@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const fadeInUp = keyframes`
   from {
@@ -58,11 +59,11 @@ const BodyContainer = styled.div`
 const HeaderSection = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 120px 20px 80px;
+  padding: 160px 20px 100px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  gap: 30px;
+  gap: 24px;
   display: flex;
 `;
 
@@ -70,15 +71,15 @@ const Title = styled.div`
   width: 100%;
   text-align: center;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
 `;
 
 const TitleHighlight = styled.span`
-  color: #9C7EEF;
-  font-size: 46px;
+  color: #835EEB;
+  font-size: 56px;
   font-family: Pretendard;
   font-weight: 700;
   line-height: 1.3;
@@ -87,7 +88,7 @@ const TitleHighlight = styled.span`
 
 const TitleText = styled.span`
   color: black;
-  font-size: 46px;
+  font-size: 56px;
   font-family: Pretendard;
   font-weight: 700;
   line-height: 1.3;
@@ -97,13 +98,13 @@ const TitleText = styled.span`
 const Subtitle = styled.div`
   width: 100%;
   text-align: center;
-  color: #858585;
+  color: #666666;
   font-size: 24px;
   font-family: Pretendard;
   font-weight: 400;
-  line-height: 1.3;
+  line-height: 1.5;
   word-wrap: break-word;
-  margin-top: 0px;
+  margin-top: 8px;
 `;
 
 const SectionTitle = styled.div`
@@ -385,8 +386,7 @@ const SyncIcon = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0px;
-
+  padding: 10px;
   position: relative;
   width: 50px;
   height: 50px;
@@ -566,7 +566,7 @@ const DemoSubtitle = styled.div`
   word-wrap: break-word;
 `;
 
-const DemoButton = styled.button`
+const DemoButton = styled.a`
   padding: 10px 30px;
   background: white;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
@@ -579,6 +579,8 @@ const DemoButton = styled.button`
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
   
   span {
     color: #835EEB;
@@ -586,6 +588,11 @@ const DemoButton = styled.button`
     font-family: Pretendard;
     font-weight: 700;
     line-height: 29px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -696,133 +703,86 @@ const StatText = styled.div`
 `;
 
 const TabContainer = styled.div`
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 120px 20px 80px;
+  align-self: stretch;
+  padding: 100px 0;
+  background: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 30px;
 `;
 
 const TabTitle = styled.h2`
-  color: black;
-  font-size: 46px;
+  color: #33373B;
+  font-size: 48px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 62.40px;
   text-align: center;
   margin: 0;
 `;
 
-const TabWrapper = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 400px;
-  height: 56px;
-  background: #F8F9FA;
-  border-radius: 12px;
-  padding: 8px;
-`;
-
-const TabList = styled.div`
-  display: flex;
-  position: relative;
-  width: 100%;
-  height: 100%;
-`;
-
-const TabIndicator = styled.div<{ activeTab: number }>`
-  position: absolute;
-  left: ${props => props.activeTab * 50}%;
-  width: 50%;
-  height: 100%;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-  transition: left 0.3s ease;
-`;
-
-const TabButton = styled.button<{ isActive: boolean }>`
-  flex: 1;
-  border: none;
-  background: none;
-  color: ${props => props.isActive ? '#835EEB' : '#858585'};
-  font-size: 16px;
-  font-family: Pretendard;
-  font-weight: ${props => props.isActive ? '700' : '500'};
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease;
-
-  &:hover {
-    color: #835EEB;
-  }
-`;
-
-const TabContent = styled.div<{ isActive: boolean }>`
-  display: ${props => props.isActive ? 'block' : 'none'};
-  width: 100%;
-  padding: 40px 0;
-`;
-
-const ContentList = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+const FaqList = styled.div`
+  width: 700px;
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 
-const ContentItem = styled.div`
-  background: white;
-  border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.05);
+const FaqItem = styled.div`
+  padding: 20px 30px;
+  background: #F9FAFB;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const FaqHeader = styled.div`
+  width: 600px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const FaqTitle = styled.div`
+  color: #33373B;
+  font-size: 24px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 36px;
+`;
+
+const FaqArrow = styled.div`
+  width: 19px;
+  height: 30px;
+  color: #8D94A0;
+  font-size: 24px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 36px;
+  text-align: center;
+`;
+
+const MoreButton = styled.button`
+  margin-top: 20px;
+  padding: 16px 32px;
+  background: #835EEB;
+  color: white;
+  font-size: 18px;
+  font-family: Pretendard;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
 
   &:hover {
+    background: #6B4CD3;
     transform: translateY(-2px);
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   }
-`;
-
-const ItemTitle = styled.h3`
-  color: #33373B;
-  font-size: 18px;
-  font-family: Pretendard;
-  font-weight: 600;
-  margin: 0 0 8px 0;
-`;
-
-const ItemDate = styled.span`
-  color: #858585;
-  font-size: 14px;
-  font-family: Pretendard;
-`;
-
-const ItemContent = styled.p`
-  color: #575C64;
-  font-size: 16px;
-  font-family: Pretendard;
-  line-height: 1.6;
-  margin: 16px 0 0 0;
-`;
-
-const NoticeTag = styled.span`
-  display: inline-block;
-  padding: 4px 8px;
-  background: #835EEB;
-  color: white;
-  font-size: 12px;
-  font-family: Pretendard;
-  font-weight: 600;
-  border-radius: 4px;
-  margin-right: 8px;
 `;
 
 interface FeatureProps {
@@ -877,9 +837,25 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index }) => {
 };
 
 const Body = () => {
+  const navigate = useNavigate();
   const headerRef = useRef<HTMLDivElement>(null);
   const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [demoCount, setDemoCount] = useState(0);
+
+  useEffect(() => {
+    // Load demo count from localStorage
+    const savedCount = localStorage.getItem('demoClickCount');
+    if (savedCount) {
+      setDemoCount(parseInt(savedCount, 10));
+    }
+  }, []);
+
+  const handleDemoClick = () => {
+    const newCount = demoCount + 1;
+    setDemoCount(newCount);
+    localStorage.setItem('demoClickCount', newCount.toString());
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -948,6 +924,21 @@ const Body = () => {
       }
     ]
   };
+
+  const faqs = [
+    {
+      title: "수학대왕 클래스는 어떤 선생님들이 사용할 수 있나요?",
+      content: "수학대왕 클래스는 초/중/고등학교 수학 선생님들을 위한 서비스입니다."
+    },
+    {
+      title: "AI 채점은 얼마나 정확한가요?",
+      content: "수학대왕의 AI 채점 시스템은 99% 이상의 정확도를 보장합니다."
+    },
+    {
+      title: "학생들의 학습 데이터는 어떻게 관리되나요?",
+      content: "모든 학습 데이터는 암호화되어 안전하게 저장됩니다."
+    }
+  ];
 
   return (
     <BodyContainer>
@@ -1048,7 +1039,12 @@ const Body = () => {
             완벽한 교육 생태계를 경험하세요
           </DemoSubtitle>
           <DemoButtonContainer>
-            <DemoButton>
+            <DemoButton 
+              href="https://www.iammathking.com/demo" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={handleDemoClick}
+            >
               <span>데모 체험하기</span>
               <ArrowIcon className="right" />
             </DemoButton>
@@ -1090,104 +1086,27 @@ const Body = () => {
         </DemoContent>
         <StatsSection>
           <StatBox>
-            <span>0</span>
-          </StatBox>
-          <StatBox>
-            <span>0</span>
+            <span>{demoCount}</span>
           </StatBox>
           <StatText>명이 이미 체험했습니다</StatText>
         </StatsSection>
       </DemoSection>
 
       <TabContainer>
-        <TabTitle>
-          수학대왕의<br />
-          자주 묻는 질문을 확인하세요
-        </TabTitle>
-        <TabWrapper>
-          <TabIndicator activeTab={activeTab} />
-          <TabList>
-            <TabButton
-              isActive={activeTab === 0}
-              onClick={() => setActiveTab(0)}
-            >
-              자주 묻는 질문
-            </TabButton>
-            <TabButton
-              isActive={activeTab === 1}
-              onClick={() => setActiveTab(1)}
-            >
-              공지사항
-            </TabButton>
-          </TabList>
-        </TabWrapper>
-        <TabContent isActive={activeTab === 0}>
-          <ContentList>
-            <ContentItem>
-              <ItemTitle>수학대왕 클래스는 어떤 선생님들이 사용할 수 있나요?</ItemTitle>
-              <ItemContent>
-                수학대왕 클래스는 초/중/고등학교 수학 선생님들을 위한 서비스입니다. 
-                학원, 공부방 등 교육기관에서도 활용 가능하며, 개인 과외 선생님도 사용하실 수 있습니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <ItemTitle>AI 채점은 얼마나 정확한가요?</ItemTitle>
-              <ItemContent>
-                수학대왕의 AI 채점 시스템은 99% 이상의 정확도를 보장합니다. 
-                특히 서술형 문제의 경우, 다양한 풀이 방법을 인식하여 정확한 채점이 가능합니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <ItemTitle>학생들의 학습 데이터는 어떻게 관리되나요?</ItemTitle>
-              <ItemContent>
-                모든 학습 데이터는 암호화되어 안전하게 저장되며, 개인정보보호법을 준수합니다. 
-                선생님은 실시간으로 학생들의 학습 현황과 성취도를 확인할 수 있습니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <ItemTitle>문제 은행은 얼마나 많은 문제가 있나요?</ItemTitle>
-              <ItemContent>
-                현재 30만 문제 이상의 데이터베이스를 보유하고 있으며, 매주 새로운 문제가 추가됩니다. 
-                AI가 학생 수준에 맞는 맞춤형 문제를 추천해드립니다.
-              </ItemContent>
-            </ContentItem>
-          </ContentList>
-        </TabContent>
-        <TabContent isActive={activeTab === 1}>
-          <ContentList>
-            <ContentItem>
-              <NoticeTag>신규</NoticeTag>
-              <ItemTitle>수학대왕 클래스 2024년 상반기 업데이트 안내</ItemTitle>
-              <ItemDate>2024.03.15</ItemDate>
-              <ItemContent>
-                AI 채점 시스템 고도화, 새로운 문제 유형 추가, UI/UX 개선 등 다양한 업데이트가 진행될 예정입니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <NoticeTag>이벤트</NoticeTag>
-              <ItemTitle>신규 가입 선생님 특별 혜택 안내</ItemTitle>
-              <ItemDate>2024.03.10</ItemDate>
-              <ItemContent>
-                3월 한정 특별 이벤트! 신규 가입하시는 선생님들께 3개월 무료 이용권을 제공해드립니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <NoticeTag>안내</NoticeTag>
-              <ItemTitle>2024학년도 교과과정 업데이트 완료</ItemTitle>
-              <ItemDate>2024.03.01</ItemDate>
-              <ItemContent>
-                2024학년도 개정 교과과정이 반영된 새로운 콘텐츠가 업데이트 되었습니다.
-              </ItemContent>
-            </ContentItem>
-            <ContentItem>
-              <ItemTitle>서버 점검 안내</ItemTitle>
-              <ItemDate>2024.02.28</ItemDate>
-              <ItemContent>
-                3월 1일 새벽 2시~4시까지 서버 점검이 진행됩니다. 이용에 참고 부탁드립니다.
-              </ItemContent>
-            </ContentItem>
-          </ContentList>
-        </TabContent>
+        <TabTitle>자주 묻는 질문</TabTitle>
+        <FaqList>
+          {faqs.map((faq, index) => (
+            <FaqItem key={index}>
+              <FaqHeader>
+                <FaqTitle>{faq.title}</FaqTitle>
+                <FaqArrow>⌃</FaqArrow>
+              </FaqHeader>
+            </FaqItem>
+          ))}
+        </FaqList>
+        <MoreButton onClick={() => navigate('/notice')}>
+          더 자세한 내용 보기
+        </MoreButton>
       </TabContainer>
     </BodyContainer>
   );
