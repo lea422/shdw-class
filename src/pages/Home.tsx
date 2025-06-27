@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Dialog from '../components/Dialog';
 import ConsultationForm from '../components/ConsultationForm';
 import Body from '../components/Body';
@@ -9,33 +9,68 @@ import ScrollGuide from '../components/ScrollGuide';
 const HomeContainer = styled.div`
   min-height: 100vh;
   padding-top: 60px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const HeroSection = styled.div`
   width: 100%;
-  height: 1000px;
-  padding: 150px 64px 100px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+`;
+
+const ImageSlider = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+`;
+
+const Slide = styled.div<{ isActive: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${props => props.isActive ? 1 : 0};
+  transition: opacity 1s ease-in-out;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+`;
+
+const SlideOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+`;
+
+const ContentContainer = styled.div`
+  position: absolute;
+  top: 55%;
+  left: 64px;
+  transform: translateY(-50%);
+  z-index: 2;
+  max-width: 600px;
+  color: white;
+  width: 100%;
+  padding: 0 24px;
   box-sizing: border-box;
 `;
 
 const TitleSection = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 10px;
+  margin-bottom: 30px;
 `;
 
 const PreTitle = styled.div`
-  width: 1152px;
-  max-width: 100%;
-  text-align: center;
-  color: black;
+  color: white;
   font-size: 26px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 500;
@@ -44,10 +79,7 @@ const PreTitle = styled.div`
 `;
 
 const MainTitle = styled.div`
-  width: 1152px;
-  max-width: 100%;
-  text-align: center;
-  color: black;
+  color: white;
   font-size: 46px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
@@ -56,10 +88,6 @@ const MainTitle = styled.div`
 `;
 
 const BrandTitle = styled.div`
-  width: 1152px;
-  max-width: 100%;
-  text-align: center;
-  
   span:first-child {
     color: #835EEB;
     font-size: 64px;
@@ -80,24 +108,18 @@ const BrandTitle = styled.div`
 `;
 
 const Description = styled.div`
-  text-align: center;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 20px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.1px;
+  margin-bottom: 30px;
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-`;
-
-const BaseButton = styled.button`
-  width: 200px;
-  padding: 15px;
+const PrimaryButton = styled.button`
+  width: 250px;
+  padding: 18px 30px;
   border-radius: 15px;
   font-size: 18px;
   font-family: 'Pretendard', sans-serif;
@@ -113,6 +135,10 @@ const BaseButton = styled.button`
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  background: linear-gradient(to right, #835EEB, #6B4BC4);
+  border: none;
+  color: white;
+  box-shadow: 0 2px 4px rgba(131, 94, 235, 0.2);
 
   &:before {
     content: '';
@@ -123,68 +149,47 @@ const BaseButton = styled.button`
     height: 100%;
     transition: all 0.3s ease;
     opacity: 0;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-
-    &:before {
-      opacity: 1;
-    }
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
-`;
-
-const PrimaryButton = styled(BaseButton)`
-  background: linear-gradient(to right, #835EEB, #6B4BC4);
-  border: none;
-  color: white;
-  box-shadow: 0 2px 4px rgba(131, 94, 235, 0.2);
-
-  &:before {
     background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
     transform: translateX(-100%);
   }
 
   &:hover {
+    transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(131, 94, 235, 0.3);
 
     &:before {
+      opacity: 1;
       transform: translateX(100%);
     }
   }
 
   &:active {
+    transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(131, 94, 235, 0.3);
   }
 `;
 
-const SecondaryButton = styled(BaseButton).attrs({ as: 'a' })`
-  background: transparent;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  color: black;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+const SlideIndicators = styled.div`
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+`;
 
-  &:before {
-    background: linear-gradient(120deg, transparent 0%, rgba(131, 94, 235, 0.1) 50%, transparent 100%);
-    transform: translateX(-100%);
-  }
+const Indicator = styled.button<{ isActive: boolean }>`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: ${props => props.isActive ? 'white' : 'rgba(255, 255, 255, 0.3)'};
+  cursor: pointer;
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: #835EEB;
-    color: #835EEB;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-
-    &:before {
-      transform: translateX(100%);
-    }
-  }
-
-  &:active {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: ${props => props.isActive ? 'white' : 'rgba(255, 255, 255, 0.6)'};
   }
 `;
 
@@ -236,9 +241,273 @@ const SyncIcon = styled.div`
   margin-right: 8px;
 `;
 
+const UpdateSection = styled.section`
+  width: 100%;
+  background: #F3EFFD;
+  padding: 80px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const UpdateTitle = styled.h2`
+  font-size: 40px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 40px;
+  text-align: center;
+`;
+
+const UpdateList = styled.ul`
+  width: 100%;
+  max-width: 800px;
+  background: #F3EFFD;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`;
+
+const UpdateItem = styled.li`
+  border-bottom: 1px solid #E5E7EB;
+  padding: 32px 0;
+  font-size: 20px;
+  color: #33373B;
+`;
+
+const FaqSection = styled.section`
+  width: 100%;
+  background: #F3EFFD;
+  padding: 80px 0 80px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const FaqTitle = styled.h2`
+  font-size: 40px;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 40px;
+  text-align: center;
+`;
+
+const FaqList = styled.ul`
+  width: 100%;
+  max-width: 800px;
+  background: #F3EFFD;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+`;
+
+const FaqItem = styled.li`
+  border-bottom: 1px solid #E5E7EB;
+`;
+
+const FaqQuestion = styled.button<{ open: boolean }>`
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  padding: 32px 0 32px 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const FaqAnswer = styled.div`
+  font-size: 18px;
+  color: #555;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+  padding-right: 32px;
+`;
+
+const FaqIcon = styled.span`
+  font-size: 32px;
+  color: #835EEB;
+  margin-left: 16px;
+`;
+
+const MoreButton = styled.button`
+  margin: 40px auto 0 auto;
+  padding: 16px 32px;
+  background: #835EEB;
+  color: white;
+  font-size: 18px;
+  font-family: Pretendard;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block;
+  &:hover {
+    background: #6B4CD3;
+    transform: translateY(-2px);
+  }
+`;
+
+const UpdateBarContainer = styled.div`
+  padding: 30px 50px;
+  overflow: hidden;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  display: flex;
+  background: #F3EFFD;
+  position: relative;
+`;
+const UpdateBadge = styled.div`
+  padding: 5px 30px;
+  background: #835EEB;
+  border-radius: 9999px;
+  outline: 1.33px solid #835EEB;
+  outline-offset: -1.33px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  position: absolute;
+  left: 50px;
+  z-index: 2;
+`;
+const UpdateBadgeText = styled.div`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 24px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 36px;
+  word-wrap: break-word;
+`;
+const UpdateContent = styled.div<{fade: boolean}>`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #575C64;
+  font-size: 32px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 48px;
+  word-wrap: break-word;
+  min-width: 400px;
+  max-width: 600px;
+  margin-left: 260px;
+  opacity: ${props => props.fade ? 0 : 1};
+  transition: opacity 0.6s;
+`;
+const UpdateDate = styled.div`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #C6B5F6;
+  font-size: 24px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 36px;
+  word-wrap: break-word;
+  min-width: 120px;
+`;
+
+const updates = [
+  { id: 1, text: '수학대왕 클래스 신규 기능 출시!', date: '2024-06-01' },
+  { id: 2, text: '장학금 시스템 업그레이드 안내', date: '2024-05-20' },
+  { id: 3, text: '선생님 대시보드 UI 개선', date: '2024-05-10' },
+];
+
+const UpdateBar: React.FC = () => {
+  const [current, setCurrent] = useState(0);
+  const [fade, setFade] = useState(false);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFade(true);
+      setTimeout(() => {
+        setCurrent((prev) => (prev + 1) % updates.length);
+        setFade(false);
+      }, 600);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+  return (
+    <UpdateBarContainer>
+      <UpdateBadge>
+        <UpdateBadgeText>수학대왕 CLASS 업데이트</UpdateBadgeText>
+      </UpdateBadge>
+      <UpdateContent fade={fade}>
+        {updates[current].text}
+      </UpdateContent>
+      <UpdateDate>{updates[current].date}</UpdateDate>
+    </UpdateBarContainer>
+  );
+};
+
 const Home = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+
+  const slides = [
+    {
+      id: 1,
+      image: '/Hero-2.png',
+      title: 'AI가 바꾸는',
+      subtitle: '수학 교육의 미래',
+      brand: '수학대왕 CLASS',
+      description: '교사의 업무는 줄이고, 학생의 성과는 높이는<br />AI 기반 혁신적 수학 학습관리 시스템'
+    },
+    {
+      id: 2,
+      image: '/Hero-3.png',
+      title: '혁신적인',
+      subtitle: '학습 관리 시스템',
+      brand: '수학대왕 CLASS',
+      description: '개인별 맞춤 학습과 실시간 피드백으로<br />학습 효과를 극대화하는 스마트 교육 플랫폼'
+    },
+    {
+      id: 3,
+      image: '/Hero-4.png',
+      title: '스마트한',
+      subtitle: 'AI 채점 시스템',
+      brand: '수학대왕 CLASS',
+      description: '필기 인식 기반 정확한 채점과<br />즉시 피드백으로 학습 효율 극대화'
+    },
+    {
+      id: 4,
+      image: '/Hero-5.png',
+      title: '맞춤형',
+      subtitle: '학습 솔루션',
+      brand: '수학대왕 CLASS',
+      description: '학생 개개인의 실력에 맞춘<br />개인별 최적화된 학습 경험 제공'
+    },
+    {
+      id: 5,
+      image: '/Hero-6.png',
+      title: '미래를 여는',
+      subtitle: '교육 혁신',
+      brand: '수학대왕 CLASS',
+      description: 'AI 기술로 완성된<br />차세대 수학 교육의 새로운 패러다임'
+    }
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
@@ -252,47 +521,105 @@ const Home = () => {
     bodyRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const handleIndicatorClick = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  const faqs = [
+    {
+      question: '수학대왕 클래스가 뭔가요?',
+      answer: '수학대왕 클래스는 수학대왕의 온라인 학습 플랫폼입니다.'
+    },
+    {
+      question: '선생님은 어떤 기기로 사용 가능한가요?',
+      answer: '선생님께서는 웹사이트에 접속해서 사용 가능합니다. 웹사이트는 반응형 웹사이트로 제작되어 있어서 스마트폰, 태블릿, 노트북, 데스크톱에서 모두 사용 가능하십니다.'
+    },
+    {
+      question: '학생들의 학습 데이터는 어떻게 관리되나요?',
+      answer: '학생들은 기본적으로 앱스토어, 플레이스토어에서 스마트폰용 앱, 태블릿 용 앱을 설치할 수 있게 브라우저를 활용하여 앱을 구동할 수도 있습니다. 즉, 아이폰, 갤럭시 스마트폰, 갤럭시 태블릿, 아이패드, 노트북, 데스크톱, 서피스, 웨일북, 크롬북 등 장비와 기기에 전혀 구애받지 않고 공정한 AI 수학 교육을 받을 수 있습니다.'
+    },
+    {
+      question: '어떤 학년이 사용 가능한가요?',
+      answer: '초등학교 1학년부터 고등학교 3학년까지 사용 가능합니다. 초1, 초2는 출시 예정이 없습니다.'
+    },
+    {
+      question: '필기 기능이 존재하나요? 학생 필기를 선생님이 볼 수 있나요?',
+      answer: '필기 기능이 완벽하게 구현되어 있습니다. 학생은 디바이스에서 수학 문제 위에 필기를 하면서 문제를 풀 수 있습니다. 그 필기 기록은 문제와 함께 한 문제 단위로 실시간으로 선생님 대시보드에 반영되어 선생님이 확인할 수 있습니다.'
+    },
+    {
+      question: '학생들의 학습 현황을 선생님이 볼 수 있나요?',
+      answer: '선생님이 내준 숙제, 학생이 추가적으로 자습한 문제 등 모든 학습량과 학습 기록을 선생님이 일별, 주별, 월별로 현황을 볼 수 있습니다.'
+    },
+    {
+      question: '장학금은 어떤 기능인가요?',
+      answer: '수학대왕은 학생들의 동기부여를 위해 장학금 제도를 운영하고 있습니다. 수학 실력과 성적에 관계없이 AI가 추천해 주는 내 실력에 맞는 문제를 꾸준히 푼다면, 모든 학생들이 예외 없이 확정적으로 장학금을 받을 수 있습니다. **즉, 성적에 따라 장학금을 받는 것이 아니라, 모든 학생이 나의 노력에 따라 장학금을 받을 수 있는 시스템입니다.** 장학금은 수학대왕 앱 내에서 네이버페이로 변환하여 결제 및 사용이 가능합니다. 학생당 월별로 받아 갈 수 있는 최대의 장학금 양은 단체 도입하실 때 설정하실 수 있으며, **선생님께서 설정하신 플랜에 따라 맞춤 예산 설계가 가능합니다.**'
+    }
+  ];
+
+  const FaqAccordion: React.FC = () => {
+    const [openIdx, setOpenIdx] = useState<number | null>(null);
+    const navigate = useNavigate();
+    // 미리보기로 3개만 보여줌
+    const previewFaqs = faqs.slice(0, 3);
+    return (
+      <FaqSection>
+        <FaqTitle>자주 묻는 질문</FaqTitle>
+        <FaqList>
+          {previewFaqs.map((faq, idx) => (
+            <FaqItem key={faq.question}>
+              <FaqQuestion open={openIdx === idx} onClick={() => setOpenIdx(openIdx === idx ? null : idx)}>
+                {faq.question}
+                <FaqIcon>{openIdx === idx ? '×' : '+'}</FaqIcon>
+              </FaqQuestion>
+              {openIdx === idx && <FaqAnswer>{faq.answer}</FaqAnswer>}
+            </FaqItem>
+          ))}
+        </FaqList>
+        <MoreButton onClick={() => navigate('/notice/faq')}>
+          더 자세한 내용 보기
+        </MoreButton>
+      </FaqSection>
+    );
+  };
+
   return (
     <HomeContainer>
       <HeroSection>
-        <TitleSection>
-          <PreTitle>
-            AI가 바꾸는
-          </PreTitle>
-          <MainTitle>
-            수학 교육의 미래
-          </MainTitle>
-          <BrandTitle>
-            <span>수학대왕</span>
-            <span>CLASS</span>
-          </BrandTitle>
-        </TitleSection>
-        <Description>
-          교사의 업무는 줄이고, 학생의 성과는 높이는<br />
-          AI 기반 혁신적 수학 학습관리 시스템
-        </Description>
-        <ButtonGroup>
-          <PrimaryButton onClick={handleOpenDialog}>
-            무료 체험 신청하기
-          </PrimaryButton>
-          <SecondaryButton href="https://www.iammathking.com/demo" target="_blank" rel="noopener noreferrer">
-            데모 체험하기
-          </SecondaryButton>
-        </ButtonGroup>
-        <FeatureSection>
-          <FeatureCard>
-            <h3>AI 서술형 자동 채점</h3>
-            <p>필기 인식 기반 정확한 채점</p>
-          </FeatureCard>
-          <FeatureCard>
-            <h3>맞춤형 문제 추천</h3>
-            <p>실력 분석 기반 개인별 최적화</p>
-          </FeatureCard>
-          <FeatureCard>
-            <h3>동기부여 시스템</h3>
-            <p>장학금과 피드백으로 학습 동기 극대화</p>
-          </FeatureCard>
-        </FeatureSection>
+        <ImageSlider>
+          {slides.map((slide, index) => (
+            <Slide
+              key={slide.id}
+              isActive={index === currentSlide}
+              style={{ backgroundImage: `url(${slide.image})` }}
+            />
+          ))}
+          <SlideOverlay />
+          <ContentContainer>
+            <TitleSection>
+              <PreTitle>{slides[currentSlide].title}</PreTitle>
+              <MainTitle>{slides[currentSlide].subtitle}</MainTitle>
+              <BrandTitle>
+                <span>수학대왕</span>
+                <span>CLASS</span>
+              </BrandTitle>
+            </TitleSection>
+            <Description
+              dangerouslySetInnerHTML={{ __html: slides[currentSlide].description }}
+            />
+            <PrimaryButton onClick={handleOpenDialog}>
+              무료 체험 신청하기
+            </PrimaryButton>
+          </ContentContainer>
+          <SlideIndicators>
+            {slides.map((_, index) => (
+              <Indicator
+                key={index}
+                isActive={index === currentSlide}
+                onClick={() => handleIndicatorClick(index)}
+              />
+            ))}
+          </SlideIndicators>
+        </ImageSlider>
       </HeroSection>
       <ScrollGuide onClick={scrollToBody} />
       <div ref={bodyRef}>
@@ -306,6 +633,7 @@ const Home = () => {
       >
         <ConsultationForm onClose={handleCloseDialog} />
       </Dialog>
+      <FaqAccordion />
     </HomeContainer>
   );
 };

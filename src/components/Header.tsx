@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 
 const HeaderContainer = styled.header`
   width: 100%;
@@ -19,9 +20,14 @@ const HeaderContainer = styled.header`
   left: 0;
   z-index: 1000;
 
-  @media (max-width: 768px) {
-    padding: 20px 20px;
-    gap: 20px;
+  @media (max-width: 1024px) {
+    padding: 16px 24px;
+    gap: 24px;
+  }
+  @media (max-width: 600px) {
+    padding: 4px 8px;
+    gap: 4px;
+    height: 36px;
   }
 `;
 
@@ -29,59 +35,53 @@ const LogoContainer = styled(Link)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   min-width: fit-content;
   text-decoration: none;
+  white-space: nowrap;
+  @media (max-width: 600px) {
+    gap: 2px;
+  }
 `;
 
-const LogoIcon = styled.div`
+const StyledLogoIcon = styled(LogoIcon)`
   width: 26px;
   height: 26px;
-  position: relative;
   flex-shrink: 0;
-`;
-
-const LogoIconPart1 = styled.div`
-  width: 9.09px;
-  height: 17.89px;
-  left: 3.25px;
-  top: 4.33px;
-  position: absolute;
-  background: #835EEB;
-`;
-
-const LogoIconPart2 = styled.div`
-  width: 9.09px;
-  height: 11.33px;
-  left: 13.66px;
-  top: 4.33px;
-  position: absolute;
-  background: #835EEB;
-`;
-
-const LogoIconPart3 = styled.div`
-  width: 9.09px;
-  height: 7.54px;
-  left: 13.66px;
-  top: 14.69px;
-  position: absolute;
-  background: #CDBEF7;
+  @media (max-width: 600px) {
+    width: 16px;
+    height: 16px;
+  }
 `;
 
 const LogoText1 = styled.div`
   color: #835EEB;
-  font-size: 19.50px;
+  font-size: 19.5px;
   font-family: 'Godo B', sans-serif;
   font-weight: 400;
   white-space: nowrap;
+  @media (max-width: 1024px) {
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    font-size: 11px;
+    font-weight: 400;
+  }
 `;
 
 const LogoText2 = styled.div`
   color: #835EEB;
-  font-size: 19.50px;
+  font-size: 19.5px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   white-space: nowrap;
+  @media (max-width: 1024px) {
+    font-size: 15px;
+  }
+  @media (max-width: 600px) {
+    font-size: 11px;
+    font-weight: 600;
+  }
 `;
 
 const RightSection = styled.div`
@@ -181,11 +181,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoContainer to="/">
-        <LogoIcon>
-          <LogoIconPart1 />
-          <LogoIconPart2 />
-          <LogoIconPart3 />
-        </LogoIcon>
+        <StyledLogoIcon />
         <LogoText1>수학대왕</LogoText1>
         <LogoText2>CLASS</LogoText2>
       </LogoContainer>

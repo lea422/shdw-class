@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const FooterContainer = styled.div`
   width: 100%;
   padding: 72px 0 128px;
-  background: var(--Color-Bg-Neutral-subtle, #F9FAFB);
+  background: #33373B;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -41,14 +41,14 @@ const LinkGroup = styled.div`
 const LinkButton = styled.div`
   height: 32px;
   padding: 0 12px 0 8px;
-  background: var(--Color-Bg-Neutral-subtler, rgba(255, 255, 255, 0));
+  background: rgba(255, 255, 255, 0);
   overflow: hidden;
   border-radius: 9999px;
   justify-content: center;
   align-items: center;
   gap: 4px;
   display: flex;
-  color: var(--Color-Text-neutral_subtle, #575C64);
+  color: #D1D5DB;
   font-size: 14px;
   font-family: Pretendard;
   font-weight: 500;
@@ -72,7 +72,7 @@ const CompanyInfo = styled.div`
 `;
 
 const InfoText = styled.div`
-  color: var(--Color-Text-neutral_subtler, #7A828D);
+  color: #D1D5DB;
   font-size: 14px;
   font-family: Pretendard;
   font-weight: 500;
@@ -100,7 +100,7 @@ const SocialButton = styled.a`
   width: 48px;
   height: 48px;
   position: relative;
-  background: #F9FAFB;
+  background: #33373B;
   border-radius: 9999px;
   border: 1px solid #E5E7EB;
   transition: all 0.3s ease;
@@ -128,7 +128,7 @@ const SocialIcon = styled.div`
   svg {
     width: 20px;
     height: 20px;
-    fill: #8D94A0;
+    fill: #D1D5DB;
     transition: all 0.3s ease;
   }
 

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
+import styled from 'styled-components';
 
 interface Notice {
   id: number;
@@ -8,17 +9,21 @@ interface Notice {
   tag?: string;
 }
 
-function NoticeListPage() {
+const NoticeListPage = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
 
   useEffect(() => {
     const fetchNotices = async () => {
       const { data, error } = await supabase
-        .from("notices")
-        .select("*")
-        .order("date", { ascending: false });
+        .from('notices')
+        .select('*')
+        .order('date', { ascending: false });
 
-      if (!error) setNotices(data);
+      if (error) {
+        console.error('❌ Supabase fetch error:', error);
+      } else {
+        setNotices(data || []);
+      }
     };
 
     fetchNotices();
@@ -26,8 +31,8 @@ function NoticeListPage() {
 
   return (
     <div className="space-y-4">
-      {notices.map((item, idx) => (
-        <div key={idx} className="border-b pb-2">
+      {notices.map((item) => (
+        <div key={item.id} className="border-b pb-2">
           <div className="flex items-center gap-2 mb-1">
             {item.tag && (
               <span className="text-xs font-semibold text-white bg-purple-500 px-2 py-0.5 rounded">
@@ -41,6 +46,6 @@ function NoticeListPage() {
       ))}
     </div>
   );
-}
+};
 
-export default NoticeListPage; 
+export default NoticeListPage;

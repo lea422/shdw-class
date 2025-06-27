@@ -3,7 +3,9 @@ import styled from 'styled-components';
 
 const PricingContainer = styled.div`
   padding: 60px 50px;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px - 200px);
+  display: flex;
+  flex-direction: column;
 `;
 
 const PricingContent = styled.div`

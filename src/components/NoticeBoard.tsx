@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { supabase } from '../lib/supabase';
-import { Notice } from '../lib/types';
+
+// Notice 타입 정의 추가
+interface Notice {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+}
 
 const NoticeBoardContainer = styled.div`
   max-width: 800px;
@@ -49,13 +55,12 @@ export const NoticeBoard: React.FC = () => {
 
   const fetchNotices = async () => {
     try {
-      const { data, error } = await supabase
-        .from('notices')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if (error) throw error;
-      setNotices(data || []);
+      // Placeholder for supabase fetch
+      setNotices([
+        { id: '1', title: 'Notice 1', content: 'This is the content of Notice 1', created_at: new Date().toISOString() },
+        { id: '2', title: 'Notice 2', content: 'This is the content of Notice 2', created_at: new Date().toISOString() },
+        { id: '3', title: 'Notice 3', content: 'This is the content of Notice 3', created_at: new Date().toISOString() },
+      ]);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

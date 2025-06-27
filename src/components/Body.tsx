@@ -723,49 +723,6 @@ const TabTitle = styled.h2`
   margin: 0;
 `;
 
-const FaqList = styled.div`
-  width: 700px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-const FaqItem = styled.div`
-  padding: 20px 30px;
-  background: #F9FAFB;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const FaqHeader = styled.div`
-  width: 600px;
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const FaqTitle = styled.div`
-  color: #33373B;
-  font-size: 24px;
-  font-family: Pretendard;
-  font-weight: 500;
-  line-height: 36px;
-`;
-
-const FaqArrow = styled.div`
-  width: 19px;
-  height: 30px;
-  color: #8D94A0;
-  font-size: 24px;
-  font-family: Pretendard;
-  font-weight: 400;
-  line-height: 36px;
-  text-align: center;
-`;
-
 const MoreButton = styled.button`
   margin-top: 20px;
   padding: 16px 32px;
@@ -783,6 +740,84 @@ const MoreButton = styled.button`
     background: #6B4CD3;
     transform: translateY(-2px);
   }
+`;
+
+const Tabs = styled.div`
+  display: flex;
+  gap: 16px;
+  margin: 40px 0 24px 0;
+`;
+
+const TabButton = styled.button<{ active: boolean }>`
+  padding: 12px 32px;
+  border-radius: 24px;
+  border: none;
+  background: ${({ active }) => (active ? '#835EEB' : '#E5D8FB')};
+  color: ${({ active }) => (active ? 'white' : '#835EEB')};
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+`;
+
+const SlideContainer = styled.div`
+  width: 700px;
+  max-width: 90vw;
+  background: #ede5fa;
+  border-radius: 24px;
+  padding: 32px 24px 40px 24px;
+  box-shadow: 0 4px 24px rgba(131, 94, 235, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+`;
+
+const SlideTitle = styled.div`
+  background: #835EEB;
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  border-radius: 18px;
+  padding: 8px 32px;
+  margin-bottom: 16px;
+  align-self: center;
+`;
+
+const SlideDesc = styled.div`
+  color: #6B5B8C;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 24px;
+`;
+
+const SlideBox = styled.div`
+  width: 100%;
+  height: 320px;
+  background: white;
+  border-radius: 18px;
+  border: 2px solid #BFA8F6;
+`;
+
+const ArrowButton = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 32px;
+  color: #835EEB;
+  cursor: pointer;
+  z-index: 2;
+  &:hover { color: #6B4BC4; }
+`;
+
+const ArrowLeft = styled(ArrowButton)`
+  left: -48px;
+`;
+const ArrowRight = styled(ArrowButton)`
+  right: -48px;
 `;
 
 interface FeatureProps {
@@ -841,6 +876,7 @@ const Body = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeTab, setActiveTab] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
   const [demoCount, setDemoCount] = useState(0);
 
   useEffect(() => {
@@ -892,53 +928,58 @@ const Body = () => {
     };
   }, []);
 
-  const features = {
-    customWorksheet: [
-      {
-        title: "AI 기반 실시간 맞춤 문제 추천",
-        description: ["학생별 실력과 취약점을 분석하여", "최적의 문제를 자동으로 추천합니다."]
-      },
-      {
-        title: "오답 클리닉 자동 & 무한 배부",
-        description: ["틀린 문제를 자동으로 분석하여", "유사 문제를 무제한 제공합니다."]
-      }
-    ],
-    aiGrading: [
-      {
-        title: "서술형 자동 채점",
-        description: ["필기 인식 기술로 서술형 답안을", "정확하게 자동 채점합니다."]
-      },
-      {
-        title: "전국 단위 실력 분석",
-        description: ["전국 학생들과 비교한", "객관적인 실력 분석 리포트를 제공합니다."]
-      }
-    ],
-    motivation: [
-      {
-        title: "AI 힌트 및 오답 피드백",
-        description: ["학생이 막힐 때 단계별 힌트와", "상세한 오답 분석을 제공합니다."]
-      },
-      {
-        title: "장학금 제공 시스템",
-        description: ["학습 성과에 따라 실제 장학금을", "지급하여 동기를 부여합니다."]
-      }
-    ]
-  };
-
-  const faqs = [
+  const features = [
     {
-      title: "수학대왕 클래스는 어떤 선생님들이 사용할 수 있나요?",
-      content: "수학대왕 클래스는 초/중/고등학교 수학 선생님들을 위한 서비스입니다."
+      tab: "맞춤형 학습지",
+      slides: [
+        {
+          title: "AI 기반 맞춤형 학습지",
+          desc: "학생 개개인의 실력에 맞춘 개인별 최적화된 학습지를 AI가 자동으로 제작합니다."
+        },
+        {
+          title: "실시간 난이도 조절",
+          desc: "학생의 학습 진행 상황에 따라 실시간으로 난이도를 조절하여 최적의 학습 효과를 제공합니다."
+        }
+      ]
     },
     {
-      title: "AI 채점은 얼마나 정확한가요?",
-      content: "수학대왕의 AI 채점 시스템은 99% 이상의 정확도를 보장합니다."
+      tab: "AI 채점 시스템",
+      slides: [
+        {
+          title: "필기 인식 채점",
+          desc: "학생의 필기 답안을 AI가 정확하게 인식하여 즉시 채점하고 피드백을 제공합니다."
+        },
+        {
+          title: "오답 분석 및 힌트",
+          desc: "틀린 문제에 대해 단계별 힌트와 해설을 제공하여 학생이 스스로 해결할 수 있도록 도와줍니다."
+        }
+      ]
     },
     {
-      title: "학생들의 학습 데이터는 어떻게 관리되나요?",
-      content: "모든 학습 데이터는 암호화되어 안전하게 저장됩니다."
+      tab: "학습 관리",
+      slides: [
+        {
+          title: "실시간 학습 현황",
+          desc: "선생님이 학생들의 학습 진행 상황을 실시간으로 확인하고 관리할 수 있습니다."
+        },
+        {
+          title: "성과 분석 리포트",
+          desc: "학생별, 클래스별 상세한 성과 분석 리포트를 제공하여 효과적인 학습 지도를 가능하게 합니다."
+        }
+      ]
     }
   ];
+
+  const handleTabClick = (idx: number) => {
+    setActiveTab(idx);
+    setActiveSlide(0);
+  };
+  const handlePrev = () => {
+    setActiveSlide((prev) => (prev === 0 ? features[activeTab].slides.length - 1 : prev - 1));
+  };
+  const handleNext = () => {
+    setActiveSlide((prev) => (prev === features[activeTab].slides.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <BodyContainer>
@@ -956,28 +997,25 @@ const Body = () => {
         <SectionTitleText>맞춤형 학습지 제작</SectionTitleText>
       </AnimatedSectionTitle>
       <FeatureGrid>
-        {features.customWorksheet.map((feature, index) => (
-          <Feature key={index} {...feature} index={index} />
+        {features[activeTab].slides.map((feature, index) => (
+          <Feature key={index} title={feature.title} description={[feature.desc]} index={index} />
         ))}
       </FeatureGrid>
 
-      <AnimatedSectionTitle ref={el => titleRefs.current[1] = el}>
-        <SectionTitleText>AI 채점 시스템</SectionTitleText>
-      </AnimatedSectionTitle>
-      <FeatureGrid>
-        {features.aiGrading.map((feature, index) => (
-          <Feature key={index} {...feature} index={index + 2} />
+      <Tabs>
+        {features.map((cat, idx) => (
+          <TabButton key={cat.tab} active={activeTab === idx} onClick={() => handleTabClick(idx)}>
+            {cat.tab}
+          </TabButton>
         ))}
-      </FeatureGrid>
-
-      <AnimatedSectionTitle ref={el => titleRefs.current[2] = el}>
-        <SectionTitleText>동기부여 시스템</SectionTitleText>
-      </AnimatedSectionTitle>
-      <FeatureGrid>
-        {features.motivation.map((feature, index) => (
-          <Feature key={index} {...feature} index={index + 4} />
-        ))}
-      </FeatureGrid>
+      </Tabs>
+      <SlideContainer>
+        <SlideTitle>{features[activeTab].slides[activeSlide].title}</SlideTitle>
+        <SlideDesc>{features[activeTab].slides[activeSlide].desc}</SlideDesc>
+        <SlideBox />
+        <ArrowLeft onClick={handlePrev}>&lt;</ArrowLeft>
+        <ArrowRight onClick={handleNext}>&gt;</ArrowRight>
+      </SlideContainer>
 
       <WebAppSection>
         <WebAppHeader>
@@ -1091,23 +1129,6 @@ const Body = () => {
           <StatText>명이 이미 체험했습니다</StatText>
         </StatsSection>
       </DemoSection>
-
-      <TabContainer>
-        <TabTitle>자주 묻는 질문</TabTitle>
-        <FaqList>
-          {faqs.map((faq, index) => (
-            <FaqItem key={index}>
-              <FaqHeader>
-                <FaqTitle>{faq.title}</FaqTitle>
-                <FaqArrow>⌃</FaqArrow>
-              </FaqHeader>
-            </FaqItem>
-          ))}
-        </FaqList>
-        <MoreButton onClick={() => navigate('/notice')}>
-          더 자세한 내용 보기
-        </MoreButton>
-      </TabContainer>
     </BodyContainer>
   );
 };
