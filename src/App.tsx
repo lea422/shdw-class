@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import SideDrawer from './components/SideDrawer';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Notice from './pages/Notice';
@@ -32,6 +33,7 @@ function App() {
           </Routes>
         </MainContent>
         <Footer />
+        <SideDrawer />
       </AppContainer>
     </Router>
   );

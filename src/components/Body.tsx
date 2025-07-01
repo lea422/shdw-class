@@ -620,26 +620,17 @@ const slideLeft = keyframes`
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-200%);
+    transform: translateX(-50%);
   }
 `;
 
 const FeatureBoxFlow = styled.div`
   display: flex;
   gap: 30px;
-  animation: ${slideLeft} 20s linear infinite;
+  animation: ${slideLeft} 30s linear infinite;
 `;
 
-const FeatureBox = styled.div`
-  min-width: 550px;
-  height: 400px;
-  background: #F3F4F6;
-  overflow: hidden;
-  border-radius: 19.72px;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+const FeatureBoxSlide = styled.div`
   flex-shrink: 0;
 `;
 
@@ -657,11 +648,33 @@ const FeatureBoxContent = styled.div`
     text-align: center;
     color: #33373B;
     font-size: 29.58px;
-    font-family: Pretendard;
+    font-family: 'Pretendard', sans-serif;
     font-weight: 700;
     line-height: 44.36px;
     word-wrap: break-word;
     margin: 0;
+  }
+`;
+
+const FeatureImage = styled.div<{ image: string }>`
+  width: 500px;
+  height: 500px;
+  background-image: url(${props => props.image});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 32px;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08));
+    border-radius: 32px;
   }
 `;
 
@@ -878,6 +891,42 @@ const Body = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [demoCount, setDemoCount] = useState(0);
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [textVisible, setTextVisible] = useState(true);
+
+  // 테스티모니얼 데이터
+  const testimonials = [
+    {
+      title: {
+        highlight: "현장의 목소리로",
+        normal: "증명된 효과"
+      },
+      quote: "교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요",
+      name: "을지대 의예과<br/>24학번 김영우 학생",
+      videoUrl: "https://youtu.be/MBQZ4PCuNEQ?si=NX8FTvhS880GB9s3",
+      thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
+    },
+    {
+      title: {
+        highlight: "AI 기술로",
+        normal: "완성된 학습"
+      },
+      quote: "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
+      name: "서울대 의예과<br/>23학번 박민수 학생",
+      videoUrl: "https://youtu.be/example2",
+      thumbnailUrl: "https://img.youtube.com/vi/example2/maxresdefault.jpg"
+    },
+    {
+      title: {
+        highlight: "체계적인 관리로",
+        normal: "성과 극대화"
+      },
+      quote: "학생들의 학습 현황을 한눈에 파악하고<br/>효과적으로 지도할 수 있어요",
+      name: "강남 수학학원<br/>김선생님",
+      videoUrl: "https://youtu.be/example3",
+      thumbnailUrl: "https://img.youtube.com/vi/example3/maxresdefault.jpg"
+    }
+  ];
 
   useEffect(() => {
     // Load demo count from localStorage
@@ -886,6 +935,24 @@ const Body = () => {
       setDemoCount(parseInt(savedCount, 10));
     }
   }, []);
+
+  // 테스티모니얼 변경 시 자연스러운 전환 효과
+  useEffect(() => {
+    // 텍스트가 부드럽게 슬라이드되면서 변경
+    setTextVisible(false);
+    const timer = setTimeout(() => {
+      setTextVisible(true);
+    }, 150); // 더 빠른 전환
+    return () => clearTimeout(timer);
+  }, [currentTestimonial]);
+
+  // 자동 슬라이드 (8초마다)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   const handleDemoClick = () => {
     const newCount = demoCount + 1;
@@ -930,43 +997,31 @@ const Body = () => {
 
   const features = [
     {
-      tab: "맞춤형 학습지",
-      slides: [
-        {
-          title: "AI 기반 맞춤형 학습지",
-          desc: "학생 개개인의 실력에 맞춘 개인별 최적화된 학습지를 AI가 자동으로 제작합니다."
-        },
-        {
-          title: "실시간 난이도 조절",
-          desc: "학생의 학습 진행 상황에 따라 실시간으로 난이도를 조절하여 최적의 학습 효과를 제공합니다."
-        }
-      ]
+      title: '맞춤형 학습지 제작',
+      sub: [
+        { label: 'AI 기반 실시간 맞춤 문제 추천', gif: '' },
+        { label: '오답클리닉 자동 & 무한 배부', gif: '' }
+      ],
+      desc: '학생이 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
+      defaultGif: ''
     },
     {
-      tab: "AI 채점 시스템",
-      slides: [
-        {
-          title: "필기 인식 채점",
-          desc: "학생의 필기 답안을 AI가 정확하게 인식하여 즉시 채점하고 피드백을 제공합니다."
-        },
-        {
-          title: "오답 분석 및 힌트",
-          desc: "틀린 문제에 대해 단계별 힌트와 해설을 제공하여 학생이 스스로 해결할 수 있도록 도와줍니다."
-        }
-      ]
+      title: 'AI 채점 시스템',
+      sub: [
+        { label: '서술형 자동 채점', gif: '' },
+        { label: '전국 단위 실력 분석', gif: '' }
+      ],
+      desc: 'AI가 학생의 답안을 실시간으로 분석하고<br/>정확한 피드백을 제공합니다.',
+      defaultGif: ''
     },
     {
-      tab: "학습 관리",
-      slides: [
-        {
-          title: "실시간 학습 현황",
-          desc: "선생님이 학생들의 학습 진행 상황을 실시간으로 확인하고 관리할 수 있습니다."
-        },
-        {
-          title: "성과 분석 리포트",
-          desc: "학생별, 클래스별 상세한 성과 분석 리포트를 제공하여 효과적인 학습 지도를 가능하게 합니다."
-        }
-      ]
+      title: 'AI 힌트 및 오답 피드백',
+      sub: [
+        { label: 'AI 힌트 및 오답 피드백', gif: '' },
+        { label: '질문 게시판', gif: '' }
+      ],
+      desc: '학생이 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
+      defaultGif: ''
     }
   ];
 
@@ -975,49 +1030,68 @@ const Body = () => {
     setActiveSlide(0);
   };
   const handlePrev = () => {
-    setActiveSlide((prev) => (prev === 0 ? features[activeTab].slides.length - 1 : prev - 1));
+    setActiveSlide((prev) => (prev === 0 ? features[activeTab].sub.length - 1 : prev - 1));
   };
   const handleNext = () => {
-    setActiveSlide((prev) => (prev === features[activeTab].slides.length - 1 ? 0 : prev + 1));
+    setActiveSlide((prev) => (prev === features[activeTab].sub.length - 1 ? 0 : prev + 1));
   };
+
+  const [hovered, setHovered] = useState<{featureIdx: number, subIdx: number | null}>({featureIdx: 0, subIdx: null});
 
   return (
     <BodyContainer>
       <AnimatedHeaderSection ref={headerRef}>
         <Title>
-          <TitleHighlight>수학대왕 클래스</TitleHighlight>
-          <TitleText>의 핵심 기능</TitleText>
+          <TitleHighlight>수학대왕 클래스의</TitleHighlight>
+          <TitleText>핵심 기능</TitleText>
         </Title>
         <Subtitle>
           AI 기술로 완성된 체계적인 수학 학습 관리 시스템
         </Subtitle>
       </AnimatedHeaderSection>
 
-      <AnimatedSectionTitle ref={el => titleRefs.current[0] = el}>
-        <SectionTitleText>맞춤형 학습지 제작</SectionTitleText>
-      </AnimatedSectionTitle>
-      <FeatureGrid>
-        {features[activeTab].slides.map((feature, index) => (
-          <Feature key={index} title={feature.title} description={[feature.desc]} index={index} />
+      <FeatureSectionWrapper>
+        {features.map((feature, i) => (
+          <FeatureBox key={i}>
+            <FeatureTextBlock>
+              <FeatureTitle>{feature.title}</FeatureTitle>
+              <SubButtonRow>
+                {feature.sub.map((btn, j) => (
+                  <SubButton
+                    key={j}
+                    onMouseEnter={() => setHovered({featureIdx: i, subIdx: j})}
+                    onMouseLeave={() => setHovered({featureIdx: i, subIdx: null})}
+                  >
+                    {btn.label}
+                  </SubButton>
+                ))}
+              </SubButtonRow>
+              <FeatureDesc dangerouslySetInnerHTML={{__html: feature.desc}} />
+            </FeatureTextBlock>
+            <GifBox>
+              {(hovered.featureIdx === i && hovered.subIdx !== null && feature.sub[hovered.subIdx].gif) ? (
+                <img
+                  src={feature.sub[hovered.subIdx].gif}
+                  alt="기능 미리보기"
+                  style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: 24, background: '#F3EFFD', transition: 'opacity 0.4s'}}
+                />
+              ) : feature.defaultGif ? (
+                <img
+                  src={feature.defaultGif}
+                  alt="기능 미리보기"
+                  style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: 24, background: '#F3EFFD', transition: 'opacity 0.4s'}}
+                />
+              ) : (
+                <div style={{width: '100%', height: '100%', background: '#F3EFFD', borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#835EEB', fontSize: 32, fontWeight: 700}}>
+                  GIF 미리보기 영역
+                </div>
+              )}
+            </GifBox>
+          </FeatureBox>
         ))}
-      </FeatureGrid>
+      </FeatureSectionWrapper>
 
-      <Tabs>
-        {features.map((cat, idx) => (
-          <TabButton key={cat.tab} active={activeTab === idx} onClick={() => handleTabClick(idx)}>
-            {cat.tab}
-          </TabButton>
-        ))}
-      </Tabs>
-      <SlideContainer>
-        <SlideTitle>{features[activeTab].slides[activeSlide].title}</SlideTitle>
-        <SlideDesc>{features[activeTab].slides[activeSlide].desc}</SlideDesc>
-        <SlideBox />
-        <ArrowLeft onClick={handlePrev}>&lt;</ArrowLeft>
-        <ArrowRight onClick={handleNext}>&gt;</ArrowRight>
-      </SlideContainer>
-
-      <WebAppSection>
+      <WebAppSectionWrapper>
         <WebAppHeader>
           <WebAppTitle>
             <WebAppTitleHighlight>웹-앱 연동으로</WebAppTitleHighlight>
@@ -1065,7 +1139,7 @@ const Body = () => {
             </PlatformFeatures>
           </PlatformCard>
         </WebAppContent>
-      </WebAppSection>
+      </WebAppSectionWrapper>
 
       <DemoSection>
         <DemoHeader>
@@ -1073,13 +1147,12 @@ const Body = () => {
             수학대왕 APP 기능을 직접 체험해 보세요!
           </DemoTitle>
           <DemoSubtitle>
-            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br />
+            교사는 웹에서 관리하고, 학생은 앱으로 학습하는
             완벽한 교육 생태계를 경험하세요
           </DemoSubtitle>
           <DemoButtonContainer>
             <DemoButton 
               href="https://www.iammathking.com/demo" 
-              target="_blank" 
               rel="noopener noreferrer"
               onClick={handleDemoClick}
             >
@@ -1090,36 +1163,27 @@ const Body = () => {
         </DemoHeader>
         <DemoContent>
           <FeatureBoxFlow>
-            <FeatureBox>
-              <FeatureBoxContent>
-                <h3>실시간 피드백으로<br/>즉시 오답을 분석해볼 수 있어요</h3>
-              </FeatureBoxContent>
-              <div style={{ width: '550.44px', height: '345.05px' }} />
-            </FeatureBox>
-            <FeatureBox>
-              <FeatureBoxContent>
-                <h3>AI가 제공하는<br/>맞춤형 문제를 풀어보세요</h3>
-              </FeatureBoxContent>
-              <div style={{ width: '550.44px', height: '345.05px' }} />
-            </FeatureBox>
-            <FeatureBox>
-              <FeatureBoxContent>
-                <h3>단계별 힌트로<br/>스스로 해결할 수 있어요</h3>
-              </FeatureBoxContent>
-              <div style={{ width: '550.44px', height: '345.05px' }} />
-            </FeatureBox>
-            <FeatureBox>
-              <FeatureBoxContent>
-                <h3>성과에 따른<br/>장학금 혜택을 받아보세요</h3>
-              </FeatureBoxContent>
-              <div style={{ width: '550.44px', height: '345.05px' }} />
-            </FeatureBox>
-            <FeatureBox>
-              <FeatureBoxContent>
-                <h3>실시간 피드백으로<br/>즉시 오답을 분석해볼 수 있어요</h3>
-              </FeatureBoxContent>
-              <div style={{ width: '550.44px', height: '345.05px' }} />
-            </FeatureBox>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-1.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-2.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-3.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-4.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-5.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-6.png" />
+            </FeatureBoxSlide>
+            <FeatureBoxSlide>
+              <FeatureImage image="/feature-slide-7.png" />
+            </FeatureBoxSlide>
           </FeatureBoxFlow>
         </DemoContent>
         <StatsSection>
@@ -1129,8 +1193,408 @@ const Body = () => {
           <StatText>명이 이미 체험했습니다</StatText>
         </StatsSection>
       </DemoSection>
+
+      {/* 현장의 목소리 섹션 */}
+      <ExperienceSection>
+        <ExperienceInner>
+          <ExperienceTextBlock>
+            <AnimatedTextContent className={textVisible ? 'visible' : ''}>
+              <ExperienceTitle>
+                {testimonials[currentTestimonial].title.highlight}<br/>{testimonials[currentTestimonial].title.normal}
+              </ExperienceTitle>
+              <ExperienceQuote>
+                <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial].quote }} />
+              </ExperienceQuote>
+              <NameSection>
+                <VerticalLine />
+                <NameSpacer />
+                <ExperienceName>
+                  <span>을지대 의예과</span>
+                  <span>24학번 김영우 학생</span>
+                </ExperienceName>
+              </NameSection>
+            </AnimatedTextContent>
+          </ExperienceTextBlock>
+          <ExperienceImageBlock>
+            <VideoSlider>
+              {testimonials.map((testimonial, index) => (
+                <VideoSlide
+                  key={index}
+                  className={index === currentTestimonial ? 'active' : ''}
+                  style={{ transform: `translateX(${(index - currentTestimonial) * 100}%)` }}
+                >
+                  <YouTubeThumbnail
+                    href={testimonial.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ThumbnailImage
+                      src={testimonial.thumbnailUrl}
+                      alt={testimonial.name}
+                    />
+                    <PlayButton>
+                      <PlayIcon>▶</PlayIcon>
+                    </PlayButton>
+                  </YouTubeThumbnail>
+                </VideoSlide>
+              ))}
+            </VideoSlider>
+
+          </ExperienceImageBlock>
+        </ExperienceInner>
+      </ExperienceSection>
     </BodyContainer>
   );
 };
+
+// styled-components for the new section
+const ExperienceSection = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  min-height: 720px;
+  padding: 60px 0;
+`;
+
+const ExperienceInner = styled.div`
+  width: 1280px;
+  height: 720px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 64px;
+  @media (max-width: 1300px) {
+    width: 100vw;
+    min-width: 0;
+    padding: 0 16px;
+  }
+  @media (max-width: 900px) {
+    flex-direction: column;
+    height: auto;
+    gap: 32px;
+    align-items: center;
+  }
+`;
+
+const ExperienceTextBlock = styled.div`
+  width: 488px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0;
+  padding-top: 40px;
+  @media (max-width: 900px) {
+    width: 100%;
+    height: auto;
+    align-items: center;
+  }
+`;
+
+const ExperienceTitle = styled.div`
+  color: #33373B;
+  font-size: 48px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 62.4px;
+  word-break: keep-all;
+  margin-bottom: 36px;
+`;
+
+const ExperienceQuote = styled.div`
+  color: #33373B;
+  font-size: 22px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 36px;
+  word-break: keep-all;
+  margin-bottom: 32px;
+`;
+
+const ExperienceName = styled.div`
+  color: #835EEB;
+  font-size: 20px;
+  font-family: Pretendard;
+  line-height: 26px;
+  word-break: keep-all;
+  font-weight: 700;
+  span { display: block; }
+  span:last-child { font-weight: 400; }
+`;
+
+const ExperienceImageBlock = styled.div`
+  width: 663px;
+  height: 410px;
+  position: relative;
+  overflow: hidden;
+  outline: 6px #835EED solid;
+  background: #F8F6FF;
+  @media (max-width: 900px) {
+    width: 100%;
+    max-width: 663px;
+    height: 300px;
+  }
+`;
+
+const YouTubeThumbnail = styled.a`
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+`;
+
+const ThumbnailImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+`;
+
+const PlayButton = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  
+  ${YouTubeThumbnail}:hover & {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+`;
+
+const PlayIcon = styled.span`
+  color: white;
+  font-size: 32px;
+  font-weight: bold;
+  margin-left: 4px;
+`;
+
+const NameSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+`;
+
+const VerticalLine = styled.div`
+  width: 3px;
+  min-width: 3px;
+  height: 100%;
+  background: #835EEB;
+  margin-right: 16px;
+  border-radius: 2px;
+`;
+
+const NameSpacer = styled.div`
+  height: 20px;
+`;
+
+const ArrowGroup = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const Arrow = styled.div`
+  width: 20px;
+  height: 13px;
+  transform: rotate(90deg);
+  transform-origin: top left;
+  outline: 2px #835EEB solid;
+  outline-offset: -1px;
+`;
+
+// 추가 styled-components
+const AnimatedTextContent = styled.div`
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+`;
+
+const VideoSlider = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+`;
+
+const VideoSlide = styled.div`
+  min-width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: scale(0.95);
+  z-index: 1;
+  
+  &.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+  }
+`;
+
+const SliderControls = styled.div`
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 10;
+`;
+
+const SliderArrow = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(131, 94, 235, 0.9);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  
+  &:hover {
+    background: rgba(131, 94, 235, 1);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  &.prev {
+    left: 16px;
+  }
+  
+  &.next {
+    right: 16px;
+  }
+`;
+
+const FeatureSectionWrapper = styled.div`
+  width: 1280px;
+  margin: 0 auto 100px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  align-items: center;
+`;
+
+const FeatureBox = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FeatureTextBlock = styled.div`
+  min-width: 400px;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+`;
+
+const FeatureTitleNew = styled.div`
+  color: #33373B;
+  font-size: 36px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 43.2px;
+  text-align: center;
+`;
+
+const SubButtonRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const SubButton = styled.button`
+  width: 300px;
+  height: 40px;
+  background: #F3EFFD;
+  border: none;
+  border-radius: 50px;
+  color: #835EEB;
+  font-size: 20px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+  position: relative;
+  transition: box-shadow 0.2s, background 0.2s;
+  cursor: pointer;
+  &:hover {
+    background: #E5D8FB;
+    box-shadow: 0 4px 16px rgba(131,94,235,0.08);
+  }
+`;
+
+const FeatureDesc = styled.div`
+  opacity: 0.6;
+  color: #4B4B4B;
+  font-size: 24px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 34.8px;
+  text-align: center;
+`;
+
+const GifBox = styled.div`
+  width: 900px;
+  height: 500px;
+  background: #835EEB;
+  border-radius: 24px;
+  overflow: hidden;
+  outline: 1px #835EEB solid;
+  outline-offset: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const WebAppSectionWrapper = styled.div`
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+`;
 
 export default Body; 

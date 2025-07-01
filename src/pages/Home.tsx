@@ -6,6 +6,7 @@ import ConsultationForm from '../components/ConsultationForm';
 import Body from '../components/Body';
 import ScrollGuide from '../components/ScrollGuide';
 
+// Styled Components
 const HomeContainer = styled.div`
   min-height: 100vh;
   padding-top: 60px;
@@ -190,6 +191,16 @@ const Indicator = styled.button<{ isActive: boolean }>`
 
   &:hover {
     background: ${props => props.isActive ? 'white' : 'rgba(255, 255, 255, 0.6)'};
+    transform: scale(1.2);
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
   }
 `;
 
@@ -223,6 +234,7 @@ const FeatureCard = styled.div`
     font-weight: 700;
     text-align: center;
     margin: 0;
+    transition: color 0.3s ease;
   }
 
   p {
@@ -232,6 +244,12 @@ const FeatureCard = styled.div`
     font-weight: 400;
     text-align: center;
     margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  &:hover h3,
+  &:hover p {
+    color: #835EEB;
   }
 `;
 
@@ -318,6 +336,18 @@ const FaqQuestion = styled.button<{ open: boolean }>`
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+
+  &:hover {
+    color: #835EEB;
+    background: rgba(131, 94, 235, 0.02);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(131, 94, 235, 0.1);
+  }
 `;
 
 const FaqAnswer = styled.div`
@@ -326,12 +356,25 @@ const FaqAnswer = styled.div`
   margin: 0 0 32px 0;
   line-height: 1.6;
   padding-right: 32px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 const FaqIcon = styled.span`
   font-size: 32px;
   color: #835EEB;
   margin-left: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+
+  &:hover {
+    background: rgba(131, 94, 235, 0.1);
+    transform: scale(1.1);
+  }
 `;
 
 const MoreButton = styled.button`
@@ -340,13 +383,13 @@ const MoreButton = styled.button`
   background: #835EEB;
   color: white;
   font-size: 18px;
-  font-family: Pretendard;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 600;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  display: block;
+
   &:hover {
     background: #6B4CD3;
     transform: translateY(-2px);
@@ -363,6 +406,7 @@ const UpdateBarContainer = styled.div`
   background: #F3EFFD;
   position: relative;
 `;
+
 const UpdateBadge = styled.div`
   padding: 5px 30px;
   background: #835EEB;
@@ -377,6 +421,7 @@ const UpdateBadge = styled.div`
   left: 50px;
   z-index: 2;
 `;
+
 const UpdateBadgeText = styled.div`
   text-align: center;
   justify-content: center;
@@ -389,6 +434,7 @@ const UpdateBadgeText = styled.div`
   line-height: 36px;
   word-wrap: break-word;
 `;
+
 const UpdateContent = styled.div<{fade: boolean}>`
   text-align: center;
   justify-content: center;
@@ -406,6 +452,7 @@ const UpdateContent = styled.div<{fade: boolean}>`
   opacity: ${props => props.fade ? 0 : 1};
   transition: opacity 0.6s;
 `;
+
 const UpdateDate = styled.div`
   text-align: center;
   justify-content: center;
@@ -418,6 +465,110 @@ const UpdateDate = styled.div`
   line-height: 36px;
   word-wrap: break-word;
   min-width: 120px;
+`;
+
+const SlideTitle = styled.h2`
+  text-align: center;
+  font-size: 40px;
+  font-weight: 700;
+  color: #33373B;
+  margin-bottom: 60px;
+  font-family: 'Pretendard', sans-serif;
+`;
+
+const SlideContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+`;
+
+const SlideTrack = styled.div<{ translateX: number }>`
+  display: flex;
+  gap: 30px;
+  transform: translateX(${props => props.translateX}px);
+  transition: transform 0.5s ease-out;
+  position: absolute;
+  left: 0;
+  top: 0;
+`;
+
+const SlideCard = styled.div`
+  min-width: 300px;
+  height: 400px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(131, 94, 235, 0.15);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(131, 94, 235, 0.25);
+  }
+
+  &:active {
+    transform: translateY(-5px) scale(0.98);
+  }
+`;
+
+const CardImage = styled.div<{ image: string }>`
+  width: 100%;
+  height: 200px;
+  background-image: url(${props => props.image});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+  }
+`;
+
+const CardContent = styled.div`
+  padding: 24px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const CardTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 700;
+  color: #33373B;
+  margin: 0 0 12px 0;
+  font-family: 'Pretendard', sans-serif;
+`;
+
+const CardDescription = styled.p`
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.5;
+  margin: 0;
+  font-family: 'Pretendard', sans-serif;
+  flex: 1;
+`;
+
+const CardBadge = styled.span`
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #835EEB, #6B4BC4);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  align-self: flex-start;
+  font-family: 'Pretendard', sans-serif;
 `;
 
 const updates = [
@@ -455,6 +606,7 @@ const UpdateBar: React.FC = () => {
 const Home = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slideTranslateX, setSlideTranslateX] = useState(0);
   const bodyRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -501,6 +653,87 @@ const Home = () => {
     }
   ];
 
+  // 8장의 이미지 카드 데이터
+  const slideCards = [
+    {
+      id: 1,
+      image: '/Hero-2.png',
+      title: 'AI 수학 학습',
+      description: '인공지능이 개인별 맞춤 학습을 제공하여 수학 실력을 향상시킵니다.',
+      badge: 'AI 기술'
+    },
+    {
+      id: 2,
+      image: '/Hero-3.png',
+      title: '실시간 채점',
+      description: '필기 인식 기술로 즉시 정답을 확인하고 피드백을 받을 수 있습니다.',
+      badge: '실시간'
+    },
+    {
+      id: 3,
+      image: '/Hero-4.png',
+      title: '맞춤형 문제',
+      description: '학생의 실력에 맞는 난이도의 문제를 자동으로 추천합니다.',
+      badge: '맞춤형'
+    },
+    {
+      id: 4,
+      image: '/Hero-5.png',
+      title: '학습 분석',
+      description: '상세한 학습 데이터 분석으로 효율적인 학습 방향을 제시합니다.',
+      badge: '분석'
+    },
+    {
+      id: 5,
+      image: '/Hero-6.png',
+      title: '장학금 시스템',
+      description: '노력에 따른 장학금 지급으로 학습 동기를 높입니다.',
+      badge: '혜택'
+    },
+    {
+      id: 6,
+      image: '/Hero-2.png',
+      title: '교사 관리 도구',
+      description: '교사가 학생들의 학습 현황을 한눈에 파악할 수 있습니다.',
+      badge: '관리'
+    },
+    {
+      id: 7,
+      image: '/Hero-3.png',
+      title: '모바일 학습',
+      description: '언제 어디서나 스마트폰으로 편리하게 학습할 수 있습니다.',
+      badge: '모바일'
+    },
+    {
+      id: 8,
+      image: '/Hero-4.png',
+      title: '웹-앱 연동',
+      description: '웹과 앱이 실시간으로 연동되어 완벽한 학습 환경을 제공합니다.',
+      badge: '연동'
+    }
+  ];
+
+  // 무한 슬라이드 애니메이션
+  useEffect(() => {
+    const slideWidth = 330; // 카드 너비 + 간격
+    
+    const animate = () => {
+      setSlideTranslateX(prev => {
+        const newTranslateX = prev - 1; // 1px씩 이동
+        if (Math.abs(newTranslateX) >= slideWidth) {
+          // 첫 번째 카드가 완전히 사라지면 마지막으로 이동
+          return newTranslateX + slideWidth;
+        }
+        return newTranslateX;
+      });
+    };
+
+    const interval = setInterval(animate, 30); // 30ms마다 1px씩 이동
+
+    return () => clearInterval(interval);
+  }, [slideCards.length]);
+
+  // 히어로 슬라이드 애니메이션
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -625,6 +858,7 @@ const Home = () => {
       <div ref={bodyRef}>
         <Body />
       </div>
+      
       <Dialog 
         isOpen={isDialogOpen} 
         onClose={handleCloseDialog}

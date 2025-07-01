@@ -6,24 +6,47 @@ const bounce = keyframes`
     transform: translateY(0);
   }
   40% {
-    transform: translateY(-20px);
+    transform: translateY(-15px);
   }
   60% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1);
   }
 `;
 
 const Container = styled.div`
   width: 100%;
-  height: 200px;
+  height: 120px;
   background: linear-gradient(to bottom, white, #F8F6FF);
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: linear-gradient(to bottom, #f8f6ff, #f0edff);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 
   &::after {
     content: '';
@@ -37,33 +60,44 @@ const Container = styled.div`
   }
 `;
 
-const ScrollIcon = styled.div`
-  width: 40px;
-  height: 60px;
-  border: 2px solid #835EEB;
-  border-radius: 20px;
-  position: relative;
-  animation: ${bounce} 2s infinite;
+const ArrowContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: ${pulse} 2s ease-in-out infinite;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    background: #835EEB;
-    border-radius: 50%;
-    transform: translateX(-50%);
+  &:hover {
+    animation: ${bounce} 1s ease-in-out infinite;
   }
 `;
 
-const Text = styled.div`
-  margin-top: 16px;
-  color: #835EEB;
-  font-size: 16px;
-  font-family: Pretendard;
-  font-weight: 500;
+const ArrowIcon = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 16px solid #835EEB;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  ${ArrowContainer}:hover & {
+    border-top-color: #6B4BC4;
+    transform: scale(1.2);
+  }
+`;
+
+const ArrowDot = styled.div`
+  width: 4px;
+  height: 4px;
+  background: #835EEB;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  ${ArrowContainer}:hover & {
+    background: #6B4BC4;
+    transform: scale(1.5);
+  }
 `;
 
 interface ScrollGuideProps {
@@ -73,8 +107,10 @@ interface ScrollGuideProps {
 const ScrollGuide: React.FC<ScrollGuideProps> = ({ onClick }) => {
   return (
     <Container onClick={onClick}>
-      <ScrollIcon />
-      <Text>스크롤하여 더 알아보기</Text>
+      <ArrowContainer>
+        <ArrowIcon />
+        <ArrowDot />
+      </ArrowContainer>
     </Container>
   );
 };
