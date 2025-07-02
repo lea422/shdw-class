@@ -1,0 +1,10 @@
+<svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- 첫 번째 부분 (왼쪽 상단) -->
+  <rect x="3.25" y="4.33" width="9.09" height="17.89" fill="#835EEB"/>
+  
+  <!-- 두 번째 부분 (오른쪽 상단) -->
+  <rect x="13.66" y="4.33" width="9.09" height="11.33" fill="#835EEB"/>
+  
+  <!-- 세 번째 부분 (오른쪽 하단) -->
+  <rect x="13.66" y="14.69" width="9.09" height="7.54" fill="#CDBEF7"/>
+</svg> 

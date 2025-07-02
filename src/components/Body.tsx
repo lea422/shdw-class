@@ -1132,7 +1132,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
         
@@ -1174,7 +1202,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
 
@@ -1216,7 +1272,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
         
@@ -1258,7 +1342,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
 
@@ -1300,7 +1412,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
         
@@ -1342,7 +1482,35 @@ const Body = () => {
                 objectFit: 'cover',
                 borderRadius: 0
               }}
+              onError={(e) => {
+                console.error('Video loading error:', e);
+                const target = e.target as HTMLVideoElement;
+                target.style.display = 'none';
+                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
+                if (placeholder) {
+                  placeholder.style.display = 'flex';
+                }
+              }}
             />
+            <div 
+              className="video-placeholder"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'none',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#f0f0f0',
+                color: '#666',
+                fontSize: '18px',
+                fontFamily: 'Pretendard, sans-serif'
+              }}
+            >
+              영상 로딩 중...
+            </div>
           </GifBox>
         </FeatureBox>
       </FeatureSectionWrapper>
