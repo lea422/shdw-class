@@ -1772,7 +1772,7 @@ const FeatureSectionWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 100px;
+  gap: 150px;
   padding: 0;
 `;
 
@@ -1788,7 +1788,7 @@ const FeatureBox = styled.div`
 `;
 
 const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
-  width: 600px;
+  width: 500px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1854,8 +1854,8 @@ const FeatureDesc = styled.div`
 `;
 
 const GifBox = styled.div<{ isZoomed?: boolean }>`
-  width: 600px;
-  height: 400px;
+  width: 730px;
+  height: 487px;
   background: transparent;
   border-radius: 10px;
   overflow: hidden;

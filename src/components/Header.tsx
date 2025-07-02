@@ -87,7 +87,7 @@ const LogoText2 = styled.div`
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 50px;
+  gap: 30px;
 
   @media (max-width: 768px) {
     gap: 20px;
@@ -162,6 +162,38 @@ const LoginButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
+  width: 120px;
+  text-align: center;
+  display: inline-block;
+
+  &:hover {
+    color: #835EEB;
+    background: rgba(131, 94, 235, 0.05);
+    border-color: #835EEB;
+    box-shadow: none;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+`;
+
+const DownloadButton = styled.a`
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background: #835EEB;
+  color: white;
+  border: 1px solid #835EEB;
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
+  width: 120px;
+  text-align: center;
+  display: inline-block;
 
   &:hover {
     color: #835EEB;
@@ -177,6 +209,7 @@ const LoginButton = styled.a`
 
 const Header = () => {
   const LOGIN_URL = "https://class.iammathking.com/login";
+  const DOWNLOAD_URL = "#"; // 추후 앱 다운로드 링크로 변경 예정
 
   return (
     <HeaderContainer>
@@ -191,6 +224,13 @@ const Header = () => {
           <NavItem to="/pricing">요금안내</NavItem>
           <NavItem to="/notice">공지사항</NavItem>
         </NavContainer>
+        <DownloadButton 
+          href={DOWNLOAD_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          앱 다운로드
+        </DownloadButton>
         <LoginButton 
           href={LOGIN_URL}
           target="_blank"
