@@ -59,7 +59,7 @@ const BodyContainer = styled.div`
 const HeaderSection = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 160px 20px 100px;
+  padding: 120px 20px 60px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -145,7 +145,7 @@ const ImagePlaceholder = styled.div`
   border-radius: 20px;
   border: 2px #835EEB solid;
   transition: all 0.3s ease;
-  overflow: hidden;
+
 
   &::before {
     content: '';
@@ -680,7 +680,7 @@ const FeatureImage = styled.div<{ image: string }>`
 
 const StatsSection = styled.div`
   align-self: stretch;
-  padding: 20px 0 60px;
+  padding: 20px 0 40px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -717,7 +717,7 @@ const StatText = styled.div`
 
 const TabContainer = styled.div`
   align-self: stretch;
-  padding: 100px 0;
+  padding: 60px 0;
   background: white;
   display: flex;
   flex-direction: column;
@@ -893,6 +893,10 @@ const Body = () => {
   const [demoCount, setDemoCount] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [textVisible, setTextVisible] = useState(true);
+  const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
+  const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
+  const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
+
 
   // 테스티모니얼 데이터
   const testimonials = [
@@ -995,6 +999,45 @@ const Body = () => {
     };
   }, []);
 
+  // 스크롤 기반 인터랙션
+  useEffect(() => {
+    const handleScroll = () => {
+      const newZoomedBoxes = new Set<number>();
+      const newVisibleTexts = new Set<number>(Array.from(visibleTexts)); // 기존 보인 텍스트 유지
+      
+      featureBoxRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          const windowHeight = window.innerHeight;
+          const elementCenter = rect.top + rect.height / 2;
+          const screenCenter = windowHeight / 2;
+          
+          // 화면 중앙에 가까울수록 줌 효과
+          const distanceFromCenter = Math.abs(elementCenter - screenCenter);
+          const maxDistance = windowHeight / 2;
+          const zoomThreshold = maxDistance * 0.3; // 화면 중앙 30% 영역에서 줌
+          
+          if (distanceFromCenter < zoomThreshold) {
+            newZoomedBoxes.add(index);
+            newVisibleTexts.add(index);
+          }
+        }
+      });
+      
+      setZoomedBoxes(newZoomedBoxes);
+      setVisibleTexts(newVisibleTexts);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 초기 상태 설정
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [visibleTexts]);
+
+
+
   const features = [
     {
       title: '맞춤형 학습지 제작',
@@ -1051,44 +1094,257 @@ const Body = () => {
       </AnimatedHeaderSection>
 
       <FeatureSectionWrapper>
-        {features.map((feature, i) => (
-          <FeatureBox key={i}>
-            <FeatureTextBlock>
-              <FeatureTitle>{feature.title}</FeatureTitle>
-              <SubButtonRow>
-                {feature.sub.map((btn, j) => (
-                  <SubButton
-                    key={j}
-                    onMouseEnter={() => setHovered({featureIdx: i, subIdx: j})}
-                    onMouseLeave={() => setHovered({featureIdx: i, subIdx: null})}
-                  >
-                    {btn.label}
-                  </SubButton>
-                ))}
-              </SubButtonRow>
-              <FeatureDesc dangerouslySetInnerHTML={{__html: feature.desc}} />
-            </FeatureTextBlock>
-            <GifBox>
-              {(hovered.featureIdx === i && hovered.subIdx !== null && feature.sub[hovered.subIdx].gif) ? (
-                <img
-                  src={feature.sub[hovered.subIdx].gif}
-                  alt="기능 미리보기"
-                  style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: 24, background: '#F3EFFD', transition: 'opacity 0.4s'}}
-                />
-              ) : feature.defaultGif ? (
-                <img
-                  src={feature.defaultGif}
-                  alt="기능 미리보기"
-                  style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: 24, background: '#F3EFFD', transition: 'opacity 0.4s'}}
-                />
-              ) : (
-                <div style={{width: '100%', height: '100%', background: '#F3EFFD', borderRadius: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#835EEB', fontSize: 32, fontWeight: 700}}>
-                  GIF 미리보기 영역
-                </div>
-              )}
-            </GifBox>
-          </FeatureBox>
-        ))}
+        <FeatureBox ref={el => featureBoxRefs.current[0] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(0)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                맞춤형 학습지 제작
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              AI 기반 실시간<br/>맞춤 문제 추천
+            </FeatureMainTitle>
+            <FeatureDesc>
+              학생별 실력과 취약점을 분석하여<br/>최적의 문제를 자동으로 추천합니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(0)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
+        
+        <FeatureBox ref={el => featureBoxRefs.current[1] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(1)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                맞춤형 학습지 제작
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              오답 클리닉<br/>자동 & 무한 배부
+            </FeatureMainTitle>
+            <FeatureDesc>
+              틀린 문제를 자동으로 분석하여<br/>유사 문제를 무제한 제공합니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(1)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
+
+        <FeatureBox ref={el => featureBoxRefs.current[2] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(2)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                AI 채점 시스템
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              서술형<br/>자동 채점
+            </FeatureMainTitle>
+            <FeatureDesc>
+              필기 인식 기술로 서술형 답안을<br/>정확하게 자동 채점합니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(2)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
+        
+        <FeatureBox ref={el => featureBoxRefs.current[3] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(3)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                AI 채점 시스템
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              전국 단위<br/>실력 분석
+            </FeatureMainTitle>
+            <FeatureDesc>
+              전국 학생들과 비교한<br/>객관적인 실력 분석 리포트를 제공합니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(3)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
+
+        <FeatureBox ref={el => featureBoxRefs.current[4] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(4)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                맞춤형 학습지 제작
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              AI 힌트 및<br/>오답 피드백
+            </FeatureMainTitle>
+            <FeatureDesc>
+              풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(4)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
+        
+        <FeatureBox ref={el => featureBoxRefs.current[5] = el}>
+          <FeatureTextBlock isVisible={visibleTexts.has(5)}>
+            <FeatureCategory>
+              <div style={{
+                textAlign: 'center',
+                justifyContent: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                color: 'white',
+                fontSize: 20,
+                fontFamily: 'Pretendard',
+                fontWeight: '700',
+                lineHeight: 26,
+                wordWrap: 'break-word'
+              }}>
+                맞춤형 학습지 제작
+              </div>
+            </FeatureCategory>
+            <FeatureMainTitle>
+              질문 게시판
+            </FeatureMainTitle>
+            <FeatureDesc>
+              모르는 문제를 게시판에 질문하고<br/>빠르게 답변을 받아 볼 수 있습니다.
+            </FeatureDesc>
+          </FeatureTextBlock>
+          <GifBox isZoomed={zoomedBoxes.has(5)}>
+            <video 
+              src="/video/feature-1-ai-recommendation.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              style={{
+                width: '100%', 
+                height: '100%', 
+                objectFit: 'cover',
+                borderRadius: 0
+              }}
+            />
+          </GifBox>
+        </FeatureBox>
       </FeatureSectionWrapper>
 
       <WebAppSectionWrapper>
@@ -1217,27 +1473,35 @@ const Body = () => {
           </ExperienceTextBlock>
           <ExperienceImageBlock>
             <VideoSlider>
-              {testimonials.map((testimonial, index) => (
-                <VideoSlide
-                  key={index}
-                  className={index === currentTestimonial ? 'active' : ''}
-                  style={{ transform: `translateX(${(index - currentTestimonial) * 100}%)` }}
-                >
-                  <YouTubeThumbnail
-                    href={testimonial.videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+              {testimonials.map((testimonial, index) => {
+                // 좌측으로만 흐르도록 계산
+                let slideIndex = index;
+                if (index < currentTestimonial) {
+                  slideIndex = index + testimonials.length;
+                }
+                
+                return (
+                  <VideoSlide
+                    key={index}
+                    className={index === currentTestimonial ? 'active' : ''}
+                    style={{ transform: `translateX(${(slideIndex - currentTestimonial) * 100}%)` }}
                   >
-                    <ThumbnailImage
-                      src={testimonial.thumbnailUrl}
-                      alt={testimonial.name}
-                    />
-                    <PlayButton>
-                      <PlayIcon>▶</PlayIcon>
-                    </PlayButton>
-                  </YouTubeThumbnail>
-                </VideoSlide>
-              ))}
+                    <YouTubeThumbnail
+                      href={testimonial.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ThumbnailImage
+                        src={testimonial.thumbnailUrl}
+                        alt={testimonial.name}
+                      />
+                      <PlayButton>
+                        <PlayIcon>▶</PlayIcon>
+                      </PlayButton>
+                    </YouTubeThumbnail>
+                  </VideoSlide>
+                );
+              })}
             </VideoSlider>
 
           </ExperienceImageBlock>
@@ -1254,19 +1518,19 @@ const ExperienceSection = styled.section`
   justify-content: center;
   align-items: center;
   background: #fff;
-  min-height: 720px;
-  padding: 60px 0;
+  min-height: 600px;
+  padding: 40px 0;
 `;
 
 const ExperienceInner = styled.div`
-  width: 1280px;
-  height: 720px;
+  width: 1440px;
+  height: 600px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-end;
+  justify-content: center;
+  align-items: center;
   gap: 64px;
-  @media (max-width: 1300px) {
+  @media (max-width: 1500px) {
     width: 100vw;
     min-width: 0;
     padding: 0 16px;
@@ -1281,13 +1545,12 @@ const ExperienceInner = styled.div`
 
 const ExperienceTextBlock = styled.div`
   width: 488px;
-  height: 400px;
+  height: 486px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-start;
   gap: 0;
-  padding-top: 40px;
   @media (max-width: 900px) {
     width: 100%;
     height: auto;
@@ -1327,16 +1590,16 @@ const ExperienceName = styled.div`
 `;
 
 const ExperienceImageBlock = styled.div`
-  width: 663px;
-  height: 410px;
+  width: 864px;
+  height: 486px;
   position: relative;
   overflow: hidden;
   outline: 6px #835EED solid;
   background: #F8F6FF;
   @media (max-width: 900px) {
     width: 100%;
-    max-width: 663px;
-    height: 300px;
+    max-width: 864px;
+    height: 400px;
   }
 `;
 
@@ -1504,85 +1767,134 @@ const SliderArrow = styled.button`
 
 const FeatureSectionWrapper = styled.div`
   width: 1280px;
-  margin: 0 auto 100px auto;
+  margin: 0 auto 60px auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   gap: 100px;
-  align-items: center;
+  padding: 0;
 `;
 
 const FeatureBox = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 50px;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow: visible;
+  padding-left: 0px;
 `;
 
-const FeatureTextBlock = styled.div`
-  min-width: 400px;
-  max-width: 480px;
+const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
+  width: 600px;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 30px;
+  margin: 0;
+  margin-left: 0px;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateX(${props => props.isVisible ? '0' : '-30px'});
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
 const FeatureTitleNew = styled.div`
   color: #33373B;
-  font-size: 36px;
-  font-family: Pretendard;
+  font-size: 24px;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 700;
-  line-height: 43.2px;
+  line-height: 28.8px;
   text-align: center;
 `;
 
-const SubButtonRow = styled.div`
+const FeatureMainTitle = styled.div`
+  justify-content: center;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  color: #835EEB;
+  font-size: 40px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 52px;
+  word-wrap: break-word;
+  text-align: left;
+  width: 100%;
 `;
 
-const SubButton = styled.button`
-  width: 300px;
-  height: 40px;
-  background: #F3EFFD;
-  border: none;
+const FeatureCategory = styled.div`
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #835EEB;
+  overflow: hidden;
   border-radius: 50px;
-  color: #835EEB;
-  font-size: 20px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 26px;
-  text-align: center;
-  position: relative;
-  transition: box-shadow 0.2s, background 0.2s;
-  cursor: pointer;
-  &:hover {
-    background: #E5D8FB;
-    box-shadow: 0 4px 16px rgba(131,94,235,0.08);
-  }
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  display: inline-flex;
+  width: fit-content;
+  height: 26px;
 `;
 
 const FeatureDesc = styled.div`
   opacity: 0.6;
   color: #4B4B4B;
   font-size: 24px;
-  font-family: Pretendard;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 500;
   line-height: 34.8px;
-  text-align: center;
+  text-align: left;
+  width: 100%;
+  max-width: 450px;
 `;
 
-const GifBox = styled.div`
-  width: 900px;
-  height: 500px;
-  background: #835EEB;
-  border-radius: 24px;
+const GifBox = styled.div<{ isZoomed?: boolean }>`
+  width: 600px;
+  height: 400px;
+  background: transparent;
+  border-radius: 10px;
   overflow: hidden;
-  outline: 1px #835EEB solid;
-  outline-offset: -1px;
+  outline: none;
+  border: 2px solid #835EEB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform: scale(${props => props.isZoomed ? '1.1' : '1'});
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  margin: 0;
+`;
+
+const VideoPlaceholder = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.34;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: black;
+  font-size: 96px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 124.8px;
+  word-wrap: break-word;
+`;
+
+const FeatureTitleSection = styled.div`
+  align-self: stretch;
+  height: 50px;
+  position: relative;
+  background: #F3EFFD;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1594,7 +1906,7 @@ const WebAppSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
 `;
 
 export default Body; 
