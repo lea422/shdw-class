@@ -4,12 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import Dialog from '../components/Dialog';
 import ConsultationForm from '../components/ConsultationForm';
 import Body from '../components/Body';
-import ScrollGuide from '../components/ScrollGuide';
 
 // Styled Components
 const HomeContainer = styled.div`
   min-height: 100vh;
-  padding-top: 60px;
   display: flex;
   flex-direction: column;
 `;
@@ -19,6 +17,7 @@ const HeroSection = styled.div`
   height: 100vh;
   position: relative;
   overflow: hidden;
+  /* margin-top: 60px; */
 `;
 
 const ImageSlider = styled.div`
@@ -52,15 +51,26 @@ const SlideOverlay = styled.div`
 
 const ContentContainer = styled.div`
   position: absolute;
-  top: 55%;
-  left: 64px;
+  top: 60%;
+  left: calc((100vw - 1280px)/2 + 24px);
   transform: translateY(-50%);
   z-index: 2;
   max-width: 600px;
   color: white;
   width: 100%;
-  padding: 0 24px;
+  padding: 0;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: 1280px) {
+    left: 24px;
+  }
+  @media (max-width: 600px) {
+    left: 8px;
+    max-width: 98vw;
+  }
 `;
 
 const TitleSection = styled.div`
@@ -170,37 +180,60 @@ const PrimaryButton = styled.button`
   }
 `;
 
-const SlideIndicators = styled.div`
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
+const IndicatorBarContainer = styled.div`
+  width: 250px;
+  margin: 50px 0 0 0;
   display: flex;
-  gap: 8px;
-  z-index: 3;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
 `;
-
-const Indicator = styled.button<{ isActive: boolean }>`
-  width: 8px;
+const IndicatorDots = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  margin-left: 10px;
+`;
+const IndicatorDot = styled.button<{ active: boolean }>`
+  width: ${props => (props.active ? '24px' : '8px')};
   height: 8px;
-  border-radius: 50%;
+  border-radius: 6px;
+  background: ${props => (props.active ? '#fff' : 'rgba(255,255,255,0.4)')};
   border: none;
-  background: ${props => props.isActive ? 'white' : 'rgba(255, 255, 255, 0.3)'};
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
   cursor: pointer;
-  transition: all 0.3s ease;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+`;
+const IndicatorPause = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
-    background: ${props => props.isActive ? 'white' : 'rgba(255, 255, 255, 0.6)'};
-    transform: scale(1.2);
+    opacity: 0.7;
   }
-
-  &:active {
-    transform: scale(0.9);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+`;
+const IndicatorNext = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    opacity: 0.7;
   }
 `;
 
@@ -294,11 +327,12 @@ const UpdateItem = styled.li`
 
 const FaqSection = styled.section`
   width: 100%;
-  background: #F3EFFD;
-  padding: 80px 0 80px 0;
+  background: transparent;
+  padding: 60px 0 60px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 `;
 
 const FaqTitle = styled.h2`
@@ -311,15 +345,31 @@ const FaqTitle = styled.h2`
 
 const FaqList = styled.ul`
   width: 100%;
-  max-width: 800px;
-  background: #F3EFFD;
+  max-width: 700px;
   padding: 0;
   margin: 0;
   list-style: none;
+  background: transparent;
 `;
 
 const FaqItem = styled.li`
-  border-bottom: 1px solid #E5E7EB;
+  border: none;
+  background: transparent;
+  margin-bottom: 0;
+`;
+
+const FaqAnswer = styled.div<{ open: boolean }>`
+  font-size: 16px;
+  color: #555;
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+  padding: 0;
+  background: none;
+  border: none;
+  max-height: ${({ open }) => (open ? '500px' : '0')};
+  opacity: ${({ open }) => (open ? 1 : 0)};
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
 `;
 
 const FaqQuestion = styled.button<{ open: boolean }>`
@@ -327,54 +377,38 @@ const FaqQuestion = styled.button<{ open: boolean }>`
   background: none;
   border: none;
   outline: none;
-  padding: 32px 0 32px 0;
-  font-size: 22px;
-  font-weight: 600;
-  color: #222;
+  padding: 24px 0 16px 0;
+  font-size: 20px;
+  font-weight: ${({ open }) => (open ? 700 : 600)};
+  color: ${({ open }) => (open ? '#835EEB' : '#222')};
   text-align: left;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  transition: color 0.2s, font-weight 0.2s;
+  border-radius: 0;
+  box-shadow: none;
 
   &:hover {
     color: #835EEB;
-    background: rgba(131, 94, 235, 0.02);
-  }
-
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(131, 94, 235, 0.1);
+    background: none;
   }
 `;
 
-const FaqAnswer = styled.div`
-  font-size: 18px;
-  color: #555;
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-  padding-right: 32px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-`;
-
-const FaqIcon = styled.span`
-  font-size: 32px;
+const FaqIcon = styled.span<{ open: boolean }>`
+  font-size: 24px;
   color: #835EEB;
-  margin-left: 16px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 12px;
+  transition: transform 0.3s;
+  width: 24px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-
-  &:hover {
-    background: rgba(131, 94, 235, 0.1);
-    transform: scale(1.1);
-  }
+  border-radius: 0;
+  background: none;
+  transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0deg)')};
 `;
 
 const MoreButton = styled.button`
@@ -571,6 +605,24 @@ const CardBadge = styled.span`
   font-family: 'Pretendard', sans-serif;
 `;
 
+const BarNextButton = styled.button`
+  margin-left: 16px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 12px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background: rgba(255,255,255,0.12);
+  }
+`;
+
 const updates = [
   { id: 1, text: '수학대왕 클래스 신규 기능 출시!', date: '2024-06-01' },
   { id: 2, text: '장학금 시스템 업그레이드 안내', date: '2024-05-20' },
@@ -603,6 +655,36 @@ const UpdateBar: React.FC = () => {
   );
 };
 
+// FAQ 아코디언 컴포넌트 분리
+const FaqAccordion: React.FC<{ faqs: { question: string; answer: string }[] }> = ({ faqs }) => {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const navigate = useNavigate();
+  const previewFaqs = faqs.slice(0, 3);
+  return (
+    <FaqSection>
+      <FaqTitle>자주 묻는 질문</FaqTitle>
+      <FaqList>
+        {previewFaqs.map((faq, idx) => (
+          <FaqItem key={faq.question}>
+            <FaqQuestion
+              type="button"
+              open={openIdx === idx}
+              onClick={() => setOpenIdx(openIdx === idx ? null : idx)}
+            >
+              {faq.question}
+              <FaqIcon open={openIdx === idx}>{'+'}</FaqIcon>
+            </FaqQuestion>
+            <FaqAnswer open={openIdx === idx}>{faq.answer}</FaqAnswer>
+          </FaqItem>
+        ))}
+      </FaqList>
+      <MoreButton onClick={() => navigate('/notice/faq')}>
+        더 자세한 내용 보기
+      </MoreButton>
+    </FaqSection>
+  );
+};
+
 const Home = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -613,7 +695,7 @@ const Home = () => {
   const slides = [
     {
       id: 1,
-      image: '/Hero-2.png',
+      image: '/Hero-1.png',
       title: 'AI가 바꾸는',
       subtitle: '수학 교육의 미래',
       brand: '수학대왕 CLASS',
@@ -621,7 +703,7 @@ const Home = () => {
     },
     {
       id: 2,
-      image: '/Hero-3.png',
+      image: '/Hero-2.png',
       title: '혁신적인',
       subtitle: '학습 관리 시스템',
       brand: '수학대왕 CLASS',
@@ -629,7 +711,7 @@ const Home = () => {
     },
     {
       id: 3,
-      image: '/Hero-4.png',
+      image: '/Hero-3.png',
       title: '스마트한',
       subtitle: 'AI 채점 시스템',
       brand: '수학대왕 CLASS',
@@ -637,7 +719,7 @@ const Home = () => {
     },
     {
       id: 4,
-      image: '/Hero-5.png',
+      image: '/Hero-4.png',
       title: '맞춤형',
       subtitle: '학습 솔루션',
       brand: '수학대왕 CLASS',
@@ -645,7 +727,7 @@ const Home = () => {
     },
     {
       id: 5,
-      image: '/Hero-6.png',
+      image: '/Hero-5.png',
       title: '미래를 여는',
       subtitle: '교육 혁신',
       brand: '수학대왕 CLASS',
@@ -789,32 +871,6 @@ const Home = () => {
     }
   ];
 
-  const FaqAccordion: React.FC = () => {
-    const [openIdx, setOpenIdx] = useState<number | null>(null);
-    const navigate = useNavigate();
-    // 미리보기로 3개만 보여줌
-    const previewFaqs = faqs.slice(0, 3);
-    return (
-      <FaqSection>
-        <FaqTitle>자주 묻는 질문</FaqTitle>
-        <FaqList>
-          {previewFaqs.map((faq, idx) => (
-            <FaqItem key={faq.question}>
-              <FaqQuestion open={openIdx === idx} onClick={() => setOpenIdx(openIdx === idx ? null : idx)}>
-                {faq.question}
-                <FaqIcon>{openIdx === idx ? '×' : '+'}</FaqIcon>
-              </FaqQuestion>
-              {openIdx === idx && <FaqAnswer>{faq.answer}</FaqAnswer>}
-            </FaqItem>
-          ))}
-        </FaqList>
-        <MoreButton onClick={() => navigate('/notice/faq')}>
-          더 자세한 내용 보기
-        </MoreButton>
-      </FaqSection>
-    );
-  };
-
   return (
     <HomeContainer>
       <HeroSection>
@@ -842,19 +898,30 @@ const Home = () => {
             <PrimaryButton onClick={handleOpenDialog}>
               무료 체험 신청하기
             </PrimaryButton>
+            <IndicatorBarContainer>
+              <IndicatorDots>
+                {slides.map((_, idx) => (
+                  <IndicatorDot
+                    key={idx}
+                    active={currentSlide === idx}
+                    aria-label={`슬라이드 ${idx + 1}`}
+                    onClick={() => setCurrentSlide(idx)}
+                  />
+                ))}
+              </IndicatorDots>
+              <IndicatorPause aria-label="일시정지">
+                &#10073;&#10073;
+              </IndicatorPause>
+              <IndicatorNext
+                aria-label="다음 슬라이드"
+                onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+              >
+                &gt;
+              </IndicatorNext>
+            </IndicatorBarContainer>
           </ContentContainer>
-          <SlideIndicators>
-            {slides.map((_, index) => (
-              <Indicator
-                key={index}
-                isActive={index === currentSlide}
-                onClick={() => handleIndicatorClick(index)}
-              />
-            ))}
-          </SlideIndicators>
         </ImageSlider>
       </HeroSection>
-      <ScrollGuide onClick={scrollToBody} />
       <div ref={bodyRef}>
         <Body />
       </div>
@@ -867,7 +934,7 @@ const Home = () => {
       >
         <ConsultationForm onClose={handleCloseDialog} />
       </Dialog>
-      <FaqAccordion />
+      <FaqAccordion faqs={faqs} />
     </HomeContainer>
   );
 };

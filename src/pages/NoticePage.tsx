@@ -512,7 +512,7 @@ export default function NoticePage() {
           {/* ToggleSlider: 토글 슬라이드 배경 */}
           <ToggleSlider index={tabIndex} />
           <TabButton
-            to="/notice/announcements"
+            to="/notice"
             className={({ isActive }) => isActive ? 'active' : ''}
           >
             공지사항
@@ -527,8 +527,7 @@ export default function NoticePage() {
 
       <Routes>
         <Route path="faq" element={<FaqPage />} />
-          <Route path="announcements" element={<UpdateSlide />} />
-          <Route path="" element={<FaqPage />} />
+        <Route path="" element={<UpdateSlide />} />
       </Routes>
       </ContentWrapper>
     </PageContainer>

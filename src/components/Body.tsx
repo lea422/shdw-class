@@ -59,7 +59,7 @@ const BodyContainer = styled.div`
 const HeaderSection = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 120px 20px 60px;
+  padding: 120px 0 60px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -109,7 +109,7 @@ const Subtitle = styled.div`
 
 const SectionTitle = styled.div`
   width: 100%;
-  padding: 30px 20px;
+  padding: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -130,7 +130,7 @@ const SectionTitleText = styled.div`
 const FeatureGrid = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 30px 20px;
+  padding: 30px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -901,34 +901,25 @@ const Body = () => {
   // 테스티모니얼 데이터
   const testimonials = [
     {
-      title: {
-        highlight: "현장의 목소리로",
-        normal: "증명된 효과"
-      },
-      quote: "교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요",
+      title: { highlight: "체계적인 관리로", normal: "성과 극대화" },
+      quote: "학생들의 학습 현황을 한눈에 파악하고<br/>효과적으로 지도할 수 있어요",
+      name: "중계동 초중고 수학학원<br/>최수연 원장 선생님",
+      videoUrl: "https://www.youtube.com/watch?v=_g9OwAA8V5g",
+      thumbnailUrl: "https://img.youtube.com/vi/_g9OwAA8V5g/maxresdefault.jpg"
+    },
+    {
+      title: { highlight: "현장의 목소리로", normal: "증명된 효과" },
+      quote: "AI 추천 문제를 통해<br/>취약한 단원을 완벽 보완할 수 있어요.",
       name: "을지대 의예과<br/>24학번 김영우 학생",
-      videoUrl: "https://youtu.be/MBQZ4PCuNEQ?si=NX8FTvhS880GB9s3",
+      videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQM",
       thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
     },
     {
-      title: {
-        highlight: "AI 기술로",
-        normal: "완성된 학습"
-      },
+      title: { highlight: "AI 기술로", normal: "완성된 학습" },
       quote: "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
-      name: "서울대 의예과<br/>23학번 박민수 학생",
-      videoUrl: "https://youtu.be/example2",
-      thumbnailUrl: "https://img.youtube.com/vi/example2/maxresdefault.jpg"
-    },
-    {
-      title: {
-        highlight: "체계적인 관리로",
-        normal: "성과 극대화"
-      },
-      quote: "학생들의 학습 현황을 한눈에 파악하고<br/>효과적으로 지도할 수 있어요",
-      name: "강남 수학학원<br/>김선생님",
-      videoUrl: "https://youtu.be/example3",
-      thumbnailUrl: "https://img.youtube.com/vi/example3/maxresdefault.jpg"
+      name: "학부모 후기<br/>초등 5학년 학부모",
+      videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQ",
+      thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
     }
   ];
 
@@ -1012,10 +1003,10 @@ const Body = () => {
           const elementCenter = rect.top + rect.height / 2;
           const screenCenter = windowHeight / 2;
           
-          // 화면 중앙에 가까울수록 줌 효과
+          // 화면 중앙에 가까울수록 줌 효과 (부드러운 전환)
           const distanceFromCenter = Math.abs(elementCenter - screenCenter);
           const maxDistance = windowHeight / 2;
-          const zoomThreshold = maxDistance * 0.3; // 화면 중앙 30% 영역에서 줌
+          const zoomThreshold = maxDistance * 0.4; // 화면 중앙 40% 영역에서 줌 (더 넓은 영역)
           
           if (distanceFromCenter < zoomThreshold) {
             newZoomedBoxes.add(index);
@@ -1034,7 +1025,7 @@ const Body = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [visibleTexts]);
+  }, []);
 
 
 
@@ -1058,12 +1049,12 @@ const Body = () => {
       defaultGif: ''
     },
     {
-      title: 'AI 힌트 및 오답 피드백',
+      title: '실시간 피드백',
       sub: [
         { label: 'AI 힌트 및 오답 피드백', gif: '' },
-        { label: '질문 게시판', gif: '' }
+        { label: '실시간<br/>질문 게시판', gif: '' }
       ],
-      desc: '학생이 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
+      desc: '풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
       defaultGif: ''
     }
   ];
@@ -1094,6 +1085,7 @@ const Body = () => {
       </AnimatedHeaderSection>
 
       <FeatureSectionWrapper>
+        {/* 1번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[0] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
             <FeatureCategory>
@@ -1120,50 +1112,14 @@ const Body = () => {
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(0)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-1.png"
+              alt="핵심기능1"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
-        
+        {/* 2번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[1] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
             <FeatureCategory>
@@ -1188,52 +1144,16 @@ const Body = () => {
             <FeatureDesc>
               틀린 문제를 자동으로 분석하여<br/>유사 문제를 무제한 제공합니다.
             </FeatureDesc>
-          </FeatureTextBlock>
+            </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(1)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-2.png"
+              alt="핵심기능2"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
-
+        {/* 3번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[2] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(2)}>
             <FeatureCategory>
@@ -1260,50 +1180,14 @@ const Body = () => {
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(2)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-3.png"
+              alt="핵심기능3"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
-        
+        {/* 4번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[3] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(3)}>
             <FeatureCategory>
@@ -1330,50 +1214,14 @@ const Body = () => {
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(3)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-4.png"
+              alt="핵심기능4"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
-
+        {/* 5번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[4] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(4)}>
             <FeatureCategory>
@@ -1389,7 +1237,7 @@ const Body = () => {
                 lineHeight: 26,
                 wordWrap: 'break-word'
               }}>
-                맞춤형 학습지 제작
+                실시간 피드백
               </div>
             </FeatureCategory>
             <FeatureMainTitle>
@@ -1400,50 +1248,14 @@ const Body = () => {
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(4)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-5.png"
+              alt="핵심기능5"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
-        
+        {/* 6번 FeatureBox */}
         <FeatureBox ref={el => featureBoxRefs.current[5] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(5)}>
             <FeatureCategory>
@@ -1459,63 +1271,27 @@ const Body = () => {
                 lineHeight: 26,
                 wordWrap: 'break-word'
               }}>
-                맞춤형 학습지 제작
+                실시간 피드백
               </div>
             </FeatureCategory>
             <FeatureMainTitle>
-              질문 게시판
+              실시간<br/>질문 게시판
             </FeatureMainTitle>
             <FeatureDesc>
               모르는 문제를 게시판에 질문하고<br/>빠르게 답변을 받아 볼 수 있습니다.
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(5)}>
-            <video 
-              src="/video/feature-1-ai-recommendation.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              style={{
-                width: '100%', 
-                height: '100%', 
-                objectFit: 'cover',
-                borderRadius: 0
-              }}
-              onError={(e) => {
-                console.error('Video loading error:', e);
-                const target = e.target as HTMLVideoElement;
-                target.style.display = 'none';
-                const placeholder = target.parentElement?.querySelector('.video-placeholder') as HTMLElement;
-                if (placeholder) {
-                  placeholder.style.display = 'flex';
-                }
-              }}
+            <img 
+              src="/video/Body-image-6.png"
+              alt="핵심기능6"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
-            <div 
-              className="video-placeholder"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                display: 'none',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: '#f0f0f0',
-                color: '#666',
-                fontSize: '18px',
-                fontFamily: 'Pretendard, sans-serif'
-              }}
-            >
-              영상 로딩 중...
-            </div>
           </GifBox>
         </FeatureBox>
       </FeatureSectionWrapper>
 
-      <WebAppSectionWrapper>
+      {/* <WebAppSectionWrapper>
         <WebAppHeader>
           <WebAppTitle>
             <WebAppTitleHighlight>웹-앱 연동으로</WebAppTitleHighlight>
@@ -1544,7 +1320,6 @@ const Body = () => {
           <SyncSection>
             <SyncIcon>
               <ArrowIcon className="left" />
-              <ArrowIcon className="right" />
             </SyncIcon>
             <SyncTitle>실시간 연동</SyncTitle>
             <SyncSubtitle>데이터 동기화</SyncSubtitle>
@@ -1563,7 +1338,7 @@ const Body = () => {
             </PlatformFeatures>
           </PlatformCard>
         </WebAppContent>
-      </WebAppSectionWrapper>
+      </WebAppSectionWrapper> */}
 
       <DemoSection>
         <DemoHeader>
@@ -1581,7 +1356,7 @@ const Body = () => {
               onClick={handleDemoClick}
             >
               <span>데모 체험하기</span>
-              <ArrowIcon className="right" />
+              
             </DemoButton>
           </DemoButtonContainer>
         </DemoHeader>
@@ -1633,8 +1408,9 @@ const Body = () => {
                 <VerticalLine />
                 <NameSpacer />
                 <ExperienceName>
-                  <span>을지대 의예과</span>
-                  <span>24학번 김영우 학생</span>
+                  {testimonials[currentTestimonial].name.split('<br/>').map((line, idx) => (
+                    <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
+                  ))}
                 </ExperienceName>
               </NameSection>
             </AnimatedTextContent>
@@ -1649,25 +1425,25 @@ const Body = () => {
                 }
                 
                 return (
-                  <VideoSlide
-                    key={index}
-                    className={index === currentTestimonial ? 'active' : ''}
+                <VideoSlide
+                  key={index}
+                  className={index === currentTestimonial ? 'active' : ''}
                     style={{ transform: `translateX(${(slideIndex - currentTestimonial) * 100}%)` }}
+                >
+                  <YouTubeThumbnail
+                    href={testimonial.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <YouTubeThumbnail
-                      href={testimonial.videoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <ThumbnailImage
-                        src={testimonial.thumbnailUrl}
-                        alt={testimonial.name}
-                      />
-                      <PlayButton>
-                        <PlayIcon>▶</PlayIcon>
-                      </PlayButton>
-                    </YouTubeThumbnail>
-                  </VideoSlide>
+                    <ThumbnailImage
+                      src={testimonial.thumbnailUrl}
+                      alt={testimonial.name}
+                    />
+                    <PlayButton>
+                      <PlayIcon>▶</PlayIcon>
+                    </PlayButton>
+                  </YouTubeThumbnail>
+                </VideoSlide>
                 );
               })}
             </VideoSlider>
@@ -1687,7 +1463,7 @@ const ExperienceSection = styled.section`
   align-items: center;
   background: #fff;
   min-height: 600px;
-  padding: 40px 0;
+  padding: 10px 0;
 `;
 
 const ExperienceInner = styled.div`
@@ -1965,9 +1741,10 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
   gap: 30px;
   margin: 0;
   margin-left: 0px;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateX(${props => props.isVisible ? '0' : '-30px'});
+  opacity: ${props => props.isVisible ? 1 : 0.3};
+  transform: translateX(${props => props.isVisible ? '0' : '-30px'}) scale(${props => props.isVisible ? '1.05' : '1'});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: none;
 `;
 
 const FeatureTitleNew = styled.div`
@@ -2024,7 +1801,7 @@ const FeatureDesc = styled.div`
 const GifBox = styled.div<{ isZoomed?: boolean }>`
   width: 730px;
   height: 487px;
-  background: transparent;
+  background: #F8F6FF !important;
   border-radius: 10px;
   overflow: hidden;
   outline: none;
@@ -2033,10 +1810,15 @@ const GifBox = styled.div<{ isZoomed?: boolean }>`
   align-items: center;
   justify-content: center;
   position: relative;
-  transform: scale(${props => props.isZoomed ? '1.1' : '1'});
-  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(${props => props.isZoomed ? '1.15' : '1'});
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
   margin: 0;
+  filter: none;
+  /* 배경색이 어떤 경우에도 변하지 않도록 강제 */
+  &::before, &::after {
+    background: transparent !important;
+  }
 `;
 
 const VideoPlaceholder = styled.div`

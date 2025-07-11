@@ -1,31 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 
 const HeaderContainer = styled.header`
-  width: 100%;
+  width: 100vw;
+  min-width: 100vw;
   height: 60px;
-  padding: 20px 50px;
-  border-bottom: 0.50px solid #CDBEF7;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: transparent;
+  border-bottom: 0.5px solid #CDBEF7;
+  box-sizing: border-box;
+  backdrop-filter: blur(8px);
+`;
+
+const HeaderInner = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 60px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 50px;
+  padding: 0 24px;
   box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(8px);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
 
+  @media (max-width: 1280px) {
+    max-width: 100vw;
+    padding: 0 16px;
+  }
   @media (max-width: 1024px) {
-    padding: 16px 24px;
+    padding: 0 8px;
     gap: 24px;
   }
   @media (max-width: 600px) {
-    padding: 4px 8px;
+    padding: 0 4px;
     gap: 4px;
     height: 36px;
   }
@@ -87,10 +101,10 @@ const LogoText2 = styled.div`
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 20px;
 
   @media (max-width: 768px) {
-    gap: 20px;
+    gap: 15px;
   }
 `;
 
@@ -99,6 +113,8 @@ const NavContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   gap: 50px;
+  pointer-events: auto;
+  z-index: 1001;
 
   @media (max-width: 768px) {
     gap: 20px;
@@ -109,13 +125,13 @@ const NavContainer = styled.div`
   }
 `;
 
-const NavItem = styled(Link)`
+const NavItem = styled(Link)<{ $color: string }>`
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  color: #33373B;
-  font-size: 16px;
+  color: ${props => props.$color};
+  font-size: 13px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 500;
   text-transform: capitalize;
@@ -124,6 +140,9 @@ const NavItem = styled(Link)`
   text-decoration: none;
   transition: color 0.2s;
   position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1001;
 
   &:after {
     content: '';
@@ -138,19 +157,18 @@ const NavItem = styled(Link)`
 
   &:hover {
     color: #835EEB;
-    
     &:after {
       width: 100%;
     }
   }
 
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `;
 
 const LoginButton = styled.a`
-  padding: 8px 20px;
+  padding: 8px 16px;
   border-radius: 30px;
   font-size: 15px;
   font-family: 'Pretendard', sans-serif;
@@ -162,7 +180,7 @@ const LoginButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 120px;
+  width: 100px;
   text-align: center;
   display: inline-block;
 
@@ -179,7 +197,7 @@ const LoginButton = styled.a`
 `;
 
 const DownloadButton = styled.a`
-  padding: 8px 20px;
+  padding: 8px 16px;
   border-radius: 30px;
   font-size: 15px;
   font-family: 'Pretendard', sans-serif;
@@ -191,7 +209,7 @@ const DownloadButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 120px;
+  width: 100px;
   text-align: center;
   display: inline-block;
 
@@ -208,37 +226,60 @@ const DownloadButton = styled.a`
 `;
 
 const Header = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   const LOGIN_URL = "https://class.iammathking.com/login";
-  const DOWNLOAD_URL = "#"; // 추후 앱 다운로드 링크로 변경 예정
+  const DOWNLOAD_URL = "https://hi.iammathking.com/v4zqjr";
+
+  // 스크롤 위치에 따라 메뉴 색상 변경
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 80);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 배경이 #fff(스크롤 80px 이상)이면 #222, 그 외에는 #fff
+  const navColor = isScrolled ? '#222222' : '#ffffff';
+
+  const handleNavClick = (path: string) => {
+    console.log('Navigation clicked:', path);
+    navigate(path);
+  };
 
   return (
     <HeaderContainer>
-      <LogoContainer to="/">
-        <StyledLogoIcon />
-        <LogoText1>수학대왕</LogoText1>
-        <LogoText2>CLASS</LogoText2>
-      </LogoContainer>
-      <RightSection>
-        <NavContainer>
-          <NavItem to="/">홈</NavItem>
-          <NavItem to="/pricing">요금안내</NavItem>
-          <NavItem to="/notice">공지사항</NavItem>
-        </NavContainer>
-        <DownloadButton 
-          href={DOWNLOAD_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          앱 다운로드
-        </DownloadButton>
-        <LoginButton 
-          href={LOGIN_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          로그인
-        </LoginButton>
-      </RightSection>
+      <HeaderInner>
+        <LogoContainer to="/">
+          <StyledLogoIcon />
+          <LogoText1>수학대왕</LogoText1>
+          <LogoText2>CLASS</LogoText2>
+        </LogoContainer>
+        <RightSection>
+          <NavContainer>
+            <NavItem to="/" $color={navColor} onClick={() => handleNavClick('/')}>홈</NavItem>
+            <NavItem to="/pricing" $color={navColor} onClick={() => handleNavClick('/pricing')}>요금안내</NavItem>
+            <NavItem to="/notice" $color={navColor} onClick={() => handleNavClick('/notice')}>공지사항</NavItem>
+          </NavContainer>
+          <DownloadButton 
+            href={DOWNLOAD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            앱 다운로드
+          </DownloadButton>
+          <LoginButton 
+            href={LOGIN_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            로그인
+          </LoginButton>
+        </RightSection>
+      </HeaderInner>
     </HeaderContainer>
   );
 };
