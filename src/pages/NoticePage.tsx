@@ -3,32 +3,6 @@ import { useNavigate, useLocation, Routes, Route, NavLink } from "react-router-d
 import { ReactComponent as ArrowIcon } from "../assets/arrow-icon.svg";
 import styled from 'styled-components';
 
-// 업데이트 카테고리 버튼 스타일
-const UpdateCategoryContainer = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 40px auto;
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-`;
-
-const CategoryButton = styled.button<{ active: boolean }>`
-  padding: 12px 24px;
-  border-radius: 24px;
-  border: none;
-  background: ${({ active }) => (active ? '#835EEB' : '#E5D8FB')};
-  color: ${({ active }) => (active ? 'white' : '#835EEB')};
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: ${({ active }) => (active ? '#6B4BC4' : '#D1B8F7')};
-  }
-`;
-
 // 업데이트 슬라이드 컨테이너
 const UpdateSlideContainer = styled.div`
   width: 100%;
@@ -228,24 +202,18 @@ const allFaqs = [
   }
 ];
 
-// 업데이트 카테고리별 데이터
-const updateCategories = {
-  '신규 기능': [
-    { id: 1, title: '수학대왕 클래스 신규 기능 출시!', text: 'AI 기반 맞춤형 학습지 제작 기능이 새롭게 추가되었습니다.', date: '2024-06-01' },
-    { id: 2, title: '실시간 채점 시스템 업그레이드', text: '필기 인식 정확도가 99% 이상으로 향상되었습니다.', date: '2024-05-25' },
-    { id: 3, title: '학생 대시보드 UI 개선', text: '더 직관적이고 사용하기 쉬운 학생용 인터페이스로 개선되었습니다.', date: '2024-05-20' }
-  ],
-  '시스템 업데이트': [
-    { id: 4, title: '장학금 시스템 업그레이드 안내', text: '장학금 지급 시스템이 더욱 공정하고 투명하게 개선되었습니다.', date: '2024-05-20' },
-    { id: 5, title: '서버 성능 최적화', text: '전체적인 시스템 성능이 향상되어 더 빠른 응답 속도를 제공합니다.', date: '2024-05-15' },
-    { id: 6, title: '보안 시스템 강화', text: '학생 개인정보 보호를 위한 보안 시스템이 강화되었습니다.', date: '2024-05-10' }
-  ],
-  'UI/UX 개선': [
-    { id: 7, title: '선생님 대시보드 UI 개선', text: '선생님용 대시보드가 더욱 직관적이고 효율적으로 개선되었습니다.', date: '2024-05-10' },
-    { id: 8, title: '모바일 앱 반응형 개선', text: '모바일 환경에서의 사용성이 크게 향상되었습니다.', date: '2024-05-05' },
-    { id: 9, title: '알림 시스템 개선', text: '실시간 알림 기능이 더욱 정확하고 빠르게 작동합니다.', date: '2024-05-01' }
-  ]
-};
+// 모든 업데이트를 하나의 배열로 합치기
+const allUpdates = [
+  { id: 1, title: '수학대왕 클래스 신규 기능 출시!', text: 'AI 기반 맞춤형 학습지 제작 기능이 새롭게 추가되었습니다.', date: '2024-06-01' },
+  { id: 2, title: '실시간 채점 시스템 업그레이드', text: '필기 인식 정확도가 99% 이상으로 향상되었습니다.', date: '2024-05-25' },
+  { id: 3, title: '학생 대시보드 UI 개선', text: '더 직관적이고 사용하기 쉬운 학생용 인터페이스로 개선되었습니다.', date: '2024-05-20' },
+  { id: 4, title: '장학금 시스템 업그레이드 안내', text: '장학금 지급 시스템이 더욱 공정하고 투명하게 개선되었습니다.', date: '2024-05-20' },
+  { id: 5, title: '서버 성능 최적화', text: '전체적인 시스템 성능이 향상되어 더 빠른 응답 속도를 제공합니다.', date: '2024-05-15' },
+  { id: 6, title: '보안 시스템 강화', text: '학생 개인정보 보호를 위한 보안 시스템이 강화되었습니다.', date: '2024-05-10' },
+  { id: 7, title: '선생님 대시보드 UI 개선', text: '선생님용 대시보드가 더욱 직관적이고 효율적으로 개선되었습니다.', date: '2024-05-10' },
+  { id: 8, title: '모바일 앱 반응형 개선', text: '모바일 환경에서의 사용성이 크게 향상되었습니다.', date: '2024-05-05' },
+  { id: 9, title: '알림 시스템 개선', text: '실시간 알림 기능이 더욱 정확하고 빠르게 작동합니다.', date: '2024-05-01' }
+];
 
 function FaqPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
@@ -268,21 +236,26 @@ function FaqPage() {
 
 // 업데이트 슬라이드 컴포넌트
 const UpdateSlide: React.FC = () => {
-  const [currentCategory, setCurrentCategory] = useState('신규 기능');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fade, setFade] = useState(false);
 
-  const currentUpdates = updateCategories[currentCategory as keyof typeof updateCategories];
+  // 자동 슬라이드 기능
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFade(true);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
+        setFade(false);
+      }, 300);
+    }, 4000); // 4초마다 자동 슬라이드
 
-  const handleCategoryChange = (category: string) => {
-    setCurrentCategory(category);
-    setCurrentSlide(0);
-  };
+    return () => clearInterval(interval);
+  }, []);
 
   const handlePrev = () => {
     setFade(true);
     setTimeout(() => {
-      setCurrentSlide((prev) => (prev === 0 ? currentUpdates.length - 1 : prev - 1));
+      setCurrentSlide((prev) => (prev === 0 ? allUpdates.length - 1 : prev - 1));
       setFade(false);
     }, 300);
   };
@@ -290,40 +263,26 @@ const UpdateSlide: React.FC = () => {
   const handleNext = () => {
     setFade(true);
     setTimeout(() => {
-      setCurrentSlide((prev) => (prev === currentUpdates.length - 1 ? 0 : prev + 1));
+      setCurrentSlide((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
       setFade(false);
     }, 300);
   };
 
   return (
-    <>
-      <UpdateCategoryContainer>
-        {Object.keys(updateCategories).map((category) => (
-          <CategoryButton
-            key={category}
-            active={currentCategory === category}
-            onClick={() => handleCategoryChange(category)}
-          >
-            {category}
-          </CategoryButton>
-        ))}
-      </UpdateCategoryContainer>
+    <UpdateSlideContainer>
+      <UpdateSlideContent fade={fade}>
+        <UpdateSlideTitle>{allUpdates[currentSlide].title}</UpdateSlideTitle>
+        <UpdateSlideText>{allUpdates[currentSlide].text}</UpdateSlideText>
+        <UpdateSlideDate>{allUpdates[currentSlide].date}</UpdateSlideDate>
+      </UpdateSlideContent>
       
-      <UpdateSlideContainer>
-        <UpdateSlideContent fade={fade}>
-          <UpdateSlideTitle>{currentUpdates[currentSlide].title}</UpdateSlideTitle>
-          <UpdateSlideText>{currentUpdates[currentSlide].text}</UpdateSlideText>
-          <UpdateSlideDate>{currentUpdates[currentSlide].date}</UpdateSlideDate>
-        </UpdateSlideContent>
-        
-        <UpdateSlideArrowLeft onClick={handlePrev}>
-          ‹
-        </UpdateSlideArrowLeft>
-        <UpdateSlideArrowRight onClick={handleNext}>
-          ›
-        </UpdateSlideArrowRight>
-      </UpdateSlideContainer>
-    </>
+      <UpdateSlideArrowLeft onClick={handlePrev}>
+        ‹
+      </UpdateSlideArrowLeft>
+      <UpdateSlideArrowRight onClick={handleNext}>
+        ›
+      </UpdateSlideArrowRight>
+    </UpdateSlideContainer>
   );
 };
 
@@ -334,7 +293,7 @@ const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  margin-top: 60px; /* header 높이만큼 마진 추가 */
+  margin-top: 120px; /* header 높이만큼 마진 추가 */
 `;
 
 const ContentWrapper = styled.div`

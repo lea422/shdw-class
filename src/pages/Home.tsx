@@ -8,35 +8,69 @@ import Body from '../components/Body';
 // Styled Components
 const HomeContainer = styled.div`
   min-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
 `;
 
 const HeroSection = styled.div`
-  width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
-  /* margin-top: 60px; */
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+  }
 `;
 
 const ImageSlider = styled.div`
-  width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   height: 100%;
   position: relative;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+  }
 `;
 
-const Slide = styled.div<{ isActive: boolean }>`
+const Slide = styled.div<{ isActive: boolean; bgMobile?: string; bgDesktop: string }>`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100vw;
+  max-width: 100vw;
   height: 100%;
   opacity: ${props => props.isActive ? 1 : 0};
   transition: opacity 1s ease-in-out;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  box-sizing: border-box;
+  background-image: url(${props => props.bgDesktop});
+  @media (max-width: 600px) {
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    transform: none;
+    background-image: url(${props => props.bgMobile || props.bgDesktop});
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 `;
 
 const SlideOverlay = styled.div`
@@ -63,58 +97,114 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
   @media (max-width: 1280px) {
     left: 24px;
   }
   @media (max-width: 600px) {
-    left: 8px;
-    max-width: 98vw;
+    left: 0;
+    max-width: 100%;
+    padding: 20px;
+    align-items: center;
+    top: 50%;
+    transform: translateY(-50%);
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
   }
 `;
 
 const TitleSection = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 30px;
+  width: 405px;
+  height: 110.67px;
+  position: relative;
+  @media (max-width: 600px) {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
 `;
 
 const PreTitle = styled.div`
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
   color: white;
-  font-size: 26px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 500;
-  line-height: 1.25;
-  letter-spacing: -0.52px;
+  font-size: 26.67px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 33.33px;
+  word-wrap: break-word;
+  @media (max-width: 600px) {
+    position: static;
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    width: 100%;
+    font-weight: 400;
+  }
 `;
 
 const MainTitle = styled.div`
-  color: white;
-  font-size: 46px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: -0.92px;
+  left: 0px;
+  top: 43.67px;
+  position: absolute;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  color: #835EEB;
+  font-size: 53.33px;
+  font-family: Godo B;
+  font-weight: 400;
+  line-height: 66.67px;
+  word-wrap: break-word;
+  @media (max-width: 600px) {
+    position: static;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    width: auto;
+    display: inline;
+  }
 `;
 
-const BrandTitle = styled.div`
-  span:first-child {
-    color: #835EEB;
-    font-size: 64px;
-    font-family: 'Godo B', sans-serif;
-    font-weight: 400;
-    line-height: 1.25;
-    letter-spacing: -1.28px;
+const ClassText = styled.div`
+  left: 202px;
+  top: 43px;
+  position: absolute;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+  color: #835EEB;
+  font-size: 64px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 64px;
+  word-wrap: break-word;
+  @media (max-width: 600px) {
+    position: static;
+    font-size: 32px;
+    line-height: 38px;
+    text-align: center;
+    width: auto;
+    display: inline;
+    margin-left: 8px;
   }
+`;
 
-  span:last-child {
-    color: #835EEB;
-    font-size: 64px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 700;
-    line-height: 1.25;
-    letter-spacing: -1.28px;
+const TitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  @media (max-width: 600px) {
+    gap: 8px;
   }
 `;
 
@@ -126,6 +216,13 @@ const Description = styled.div`
   line-height: 1.5;
   letter-spacing: -0.1px;
   margin-bottom: 30px;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    max-width: 300px;
+  }
 `;
 
 const PrimaryButton = styled.button`
@@ -150,7 +247,6 @@ const PrimaryButton = styled.button`
   border: none;
   color: white;
   box-shadow: 0 2px 4px rgba(131, 94, 235, 0.2);
-
   &:before {
     content: '';
     position: absolute;
@@ -163,20 +259,26 @@ const PrimaryButton = styled.button`
     background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.2) 50%, transparent 100%);
     transform: translateX(-100%);
   }
-
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(131, 94, 235, 0.3);
-
     &:before {
       opacity: 1;
       transform: translateX(100%);
     }
   }
-
   &:active {
     transform: translateY(1px);
     box-shadow: 0 2px 8px rgba(131, 94, 235, 0.3);
+  }
+  @media (max-width: 600px) {
+    width: 180px;
+    height: 44px;
+    font-size: 16px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    line-height: 20px;
   }
 `;
 
@@ -187,6 +289,13 @@ const IndicatorBarContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 16px;
+  @media (max-width: 600px) {
+    width: 100%;
+    margin: 20px 0 0 0;
+    gap: 0;
+    justify-content: center;
+    flex-direction: column;
+  }
 `;
 const IndicatorDots = styled.div`
   display: flex;
@@ -194,6 +303,11 @@ const IndicatorDots = styled.div`
   gap: 12px;
   flex: 1;
   margin-left: 10px;
+  @media (max-width: 600px) {
+    gap: 8px;
+    margin-left: 0;
+    flex: none;
+  }
 `;
 const IndicatorDot = styled.button<{ active: boolean }>`
   width: ${props => (props.active ? '24px' : '8px')};
@@ -207,6 +321,11 @@ const IndicatorDot = styled.button<{ active: boolean }>`
   align-items: center;
   justify-content: center;
   padding: 0;
+  @media (max-width: 600px) {
+    width: ${props => (props.active ? '20px' : '8px')};
+    height: 8px;
+    border-radius: 4px;
+  }
 `;
 const IndicatorPause = styled.button`
   background: none;
@@ -220,6 +339,9 @@ const IndicatorPause = styled.button`
   justify-content: center;
   &:hover {
     opacity: 0.7;
+  }
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 const IndicatorNext = styled.button`
@@ -235,7 +357,12 @@ const IndicatorNext = styled.button`
   &:hover {
     opacity: 0.7;
   }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
+
+
 
 const FeatureSection = styled.div`
   width: 100%;
@@ -244,6 +371,12 @@ const FeatureSection = styled.div`
   justify-content: center;
   align-items: center;
   gap: 50px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+    padding: 24px 0;
+  }
 `;
 
 const FeatureCard = styled.div`
@@ -259,7 +392,6 @@ const FeatureCard = styled.div`
   border: 1px solid #F3F4F6;
   border-radius: 30px;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
-
   h3 {
     color: #33373B;
     font-size: 24px;
@@ -268,8 +400,10 @@ const FeatureCard = styled.div`
     text-align: center;
     margin: 0;
     transition: color 0.3s ease;
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
   }
-
   p {
     color: #33373B;
     font-size: 16px;
@@ -278,11 +412,17 @@ const FeatureCard = styled.div`
     text-align: center;
     margin: 0;
     transition: color 0.3s ease;
+    @media (max-width: 600px) {
+      font-size: 12px;
+    }
   }
-
-  &:hover h3,
-  &:hover p {
-    color: #835EEB;
+  @media (max-width: 600px) {
+    width: 90vw;
+    min-width: 0;
+    height: 120px;
+    padding: 0 8px;
+    border-radius: 16px;
+    gap: 6px;
   }
 `;
 
@@ -290,6 +430,11 @@ const SyncIcon = styled.div`
   width: 24px;
   height: 24px;
   margin-right: 8px;
+  @media (max-width: 600px) {
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+  }
 `;
 
 const UpdateSection = styled.section`
@@ -299,6 +444,9 @@ const UpdateSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 600px) {
+    padding: 32px 0 0 0;
+  }
 `;
 
 const UpdateTitle = styled.h2`
@@ -307,6 +455,10 @@ const UpdateTitle = styled.h2`
   color: #222;
   margin-bottom: 40px;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 20px;
+    margin-bottom: 18px;
+  }
 `;
 
 const UpdateList = styled.ul`
@@ -316,6 +468,9 @@ const UpdateList = styled.ul`
   padding: 0;
   margin: 0;
   list-style: none;
+  @media (max-width: 600px) {
+    max-width: 98vw;
+  }
 `;
 
 const UpdateItem = styled.li`
@@ -323,6 +478,10 @@ const UpdateItem = styled.li`
   padding: 32px 0;
   font-size: 20px;
   color: #33373B;
+  @media (max-width: 600px) {
+    font-size: 13px;
+    padding: 16px 0;
+  }
 `;
 
 const FaqSection = styled.section`
@@ -333,6 +492,9 @@ const FaqSection = styled.section`
   flex-direction: column;
   align-items: center;
   position: relative;
+  @media (max-width: 600px) {
+    padding: 32px 0 32px 0;
+  }
 `;
 
 const FaqTitle = styled.h2`
@@ -341,6 +503,10 @@ const FaqTitle = styled.h2`
   color: #222;
   margin-bottom: 40px;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
 `;
 
 const FaqList = styled.ul`
@@ -350,6 +516,10 @@ const FaqList = styled.ul`
   margin: 0;
   list-style: none;
   background: transparent;
+  @media (max-width: 600px) {
+    max-width: calc(100vw - 40px);
+    padding: 0 20px;
+  }
 `;
 
 const FaqItem = styled.li`
@@ -370,6 +540,10 @@ const FaqAnswer = styled.div<{ open: boolean }>`
   opacity: ${({ open }) => (open ? 1 : 0)};
   overflow: hidden;
   transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    margin: 0 0 16px 0;
+  }
 `;
 
 const FaqQuestion = styled.button<{ open: boolean }>`
@@ -389,10 +563,13 @@ const FaqQuestion = styled.button<{ open: boolean }>`
   transition: color 0.2s, font-weight 0.2s;
   border-radius: 0;
   box-shadow: none;
-
   &:hover {
     color: #835EEB;
     background: none;
+  }
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 16px 0 12px 0;
   }
 `;
 
@@ -409,6 +586,12 @@ const FaqIcon = styled.span<{ open: boolean }>`
   border-radius: 0;
   background: none;
   transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0deg)')};
+  @media (max-width: 600px) {
+    font-size: 20px;
+    margin-left: 8px;
+    width: 20px;
+    height: 20px;
+  }
 `;
 
 const MoreButton = styled.button`
@@ -423,10 +606,15 @@ const MoreButton = styled.button`
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-
   &:hover {
     background: #6B4CD3;
     transform: translateY(-2px);
+  }
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 14px 24px;
+    border-radius: 8px;
+    margin: 24px auto 0 auto;
   }
 `;
 
@@ -692,45 +880,51 @@ const Home = () => {
   const bodyRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
+  // 슬라이드 데이터에 모바일 이미지 경로 추가
   const slides = [
     {
       id: 1,
       image: '/Hero-1.png',
-      title: 'AI가 바꾸는',
-      subtitle: '수학 교육의 미래',
-      brand: '수학대왕 CLASS',
+      imageMobile: '/mobile-hero-1.png',
+      preTitle: 'AI가 바꾸는 수학 교육의 미래',
+      mainTitle: '수학대왕',
+      classText: 'CLASS',
       description: '교사의 업무는 줄이고, 학생의 성과는 높이는<br />AI 기반 혁신적 수학 학습관리 시스템'
     },
     {
       id: 2,
       image: '/Hero-2.png',
-      title: '혁신적인',
-      subtitle: '학습 관리 시스템',
-      brand: '수학대왕 CLASS',
+      imageMobile: '/mobile-hero-2.png',
+      preTitle: '혁신적인 학습 관리 시스템',
+      mainTitle: '수학대왕',
+      classText: 'CLASS',
       description: '개인별 맞춤 학습과 실시간 피드백으로<br />학습 효과를 극대화하는 스마트 교육 플랫폼'
     },
     {
       id: 3,
       image: '/Hero-3.png',
-      title: '스마트한',
-      subtitle: 'AI 채점 시스템',
-      brand: '수학대왕 CLASS',
+      imageMobile: '/mobile-hero-3.png',
+      preTitle: '스마트한 AI 채점 시스템',
+      mainTitle: '수학대왕',
+      classText: 'CLASS',
       description: '필기 인식 기반 정확한 채점과<br />즉시 피드백으로 학습 효율 극대화'
     },
     {
       id: 4,
       image: '/Hero-4.png',
-      title: '맞춤형',
-      subtitle: '학습 솔루션',
-      brand: '수학대왕 CLASS',
+      imageMobile: '/mobile-hero-4.png',
+      preTitle: '맞춤형 학습 솔루션',
+      mainTitle: '수학대왕',
+      classText: 'CLASS',
       description: '학생 개개인의 실력에 맞춘<br />개인별 최적화된 학습 경험 제공'
     },
     {
       id: 5,
       image: '/Hero-5.png',
-      title: '미래를 여는',
-      subtitle: '교육 혁신',
-      brand: '수학대왕 CLASS',
+      imageMobile: '/mobile-hero-5.png',
+      preTitle: '미래를 여는 교육 혁신',
+      mainTitle: '수학대왕',
+      classText: 'CLASS',
       description: 'AI 기술로 완성된<br />차세대 수학 교육의 새로운 패러다임'
     }
   ];
@@ -879,24 +1073,24 @@ const Home = () => {
             <Slide
               key={slide.id}
               isActive={index === currentSlide}
-              style={{ backgroundImage: `url(${slide.image})` }}
+              bgDesktop={slide.image}
+              bgMobile={slide.imageMobile}
             />
           ))}
           <SlideOverlay />
           <ContentContainer>
             <TitleSection>
-              <PreTitle>{slides[currentSlide].title}</PreTitle>
-              <MainTitle>{slides[currentSlide].subtitle}</MainTitle>
-              <BrandTitle>
-                <span>수학대왕</span>
-                <span>CLASS</span>
-              </BrandTitle>
+              <PreTitle>{slides[currentSlide].preTitle}</PreTitle>
+              <TitleRow>
+                <MainTitle>{slides[currentSlide].mainTitle}</MainTitle>
+                <ClassText>{slides[currentSlide].classText}</ClassText>
+              </TitleRow>
             </TitleSection>
             <Description
               dangerouslySetInnerHTML={{ __html: slides[currentSlide].description }}
             />
             <PrimaryButton onClick={handleOpenDialog}>
-              무료 체험 신청하기
+              무료 체험 시작하기
             </PrimaryButton>
             <IndicatorBarContainer>
               <IndicatorDots>
@@ -922,9 +1116,7 @@ const Home = () => {
           </ContentContainer>
         </ImageSlider>
       </HeroSection>
-      <div ref={bodyRef}>
-        <Body />
-      </div>
+      <Body ref={bodyRef} />
       
       <Dialog 
         isOpen={isDialogOpen} 

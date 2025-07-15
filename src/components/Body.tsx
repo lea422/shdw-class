@@ -47,34 +47,46 @@ const blink = keyframes`
 `;
 
 const BodyContainer = styled.div`
-  width: 100%;
-  padding-bottom: 50px;
+  width: 100vw;
+  max-width: 100vw;
+  padding-bottom: 30px;
   background: #F8F6FF;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 `;
 
 const HeaderSection = styled.div`
-  width: 100%;
+  width: 100vw;
   max-width: 1280px;
-  padding: 120px 0 60px;
+  padding: 140px 0 80px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   gap: 24px;
   display: flex;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  @media (max-width: 600px) {
+    padding: 60px 0 20px;
+    gap: 12px;
+  }
 `;
 
 const Title = styled.div`
-  width: 100%;
+  width: 100vw;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    gap: 4px;
+  }
 `;
 
 const TitleHighlight = styled.span`
@@ -84,6 +96,10 @@ const TitleHighlight = styled.span`
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 30px;
+    line-height: 1.2;
+  }
 `;
 
 const TitleText = styled.span`
@@ -93,10 +109,14 @@ const TitleText = styled.span`
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 30px;
+    line-height: 1.2;
+  }
 `;
 
 const Subtitle = styled.div`
-  width: 100%;
+  width: 100vw;
   text-align: center;
   color: #666666;
   font-size: 24px;
@@ -105,18 +125,29 @@ const Subtitle = styled.div`
   line-height: 1.5;
   word-wrap: break-word;
   margin-top: 8px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    line-height: 1.4;
+    margin-top: 6px;
+  }
 `;
 
 const SectionTitle = styled.div`
-  width: 100%;
-  padding: 30px 0;
+  width: 100vw;
+  padding: 90px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  @media (max-width: 600px) {
+    padding: 50px 0 0;
+  }
 `;
 
 const SectionTitleText = styled.div`
-  width: 100%;
+  width: 100vw;
   max-width: 1040px;
   text-align: center;
   color: #835EEB;
@@ -125,16 +156,33 @@ const SectionTitleText = styled.div`
   font-weight: 700;
   line-height: 41.60px;
   word-wrap: break-word;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    font-size: 20px;
+    line-height: 26px;
+  }
 `;
 
 const FeatureGrid = styled.div`
-  width: 100%;
+  width: 100vw;
   max-width: 1280px;
-  padding: 30px 0;
+  padding: 70px 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 50px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 24px;
+    padding: 70px 0;
+  }
+  @media (max-width: 375px) {
+    width: 375px;
+    max-width: 375px;
+    padding: 70px 16px;
+  }
 `;
 
 const ImagePlaceholder = styled.div`
@@ -169,6 +217,10 @@ const FeatureTitle = styled.div`
   line-height: 38.40px;
   word-wrap: break-word;
   transition: all 0.3s ease;
+  @media (max-width: 600px) {
+    font-size: 20px;
+    line-height: 24px;
+  }
 `;
 
 const FeatureCard = styled.div`
@@ -182,6 +234,12 @@ const FeatureCard = styled.div`
   gap: 32px;
   transition: all 0.3s ease;
   cursor: pointer;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    max-width: 95vw;
+    gap: 12px;
+    border-radius: 12px;
+  }
 
   &:hover {
     transform: translateY(-8px);
@@ -223,6 +281,10 @@ const FeatureDescription = styled.div`
   font-weight: 500;
   line-height: 34.80px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    line-height: 20px;
+  }
 `;
 
 const AnimatedHeaderSection = styled(HeaderSection)`
@@ -255,6 +317,8 @@ const WebAppSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  box-sizing: border-box;
 `;
 
 const WebAppHeader = styled.div`
@@ -265,6 +329,11 @@ const WebAppHeader = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 30px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 32px 8px 24px;
+    gap: 12px;
+  }
 `;
 
 const WebAppTitle = styled.div`
@@ -273,6 +342,10 @@ const WebAppTitle = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    font-size: 18px;
+  }
 `;
 
 const WebAppTitleHighlight = styled.span`
@@ -282,6 +355,10 @@ const WebAppTitleHighlight = styled.span`
   font-weight: 700;
   line-height: 62.40px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
 `;
 
 const WebAppTitleText = styled.span`
@@ -291,6 +368,10 @@ const WebAppTitleText = styled.span`
   font-weight: 700;
   line-height: 62.40px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
 `;
 
 const WebAppSubtitle = styled.div`
@@ -305,6 +386,10 @@ const WebAppSubtitle = styled.div`
   font-weight: 400;
   line-height: 36.40px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    line-height: 20px;
+  }
 `;
 
 const WebAppContent = styled.div`
@@ -315,6 +400,12 @@ const WebAppContent = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+  box-sizing: border-box;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 4px;
+  }
 `;
 
 const PlatformCard = styled.div`
@@ -330,6 +421,14 @@ const PlatformCard = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    width: 90vw;
+    height: 220px;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 10px 4px;
+  }
 `;
 
 const IconCircle = styled.div`
@@ -342,6 +441,10 @@ const IconCircle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 600px) {
+    width: 36px;
+    height: 36px;
+  }
 `;
 
 const PlatformTitle = styled.div`
@@ -355,6 +458,10 @@ const PlatformTitle = styled.div`
   font-weight: 700;
   line-height: 26px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    line-height: 20px;
+  }
 `;
 
 const PlatformFeatures = styled.div`
@@ -368,6 +475,11 @@ const PlatformFeatures = styled.div`
   font-weight: 400;
   line-height: 40px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    width: 90vw;
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 const SyncSection = styled.div`
@@ -378,6 +490,8 @@ const SyncSection = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  width: 100vw;
+  box-sizing: border-box;
 `;
 
 const SyncIcon = styled.div`
@@ -496,6 +610,11 @@ const FeatureItem = styled.div`
   &:last-child {
     margin-bottom: 0;
   }
+  
+  @media (max-width: 600px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 const SyncTitle = styled.div`
@@ -509,6 +628,10 @@ const SyncTitle = styled.div`
   font-weight: 700;
   line-height: 26px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 16px;
+    line-height: 20px;
+  }
 `;
 
 const SyncSubtitle = styled.div`
@@ -522,6 +645,10 @@ const SyncSubtitle = styled.div`
   font-weight: 400;
   line-height: 18.20px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    line-height: 16px;
+  }
 `;
 
 const DemoSection = styled.div`
@@ -531,17 +658,25 @@ const DemoSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  box-sizing: border-box;
 `;
 
 const DemoHeader = styled.div`
   align-self: stretch;
-  height: 280px;
-  padding: 80px 64px 30px;
+  height: 200px;
+  padding: 60px 64px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    height: 150px;
+    padding: 32px 8px 12px;
+    gap: 12px;
+  }
 `;
 
 const DemoTitle = styled.div`
@@ -553,6 +688,10 @@ const DemoTitle = styled.div`
   font-weight: 700;
   line-height: 62.40px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
 `;
 
 const DemoSubtitle = styled.div`
@@ -564,6 +703,10 @@ const DemoSubtitle = styled.div`
   font-weight: 400;
   line-height: 33px;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    line-height: 20px;
+  }
 `;
 
 const DemoButton = styled.a`
@@ -588,6 +731,10 @@ const DemoButton = styled.a`
     font-family: Pretendard;
     font-weight: 700;
     line-height: 29px;
+    @media (max-width: 600px) {
+      font-size: 16px;
+      line-height: 22px;
+    }
   }
 
   &:hover {
@@ -598,10 +745,14 @@ const DemoButton = styled.a`
 
 const DemoButtonContainer = styled.div`
   align-self: stretch;
-  display: inline-flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  padding: 20px 0;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 16px 0;
+  }
 `;
 
 const DemoContent = styled.div`
@@ -613,6 +764,15 @@ const DemoContent = styled.div`
   align-items: center;
   gap: 30px;
   position: relative;
+  box-sizing: border-box;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 16px;
+    padding: 12px 4px;
+  }
+  @media (max-width: 600px) {
+    padding: 8px 4px;
+  }
 `;
 
 const slideLeft = keyframes`
@@ -626,12 +786,22 @@ const slideLeft = keyframes`
 
 const FeatureBoxFlow = styled.div`
   display: flex;
-  gap: 30px;
+  gap: 20px;
   animation: ${slideLeft} 30s linear infinite;
+  box-sizing: border-box;
+  @media (max-width: 900px) {
+    gap: 12px;
+    animation: ${slideLeft} 25s linear infinite;
+  }
+  @media (max-width: 600px) {
+    gap: 8px;
+    animation: ${slideLeft} 20s linear infinite;
+  }
 `;
 
 const FeatureBoxSlide = styled.div`
   flex-shrink: 0;
+  box-sizing: border-box;
 `;
 
 const FeatureBoxContent = styled.div`
@@ -657,13 +827,13 @@ const FeatureBoxContent = styled.div`
 `;
 
 const FeatureImage = styled.div<{ image: string }>`
-  width: 500px;
-  height: 500px;
+  width: 300px;
+  height: 300px;
   background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 32px;
+  border-radius: 20px;
   position: relative;
 
   &::after {
@@ -674,7 +844,27 @@ const FeatureImage = styled.div<{ image: string }>`
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08));
-    border-radius: 32px;
+    border-radius: 20px;
+  }
+  
+  @media (max-width: 900px) {
+    width: 250px;
+    height: 250px;
+    border-radius: 16px;
+    
+    &::after {
+      border-radius: 16px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    width: 200px;
+    height: 200px;
+    border-radius: 12px;
+    
+    &::after {
+      border-radius: 12px;
+    }
   }
 `;
 
@@ -685,24 +875,33 @@ const StatsSection = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 12px 0 24px;
+  }
 `;
 
 const StatBox = styled.div`
-  padding: 10px 30px;
+  padding: 8px 16px;
   background: rgba(255, 255, 255, 0.10);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 8px;
+  min-width: fit-content;
+  height: fit-content;
   
   span {
     color: white;
     font-size: 48px;
     font-family: Pretendard;
     font-weight: 700;
-    line-height: 69.60px;
+    line-height: 1.2;
+    white-space: nowrap;
+    @media (max-width: 600px) {
+      font-size: 24px;
+    }
   }
 `;
 
@@ -711,8 +910,12 @@ const StatText = styled.div`
   font-size: 48px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 69.60px;
+  line-height: 1.2;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    line-height: 1.2;
+  }
 `;
 
 const TabContainer = styled.div`
@@ -724,6 +927,11 @@ const TabContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 24px 0;
+    gap: 12px;
+  }
 `;
 
 const TabTitle = styled.h2`
@@ -734,6 +942,10 @@ const TabTitle = styled.h2`
   line-height: 62.40px;
   text-align: center;
   margin: 0;
+  @media (max-width: 600px) {
+    font-size: 24px;
+    line-height: 30px;
+  }
 `;
 
 const MoreButton = styled.button`
@@ -759,6 +971,11 @@ const Tabs = styled.div`
   display: flex;
   gap: 16px;
   margin: 40px 0 24px 0;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    gap: 8px;
+    margin: 24px 0 12px 0;
+  }
 `;
 
 const TabButton = styled.button<{ active: boolean }>`
@@ -771,6 +988,11 @@ const TabButton = styled.button<{ active: boolean }>`
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
 `;
 
 const SlideContainer = styled.div`
@@ -785,6 +1007,11 @@ const SlideContainer = styled.div`
   align-items: center;
   position: relative;
   overflow: visible;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    padding: 16px 12px 24px 12px;
+    border-radius: 12px;
+  }
 `;
 
 const SlideTitle = styled.div`
@@ -796,6 +1023,12 @@ const SlideTitle = styled.div`
   padding: 8px 32px;
   margin-bottom: 16px;
   align-self: center;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    padding: 6px 20px;
+    margin-bottom: 10px;
+  }
 `;
 
 const SlideDesc = styled.div`
@@ -803,6 +1036,11 @@ const SlideDesc = styled.div`
   font-size: 20px;
   text-align: center;
   margin-bottom: 24px;
+  box-sizing: border-box;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
 `;
 
 const SlideBox = styled.div`
@@ -811,6 +1049,7 @@ const SlideBox = styled.div`
   background: white;
   border-radius: 18px;
   border: 2px solid #BFA8F6;
+  box-sizing: border-box;
 `;
 
 const ArrowButton = styled.button`
@@ -824,13 +1063,20 @@ const ArrowButton = styled.button`
   cursor: pointer;
   z-index: 2;
   &:hover { color: #6B4BC4; }
+  box-sizing: border-box;
 `;
 
 const ArrowLeft = styled(ArrowButton)`
   left: -48px;
+  @media (max-width: 600px) {
+    left: -24px;
+  }
 `;
 const ArrowRight = styled(ArrowButton)`
   right: -48px;
+  @media (max-width: 600px) {
+    right: -24px;
+  }
 `;
 
 interface FeatureProps {
@@ -884,7 +1130,7 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index }) => {
   );
 };
 
-const Body = () => {
+const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const navigate = useNavigate();
   const headerRef = useRef<HTMLDivElement>(null);
   const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -919,7 +1165,7 @@ const Body = () => {
       quote: "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
       name: "학부모 후기<br/>초등 5학년 학부모",
       videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQ",
-      thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
+      thumbnailUrl: "https://img.youtube.com/vi/SaM59JVLZms/maxresdefault.jpg"
     }
   ];
 
@@ -1073,7 +1319,7 @@ const Body = () => {
   const [hovered, setHovered] = useState<{featureIdx: number, subIdx: number | null}>({featureIdx: 0, subIdx: null});
 
   return (
-    <BodyContainer>
+    <BodyContainer ref={ref}>
       <AnimatedHeaderSection ref={headerRef}>
         <Title>
           <TitleHighlight>수학대왕 클래스의</TitleHighlight>
@@ -1089,20 +1335,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[0] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 맞춤형 학습지 제작
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               AI 기반 실시간<br/>맞춤 문제 추천
@@ -1123,20 +1358,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[1] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 맞춤형 학습지 제작
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               오답 클리닉<br/>자동 & 무한 배부
@@ -1157,20 +1381,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[2] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(2)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 AI 채점 시스템
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               서술형<br/>자동 채점
@@ -1191,20 +1404,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[3] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(3)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 AI 채점 시스템
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               전국 단위<br/>실력 분석
@@ -1225,20 +1427,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[4] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(4)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 실시간 피드백
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               AI 힌트 및<br/>오답 피드백
@@ -1259,20 +1450,9 @@ const Body = () => {
         <FeatureBox ref={el => featureBoxRefs.current[5] = el}>
           <FeatureTextBlock isVisible={visibleTexts.has(5)}>
             <FeatureCategory>
-              <div style={{
-                textAlign: 'center',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                color: 'white',
-                fontSize: 20,
-                fontFamily: 'Pretendard',
-                fontWeight: '700',
-                lineHeight: 26,
-                wordWrap: 'break-word'
-              }}>
+              <FeatureCategoryText>
                 실시간 피드백
-              </div>
+              </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               실시간<br/>질문 게시판
@@ -1343,23 +1523,22 @@ const Body = () => {
       <DemoSection>
         <DemoHeader>
           <DemoTitle>
-            수학대왕 APP 기능을 직접 체험해 보세요!
+            수학대왕 APP 기능을 직접 체험해보세요!
           </DemoTitle>
           <DemoSubtitle>
-            교사는 웹에서 관리하고, 학생은 앱으로 학습하는
+            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
             완벽한 교육 생태계를 경험하세요
           </DemoSubtitle>
-          <DemoButtonContainer>
-            <DemoButton 
-              href="https://www.iammathking.com/demo" 
-              rel="noopener noreferrer"
-              onClick={handleDemoClick}
-            >
-              <span>데모 체험하기</span>
-              
-            </DemoButton>
-          </DemoButtonContainer>
         </DemoHeader>
+        <DemoButtonContainer>
+          <DemoButton 
+            href="https://www.iammathking.com/demo" 
+            rel="noopener noreferrer"
+            onClick={handleDemoClick}
+          >
+            <span>데모 체험하기</span>
+          </DemoButton>
+        </DemoButtonContainer>
         <DemoContent>
           <FeatureBoxFlow>
             <FeatureBoxSlide>
@@ -1453,7 +1632,7 @@ const Body = () => {
       </ExperienceSection>
     </BodyContainer>
   );
-};
+});
 
 // styled-components for the new section
 const ExperienceSection = styled.section`
@@ -1493,12 +1672,20 @@ const ExperienceTextBlock = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 0;
+  text-align: center;
   @media (max-width: 900px) {
     width: 100%;
     height: auto;
     align-items: center;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    height: auto;
+    align-items: center;
+    padding: 20px;
+    gap: 8px;
   }
 `;
 
@@ -1508,8 +1695,15 @@ const ExperienceTitle = styled.div`
   font-family: Pretendard;
   font-weight: 700;
   line-height: 62.4px;
-  word-break: keep-all;
+  word-break: break-word;
   margin-bottom: 36px;
+  text-align: center;
+  width: 100%;
+  @media (max-width: 600px) {
+    font-size: 28px;
+    line-height: 36px;
+    margin-bottom: 20px;
+  }
 `;
 
 const ExperienceQuote = styled.div`
@@ -1518,8 +1712,15 @@ const ExperienceQuote = styled.div`
   font-family: Pretendard;
   font-weight: 400;
   line-height: 36px;
-  word-break: keep-all;
+  word-break: break-word;
   margin-bottom: 32px;
+  text-align: center;
+  width: 100%;
+  @media (max-width: 600px) {
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+  }
 `;
 
 const ExperienceName = styled.div`
@@ -1527,10 +1728,16 @@ const ExperienceName = styled.div`
   font-size: 20px;
   font-family: Pretendard;
   line-height: 26px;
-  word-break: keep-all;
+  word-break: break-word;
   font-weight: 700;
+  text-align: center;
+  width: 100%;
   span { display: block; }
   span:last-child { font-weight: 400; }
+  @media (max-width: 600px) {
+    font-size: 14px;
+    line-height: 18px;
+  }
 `;
 
 const ExperienceImageBlock = styled.div`
@@ -1543,7 +1750,13 @@ const ExperienceImageBlock = styled.div`
   @media (max-width: 900px) {
     width: 100%;
     max-width: 864px;
-    height: 400px;
+    height: calc(100vw * 9 / 16);
+    max-height: 400px;
+  }
+  @media (max-width: 600px) {
+    width: 100%;
+    height: calc(100vw * 9 / 16);
+    max-height: 300px;
   }
 `;
 
@@ -1718,6 +1931,12 @@ const FeatureSectionWrapper = styled.div`
   align-items: flex-start;
   gap: 150px;
   padding: 0;
+  @media (max-width: 600px) {
+    width: 100%;
+    margin: 0 auto 30px auto;
+    gap: 40px;
+    padding: 0 20px;
+  }
 `;
 
 const FeatureBox = styled.div`
@@ -1729,6 +1948,19 @@ const FeatureBox = styled.div`
   justify-content: flex-start;
   overflow: visible;
   padding-left: 0px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  @media (max-width: 375px) {
+    width: 343px;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
@@ -1745,6 +1977,22 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
   transform: translateX(${props => props.isVisible ? '0' : '-30px'}) scale(${props => props.isVisible ? '1.05' : '1'});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   filter: none;
+  @media (max-width: 600px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    opacity: 1;
+    transform: none;
+  }
+  @media (max-width: 375px) {
+    width: 343px;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const FeatureTitleNew = styled.div`
@@ -1768,6 +2016,18 @@ const FeatureMainTitle = styled.div`
   word-wrap: break-word;
   text-align: left;
   width: 100%;
+  @media (max-width: 600px) {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #835EEB;
+    font-size: 16px;
+    font-family: Pretendard;
+    font-weight: 700;
+    line-height: 19.20px;
+    word-wrap: break-word;
+  }
 `;
 
 const FeatureCategory = styled.div`
@@ -1784,6 +2044,44 @@ const FeatureCategory = styled.div`
   display: inline-flex;
   width: fit-content;
   height: 26px;
+  @media (max-width: 600px) {
+    width: 100px;
+    height: 20px;
+    background: #F3EFFD;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    display: inline-flex;
+  }
+`;
+
+const FeatureCategoryText = styled.div`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 20px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 26px;
+  word-wrap: break-word;
+  @media (max-width: 600px) {
+    left: 13.50px;
+    top: 4px;
+    position: absolute;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #835EEB;
+    font-size: 10px;
+    font-family: Pretendard;
+    font-weight: 700;
+    line-height: 13px;
+    word-wrap: break-word;
+  }
 `;
 
 const FeatureDesc = styled.div`
@@ -1796,6 +2094,20 @@ const FeatureDesc = styled.div`
   text-align: left;
   width: 100%;
   max-width: 450px;
+  @media (max-width: 600px) {
+    opacity: 0.60;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #4B4B4B;
+    font-size: 12px;
+    font-family: Pretendard;
+    font-weight: 500;
+    line-height: 17.40px;
+    word-wrap: break-word;
+    max-width: 100%;
+  }
 `;
 
 const GifBox = styled.div<{ isZoomed?: boolean }>`
@@ -1818,6 +2130,19 @@ const GifBox = styled.div<{ isZoomed?: boolean }>`
   /* 배경색이 어떤 경우에도 변하지 않도록 강제 */
   &::before, &::after {
     background: transparent !important;
+  }
+  @media (max-width: 600px) {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    background: #835EEB;
+    border: 1px #835EEB solid;
+    transform: none;
+  }
+  @media (max-width: 375px) {
+    width: 280px;
+    height: 180px;
+    border-radius: 8px;
   }
 `;
 
@@ -1856,7 +2181,7 @@ const WebAppSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 60px;
+  margin-bottom: 0;
 `;
 
 export default Body; 

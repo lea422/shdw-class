@@ -67,6 +67,9 @@ const ModalTitle = styled.h2`
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
 `;
 
 const ModalPrice = styled.div`
@@ -75,6 +78,9 @@ const ModalPrice = styled.div`
   font-weight: 700;
   color: #835EEB;
   margin-bottom: 30px;
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const ModalDescription = styled.p`
@@ -83,6 +89,9 @@ const ModalDescription = styled.p`
   line-height: 1.6;
   margin-bottom: 30px;
   text-align: center;
+  @media (max-width: 600px) {
+    font-size: 15px;
+  }
 `;
 
 const FeatureList = styled.ul`
@@ -121,6 +130,9 @@ const FeatureText = styled.span`
   color: #33373B;
   font-size: 16px;
   font-weight: 500;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const ModalButton = styled.button`
@@ -138,6 +150,11 @@ const ModalButton = styled.button`
   &:hover {
     background: #6B4BC4;
     transform: translateY(-2px);
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 14px;
   }
 `;
 
@@ -167,14 +184,22 @@ const PricingSection = styled.div`
   align-items: center;
   gap: 50px;
   margin: 0 auto;
+  margin-top: 60px; /* 헤더 아래 여백 추가 */
   @media (max-width: 1300px) {
     width: 100vw;
     padding: 60px 20px;
+    margin-top: 60px;
   }
   @media (max-width: 900px) {
     height: auto;
     flex-direction: column;
     gap: 30px;
+    padding: 40px 20px;
+    margin-top: 60px;
+  }
+  @media (max-width: 768px) {
+    padding: 30px 16px;
+    margin-top: 60px;
   }
 `;
 
@@ -199,6 +224,14 @@ const PricingTitle = styled.div`
   font-weight: 700;
   line-height: 62.4px;
   word-wrap: break-word;
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  @media (max-width: 480px) {
+    font-size: 30px;
+    line-height: 38px;
+  }
 `;
 
 const PricingSubtitle = styled.div`
@@ -208,6 +241,14 @@ const PricingSubtitle = styled.div`
   font-weight: 400;
   line-height: 36px;
   word-wrap: break-word;
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 26px;
+  }
+  @media (max-width: 480px) {
+    font-size: 17px;
+    line-height: 25px;
+  }
 `;
 
 const PricingCardsContainer = styled.div`
@@ -218,17 +259,29 @@ const PricingCardsContainer = styled.div`
   gap: 50px;
   @media (max-width: 1300px) {
     width: 100%;
+    padding: 0 20px;
   }
   @media (max-width: 900px) {
     flex-direction: column;
-    gap: 30px;
+    gap: 24px;
+    padding: 0 20px;
+    align-items: center;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 8px;
+    align-items: center;
   }
 `;
 
 const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>`
-  width: 550px;
+  width: 360px;
+  min-width: 360px;
+  max-width: 360px;
   height: 200px;
-  padding: 0 30px;
+  margin: 0 auto;
+  padding: 0 20px;
   background: white;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.10);
   border-radius: 10px;
@@ -258,8 +311,14 @@ const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>
   }
   
   @media (max-width: 900px) {
-    width: 100%;
-    max-width: 550px;
+    width: 360px;
+    min-width: 360px;
+    max-width: 360px;
+  }
+  @media (max-width: 400px) {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
   }
 `;
 
@@ -278,6 +337,9 @@ const CardTitle = styled.div<{ isHighlighted?: boolean }>`
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
 `;
 
 const CardSubtitle = styled.div`
@@ -286,6 +348,9 @@ const CardSubtitle = styled.div`
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const CardPrice = styled.div<{ isHighlighted?: boolean }>`
@@ -294,6 +359,9 @@ const CardPrice = styled.div<{ isHighlighted?: boolean }>`
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 32px;
+  }
 `;
 
 const CardDivider = styled.div`
@@ -305,349 +373,252 @@ const CardDivider = styled.div`
 
 const CardDescription = styled.div`
   color: #7A828D;
-  font-size: 16px;
+  font-size: 12px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
-  line-height: 25px;
+  line-height: 16px;
   word-wrap: break-word;
-`;
-
-// 두 번째 섹션 - 기능 비교
-const ComparisonSection = styled.div`
-  width: 1280px;
-  height: 1000px;
-  position: relative;
-  background: white;
-  overflow: hidden;
-  margin: 0 auto;
-  @media (max-width: 1300px) {
-    width: 100vw;
-    height: auto;
-    padding: 20px;
+  white-space: pre-line;
+  margin-top: 8px;
+  padding-right: 2px;
+  @media (max-width: 600px) {
+    font-size: 11px;
+    line-height: 15px;
   }
 `;
 
-const HeaderSection = styled.div`
-  position: absolute;
-  left: 357px;
-  top: 80px;
+// 무료 체험 신청 섹션
+const TrialSection = styled.div`
+  width: 1280px;
+  padding: 100px 50px;
+  background: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin-bottom: 30px;
+  gap: 50px;
+  margin: 0 auto;
+  @media (max-width: 1300px) {
+    width: 100vw;
+    padding: 60px 20px;
+  }
+  @media (max-width: 768px) {
+    padding: 40px 16px;
+    gap: 30px;
   }
 `;
 
-const HeaderTitle = styled.div`
-  text-align: center;
-  color: #0B1215;
+const TrialHeader = styled.div`
+  width: 1150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  @media (max-width: 1300px) {
+    width: 100%;
+  align-items: center;
+    text-align: center;
+  }
+  @media (max-width: 768px) {
+    gap: 16px;
+  }
+`;
+
+const TrialTitle = styled.div`
+  color: #1E2231;
   font-size: 48px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   line-height: 62.4px;
   word-wrap: break-word;
+  
+  span {
+    color: #835EEB;
+    font-family: 'Juniory', sans-serif;
+  font-weight: 400;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  @media (max-width: 480px) {
+    font-size: 28px;
+  line-height: 36px;
+  }
 `;
 
-const HeaderSubtitle = styled.div`
-  text-align: center;
-  color: #575C64;
-  font-size: 24px;
+const TrialStepContainer = styled.div`
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
+  
+  @media (max-width: 1100px) {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+  @media (max-width: 768px) {
+    gap: 20px;
+    padding: 20px;
+    background: rgba(131, 94, 235, 0.02);
+    border-radius: 16px;
+    border: 1px solid rgba(131, 94, 235, 0.1);
+  }
+`;
+
+const TrialStepContent = styled.div`
+  width: 403px;
+  height: 158px;
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+  
+  @media (max-width: 1100px) {
+    width: 100%;
+    max-width: 403px;
+    text-align: center;
+    height: auto;
+  }
+  @media (max-width: 768px) {
+    max-width: 100%;
+    height: auto;
+    padding: 0 16px;
+  }
+`;
+
+const TrialStepNumber = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  color: #835EEB;
+  font-size: 48px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 62.4px;
+  word-wrap: break-word;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    color: #6B4BC4;
+  }
+  
+  @media (max-width: 1100px) {
+    position: relative;
+    left: auto;
+    top: auto;
+  }
+  @media (max-width: 768px) {
+    font-size: 36px;
+    line-height: 48px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 480px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+`;
+
+const TrialStepText = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 92px;
+  color: #835EEB;
+  font-size: 22px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
-  line-height: 36px;
+  line-height: 33px;
   word-wrap: break-word;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #6B4BC4;
+  }
+  
+  @media (max-width: 1100px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 20px;
+  }
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 26px;
+    margin-top: 12px;
+  }
+  @media (max-width: 480px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
 `;
 
-const FeatureBadge = styled.div`
-  width: 200px;
-  height: 40px;
-  left: 450px;
-  top: 280px;
-  position: absolute;
-  background: #835EEB;
+const TrialStepImage = styled.div`
+  width: 500px;
+  height: 300px;
+  background: #F6F6F6;
+  border-radius: 15.65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
   overflow: hidden;
-  border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 22px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 28.6px;
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 20px auto;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(131, 94, 235, 0.2);
+    background: #F0F0F0;
   }
-`;
-
-const ComparisonTable = styled.div`
-  position: absolute;
-  left: 240px;
-  top: 350px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 20px 0;
-  }
-`;
-
-const TableHeader = styled.div`
-  width: 100%;
-  padding: 3px 0;
-  background: white;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-`;
-
-const TableHeaderCell = styled.div`
-  width: 150px;
-  text-align: center;
-  color: #835EEB;
-  font-size: 18px;
-  font-family: 'SUIT Variable', sans-serif;
-  font-weight: 800;
-  line-height: 20.7px;
-  word-wrap: break-word;
-`;
-
-const TableRow = styled.div<{ isHighlighted?: boolean }>`
-  height: 50px;
-  background: ${props => props.isHighlighted ? '#F9F7FF' : 'white'};
-  border-top: 0.50px #E5E7EB solid;
-  ${props => !props.isHighlighted && 'border-bottom: 0.50px #E5E7EB solid;'}
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-`;
-
-const TableCell = styled.div<{ isHighlighted?: boolean }>`
-  width: 140px;
-  height: 40px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: ${props => props.isHighlighted ? '#835EEB' : '#575C64'};
-  font-size: ${props => props.isHighlighted ? '20.26px' : '20px'};
-  font-family: 'SUIT Variable', sans-serif;
-  font-weight: 800;
-  line-height: ${props => props.isHighlighted ? '26.34px' : '26px'};
-  word-wrap: break-word;
-`;
-
-const TableCheckCell = styled.div`
-  width: 160px;
-  height: 30px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #835EEB;
-  font-size: 26px;
-  font-family: 'SUIT Variable', sans-serif;
-  font-weight: 800;
-  line-height: 29.9px;
-  word-wrap: break-word;
-`;
-
-const FeatureComparisonTable = styled.div`
-  width: 600px;
-  left: 450px;
-  top: 550px;
-  position: absolute;
-  background: white;
-  outline: 0.50px #8D94A0 solid;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 20px auto;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
-    max-width: 600px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(131, 94, 235, 0.1), transparent);
+    transition: left 0.5s ease;
   }
-`;
-
-const FeatureColumn = styled.div`
-  flex: 1 1 0;
-  padding: 5px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 5px;
-`;
-
-const FeatureTitle = styled.div`
-  width: 77px;
-  height: 25px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #8D94A0;
-  font-size: 12px;
-  font-family: 'SUIT Variable', sans-serif;
-  font-weight: 800;
-  line-height: 13.8px;
-  word-wrap: break-word;
-`;
-
-const FeatureItem = styled.div`
-  width: 230px;
-  height: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #575C64;
-  font-size: 22px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 500;
-  line-height: 25.3px;
-  word-wrap: break-word;
-`;
-
-const CompanyColumn = styled.div`
-  width: 160px;
-  padding: 10px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-`;
-
-const CompanyTitle = styled.div`
-  width: 53px;
-  height: 25px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #8D94A0;
-  font-size: 12px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 15.6px;
-  word-wrap: break-word;
-`;
-
-const CompanyCheckCell = styled.div`
-  width: 100px;
-  height: 60px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-`;
-
-const MathKingBadge = styled.div`
-  width: 160px;
-  padding: 30px 10px;
-  left: 590px;
-  top: 550px;
-  position: absolute;
-  background: #F9F7FF;
-  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.10);
-  border-radius: 10px;
-  outline: 1px #835EEB solid;
-  outline-offset: -1px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+  
+  &:hover::before {
+    left: 100%;
+  }
+  
   @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 20px auto;
+    width: 100%;
+    max-width: 500px;
+  }
+  @media (max-width: 768px) {
+    height: 200px;
+    border-radius: 12px;
+  }
+  @media (max-width: 480px) {
+    height: 150px;
+    font-size: 14px;
   }
 `;
 
-const MathKingTitle = styled.div`
-  width: 112px;
-  height: 50px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #835EEB;
-  font-size: 32px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 40px;
-  word-wrap: break-word;
-`;
-
-const MathKingCheckCell = styled.div`
-  width: 120px;
-  height: 60px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #835EEB;
-  font-size: 40px;
-  font-family: 'SUIT Variable', sans-serif;
-  font-weight: 800;
-  line-height: 46px;
-  word-wrap: break-word;
-`;
-
-const ImageBox = styled.div`
-  width: 400px;
-  height: 400px;
-  left: 240px;
-  top: 600px;
-  position: absolute;
-  background: white;
-  outline: 1px black solid;
-  outline-offset: -1px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin: 20px auto;
-  }
-`;
-
-const ImagePlaceholder = styled.div`
-  width: 160px;
-  height: 120px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: black;
-  font-size: 28px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 42px;
-  word-wrap: break-word;
+// 애니메이션을 위한 스타일 컴포넌트
+const AnimatedTrialStepContainer = styled(TrialStepContainer)<{ isVisible: boolean }>`
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  transition: all 0.6s ease;
 `;
 
 // 요금 플랜 데이터
@@ -690,6 +661,7 @@ const Pricing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [visibleSteps, setVisibleSteps] = useState<boolean[]>([false, false, false, false, false, false]);
 
   // 페이지 진입 시 카드 애니메이션 시작
   React.useEffect(() => {
@@ -699,6 +671,35 @@ const Pricing = () => {
     
     return () => clearTimeout(timer);
   }, []);
+
+  // 스크롤 인터랙션을 위한 useEffect
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const trialSection = document.querySelector('[data-trial-section]');
+      if (trialSection) {
+        const rect = trialSection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * 0.8;
+        
+        if (isVisible) {
+          // 각 단계를 순차적으로 나타나게 함
+          visibleSteps.forEach((_, index) => {
+            setTimeout(() => {
+              setVisibleSteps(prev => {
+                const newSteps = [...prev];
+                newSteps[index] = true;
+                return newSteps;
+              });
+            }, index * 200);
+          });
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // 초기 로드 시에도 체크
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [visibleSteps]);
 
   const handleCardClick = (plan: string) => {
     setSelectedPlan(plan);
@@ -786,86 +787,62 @@ const Pricing = () => {
         </PricingCardsContainer>
       </PricingSection>
 
-      {/* 두 번째 섹션 - 기능 비교 */}
-      <ComparisonSection>
-        <HeaderSection>
-          <HeaderTitle>
-            편리한 문제은행에<br/>수학대왕만의 AI 기술을 더합니다
-          </HeaderTitle>
-          <HeaderSubtitle>
-            기존 문제은행 기능에 수학대왕만의 기술을 더해,<br/>완벽한 1:1 맞춤형 학습 진행이 가능합니다.
-          </HeaderSubtitle>
-        </HeaderSection>
+      {/* 두 번째 섹션 - 무료 체험 신청 */}
+      <TrialSection data-trial-section>
+        <TrialHeader>
+          <TrialTitle>
+            무료 체험 신청 <span>a to z</span>
+          </TrialTitle>
+        </TrialHeader>
 
-        <FeatureBadge>
-          기존 문제은행 기능
-        </FeatureBadge>
-
-        <ComparisonTable>
-          <TableHeader>
-            <div style={{ width: 70, height: 20 }} />
-            <TableHeaderCell>시험지 제작 및 평가</TableHeaderCell>
-            <TableHeaderCell>문제지/교재 제작</TableHeaderCell>
-            <TableHeaderCell>유사문제 추출</TableHeaderCell>
-            <TableHeaderCell>학생별 오답 학습</TableHeaderCell>
-            <TableHeaderCell>개인별 리포트 발행</TableHeaderCell>
-          </TableHeader>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[0]}>
+          <TrialStepContent>
+            <TrialStepNumber>01</TrialStepNumber>
+            <TrialStepText>체험 신청 시,<br/>무료 체험 계정이 문자로 안내돼요</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 1</TrialStepImage>
+        </AnimatedTrialStepContainer>
           
-          <TableRow isHighlighted>
-            <TableCell isHighlighted>수학대왕</TableCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-          </TableRow>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[1]}>
+          <TrialStepContent>
+            <TrialStepNumber>02</TrialStepNumber>
+            <TrialStepText>선생님용 계정에 로그인</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 2</TrialStepImage>
+        </AnimatedTrialStepContainer>
           
-          <TableRow>
-            <TableCell>타사</TableCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-            <TableCheckCell>O</TableCheckCell>
-          </TableRow>
-        </ComparisonTable>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[2]}>
+          <TrialStepContent>
+            <TrialStepNumber>03</TrialStepNumber>
+            <TrialStepText>학생용 앱에 로그인</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 3</TrialStepImage>
+        </AnimatedTrialStepContainer>
 
-        <FeatureComparisonTable>
-          <FeatureColumn>
-            <FeatureTitle> </FeatureTitle>
-            <FeatureItem>실시간 자동 채점</FeatureItem>
-            <FeatureItem>학생 필기 저장 및 연동</FeatureItem>
-            <FeatureItem>AI 힌트 & 피드백</FeatureItem>
-            <FeatureItem>AI 심층 실력 분석</FeatureItem>
-            <FeatureItem>AI 반응형 맞춤문제 추천</FeatureItem>
-            <FeatureItem>환급 장학금 시스템</FeatureItem>
-          </FeatureColumn>
-          
-          <CompanyColumn>
-            <CompanyTitle>타사</CompanyTitle>
-            <CompanyCheckCell />
-            <CompanyCheckCell />
-            <CompanyCheckCell />
-            <CompanyCheckCell />
-            <CompanyCheckCell />
-            <CompanyCheckCell />
-          </CompanyColumn>
-        </FeatureComparisonTable>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[3]}>
+          <TrialStepContent>
+            <TrialStepNumber>04</TrialStepNumber>
+            <TrialStepText>필요한 경우<br/>학생을 추가 하실 수도 있어요</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 4</TrialStepImage>
+        </AnimatedTrialStepContainer>
 
-        <MathKingBadge>
-          <MathKingTitle>수학대왕</MathKingTitle>
-          <MathKingCheckCell>O</MathKingCheckCell>
-          <MathKingCheckCell>O</MathKingCheckCell>
-          <MathKingCheckCell>O</MathKingCheckCell>
-          <MathKingCheckCell>O</MathKingCheckCell>
-          <MathKingCheckCell>O</MathKingCheckCell>
-          <MathKingCheckCell>O</MathKingCheckCell>
-        </MathKingBadge>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[4]}>
+          <TrialStepContent>
+            <TrialStepNumber>05</TrialStepNumber>
+            <TrialStepText>학습지를 배부하고,</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 5</TrialStepImage>
+        </AnimatedTrialStepContainer>
 
-        <ImageBox>
-          <ImagePlaceholder>img</ImagePlaceholder>
-        </ImageBox>
-      </ComparisonSection>
+        <AnimatedTrialStepContainer isVisible={visibleSteps[5]}>
+          <TrialStepContent>
+            <TrialStepNumber>06</TrialStepNumber>
+            <TrialStepText>풀이 결과 대시보드를<br/>확인 하세요!</TrialStepText>
+          </TrialStepContent>
+          <TrialStepImage>이미지 6</TrialStepImage>
+        </AnimatedTrialStepContainer>
+      </TrialSection>
     </PricingPageContainer>
   );
 };
