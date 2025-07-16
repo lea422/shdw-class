@@ -11,8 +11,8 @@ const FooterContainer = styled.div`
   align-items: center;
   
   @media (max-width: 768px) {
-    padding: 48px 0 128px;
-    background: #F3F4F6;
+    padding: 100px 0;
+    background: #F9FAFB;
   }
 `;
 
@@ -28,10 +28,10 @@ const FooterContent = styled.div`
   
   @media (max-width: 768px) {
     width: 375px;
-    padding: 48px 20px 128px 20px;
+    padding: 20px;
     background: #F9FAFB;
     flex-direction: column;
-    gap: 48px;
+    gap: 24px;
     align-items: flex-start;
   }
 `;
@@ -64,20 +64,20 @@ const LinkGroup = styled.div`
 `;
 
 const LinkButton = styled.div`
-  height: 32px;
-  padding: 0 12px 0 8px;
+  height: 38px;
+  padding: 0 16px 0 12px;
   background: rgba(255, 255, 255, 0);
   overflow: hidden;
   border-radius: 9999px;
   justify-content: center;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   display: flex;
   color: #D1D5DB;
-  font-size: 14px;
+  font-size: 18px;
   font-family: Pretendard;
   font-weight: 500;
-  line-height: 18px;
+  line-height: 30px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -88,8 +88,8 @@ const LinkButton = styled.div`
   
   @media (max-width: 768px) {
     color: #575C64;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 15px;
+    line-height: 30px;
   }
 `;
 
@@ -103,21 +103,21 @@ const CompanyInfo = styled.div`
   
   @media (max-width: 768px) {
     width: 100%;
-    gap: 8px;
+    gap: 4px;
   }
 `;
 
 const InfoText = styled.div`
   color: #D1D5DB;
-  font-size: 14px;
+  font-size: 18px;
   font-family: Pretendard;
-  font-weight: 500;
-  line-height: 18px;
+  font-weight: 300;
+  line-height: 30px;
   white-space: nowrap;
   
   @media (max-width: 768px) {
     color: #7A828D;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 18px;
     white-space: normal;
   }
@@ -127,6 +127,7 @@ const InfoLink = styled(InfoText).attrs({ as: 'a' })`
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease;
+  font-weight: 500;
 
   &:hover {
     color: #835EEB;
@@ -134,65 +135,73 @@ const InfoLink = styled(InfoText).attrs({ as: 'a' })`
   
   @media (max-width: 768px) {
     color: #7A828D;
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 20px;
   }
 `;
 
-const StoreButtonGroup = styled.div`
+const SNSButtonGroup = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 16px;
+  align-items: center;
   
   @media (max-width: 768px) {
-    flex-direction: row;
-    gap: 8px;
+    gap: 12px;
   }
 `;
 
-const StoreButton = styled.a`
+const SNSButton = styled.a`
   display: flex;
   align-items: center;
-  gap: 12px;
-  min-width: 140px;
+  justify-content: center;
+  width: 48px;
   height: 48px;
-  padding: 0 24px;
   background: #33373B;
   border: 1px solid #E5E7EB;
-  border-radius: 24px;
-  color: #fff;
-  font-weight: 700;
-  font-size: 18px;
+  border-radius: 50%;
+  color: #D1D5DB;
   text-decoration: none;
-  box-shadow: none;
-  transition: background 0.2s, border 0.2s;
+  transition: all 0.3s ease;
   cursor: pointer;
+  
   &:hover {
-    background: rgba(131, 94, 235, 0.1);
+    background: #835EEB;
     border-color: #835EEB;
-  }
-  img {
-    width: 28px;
-    height: 28px;
-    display: block;
+    color: #ffffff;
+    transform: translateY(-2px);
   }
   
   @media (max-width: 768px) {
     width: 40px;
     height: 40px;
-    min-width: 40px;
-    padding: 0;
     background: #F9FAFB;
     border: 1px solid #E5E7EB;
-    border-radius: 9999px;
-    justify-content: center;
-    align-items: center;
+    color: #575C64;
     
-    img {
-      width: 20px;
-      height: 20px;
+    &:hover {
+      background: #835EEB;
+      border-color: #835EEB;
+      color: #ffffff;
     }
+  }
+`;
+
+const SNSIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -214,7 +223,7 @@ const MobileInfoSection = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 8px;
+    gap: 2px;
     display: flex;
   }
 `;
@@ -224,8 +233,9 @@ const MobileLinkSection = styled.div`
     align-self: stretch;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
     display: inline-flex;
+    margin-top: 12px;
   }
 `;
 
@@ -237,18 +247,13 @@ const Footer = () => {
           <LinkGroup>
             <div style={{ gap: '16px', display: 'flex', flexDirection: 'column' }}>
               <LinkButton as="a" href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fpf.kakao.com%2F_xexdrDxj%2Fchat#login" target="_blank" rel="noopener noreferrer">
-                <div style={{ width: '12px', height: '12px', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ width: '11.25px', height: '10.70px', left: '0.37px', top: '0.65px', position: 'absolute', background: '#575C64' }} />
-                </div>
+                <img src="/footer-headphone.svg" alt="고객센터" style={{ width: '18px', height: '18px' }} />
                 고객센터
               </LinkButton>
             </div>
             <div style={{ gap: '16px', display: 'flex', flexDirection: 'column' }}>
               <LinkButton as="a" href="https://www.teamturing.com/" target="_blank" rel="noopener noreferrer">
-                <div style={{ width: '12px', height: '12px', position: 'relative', overflow: 'hidden' }}>
-                  <div style={{ width: '4.44px', height: '9.68px', left: '11px', top: '10.84px', position: 'absolute', transform: 'rotate(180deg)', transformOrigin: 'top left', background: '#575C64' }} />
-                  <div style={{ width: '4.44px', height: '9.68px', left: '1px', top: '1.16px', position: 'absolute', background: '#575C64' }} />
-                </div>
+                <img src="/footer-problem.svg" alt="회사소개" style={{ width: '18px', height: '18px' }} />
                 회사소개
               </LinkButton>
             </div>
@@ -277,14 +282,22 @@ const Footer = () => {
           </CompanyInfo>
         </LeftSection>
         <FooterActions>
-          <StoreButtonGroup>
-            <StoreButton href="https://play.google.com/store/apps/details?id=com.turing.mathking" target="_blank" rel="noopener noreferrer">
-              <img src="/Google_Play_logo.svg" alt="Google Play" />
-            </StoreButton>
-            <StoreButton href="https://apps.apple.com/kr/app/id6476763492" target="_blank" rel="noopener noreferrer">
-              <img src="/App_Store_logo.svg" alt="App Store" />
-            </StoreButton>
-          </StoreButtonGroup>
+          <SNSButtonGroup>
+            <SNSButton href="https://www.instagram.com/mathking_official/" target="_blank" rel="noopener noreferrer">
+              <SNSIcon>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" fill="currentColor"/>
+                </svg>
+              </SNSIcon>
+            </SNSButton>
+            <SNSButton href="https://www.youtube.com/@mathking_official" target="_blank" rel="noopener noreferrer">
+              <SNSIcon>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="currentColor"/>
+                </svg>
+              </SNSIcon>
+            </SNSButton>
+          </SNSButtonGroup>
         </FooterActions>
       </FooterContent>
     </FooterContainer>

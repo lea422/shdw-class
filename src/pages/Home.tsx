@@ -16,6 +16,10 @@ const HomeContainer = styled.div`
   flex-direction: column;
   scroll-snap-type: y mandatory;
   overflow-y: auto;
+  @media (max-width: 600px) {
+    scroll-snap-type: y mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
 `;
 
 const HeroSection = styled.div`
@@ -486,12 +490,13 @@ const UpdateItem = styled.li`
 
 const FaqSection = styled.section`
   width: 100%;
-  background: transparent;
+  background: #F8F6FF;
   padding: 60px 0 60px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  scroll-snap-align: start;
   @media (max-width: 600px) {
     padding: 32px 0 32px 0;
   }
@@ -808,6 +813,32 @@ const BarNextButton = styled.button`
   justify-content: center;
   &:hover {
     background: rgba(255,255,255,0.12);
+  }
+`;
+
+const WebAppButton = styled.a`
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  background: #007bff;
+  &:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+  }
+  @media (max-width: 600px) {
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 8px;
   }
 `;
 

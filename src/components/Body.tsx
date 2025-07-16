@@ -50,7 +50,7 @@ const BodyContainer = styled.div`
   width: 100vw;
   max-width: 100vw;
   padding-bottom: 30px;
-  background: #F8F6FF;
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -61,7 +61,7 @@ const BodyContainer = styled.div`
 const HeaderSection = styled.div`
   width: 100vw;
   max-width: 1280px;
-  padding: 140px 0 80px;
+  padding: 160px 0 100px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -70,7 +70,7 @@ const HeaderSection = styled.div`
   box-sizing: border-box;
   scroll-snap-align: start;
   @media (max-width: 600px) {
-    padding: 60px 0 20px;
+    padding: 100px 0 40px;
     gap: 12px;
   }
 `;
@@ -135,14 +135,14 @@ const Subtitle = styled.div`
 
 const SectionTitle = styled.div`
   width: 100vw;
-  padding: 90px 0 0;
+  padding: 120px 0 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
   scroll-snap-align: start;
   @media (max-width: 600px) {
-    padding: 50px 0 0;
+    padding: 80px 0 20px;
   }
 `;
 
@@ -166,7 +166,7 @@ const SectionTitleText = styled.div`
 const FeatureGrid = styled.div`
   width: 100vw;
   max-width: 1280px;
-  padding: 70px 0;
+  padding: 90px 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -176,12 +176,12 @@ const FeatureGrid = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     gap: 24px;
-    padding: 70px 0;
+    padding: 90px 0;
   }
   @media (max-width: 375px) {
     width: 375px;
     max-width: 375px;
-    padding: 70px 16px;
+    padding: 90px 16px;
   }
 `;
 
@@ -278,7 +278,7 @@ const FeatureDescription = styled.div`
   color: #4B4B4B;
   font-size: 24px;
   font-family: Pretendard;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 34.80px;
   word-wrap: break-word;
   @media (max-width: 600px) {
@@ -311,102 +311,7 @@ const AnimatedFeatureCard = styled(FeatureCard)`
   }
 `;
 
-const WebAppSection = styled.div`
-  align-self: stretch;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  box-sizing: border-box;
-`;
 
-const WebAppHeader = styled.div`
-  align-self: stretch;
-  padding: 120px 64px 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 30px;
-  box-sizing: border-box;
-  @media (max-width: 600px) {
-    padding: 32px 8px 24px;
-    gap: 12px;
-  }
-`;
-
-const WebAppTitle = styled.div`
-  align-self: stretch;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  @media (max-width: 600px) {
-    font-size: 18px;
-  }
-`;
-
-const WebAppTitleHighlight = styled.span`
-  color: #9C7EEF;
-  font-size: 48px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 62.40px;
-  word-wrap: break-word;
-  @media (max-width: 600px) {
-    font-size: 24px;
-    line-height: 30px;
-  }
-`;
-
-const WebAppTitleText = styled.span`
-  color: black;
-  font-size: 48px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 62.40px;
-  word-wrap: break-word;
-  @media (max-width: 600px) {
-    font-size: 24px;
-    line-height: 30px;
-  }
-`;
-
-const WebAppSubtitle = styled.div`
-  align-self: stretch;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: #858585;
-  font-size: 28px;
-  font-family: Pretendard;
-  font-weight: 400;
-  line-height: 36.40px;
-  word-wrap: break-word;
-  @media (max-width: 600px) {
-    font-size: 15px;
-    line-height: 20px;
-  }
-`;
-
-const WebAppContent = styled.div`
-  align-self: stretch;
-  padding: 32px 8px;
-  overflow: hidden;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  box-sizing: border-box;
-  @media (max-width: 900px) {
-    flex-direction: column;
-    gap: 16px;
-    padding: 12px 4px;
-  }
-`;
 
 const PlatformCard = styled.div`
   width: 250px;
@@ -660,12 +565,19 @@ const DemoSection = styled.div`
   align-items: center;
   width: 100vw;
   box-sizing: border-box;
+  height: 890px;
+  padding: 60px 0;
+  scroll-snap-align: start;
+  @media (max-width: 600px) {
+    height: 800px;
+    padding: 40px 0;
+  }
 `;
 
 const DemoHeader = styled.div`
   align-self: stretch;
-  height: 200px;
-  padding: 60px 64px 20px;
+  height: 180px;
+  padding: 50px 64px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -673,8 +585,8 @@ const DemoHeader = styled.div`
   gap: 20px;
   box-sizing: border-box;
   @media (max-width: 600px) {
-    height: 150px;
-    padding: 32px 8px 12px;
+    height: 120px;
+    padding: 24px 8px 12px;
     gap: 12px;
   }
 `;
@@ -757,7 +669,7 @@ const DemoButtonContainer = styled.div`
 
 const DemoContent = styled.div`
   align-self: stretch;
-  padding: 20px 8px;
+  padding: 30px 8px;
   overflow: hidden;
   display: inline-flex;
   justify-content: flex-start;
@@ -768,10 +680,10 @@ const DemoContent = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     gap: 16px;
-    padding: 12px 4px;
+    padding: 20px 4px;
   }
   @media (max-width: 600px) {
-    padding: 8px 4px;
+    padding: 16px 4px;
   }
 `;
 
@@ -827,13 +739,13 @@ const FeatureBoxContent = styled.div`
 `;
 
 const FeatureImage = styled.div<{ image: string }>`
-  width: 300px;
-  height: 300px;
+  width: 400px;
+  height: 400px;
   background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  border-radius: 20px;
+  border-radius: 24px;
   position: relative;
 
   &::after {
@@ -844,26 +756,26 @@ const FeatureImage = styled.div<{ image: string }>`
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08));
-    border-radius: 20px;
+    border-radius: 24px;
   }
   
   @media (max-width: 900px) {
-    width: 250px;
-    height: 250px;
-    border-radius: 16px;
+    width: 320px;
+    height: 320px;
+    border-radius: 20px;
     
     &::after {
-      border-radius: 16px;
+      border-radius: 20px;
     }
   }
   
   @media (max-width: 600px) {
-    width: 200px;
-    height: 200px;
-    border-radius: 12px;
+    width: 280px;
+    height: 280px;
+    border-radius: 16px;
     
     &::after {
-      border-radius: 12px;
+      border-radius: 16px;
     }
   }
 `;
@@ -1471,54 +1383,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         </FeatureBox>
       </FeatureSectionWrapper>
 
-      {/* <WebAppSectionWrapper>
-        <WebAppHeader>
-          <WebAppTitle>
-            <WebAppTitleHighlight>웹-앱 연동으로</WebAppTitleHighlight>
-            <WebAppTitleText>완성되는 교육 시스템</WebAppTitleText>
-          </WebAppTitle>
-          <WebAppSubtitle>
-            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br />
-            완벽한 교육 생태계를 경험하세요
-          </WebAppSubtitle>
-        </WebAppHeader>
-        <WebAppContent>
-          <PlatformCard>
-            <IconCircle>
-              <div style={{ width: '38px', height: '22px', background: 'white', borderRadius: '2px' }} />
-              <div style={{ width: '6px', height: '4px', background: 'white' }} />
-              <div style={{ width: '30px', height: '3px', background: 'white', borderRadius: '1px' }} />
-            </IconCircle>
-            <PlatformTitle>선생님용 웹사이트</PlatformTitle>
-            <PlatformFeatures>
-              <FeatureItem><CheckBox />클래스 및 학생관리</FeatureItem>
-              <FeatureItem><CheckBox />맞춤형 문제 출제</FeatureItem>
-              <FeatureItem><CheckBox />AI 채점 결과 확인</FeatureItem>
-              <FeatureItem><CheckBox />실력 분석 리포트</FeatureItem>
-            </PlatformFeatures>
-          </PlatformCard>
-          <SyncSection>
-            <SyncIcon>
-              <ArrowIcon className="left" />
-            </SyncIcon>
-            <SyncTitle>실시간 연동</SyncTitle>
-            <SyncSubtitle>데이터 동기화</SyncSubtitle>
-          </SyncSection>
-          <PlatformCard>
-            <IconCircle>
-              <div style={{ width: '18px', height: '34px', background: 'white', borderRadius: '3px' }} />
-              <div style={{ width: '2px', height: '2px', background: '#835EEB', borderRadius: '9999px' }} />
-            </IconCircle>
-            <PlatformTitle>학생용 모바일 앱</PlatformTitle>
-            <PlatformFeatures>
-              <FeatureItem><CheckBox />맞춤형 학습지 수신</FeatureItem>
-              <FeatureItem><CheckBox />AI 힌트 시스템</FeatureItem>
-              <FeatureItem><CheckBox />실시간 채점 피드백</FeatureItem>
-              <FeatureItem><CheckBox />장학금 알림 수신</FeatureItem>
-            </PlatformFeatures>
-          </PlatformCard>
-        </WebAppContent>
-      </WebAppSectionWrapper> */}
+
 
       <DemoSection>
         <DemoHeader>
@@ -1564,13 +1429,47 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             </FeatureBoxSlide>
           </FeatureBoxFlow>
         </DemoContent>
-        <StatsSection>
-          <StatBox>
-            <span>{demoCount}</span>
-          </StatBox>
-          <StatText>명이 이미 체험했습니다</StatText>
-        </StatsSection>
       </DemoSection>
+
+      {/* 웹-앱 연동 섹션 */}
+      <WebAppSection>
+        <WebAppHeader>
+          <WebAppTitle>
+            웹-앱 연동으로 완성되는<br/>교육 시스템
+          </WebAppTitle>
+          <WebAppSubtitle>
+            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
+            완벽한 교육 생태계를 경험하세요
+          </WebAppSubtitle>
+          <WebAppButtons>
+            <WebAppButton 
+              href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WebAppIcon>
+                <img src="/Google_Play_logo.svg" alt="Google Play" />
+              </WebAppIcon>
+              <WebAppButtonText>Google Play</WebAppButtonText>
+            </WebAppButton>
+            <WebAppButton 
+              href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <WebAppIcon>
+                <img src="/App_Store_logo.svg" alt="App Store" />
+              </WebAppIcon>
+              <WebAppButtonText>App Store</WebAppButtonText>
+            </WebAppButton>
+          </WebAppButtons>
+        </WebAppHeader>
+        <WebAppContent>
+          <WebAppImage>
+            {/* 여기에 이미지나 애니메이션을 추가할 수 있습니다 */}
+          </WebAppImage>
+        </WebAppContent>
+      </WebAppSection>
 
       {/* 현장의 목소리 섹션 */}
       <ExperienceSection>
@@ -1634,6 +1533,209 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
+// styled-components for the web-app section
+const WebAppSection = styled.section`
+  width: 100%;
+  background: white;
+  padding: 192px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 128px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  @media (max-width: 900px) {
+    padding: 120px 16px;
+    gap: 80px;
+  }
+  @media (max-width: 600px) {
+    padding: 80px 12px;
+    gap: 60px;
+  }
+`;
+
+const WebAppHeader = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+  @media (max-width: 600px) {
+    gap: 24px;
+  }
+`;
+
+const WebAppTitle = styled.div`
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  color: #33373B;
+  font-size: 48px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 67.20px;
+  word-wrap: break-word;
+  @media (max-width: 900px) {
+    font-size: 36px;
+    line-height: 50px;
+  }
+  @media (max-width: 600px) {
+    font-size: 28px;
+    line-height: 38px;
+  }
+`;
+
+const WebAppSubtitle = styled.div`
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #858585;
+  font-size: 28px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 36.40px;
+  word-wrap: break-word;
+  @media (max-width: 900px) {
+    font-size: 22px;
+    line-height: 30px;
+  }
+  @media (max-width: 600px) {
+    font-size: 18px;
+    line-height: 24px;
+  }
+`;
+
+const WebAppButtons = styled.div`
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  display: flex;
+  @media (max-width: 600px) {
+    gap: 8px;
+  }
+`;
+
+const WebAppButton = styled.a`
+  padding: 8px 16px;
+  background: #33373B;
+  overflow: hidden;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 120px;
+  text-decoration: none;
+  
+  &:hover {
+    background: #835EEB;
+    transform: translateY(-2px);
+  }
+  
+  @media (max-width: 600px) {
+    padding: 6px 12px;
+    width: 100px;
+  }
+`;
+
+const WebAppIcon = styled.div`
+  width: 16px;
+  height: 16px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 600px) {
+    width: 14px;
+    height: 14px;
+  }
+`;
+
+const WebAppButtonText = styled.div`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 21px;
+  word-wrap: break-word;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+`;
+
+const WebAppContent = styled.div`
+  width: 1240px;
+  padding: 0 40px;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  @media (max-width: 1280px) {
+    width: 100%;
+    padding: 0 20px;
+  }
+  @media (max-width: 600px) {
+    padding: 0 12px;
+  }
+`;
+
+const WebAppImage = styled.div`
+  width: 1139px;
+  height: 897px;
+  background: linear-gradient(135deg, #f8f9ff 0%, #f3f4ff 100%);
+  border-radius: 20px;
+  border: 2px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    background: url('/logo.svg') no-repeat center;
+    background-size: contain;
+    opacity: 0.1;
+  }
+  
+  @media (max-width: 1280px) {
+    width: 100%;
+    max-width: 1139px;
+    height: 600px;
+  }
+  @media (max-width: 900px) {
+    height: 400px;
+  }
+  @media (max-width: 600px) {
+    height: 300px;
+    border-radius: 12px;
+  }
+`;
+
 // styled-components for the new section
 const ExperienceSection = styled.section`
   width: 100%;
@@ -1641,13 +1743,18 @@ const ExperienceSection = styled.section`
   justify-content: center;
   align-items: center;
   background: #fff;
-  min-height: 600px;
-  padding: 10px 0;
+  min-height: 800px;
+  padding: 80px 0;
+  scroll-snap-align: start;
+  @media (max-width: 600px) {
+    min-height: 700px;
+    padding: 60px 0;
+  }
 `;
 
 const ExperienceInner = styled.div`
   width: 1440px;
-  height: 600px;
+  height: 620px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1661,14 +1768,14 @@ const ExperienceInner = styled.div`
   @media (max-width: 900px) {
     flex-direction: column;
     height: auto;
-    gap: 32px;
+    gap: 40px;
     align-items: center;
   }
 `;
 
 const ExperienceTextBlock = styled.div`
   width: 488px;
-  height: 486px;
+  height: 520px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1742,7 +1849,7 @@ const ExperienceName = styled.div`
 
 const ExperienceImageBlock = styled.div`
   width: 864px;
-  height: 486px;
+  height: 520px;
   position: relative;
   overflow: hidden;
   outline: 6px #835EED solid;
@@ -1751,12 +1858,12 @@ const ExperienceImageBlock = styled.div`
     width: 100%;
     max-width: 864px;
     height: calc(100vw * 9 / 16);
-    max-height: 400px;
+    max-height: 450px;
   }
   @media (max-width: 600px) {
     width: 100%;
     height: calc(100vw * 9 / 16);
-    max-height: 300px;
+    max-height: 350px;
   }
 `;
 
@@ -2022,11 +2129,16 @@ const FeatureMainTitle = styled.div`
     display: flex;
     flex-direction: column;
     color: #835EEB;
-    font-size: 16px;
+    font-size: 18px;
     font-family: Pretendard;
     font-weight: 700;
-    line-height: 19.20px;
+    line-height: 22px;
     word-wrap: break-word;
+    white-space: nowrap;
+    
+    br {
+      display: none;
+    }
   }
 `;
 
@@ -2045,8 +2157,12 @@ const FeatureCategory = styled.div`
   width: fit-content;
   height: 26px;
   @media (max-width: 600px) {
-    width: 100px;
-    height: 20px;
+    width: fit-content;
+    height: 18px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     background: #F3EFFD;
     border-radius: 50px;
     justify-content: center;
@@ -2068,9 +2184,6 @@ const FeatureCategoryText = styled.div`
   line-height: 26px;
   word-wrap: break-word;
   @media (max-width: 600px) {
-    left: 13.50px;
-    top: 4px;
-    position: absolute;
     text-align: center;
     justify-content: center;
     display: flex;
@@ -2173,15 +2286,6 @@ const FeatureTitleSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const WebAppSectionWrapper = styled.div`
-  width: 100%;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 0;
 `;
 
 export default Body; 

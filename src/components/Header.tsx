@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { ReactComponent as LogoIcon } from '../assets/logo.svg';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const HeaderContainer = styled.header`
@@ -69,7 +68,7 @@ const LogoContainer = styled(Link)`
   }
 `;
 
-const StyledLogoIcon = styled(LogoIcon)`
+const StyledLogoIcon = styled.img`
   width: 26px;
   height: 26px;
   flex-shrink: 0;
@@ -208,7 +207,7 @@ const LoginButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 100px;
+  width: 80px;
   text-align: center;
   display: inline-block;
   &:hover {
@@ -238,7 +237,7 @@ const DownloadButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 100px;
+  width: 80px;
   text-align: center;
   display: inline-block;
   &:hover {
@@ -295,55 +294,81 @@ const MobileDrawer = styled.div.withConfig({ shouldForwardProp: (prop) => prop !
     position: fixed;
     top: 0;
     right: 0;
-    width: 80vw;
-    max-width: 320px;
+    width: 65vw;
+    max-width: 260px;
     height: 100vh;
     background: #fff;
     box-shadow: -2px 0 16px rgba(0,0,0,0.08);
     z-index: 2001;
-    padding: 32px 24px 24px 24px;
+    padding: 20px 16px 16px 16px;
     animation: slideIn 0.3s;
     @keyframes slideIn {
       from { right: -100vw; }
       to { right: 0; }
     }
   }
+  @media (max-width: 480px) {
+    width: 70vw;
+    max-width: 240px;
+    padding: 18px 14px 14px 14px;
+  }
   @media (max-width: 375px) {
-    width: 100vw;
-    max-width: 100vw;
-    padding: 16px 8px 16px 8px;
+    width: 75vw;
+    max-width: 220px;
+    padding: 16px 12px 12px 12px;
+  }
+  @media (max-width: 320px) {
+    width: 80vw;
+    max-width: 200px;
+    padding: 14px 10px 10px 10px;
   }
 `;
 
 const MobileNav = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
-  margin-top: 32px;
+  gap: 24px;
+  margin-top: 24px;
+  @media (max-width: 480px) {
+    gap: 20px;
+    margin-top: 20px;
+  }
   @media (max-width: 375px) {
     gap: 18px;
     margin-top: 18px;
+  }
+  @media (max-width: 320px) {
+    gap: 14px;
+    margin-top: 14px;
   }
 `;
 
 const MobileNavItem = styled(Link)`
   color: #835EEB;
-  font-size: 20px;
+  font-size: 18px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   text-decoration: none;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
+  @media (max-width: 480px) {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
   @media (max-width: 375px) {
     font-size: 15px;
     margin-bottom: 4px;
   }
+  @media (max-width: 320px) {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
 `;
 
 const MobileDrawerButton = styled.a`
-  margin-top: 24px;
-  padding: 12px 0;
+  margin-top: 20px;
+  padding: 10px 0;
   border-radius: 30px;
-  font-size: 18px;
+  font-size: 16px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 600;
   text-decoration: none;
@@ -353,12 +378,24 @@ const MobileDrawerButton = styled.a`
   text-align: center;
   display: block;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  @media (max-width: 480px) {
+    font-size: 15px;
+    padding: 9px 0;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
   @media (max-width: 375px) {
     font-size: 14px;
     padding: 8px 0;
-    margin-top: 12px;
+    margin-top: 16px;
     margin-bottom: 6px;
+  }
+  @media (max-width: 320px) {
+    font-size: 13px;
+    padding: 7px 0;
+    margin-top: 14px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -374,7 +411,7 @@ const Header = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      setIsScrolled(window.scrollY > 800);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -392,7 +429,7 @@ const Header = () => {
     <HeaderContainer>
       <HeaderInner>
         <LogoContainer to="/">
-          <StyledLogoIcon />
+          <StyledLogoIcon src="/logo.svg" alt="수학대왕 CLASS 로고" />
           <LogoText1>수학대왕</LogoText1>
           <LogoText2>CLASS</LogoText2>
         </LogoContainer>
