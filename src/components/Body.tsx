@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const fadeInUp = keyframes`
@@ -43,6 +43,15 @@ const blink = keyframes`
   50% {
     opacity: 0.6;
     transform: scale(0.95);
+  }
+`;
+
+const highlightAnimation = keyframes`
+  0% {
+    background-size: 0% 100%;
+  }
+  100% {
+    background-size: 60% 100%;
   }
 `;
 
@@ -1234,8 +1243,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     <BodyContainer ref={ref}>
       <AnimatedHeaderSection ref={headerRef}>
         <Title>
-          <TitleHighlight>수학대왕 클래스의</TitleHighlight>
-          <TitleText>핵심 기능</TitleText>
+          <TitleText>수학대왕에서만 만날 수 있는<br />특별한 기능을 소개합니다</TitleText>
         </Title>
         <Subtitle>
           AI 기술로 완성된 체계적인 수학 학습 관리 시스템
@@ -1248,14 +1256,17 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
             <FeatureCategory>
               <FeatureCategoryText>
-                맞춤형 학습지 제작
+                학습지 자동 제작
               </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              AI 기반 실시간<br/>맞춤 문제 추천
+              AI가 만들어주는<br/>
+              <HighlightedText isVisible={visibleTexts.has(0)}>
+                1:1 개별 맞춤 학습지
+              </HighlightedText>
             </FeatureMainTitle>
             <FeatureDesc>
-              학생별 실력과 취약점을 분석하여<br/>최적의 문제를 자동으로 추천합니다.
+              학생별로 서로 다른 실력에 맞게,<br/>최적의 문제로 학습지를 자동 생성해 드려요!
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(0)}>
@@ -1271,14 +1282,17 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
             <FeatureCategory>
               <FeatureCategoryText>
-                맞춤형 학습지 제작
+                오답 완벽 정복
               </FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              오답 클리닉<br/>자동 & 무한 배부
+              <HighlightedText isVisible={visibleTexts.has(1)}>
+                자동 오답 클리닉
+              </HighlightedText>
+              무한 제공
             </FeatureMainTitle>
             <FeatureDesc>
-              틀린 문제를 자동으로 분석하여<br/>유사 문제를 무제한 제공합니다.
+              더 이상 틀리지 않을 때까지,<br/>오답 유사 문제를 자동으로 출제해 드려요!
             </FeatureDesc>
             </FeatureTextBlock>
           <GifBox isZoomed={zoomedBoxes.has(1)}>
@@ -2142,12 +2156,29 @@ const FeatureMainTitle = styled.div`
   }
 `;
 
+const HighlightedText = styled.span<{ isVisible: boolean }>`
+  background: linear-gradient(180deg, transparent 0%, transparent 40%, #F3EFFD 40%, #F3EFFD 100%);
+  background-size: 0% 100%;
+  background-repeat: no-repeat;
+  ${props => props.isVisible && css`
+    animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
+  `}
+  @media (max-width: 600px) {
+    background: linear-gradient(180deg, transparent 0%, transparent 40%, #F3EFFD 40%, #F3EFFD 100%);
+    background-size: 0% 100%;
+    background-repeat: no-repeat;
+    ${props => props.isVisible && css`
+      animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
+    `}
+  }
+`;
+
 const FeatureCategory = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
-  background: #835EEB;
+  background: #F3EFFD;
   overflow: hidden;
   border-radius: 50px;
   justify-content: center;
@@ -2177,10 +2208,10 @@ const FeatureCategoryText = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: white;
+  color: #835EEB;
   font-size: 20px;
   font-family: Pretendard;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 26px;
   word-wrap: break-word;
   @media (max-width: 600px) {
@@ -2191,7 +2222,7 @@ const FeatureCategoryText = styled.div`
     color: #835EEB;
     font-size: 10px;
     font-family: Pretendard;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 13px;
     word-wrap: break-word;
   }

@@ -118,7 +118,7 @@ const ContentContainer = styled.div`
 `;
 
 const TitleSection = styled.div`
-  width: 405px;
+  width: 600px;
   height: 110.67px;
   position: relative;
   @media (max-width: 600px) {
@@ -157,7 +157,7 @@ const PreTitle = styled.div`
 
 const MainTitle = styled.div`
   left: 0px;
-  top: 43.67px;
+  top: 50px;
   position: absolute;
   justify-content: flex-end;
   display: flex;
@@ -178,29 +178,7 @@ const MainTitle = styled.div`
   }
 `;
 
-const ClassText = styled.div`
-  left: 202px;
-  top: 43px;
-  position: absolute;
-  justify-content: flex-end;
-  display: flex;
-  flex-direction: column;
-  color: #835EEB;
-  font-size: 64px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 64px;
-  word-wrap: break-word;
-  @media (max-width: 600px) {
-    position: static;
-    font-size: 32px;
-    line-height: 38px;
-    text-align: center;
-    width: auto;
-    display: inline;
-    margin-left: 8px;
-  }
-`;
+
 
 const TitleRow = styled.div`
   display: flex;
@@ -219,23 +197,25 @@ const Description = styled.div`
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.1px;
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 40px;
   @media (max-width: 600px) {
     font-size: 14px;
     line-height: 20px;
-    margin-bottom: 20px;
-    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    text-align: left;
     max-width: 300px;
   }
 `;
 
 const PrimaryButton = styled.button`
-  width: 250px;
-  padding: 18px 30px;
+  width: 200px;
+  padding: 18px 15px;
   border-radius: 15px;
   font-size: 18px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.45;
   letter-spacing: -0.09px;
   cursor: pointer;
@@ -281,7 +261,7 @@ const PrimaryButton = styled.button`
     font-size: 16px;
     padding: 12px 24px;
     border-radius: 8px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 20px;
   }
 `;
@@ -917,46 +897,41 @@ const Home = () => {
       id: 1,
       image: '/Hero-1.png',
       imageMobile: '/mobile-hero-1.png',
-      preTitle: 'AI가 바꾸는 수학 교육의 미래',
+      preTitle: 'No.1 AI 학습 솔루션',
       mainTitle: '수학대왕',
-      classText: 'CLASS',
-      description: '교사의 업무는 줄이고, 학생의 성과는 높이는<br />AI 기반 혁신적 수학 학습관리 시스템'
+      description: '압도적인 AI 기술로 실현하는<br />가장 완벽한 1:1 밀착 관리'
     },
     {
       id: 2,
       image: '/Hero-2.png',
       imageMobile: '/mobile-hero-2.png',
-      preTitle: '혁신적인 학습 관리 시스템',
-      mainTitle: '수학대왕',
-      classText: 'CLASS',
-      description: '개인별 맞춤 학습과 실시간 피드백으로<br />학습 효과를 극대화하는 스마트 교육 플랫폼'
+      preTitle: 'KTEA 한국브랜드평가대상',
+      mainTitle: '2년 연속 1위 수상',
+      description: '누적 가입자 200만 명 달성!<br />초중고 모든 교과과정에 최적화된 학습 플랫폼'
     },
     {
       id: 3,
       image: '/Hero-3.png',
       imageMobile: '/mobile-hero-3.png',
-      preTitle: '스마트한 AI 채점 시스템',
-      mainTitle: '수학대왕',
-      classText: 'CLASS',
-      description: '필기 인식 기반 정확한 채점과<br />즉시 피드백으로 학습 효율 극대화'
+      preTitle: 'ChatGPT 개발사',
+      mainTitle: 'OpenAI 공식 협업 기업',
+      description: '서술형 풀이 채점부터 유사문제 검색까지<br />차원이 다른 AI 기술을 제공합니다'
     },
     {
       id: 4,
       image: '/Hero-4.png',
       imageMobile: '/mobile-hero-4.png',
-      preTitle: '맞춤형 학습 솔루션',
-      mainTitle: '수학대왕',
-      classText: 'CLASS',
-      description: '학생 개개인의 실력에 맞춘<br />개인별 최적화된 학습 경험 제공'
+      preTitle: '업계 최고의 AI 기술력',
+      mainTitle: '특허 19종 등록 완료',
+      description: '문제은행을 넘어 AI 튜터로!<br />가장 수학을 잘 하는 AI를 만듭니다'
     },
     {
       id: 5,
       image: '/Hero-5.png',
       imageMobile: '/mobile-hero-5.png',
-      preTitle: '미래를 여는 교육 혁신',
-      mainTitle: '수학대왕',
-      classText: 'CLASS',
-      description: 'AI 기술로 완성된<br />차세대 수학 교육의 새로운 패러다임'
+      preTitle: '개념부터 고난도까지',
+      mainTitle: '최대 규모의 학습 콘텐츠',
+      description: '학생들의 성적 상승,<br />국내 최고의 전문가들이 함께 합니다'
     }
   ];
 
@@ -1114,14 +1089,13 @@ const Home = () => {
               <PreTitle>{slides[currentSlide].preTitle}</PreTitle>
               <TitleRow>
                 <MainTitle>{slides[currentSlide].mainTitle}</MainTitle>
-                <ClassText>{slides[currentSlide].classText}</ClassText>
               </TitleRow>
             </TitleSection>
             <Description
               dangerouslySetInnerHTML={{ __html: slides[currentSlide].description }}
             />
             <PrimaryButton onClick={handleOpenDialog}>
-              무료 체험 시작하기
+              무료체험 시작하기
             </PrimaryButton>
             <IndicatorBarContainer>
               <IndicatorDots>

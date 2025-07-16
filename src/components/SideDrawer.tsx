@@ -59,13 +59,13 @@ const FloatingButton = styled.button`
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 80px;
-  height: 80px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   background: linear-gradient(135deg, #835EEB, #6B4BC4);
   border: none;
   color: white;
-  font-size: 14px;
+  font-size: 15.4px;
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 8px 32px rgba(131, 94, 235, 0.3);
@@ -77,6 +77,7 @@ const FloatingButton = styled.button`
   justify-content: center;
   gap: 2px;
   line-height: 1.2;
+  text-align: center;
   animation: ${pulse} 2s ease-in-out infinite;
   overflow: hidden;
 
@@ -271,8 +272,8 @@ const SideDrawer: React.FC = () => {
 
   return (
     <>
-      <FloatingButton onClick={handleOpen} aria-label="상담 신청 열기">
-        상담 신청
+      <FloatingButton onClick={handleOpen} aria-label="무료체험 신청 열기">
+        무료체험<br />신청
       </FloatingButton>
       <DrawerOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
       <DrawerContainer $isOpen={isOpen}>

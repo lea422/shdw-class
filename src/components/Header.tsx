@@ -121,10 +121,20 @@ const LogoText2 = styled.div`
 const RightSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 50px;
 
   @media (max-width: 768px) {
-    gap: 15px;
+    gap: 25px;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
   }
 `;
 
@@ -193,21 +203,24 @@ const NavItem = styled(Link)<{ $color: string }>`
 const LoginButton = styled.a`
   padding: 8px 16px;
   border-radius: 30px;
-  font-size: 15px;
+  font-size: 13px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
   background: #835EEB;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
   @media (max-width: 600px) {
-    font-size: 13px;
+    font-size: 11px;
     padding: 6px 12px;
   }
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 80px;
+  width: 64px;
   text-align: center;
   display: inline-block;
   &:hover {
@@ -227,9 +240,9 @@ const LoginButton = styled.a`
 const DownloadButton = styled.a`
   padding: 8px 16px;
   border-radius: 30px;
-  font-size: 15px;
+  font-size: 13px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
@@ -237,7 +250,7 @@ const DownloadButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 80px;
+  width: 64px;
   text-align: center;
   display: inline-block;
   &:hover {
@@ -248,6 +261,9 @@ const DownloadButton = styled.a`
   }
   &:active {
     transform: scale(0.98);
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
   }
   @media (max-width: 600px) {
     display: none;
@@ -439,20 +455,22 @@ const Header = () => {
             <NavItem to="/pricing" $color={navColor} onClick={() => handleNavClick('/pricing')}>요금안내</NavItem>
             <NavItem to="/notice" $color={navColor} onClick={() => handleNavClick('/notice')}>공지사항</NavItem>
           </NavContainer>
-          <DownloadButton 
-            href={DOWNLOAD_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            앱 다운로드
-          </DownloadButton>
-          <LoginButton 
-            href={LOGIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            로그인
-          </LoginButton>
+          <ButtonGroup>
+            <DownloadButton 
+              href={DOWNLOAD_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              앱 다운로드
+            </DownloadButton>
+            <LoginButton 
+              href={LOGIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              로그인
+            </LoginButton>
+          </ButtonGroup>
           <HamburgerButton onClick={() => setDrawerOpen(true)}>
             <FiMenu size={28} color="#835EEB" />
           </HamburgerButton>
