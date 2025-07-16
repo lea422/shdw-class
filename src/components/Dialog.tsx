@@ -35,6 +35,13 @@ const DialogContainer = styled.div`
       transform: translateY(0);
     }
   }
+
+  @media (max-width: 600px) {
+    max-width: 90vw;
+    margin: 20px;
+    padding: 1rem 1rem;
+    border-radius: 12px;
+  }
 `;
 
 const DialogHeader = styled.div`
@@ -43,6 +50,10 @@ const DialogHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media (max-width: 600px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const DialogTitleWrapper = styled.div`
@@ -55,6 +66,11 @@ const DialogTitle = styled.h3`
   color: #000000;
   margin-bottom: 0.5rem;
   font-family: 'Pretendard', sans-serif;
+
+  @media (max-width: 600px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
 `;
 
 const DialogDescription = styled.p`
@@ -62,6 +78,11 @@ const DialogDescription = styled.p`
   font-size: 0.875rem;
   font-family: 'Pretendard', sans-serif;
   line-height: 1.5;
+
+  @media (max-width: 600px) {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -84,6 +105,14 @@ const CloseButton = styled.button`
   &:hover {
     background-color: rgba(131, 94, 235, 0.1);
     color: #835EEB;
+  }
+
+  @media (max-width: 600px) {
+    width: 35px;
+    height: 35px;
+    font-size: 1.25rem;
+    margin-left: 0.5rem;
+    margin-top: -0.25rem;
   }
 `;
 

@@ -20,57 +20,30 @@ const slideOut = keyframes`
   }
 `;
 
-const pulse = keyframes`
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-`;
 
-const bounce = keyframes`
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(-4px);
-  }
-`;
 
-const sparkle = keyframes`
-  0%, 100% {
-    opacity: 0;
-    transform: scale(0) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1) rotate(180deg);
-  }
-`;
-
-const FloatingButton = styled.button`
+const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
   bottom: 30px;
   right: 30px;
+  z-index: 9999;
+  opacity: ${props => props.$isVisible ? 1 : 0};
+  transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
+`;
+
+const FloatingButton = styled.button`
   width: 88px;
   height: 88px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #835EEB, #6B4BC4);
+  background: #835EEB;
   border: none;
   color: white;
   font-size: 15.4px;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(131, 94, 235, 0.3);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 9999;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -78,53 +51,23 @@ const FloatingButton = styled.button`
   gap: 2px;
   line-height: 1.2;
   text-align: center;
-  animation: ${pulse} 2s ease-in-out infinite;
   overflow: hidden;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
 
-  &::after {
-    content: '✨';
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    font-size: 16px;
-    animation: ${sparkle} 3s ease-in-out infinite;
-    pointer-events: none;
-  }
+
+
 
   &:hover {
     transform: translateY(-6px) scale(1.15);
-    box-shadow: 0 16px 48px rgba(131, 94, 235, 0.5);
-    animation: ${bounce} 0.6s ease-in-out;
-    
-    &::before {
-      left: 100%;
-    }
-    
-    &::after {
-      animation: ${sparkle} 0.8s ease-in-out infinite;
-    }
   }
 
   &:active {
     transform: translateY(-2px) scale(0.9);
-    box-shadow: 0 6px 20px rgba(131, 94, 235, 0.3);
     transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 8px 32px rgba(131, 94, 235, 0.3), 0 0 0 3px rgba(131, 94, 235, 0.2);
   }
 `;
 
@@ -161,23 +104,7 @@ const DrawerContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const DrawerHeader = styled.div`
-  padding: 24px;
-  border-bottom: 1px solid #E5E7EB;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: linear-gradient(135deg, #f8f9ff, #f3f4ff);
-`;
 
-const DrawerTitle = styled.h2`
-  margin: 0;
-  color: #33373B;
-  font-size: 20px;
-  font-weight: 700;
-  font-family: 'Pretendard', sans-serif;
-  transition: color 0.3s ease;
-`;
 
 const CloseButton = styled.button`
   background: none;
@@ -186,27 +113,17 @@ const CloseButton = styled.button`
   color: #6B7280;
   cursor: pointer;
   padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 40px;
-  height: 40px;
+  transition: color 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background: rgba(131, 94, 235, 0.1);
     color: #835EEB;
-    transform: scale(1.1);
-  }
-
-  &:active {
-    transform: scale(0.9);
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(131, 94, 235, 0.2);
   }
 `;
 
@@ -217,23 +134,19 @@ const DrawerContent = styled.div`
   background: white;
 `;
 
-const DrawerDescription = styled.p`
-  color: #6B7280;
-  font-size: 14px;
-  line-height: 1.6;
-  margin-bottom: 24px;
-  font-family: 'Pretendard', sans-serif;
-  padding: 16px;
-  background: #f8f9ff;
-  border-radius: 8px;
-  border-left: 4px solid #835EEB;
-`;
 
-const SideDrawer: React.FC = () => {
+
+interface SideDrawerProps {
+  isModalOpen?: boolean;
+  onDrawerStateChange?: (isOpen: boolean) => void;
+}
+
+const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerStateChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
     setIsOpen(true);
+    onDrawerStateChange?.(true);
     // 키보드 포커스 관리
     setTimeout(() => {
       const closeButton = document.querySelector('[data-close-button]') as HTMLElement;
@@ -243,6 +156,8 @@ const SideDrawer: React.FC = () => {
 
   const handleClose = () => {
     setIsOpen(false);
+    onDrawerStateChange?.(false);
+    document.body.style.overflow = 'auto';
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
@@ -266,27 +181,31 @@ const SideDrawer: React.FC = () => {
 
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'auto';
     };
   }, [isOpen]);
 
   return (
     <>
-      <FloatingButton onClick={handleOpen} aria-label="무료체험 신청 열기">
-        무료체험<br />신청
-      </FloatingButton>
+      <FloatingButtonContainer $isVisible={!isModalOpen}>
+        <FloatingButton onClick={handleOpen} aria-label="무료체험 신청 열기">
+          무료체험<br />신청
+        </FloatingButton>
+      </FloatingButtonContainer>
       <DrawerOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
       <DrawerContainer $isOpen={isOpen}>
-        <DrawerHeader>
-          <DrawerTitle>상담 신청</DrawerTitle>
-          <CloseButton data-close-button onClick={handleClose} aria-label="닫기">
-            ×
-          </CloseButton>
-        </DrawerHeader>
         <DrawerContent>
-          <DrawerDescription>
-            궁금한 점이 있으신가요? 아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
-          </DrawerDescription>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+            <h2 style={{ margin: 0, color: '#33373B', fontSize: '20px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
+              상담 신청
+            </h2>
+            <CloseButton data-close-button onClick={handleClose} aria-label="닫기">
+              ×
+            </CloseButton>
+          </div>
+          <p style={{ color: '#6B7280', fontSize: '14px', lineHeight: '1.6', marginBottom: '24px', fontFamily: 'Pretendard, sans-serif' }}>
+            궁금한 점이 있으신가요?<br />아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
+          </p>
           <ConsultationForm onClose={handleClose} />
         </DrawerContent>
       </DrawerContainer>

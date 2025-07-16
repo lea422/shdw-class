@@ -204,7 +204,7 @@ const Description = styled.div`
     line-height: 20px;
     margin-top: 15px;
     margin-bottom: 30px;
-    text-align: left;
+    text-align: center;
     max-width: 300px;
   }
 `;
@@ -213,7 +213,7 @@ const PrimaryButton = styled.button`
   width: 200px;
   padding: 18px 15px;
   border-radius: 15px;
-  font-size: 18px;
+  font-size: 20px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 500;
   line-height: 1.45;
@@ -267,15 +267,16 @@ const PrimaryButton = styled.button`
 `;
 
 const IndicatorBarContainer = styled.div`
-  width: 250px;
+  width: 200px;
   margin: 50px 0 0 0;
+  margin-left: -15px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 16px;
+  justify-content: space-between;
   @media (max-width: 600px) {
     width: 100%;
     margin: 20px 0 0 0;
+    margin-left: 0;
     gap: 0;
     justify-content: center;
     flex-direction: column;
@@ -286,7 +287,7 @@ const IndicatorDots = styled.div`
   align-items: center;
   gap: 12px;
   flex: 1;
-  margin-left: 10px;
+  justify-content: center;
   @media (max-width: 600px) {
     gap: 8px;
     margin-left: 0;
@@ -317,10 +318,12 @@ const IndicatorPause = styled.button`
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  padding: 0 8px;
+  padding: 8px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
+  line-height: 1;
   &:hover {
     opacity: 0.7;
   }
@@ -332,12 +335,14 @@ const IndicatorNext = styled.button`
   background: none;
   border: none;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
-  padding: 0 8px;
+  padding: 8px 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
+  line-height: 1;
   &:hover {
     opacity: 0.7;
   }
@@ -884,10 +889,16 @@ const FaqAccordion: React.FC<{ faqs: { question: string; answer: string }[] }> =
   );
 };
 
-const Home = () => {
+interface HomeProps {
+  isModalOpen: boolean;
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [slideTranslateX, setSlideTranslateX] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -1017,19 +1028,23 @@ const Home = () => {
 
   // 히어로 슬라이드 애니메이션
   useEffect(() => {
+    if (isPaused) return; // 일시정지 상태면 자동 전환 중단
+    
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [slides.length]);
+  }, [slides.length, isPaused]);
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
+    setIsModalOpen(true);
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
+    setIsModalOpen(false);
   };
 
   const scrollToBody = () => {
@@ -1038,6 +1053,10 @@ const Home = () => {
 
   const handleIndicatorClick = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  const handlePauseToggle = () => {
+    setIsPaused(!isPaused);
   };
 
   const faqs = [
@@ -1108,8 +1127,11 @@ const Home = () => {
                   />
                 ))}
               </IndicatorDots>
-              <IndicatorPause aria-label="일시정지">
-                &#10073;&#10073;
+              <IndicatorPause 
+                aria-label="일시정지"
+                onClick={handlePauseToggle}
+              >
+                {isPaused ? '▶' : '⏸'}
               </IndicatorPause>
               <IndicatorNext
                 aria-label="다음 슬라이드"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
@@ -21,19 +21,29 @@ const MainContent = styled.main`
 `;
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const handleDrawerStateChange = (isOpen: boolean) => {
+    setIsDrawerOpen(isOpen);
+  };
+
   return (
     <Router>
       <AppContainer>
         <Header />
         <MainContent>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/notice/*" element={<Notice />} />
           </Routes>
         </MainContent>
         <Footer />
-        <SideDrawer />
+        <SideDrawer 
+          isModalOpen={isModalOpen || isDrawerOpen} 
+          onDrawerStateChange={handleDrawerStateChange}
+        />
       </AppContainer>
     </Router>
   );

@@ -48,10 +48,10 @@ const blink = keyframes`
 
 const highlightAnimation = keyframes`
   0% {
-    background-size: 0% 100%;
+    background-size: 0% 50%;
   }
   100% {
-    background-size: 60% 100%;
+    background-size: 100% 50%;
   }
 `;
 
@@ -705,24 +705,60 @@ const slideLeft = keyframes`
   }
 `;
 
+const slideLeftMobile = keyframes`
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+`;
+
+const cardFlipMobile = keyframes`
+  0% {
+    transform: translateX(0) rotateY(0deg);
+  }
+  20% {
+    transform: translateX(-20%) rotateY(3deg);
+  }
+  40% {
+    transform: translateX(-40%) rotateY(0deg);
+  }
+  60% {
+    transform: translateX(-60%) rotateY(-3deg);
+  }
+  80% {
+    transform: translateX(-80%) rotateY(0deg);
+  }
+  100% {
+    transform: translateX(-100%) rotateY(0deg);
+  }
+`;
+
 const FeatureBoxFlow = styled.div`
   display: flex;
-  gap: 20px;
-  animation: ${slideLeft} 30s linear infinite;
+  gap: 40px;
+  animation: ${slideLeft} 25s linear infinite;
   box-sizing: border-box;
   @media (max-width: 900px) {
-    gap: 12px;
-    animation: ${slideLeft} 25s linear infinite;
+    gap: 24px;
+    animation: ${slideLeft} 20s linear infinite;
   }
   @media (max-width: 600px) {
     gap: 8px;
-    animation: ${slideLeft} 20s linear infinite;
+    animation: ${cardFlipMobile} 20s ease-in-out infinite;
+    animation-fill-mode: both;
+    perspective: 1000px;
   }
 `;
 
 const FeatureBoxSlide = styled.div`
   flex-shrink: 0;
   box-sizing: border-box;
+  @media (max-width: 600px) {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
 `;
 
 const FeatureBoxContent = styled.div`
@@ -1063,6 +1099,8 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
   const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
   const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [currentDemoSlide, setCurrentDemoSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
 
   // 테스티모니얼 데이터
@@ -1097,6 +1135,56 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       setDemoCount(parseInt(savedCount, 10));
     }
   }, []);
+
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
+  // 모바일 슬라이드 핸들러
+  const handlePrevDemoSlide = () => {
+    setCurrentDemoSlide((prev) => (prev === 0 ? 6 : prev - 1));
+  };
+
+  const handleNextDemoSlide = () => {
+    setCurrentDemoSlide((prev) => (prev === 6 ? 0 : prev + 1));
+  };
+
+  const [noTransition, setNoTransition] = useState(false);
+
+  // 자동 슬라이드 (모바일에서만)
+  useEffect(() => {
+    if (!isMobile) return;
+    
+    const interval = setInterval(() => {
+      setCurrentDemoSlide((prev) => {
+        const nextSlide = prev + 1;
+        // 7번 슬라이드(복제된 첫 번째)에 도달하면 0번으로 점프
+        if (nextSlide === 7) {
+          setNoTransition(true);
+          setTimeout(() => {
+            setCurrentDemoSlide(0);
+            setTimeout(() => {
+              setNoTransition(false);
+            }, 50);
+          }, 1200);
+          return 7;
+        }
+        return nextSlide;
+      });
+    }, 2000); // 2초마다 다음 슬라이드로
+
+    return () => clearInterval(interval);
+  }, [isMobile]);
 
   // 테스티모니얼 변경 시 자연스러운 전환 효과
   useEffect(() => {
@@ -1161,7 +1249,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   useEffect(() => {
     const handleScroll = () => {
       const newZoomedBoxes = new Set<number>();
-      const newVisibleTexts = new Set<number>(Array.from(visibleTexts)); // 기존 보인 텍스트 유지
+      const newVisibleTexts = new Set<number>();
       
       featureBoxRefs.current.forEach((ref, index) => {
         if (ref) {
@@ -1402,7 +1490,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       <DemoSection>
         <DemoHeader>
           <DemoTitle>
-            수학대왕 APP 기능을 직접 체험해보세요!
+            수학대왕 APP 기능을<br/>직접 체험해보세요!
           </DemoTitle>
           <DemoSubtitle>
             교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
@@ -1419,29 +1507,83 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           </DemoButton>
         </DemoButtonContainer>
         <DemoContent>
-          <FeatureBoxFlow>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-1.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-2.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-3.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-4.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-5.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-6.png" />
-            </FeatureBoxSlide>
-            <FeatureBoxSlide>
-              <FeatureImage image="/feature-slide-7.png" />
-            </FeatureBoxSlide>
-          </FeatureBoxFlow>
+          {isMobile ? (
+            <MobileDemoSlider>
+              <MobileDemoSlideContainer>
+                {[
+                  "/feature-slide-1.png",
+                  "/feature-slide-2.png", 
+                  "/feature-slide-3.png",
+                  "/feature-slide-4.png",
+                  "/feature-slide-5.png",
+                  "/feature-slide-6.png",
+                  "/feature-slide-7.png",
+                  // 무한 스크롤을 위한 복제된 이미지들
+                  "/feature-slide-1.png",
+                  "/feature-slide-2.png", 
+                  "/feature-slide-3.png",
+                  "/feature-slide-4.png",
+                  "/feature-slide-5.png",
+                  "/feature-slide-6.png",
+                  "/feature-slide-7.png"
+                ].map((image, index) => (
+                  <MobileDemoSlide 
+                    key={index}
+                    noTransition={noTransition}
+                    style={{ transform: `translateX(-${currentDemoSlide * 100}%)` }}
+                  >
+                    <FeatureImage image={image} />
+                  </MobileDemoSlide>
+                ))}
+              </MobileDemoSlideContainer>
+            </MobileDemoSlider>
+          ) : (
+            <FeatureBoxFlow>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-1.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-2.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-3.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-4.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-5.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-6.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-7.png" />
+              </FeatureBoxSlide>
+              {/* 무한 반복을 위한 복제된 이미지들 */}
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-1.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-2.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-3.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-4.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-5.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-6.png" />
+              </FeatureBoxSlide>
+              <FeatureBoxSlide>
+                <FeatureImage image="/feature-slide-7.png" />
+              </FeatureBoxSlide>
+            </FeatureBoxFlow>
+          )}
         </DemoContent>
       </DemoSection>
 
@@ -2045,7 +2187,7 @@ const SliderArrow = styled.button`
 
 const FeatureSectionWrapper = styled.div`
   width: 1280px;
-  margin: 0 auto 60px auto;
+  margin: 0 auto 150px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2054,7 +2196,7 @@ const FeatureSectionWrapper = styled.div`
   padding: 0;
   @media (max-width: 600px) {
     width: 100%;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 80px auto;
     gap: 40px;
     padding: 0 20px;
   }
@@ -2107,12 +2249,14 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
     margin: 0;
     opacity: 1;
     transform: none;
+    text-align: center;
   }
   @media (max-width: 375px) {
     width: 343px;
     gap: 8px;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
 `;
 
@@ -2138,35 +2282,46 @@ const FeatureMainTitle = styled.div`
   text-align: left;
   width: 100%;
   @media (max-width: 600px) {
-    text-align: center;
+    text-align: center !important;
     justify-content: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: #835EEB;
     font-size: 18px;
     font-family: Pretendard;
     font-weight: 700;
     line-height: 22px;
     word-wrap: break-word;
-    white-space: nowrap;
+    white-space: normal;
+    width: 100%;
     
     br {
-      display: none;
+      display: block;
     }
   }
 `;
 
 const HighlightedText = styled.span<{ isVisible: boolean }>`
-  background: linear-gradient(180deg, transparent 0%, transparent 40%, #F3EFFD 40%, #F3EFFD 100%);
-  background-size: 0% 100%;
+  display: inline-block;
+  width: fit-content;
+  background: linear-gradient(180deg, transparent 0%, transparent 50%, #F3EFFD 50%, #F3EFFD 100%);
+  background-size: 0% 50%;
   background-repeat: no-repeat;
+  background-position: left bottom;
+  box-sizing: border-box;
   ${props => props.isVisible && css`
     animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
   `}
   @media (max-width: 600px) {
-    background: linear-gradient(180deg, transparent 0%, transparent 40%, #F3EFFD 40%, #F3EFFD 100%);
-    background-size: 0% 100%;
+    display: inline-block;
+    width: fit-content;
+    background: linear-gradient(180deg, transparent 0%, transparent 50%, #F3EFFD 50%, #F3EFFD 100%);
+    background-size: 0% 50%;
     background-repeat: no-repeat;
+    background-position: left bottom;
+    box-sizing: border-box;
+    text-align: center;
     ${props => props.isVisible && css`
       animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
     `}
@@ -2240,10 +2395,11 @@ const FeatureDesc = styled.div`
   max-width: 450px;
   @media (max-width: 600px) {
     opacity: 0.60;
-    text-align: center;
+    text-align: center !important;
     justify-content: center;
     display: flex;
     flex-direction: column;
+    align-items: center;
     color: #4B4B4B;
     font-size: 12px;
     font-family: Pretendard;
@@ -2318,5 +2474,33 @@ const FeatureTitleSection = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+// 모바일 데모 슬라이드 컴포넌트들
+const MobileDemoSlider = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+`;
+
+const MobileDemoSlideContainer = styled.div`
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+`;
+
+const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  transition: ${props => props.noTransition ? 'none' : 'transform 1.2s ease-in-out'};
+  flex-shrink: 0;
+`;
+
+
 
 export default Body; 

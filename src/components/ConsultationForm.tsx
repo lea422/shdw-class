@@ -51,37 +51,7 @@ const Input = styled.input`
   }
 `;
 
-const TextArea = styled.textarea`
-  padding: 0.875rem;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-family: 'Pretendard', sans-serif;
-  min-height: 72px;
-  resize: vertical;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  background: white;
 
-  &:focus {
-    outline: none;
-    border-color: #835EEB;
-    box-shadow: 0 0 0 3px rgba(131, 94, 235, 0.1);
-    transform: translateY(-1px);
-  }
-
-  &:hover {
-    border-color: #D1D5DB;
-  }
-
-  &::placeholder {
-    color: #9CA3AF;
-    transition: color 0.3s ease;
-  }
-
-  &:focus::placeholder {
-    color: #D1D5DB;
-  }
-`;
 
 const SubmitButton = styled.button`
   background: linear-gradient(135deg, #835EEB, #6B4BC4);
@@ -178,10 +148,6 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
       <FormGroup>
         <Label>학원명</Label>
         <Input type="text" placeholder="ㅇㅇ학원" required />
-      </FormGroup>
-      <FormGroup>
-        <Label>문의사항</Label>
-        <TextArea placeholder="문의사항을 입력해주세요" required />
       </FormGroup>
       <SubmitButton type="submit">무료 체험 신청하기</SubmitButton>
       <PrivacyNotice>
