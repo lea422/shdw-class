@@ -5,6 +5,16 @@ import Dialog from '../components/Dialog';
 import ConsultationForm from '../components/ConsultationForm';
 import Body from '../components/Body';
 
+// 칩 이미지 페이드인 스타일
+const ChipImage = styled.img<{ visible: boolean }>`
+  width: 120px;
+  height: 40px;
+  object-fit: contain;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  transform: translateY(${props => (props.visible ? '0' : '12px')});
+  transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1);
+`;
+
 // Styled Components
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -937,6 +947,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const [isPaused, setIsPaused] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const [chip1Visible, setChip1Visible] = useState(false);
+  const [chip2Visible, setChip2Visible] = useState(false);
 
   // 슬라이드 데이터에 모바일 이미지 경로 추가
   const slides = [
@@ -1073,6 +1085,22 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     return () => clearInterval(interval);
   }, [slides.length, isPaused]);
 
+  useEffect(() => {
+    if (currentSlide === 2) {
+      setChip1Visible(false);
+      setChip2Visible(false);
+      const t1 = setTimeout(() => setChip1Visible(true), 50);
+      const t2 = setTimeout(() => setChip2Visible(true), 200);
+      return () => {
+        clearTimeout(t1);
+        clearTimeout(t2);
+      };
+    } else {
+      setChip1Visible(false);
+      setChip2Visible(false);
+    }
+  }, [currentSlide]);
+
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
     setIsModalOpen(true);
@@ -1152,6 +1180,23 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
           ))}
           <SlideOverlay />
           <ContentContainer>
+            {/* 슬라이드 3번(인덱스 2)에서만 버튼 이미지 노출, 나머지는 placeholder로 높이 맞춤 */}
+            {currentSlide === 2 ? (
+              <div style={{ display: 'flex', gap: 16, marginBottom: 32 }}>
+                <ChipImage
+                  src="/Hero 3_Open AI.png"
+                  alt="OpenAI"
+                  visible={chip1Visible}
+                />
+                <ChipImage
+                  src="/Hero 3_Chat GPT.png"
+                  alt="ChatGPT"
+                  visible={chip2Visible}
+                />
+              </div>
+            ) : (
+              <div style={{ height: 48, marginBottom: 32 }} />
+            )}
             <TitleSection>
               <PreTitle>{slides[currentSlide].preTitle}</PreTitle>
               <TitleRow>

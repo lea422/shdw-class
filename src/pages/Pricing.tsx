@@ -201,6 +201,11 @@ const PricingSection = styled.div`
     padding: 30px 16px;
     margin-top: 60px;
   }
+  @media (max-width: 600px) {
+    padding: 0;
+    width: 100vw;
+    box-sizing: border-box;
+  }
 `;
 
 const PricingHeader = styled.div`
@@ -273,12 +278,25 @@ const PricingCardsContainer = styled.div`
     padding: 0 8px;
     align-items: center;
   }
+  @media (max-width: 600px) {
+    width: 350px;
+    max-width: 350px;
+    min-width: 350px;
+    padding: 0;
+    gap: 0;
+    box-sizing: border-box;
+  }
+  @media (max-width: 400px) {
+    width: 100vw;
+    min-width: 0;
+    max-width: 100vw;
+  }
 `;
 
 const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>`
-  width: 360px;
-  min-width: 360px;
-  max-width: 360px;
+  width: 550px;
+  min-width: 550px;
+  max-width: 550px;
   height: 200px;
   margin: 0 auto;
   padding: 0 20px;
@@ -311,9 +329,15 @@ const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>
   }
   
   @media (max-width: 900px) {
-    width: 360px;
-    min-width: 360px;
-    max-width: 360px;
+    width: 550px;
+    min-width: 550px;
+    max-width: 550px;
+  }
+  @media (max-width: 600px) {
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    height: 150px;
   }
   @media (max-width: 400px) {
     width: 100vw;
@@ -800,7 +824,14 @@ const Pricing = () => {
             <TrialStepNumber>01</TrialStepNumber>
             <TrialStepText>체험 신청 시,<br/>무료 체험 계정이 문자로 안내돼요</TrialStepText>
           </TrialStepContent>
-          <TrialStepImage>이미지 1</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 01.png" alt="무료체험 01"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
           
         <AnimatedTrialStepContainer isVisible={visibleSteps[1]}>
@@ -808,7 +839,14 @@ const Pricing = () => {
             <TrialStepNumber>02</TrialStepNumber>
             <TrialStepText>선생님용 계정에 로그인</TrialStepText>
           </TrialStepContent>
-          <TrialStepImage>이미지 2</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 02.png" alt="무료체험 02"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
           
         <AnimatedTrialStepContainer isVisible={visibleSteps[2]}>
@@ -816,7 +854,14 @@ const Pricing = () => {
             <TrialStepNumber>03</TrialStepNumber>
             <TrialStepText>학생용 앱에 로그인</TrialStepText>
           </TrialStepContent>
-          <TrialStepImage>이미지 3</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 03.png" alt="무료체험 03"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
 
         <AnimatedTrialStepContainer isVisible={visibleSteps[3]}>
@@ -824,7 +869,14 @@ const Pricing = () => {
             <TrialStepNumber>04</TrialStepNumber>
             <TrialStepText>필요한 경우<br/>학생을 추가 하실 수도 있어요</TrialStepText>
           </TrialStepContent>
-          <TrialStepImage>이미지 4</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 04.png" alt="무료체험 04"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
 
         <AnimatedTrialStepContainer isVisible={visibleSteps[4]}>
@@ -832,7 +884,14 @@ const Pricing = () => {
             <TrialStepNumber>05</TrialStepNumber>
             <TrialStepText>학습지를 배부하고,</TrialStepText>
           </TrialStepContent>
-          <TrialStepImage>이미지 5</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 05.png" alt="무료체험 05"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
 
         <AnimatedTrialStepContainer isVisible={visibleSteps[5]}>

@@ -1617,42 +1617,137 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection>
-        <WebAppHeader>
-          <WebAppTitle>
-            웹-앱 연동으로 완성되는<br/>교육 시스템
-          </WebAppTitle>
-          <WebAppSubtitle>
-            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
-            완벽한 교육 생태계를 경험하세요
-          </WebAppSubtitle>
-          <WebAppButtons>
-            <WebAppButton 
-              href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <WebAppIcon>
-                <img src="/Google_Play_logo.svg" alt="Google Play" />
-              </WebAppIcon>
-              <WebAppButtonText>Google Play</WebAppButtonText>
-            </WebAppButton>
-            <WebAppButton 
-              href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <WebAppIcon>
-                <img src="/App_Store_logo.svg" alt="App Store" />
-              </WebAppIcon>
-              <WebAppButtonText>App Store</WebAppButtonText>
-            </WebAppButton>
-          </WebAppButtons>
-        </WebAppHeader>
-        <WebAppContent>
-          <WebAppImage>
-            {/* 여기에 이미지나 애니메이션을 추가할 수 있습니다 */}
-          </WebAppImage>
-        </WebAppContent>
+        <div style={{position:'relative',width:'100vw',maxWidth:'1920px',margin:'0 auto',padding:0,minHeight:'900px'}}>
+          {isMobile ? (
+            <>
+              <WebAppHeader
+                style={{
+                  position: 'relative',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  zIndex: 3,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: '0',
+                  padding: '24px 0 0 0',
+                  background: 'white',
+                }}
+              >
+                <WebAppTitle style={{ fontSize: 30, textAlign: 'center', marginBottom: 8 }}>
+                  웹-앱 연동으로 완성되는<br />교육 시스템
+                </WebAppTitle>
+                <WebAppSubtitle style={{ fontSize: 15, textAlign: 'center', marginBottom: 12 }}>
+                  교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br />완벽한 교육 생태계를 경험하세요
+                </WebAppSubtitle>
+                <WebAppButtons>
+                  <WebAppButton 
+                    href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                    </WebAppIcon>
+                    <WebAppButtonText>Google Play</WebAppButtonText>
+                  </WebAppButton>
+                  <WebAppButton 
+                    href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/App_Store_logo.svg" alt="App Store" />
+                    </WebAppIcon>
+                    <WebAppButtonText>App Store</WebAppButtonText>
+                  </WebAppButton>
+                </WebAppButtons>
+              </WebAppHeader>
+              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
+                <WebAppInfoBlock>
+                  <WebAppInfoTitle style={{ fontSize: 20 }}>선생님용 웹사이트</WebAppInfoTitle>
+                  <WebAppInfoChips>
+                    <WebAppInfoChip>클래스 및 학생관리</WebAppInfoChip>
+                    <WebAppInfoChip>맞춤형 문제 출제</WebAppInfoChip>
+                    <WebAppInfoChip>AI 채점 결과 확인</WebAppInfoChip>
+                    <WebAppInfoChip>실력 분석 리포트</WebAppInfoChip>
+                  </WebAppInfoChips>
+                </WebAppInfoBlock>
+              </WebAppInfoRow>
+              <img src="/웹앱연동_모바일 1.png" alt="웹앱연동 모바일1" style={{width:'80vw',maxWidth:220,margin:'24px auto',display:'block'}} />
+              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
+                <WebAppInfoBlock>
+                  <WebAppInfoTitle style={{ fontSize: 20 }}>학생용 모바일 앱</WebAppInfoTitle>
+                  <WebAppInfoChips>
+                    <WebAppInfoChip>맞춤형 학습지 수신</WebAppInfoChip>
+                    <WebAppInfoChip>AI 힌트 시스템</WebAppInfoChip>
+                    <WebAppInfoChip>실시간 채점 피드백</WebAppInfoChip>
+                    <WebAppInfoChip>장학금 알림 수신</WebAppInfoChip>
+                  </WebAppInfoChips>
+                </WebAppInfoBlock>
+              </WebAppInfoRow>
+              <img src="/웹앱연동_모바일 2.png" alt="웹앱연동 모바일2" style={{width:'53vw',maxWidth:146,margin:'24px auto 0 auto',display:'block'}} />
+            </>
+          ) : (
+            <>
+              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'0'}}>
+                <WebAppTitle style={{pointerEvents:'auto'}}>웹-앱 연동으로 완성되는<br/>교육 시스템</WebAppTitle>
+                <WebAppSubtitle style={{pointerEvents:'auto'}}>교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요</WebAppSubtitle>
+                <WebAppButtons style={{pointerEvents:'auto'}}>
+                  <WebAppButton 
+                    href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                    </WebAppIcon>
+                    <WebAppButtonText>Google Play</WebAppButtonText>
+                  </WebAppButton>
+                  <WebAppButton 
+                    href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/App_Store_logo.svg" alt="App Store" />
+                    </WebAppIcon>
+                    <WebAppButtonText>App Store</WebAppButtonText>
+                  </WebAppButton>
+                </WebAppButtons>
+              </WebAppHeader>
+              <WebAppInfoRow>
+                <WebAppInfoBlock>
+                  <WebAppInfoTitle style={{ fontSize: 24 }}>학생용 모바일 앱</WebAppInfoTitle>
+                  <WebAppInfoChips>
+                    <WebAppInfoChip>맞춤형 학습지 수신</WebAppInfoChip>
+                    <WebAppInfoChip>AI 힌트 시스템</WebAppInfoChip>
+                    <WebAppInfoChip>실시간 채점 피드백</WebAppInfoChip>
+                    <WebAppInfoChip>장학금 알림 수신</WebAppInfoChip>
+                  </WebAppInfoChips>
+                </WebAppInfoBlock>
+                <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
+                  <WebAppInfoTitle style={{ fontSize: 24 }}>선생님용 웹사이트</WebAppInfoTitle>
+                  <WebAppInfoChips>
+                    <WebAppInfoChip>클래스 및 학생관리</WebAppInfoChip>
+                    <WebAppInfoChip>맞춤형 문제 출제</WebAppInfoChip>
+                    <WebAppInfoChip>AI 채점 결과 확인</WebAppInfoChip>
+                    <WebAppInfoChip>실력 분석 리포트</WebAppInfoChip>
+                  </WebAppInfoChips>
+                </WebAppInfoBlock>
+              </WebAppInfoRow>
+              <WebAppContent>
+                <img 
+                  src="/Class UI.png" 
+                  alt="웹앱 연동 UI" 
+                  style={{ width: '100vw', maxWidth: '1920px', height: 'auto', display: 'block', objectFit: 'cover', margin: '40px auto 0 auto', borderRadius: '16px' }}
+                />
+              </WebAppContent>
+            </>
+          )}
+        </div>
       </WebAppSection>
 
       {/* 현장의 목소리 섹션 */}
@@ -1865,19 +1960,21 @@ const WebAppButtonText = styled.div`
 `;
 
 const WebAppContent = styled.div`
-  width: 1240px;
-  padding: 0 40px;
-  overflow: hidden;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  display: flex;
-  @media (max-width: 1280px) {
-    width: 100%;
-    padding: 0 20px;
-  }
+  position: relative;
+  width: 100vw;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0;
+  display: block;
+  min-height: 900px;
   @media (max-width: 600px) {
-    padding: 0 12px;
+    min-height: 0;
+    padding: 0;
+    width: 100vw;
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -2555,6 +2652,78 @@ const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
   flex-shrink: 0;
 `;
 
+// 웹앱 연동 섹션용 정보 row 스타일
+const WebAppInfoRow = styled.div`
+  width: 100vw;
+  max-width: 1920px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 48px 7vw 0 7vw;
+  box-sizing: border-box;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 4vw 0 4vw;
+    align-items: stretch;
+  }
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 40px;
+    padding: 24px 0 0 0;
+    align-items: center;
+  }
+`;
+const WebAppInfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  min-width: 220px;
+  @media (max-width: 600px) {
+    align-items: center !important;
+    text-align: center !important;
+    min-width: 0;
+    width: 100vw;
+    gap: 14px;
+  }
+`;
+const WebAppInfoTitle = styled.div`
+  color: #835EEB;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  white-space: normal;
+  @media (max-width: 600px) {
+    font-size: 26px;
+    margin-bottom: 6px;
+  }
+`;
+const WebAppInfoChips = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  @media (max-width: 600px) {
+    justify-content: center;
+    gap: 8px 8px;
+  }
+`;
+const WebAppInfoChip = styled.div`
+  background: #F3EFFD;
+  color: #835EEB;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 6px 18px;
+  border-radius: 16px;
+  display: inline-block;
+  width: max-content;
+  @media (max-width: 600px) {
+    font-size: 15px;
+    padding: 5px 12px;
+    border-radius: 12px;
+  }
+`;
 
-
-export default Body; 
+export default Body;
