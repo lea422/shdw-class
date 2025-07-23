@@ -16,6 +16,7 @@ const HomeContainer = styled.div`
   flex-direction: column;
   scroll-snap-type: y mandatory;
   overflow-y: auto;
+  scroll-behavior: smooth;
   @media (max-width: 600px) {
     scroll-snap-type: y mandatory;
     -webkit-overflow-scrolling: touch;
@@ -268,17 +269,18 @@ const PrimaryButton = styled.button`
 
 const IndicatorBarContainer = styled.div`
   width: 200px;
-  margin: 50px 0 0 0;
-  margin-left: -15px;
+  margin: 30px 0 0 0;
+  margin-left: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 20px;
   @media (max-width: 600px) {
     width: 100%;
     margin: 20px 0 0 0;
     margin-left: 0;
-    gap: 0;
-    justify-content: center;
+    gap: 16px;
+    justify-content: flex-start;
     flex-direction: column;
   }
 `;
@@ -286,12 +288,32 @@ const IndicatorDots = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
   @media (max-width: 600px) {
     gap: 8px;
     margin-left: 0;
-    flex: none;
+    justify-content: flex-start;
+  }
+`;
+
+const IndicatorPause = styled.button`
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+  &:hover {
+    opacity: 0.7;
+  }
+  @media (max-width: 600px) {
+    display: none;
   }
 `;
 const IndicatorDot = styled.button<{ active: boolean }>`
@@ -312,42 +334,56 @@ const IndicatorDot = styled.button<{ active: boolean }>`
     border-radius: 4px;
   }
 `;
-const IndicatorPause = styled.button`
+
+
+const ScrollDownButton = styled.button`
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   background: none;
   border: none;
-  color: #fff;
-  font-size: 20px;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  padding: 8px 8px;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 40px;
-  line-height: 1;
+  animation: bounce 2s infinite;
+  
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+  
   &:hover {
-    opacity: 0.7;
+    color: white;
+    transform: translateX(-50%) translateY(-3px);
+    animation-play-state: paused;
   }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+  
   @media (max-width: 600px) {
-    display: none;
-  }
-`;
-const IndicatorNext = styled.button`
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 8px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40px;
-  line-height: 1;
-  &:hover {
-    opacity: 0.7;
-  }
-  @media (max-width: 600px) {
-    display: none;
+    bottom: 20px;
+    
+    svg {
+      width: 20px;
+      height: 20px;
+    }
   }
 `;
 
@@ -1048,7 +1084,17 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   };
 
   const scrollToBody = () => {
-    bodyRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (bodyRef.current) {
+      const rect = bodyRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const targetScrollTop = scrollTop + rect.top;
+      
+      window.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
+    }
   };
 
   const handleIndicatorClick = (index: number) => {
@@ -1058,6 +1104,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const handlePauseToggle = () => {
     setIsPaused(!isPaused);
   };
+
+
 
   const faqs = [
     {
@@ -1133,14 +1181,13 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               >
                 {isPaused ? '▶' : '⏸'}
               </IndicatorPause>
-              <IndicatorNext
-                aria-label="다음 슬라이드"
-                onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-              >
-                &gt;
-              </IndicatorNext>
             </IndicatorBarContainer>
           </ContentContainer>
+          <ScrollDownButton onClick={scrollToBody} aria-label="다음 섹션으로 스크롤">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </ScrollDownButton>
         </ImageSlider>
       </HeroSection>
       <Body ref={bodyRef} />

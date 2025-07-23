@@ -65,6 +65,7 @@ const BodyContainer = styled.div`
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  scroll-snap-align: start;
 `;
 
 const HeaderSection = styled.div`
@@ -567,25 +568,24 @@ const SyncSubtitle = styled.div`
 
 const DemoSection = styled.div`
   align-self: stretch;
-  background: #835EEB;
+  background: #9C7EEF;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
   box-sizing: border-box;
-  height: 890px;
+  min-height: 890px;
   padding: 60px 0;
   scroll-snap-align: start;
   @media (max-width: 600px) {
-    height: 800px;
+    min-height: 800px;
     padding: 40px 0;
   }
 `;
 
 const DemoHeader = styled.div`
   align-self: stretch;
-  height: 180px;
   padding: 50px 64px 20px;
   display: flex;
   flex-direction: column;
@@ -594,7 +594,6 @@ const DemoHeader = styled.div`
   gap: 20px;
   box-sizing: border-box;
   @media (max-width: 600px) {
-    height: 120px;
     padding: 24px 8px 12px;
     gap: 12px;
   }
@@ -664,17 +663,7 @@ const DemoButton = styled.a`
   }
 `;
 
-const DemoButtonContainer = styled.div`
-  align-self: stretch;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-  box-sizing: border-box;
-  @media (max-width: 600px) {
-    padding: 16px 0;
-  }
-`;
+
 
 const DemoContent = styled.div`
   align-self: stretch;
@@ -1327,6 +1316,23 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 
   const [hovered, setHovered] = useState<{featureIdx: number, subIdx: number | null}>({featureIdx: 0, subIdx: null});
 
+  // 이미지 클릭 시 스냅 스크롤 핸들러
+  const handleImageClick = (index: number) => {
+    const element = featureBoxRefs.current[index];
+    if (element) {
+      const rect = element.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const elementHeight = rect.height;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const targetScrollTop = scrollTop + rect.top - (windowHeight / 2) + (elementHeight / 2);
+      
+      window.scrollTo({
+        top: targetScrollTop,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   return (
     <BodyContainer ref={ref}>
       <AnimatedHeaderSection ref={headerRef}>
@@ -1357,7 +1363,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               학생별로 서로 다른 실력에 맞게,<br/>최적의 문제로 학습지를 자동 생성해 드려요!
             </FeatureDesc>
           </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(0)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(0)}
+            onClick={() => handleImageClick(0)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-1.png"
               alt="핵심기능1"
@@ -1383,7 +1393,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               더 이상 틀리지 않을 때까지,<br/>오답 유사 문제를 자동으로 출제해 드려요!
             </FeatureDesc>
             </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(1)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(1)}
+            onClick={() => handleImageClick(1)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-2.png"
               alt="핵심기능2"
@@ -1406,7 +1420,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               필기 인식 기술로 서술형 답안을<br/>정확하게 자동 채점합니다.
             </FeatureDesc>
           </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(2)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(2)}
+            onClick={() => handleImageClick(2)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-3.png"
               alt="핵심기능3"
@@ -1429,7 +1447,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               전국 학생들과 비교한<br/>객관적인 실력 분석 리포트를 제공합니다.
             </FeatureDesc>
           </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(3)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(3)}
+            onClick={() => handleImageClick(3)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-4.png"
               alt="핵심기능4"
@@ -1452,7 +1474,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.
             </FeatureDesc>
           </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(4)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(4)}
+            onClick={() => handleImageClick(4)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-5.png"
               alt="핵심기능5"
@@ -1475,7 +1501,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               모르는 문제를 게시판에 질문하고<br/>빠르게 답변을 받아 볼 수 있습니다.
             </FeatureDesc>
           </FeatureTextBlock>
-          <GifBox isZoomed={zoomedBoxes.has(5)}>
+          <GifBox 
+            isZoomed={zoomedBoxes.has(5)}
+            onClick={() => handleImageClick(5)}
+            style={{ cursor: 'pointer' }}
+          >
             <img 
               src="/video/Body-image-6.png"
               alt="핵심기능6"
@@ -1496,8 +1526,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
             완벽한 교육 생태계를 경험하세요
           </DemoSubtitle>
-        </DemoHeader>
-        <DemoButtonContainer>
           <DemoButton 
             href="https://www.iammathking.com/demo" 
             rel="noopener noreferrer"
@@ -1505,7 +1533,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           >
             <span>데모 체험하기</span>
           </DemoButton>
-        </DemoButtonContainer>
+        </DemoHeader>
         <DemoContent>
           {isMobile ? (
             <MobileDemoSlider>
@@ -1640,7 +1668,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               </ExperienceQuote>
               <NameSection>
                 <VerticalLine />
-                <NameSpacer />
                 <ExperienceName>
                   {testimonials[currentTestimonial].name.split('<br/>').map((line, idx) => (
                     <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
@@ -1934,14 +1961,15 @@ const ExperienceTextBlock = styled.div`
   height: 520px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-start;
   gap: 0;
-  text-align: center;
+  text-align: left;
   @media (max-width: 900px) {
     width: 100%;
     height: auto;
     align-items: center;
+    text-align: center;
   }
   @media (max-width: 600px) {
     width: 100%;
@@ -1949,6 +1977,7 @@ const ExperienceTextBlock = styled.div`
     align-items: center;
     padding: 20px;
     gap: 8px;
+    text-align: center;
   }
 `;
 
@@ -1960,12 +1989,16 @@ const ExperienceTitle = styled.div`
   line-height: 62.4px;
   word-break: break-word;
   margin-bottom: 36px;
-  text-align: center;
+  text-align: left;
   width: 100%;
+  @media (max-width: 900px) {
+    text-align: center;
+  }
   @media (max-width: 600px) {
     font-size: 28px;
     line-height: 36px;
     margin-bottom: 20px;
+    text-align: center;
   }
 `;
 
@@ -1977,12 +2010,16 @@ const ExperienceQuote = styled.div`
   line-height: 36px;
   word-break: break-word;
   margin-bottom: 32px;
-  text-align: center;
+  text-align: left;
   width: 100%;
+  @media (max-width: 900px) {
+    text-align: center;
+  }
   @media (max-width: 600px) {
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 20px;
+    text-align: center;
   }
 `;
 
@@ -1993,13 +2030,17 @@ const ExperienceName = styled.div`
   line-height: 26px;
   word-break: break-word;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   width: 100%;
   span { display: block; }
   span:last-child { font-weight: 400; }
+  @media (max-width: 900px) {
+    text-align: center;
+  }
   @media (max-width: 600px) {
     font-size: 14px;
     line-height: 18px;
+    text-align: center;
   }
 `;
 
@@ -2073,16 +2114,27 @@ const PlayIcon = styled.span`
 const NameSection = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
+  @media (max-width: 900px) {
+    align-items: flex-start;
+  }
 `;
 
 const VerticalLine = styled.div`
   width: 3px;
   min-width: 3px;
-  height: 100%;
+  height: 52px;
   background: #835EEB;
   margin-right: 16px;
   border-radius: 2px;
+  @media (max-width: 900px) {
+    height: 20px;
+    margin-top: 20px;
+  }
+  @media (max-width: 600px) {
+    height: 16px;
+    margin-top: 18px;
+  }
 `;
 
 const NameSpacer = styled.div`
@@ -2194,6 +2246,7 @@ const FeatureSectionWrapper = styled.div`
   align-items: flex-start;
   gap: 150px;
   padding: 0;
+  scroll-snap-type: y mandatory;
   @media (max-width: 600px) {
     width: 100%;
     margin: 0 auto 80px auto;
@@ -2211,6 +2264,7 @@ const FeatureBox = styled.div`
   justify-content: flex-start;
   overflow: visible;
   padding-left: 0px;
+  scroll-snap-align: center;
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 20px;
