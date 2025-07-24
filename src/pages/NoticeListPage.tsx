@@ -9,6 +9,77 @@ interface Notice {
   tag?: string;
 }
 
+const NoticeListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  @media (max-width: 1024px) {
+    gap: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 12px;
+  }
+`;
+
+const NoticeItem = styled.div`
+  border-bottom: 1px solid #E5E7EB;
+  padding-bottom: 8px;
+  
+  @media (max-width: 768px) {
+    padding-bottom: 6px;
+  }
+`;
+
+const NoticeHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  
+  @media (max-width: 768px) {
+    gap: 6px;
+    margin-bottom: 3px;
+  }
+`;
+
+const NoticeTag = styled.span`
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  background: #8B5CF6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+`;
+
+const NoticeTitle = styled.p`
+  font-weight: 500;
+  color: #1F2937;
+  
+  @media (max-width: 1024px) {
+    font-size: 15px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+const NoticeDate = styled.p`
+  font-size: 14px;
+  color: #6B7280;
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`;
+
 const NoticeListPage = () => {
   const [notices, setNotices] = useState<Notice[]>([]);
 
@@ -30,21 +101,21 @@ const NoticeListPage = () => {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <NoticeListContainer>
       {notices.map((item) => (
-        <div key={item.id} className="border-b pb-2">
-          <div className="flex items-center gap-2 mb-1">
+        <NoticeItem key={item.id}>
+          <NoticeHeader>
             {item.tag && (
-              <span className="text-xs font-semibold text-white bg-purple-500 px-2 py-0.5 rounded">
+              <NoticeTag>
                 {item.tag}
-              </span>
+              </NoticeTag>
             )}
-            <p className="font-medium">📌 {item.title}</p>
-          </div>
-          <p className="text-sm text-gray-500">{item.date}</p>
-        </div>
+            <NoticeTitle>📌 {item.title}</NoticeTitle>
+          </NoticeHeader>
+          <NoticeDate>{item.date}</NoticeDate>
+        </NoticeItem>
       ))}
-    </div>
+    </NoticeListContainer>
   );
 };
 

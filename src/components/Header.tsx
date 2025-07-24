@@ -19,6 +19,9 @@ const HeaderContainer = styled.header`
   @media (max-width: 768px) {
     height: 48px;
   }
+  @media (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const HeaderInner = styled.div`
@@ -49,6 +52,12 @@ const HeaderInner = styled.div`
     padding: 0 8px;
     gap: 8px;
     height: 48px;
+  }
+  @media (max-width: 375px) {
+    width: 375px;
+    min-width: 375px;
+    padding: 0 16px;
+    gap: 8px;
   }
 `;
 

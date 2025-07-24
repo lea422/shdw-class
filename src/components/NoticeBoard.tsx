@@ -13,6 +13,16 @@ const NoticeBoardContainer = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  
+  @media (max-width: 1024px) {
+    max-width: 90%;
+    padding: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 95%;
+    padding: 12px;
+  }
 `;
 
 const NoticeItem = styled.div`
@@ -26,22 +36,63 @@ const NoticeItem = styled.div`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+  
+  @media (max-width: 1024px) {
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+  }
 `;
 
 const NoticeTitle = styled.h3`
   margin: 0 0 10px 0;
   color: #333;
+  
+  @media (max-width: 1024px) {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+  }
+  
+  @media (max-width: 768px) {
+    margin: 0 0 6px 0;
+    font-size: 16px;
+  }
 `;
 
 const NoticeDate = styled.p`
   color: #666;
   font-size: 0.9em;
   margin: 5px 0;
+  
+  @media (max-width: 1024px) {
+    font-size: 0.85em;
+    margin: 4px 0;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 0.8em;
+    margin: 3px 0;
+  }
 `;
 
 const NoticeContent = styled.p`
   color: #444;
   line-height: 1.5;
+  
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 1.3;
+  }
 `;
 
 export const NoticeBoard: React.FC = () => {

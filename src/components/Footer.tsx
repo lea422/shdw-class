@@ -14,6 +14,9 @@ const FooterContainer = styled.div`
     padding: 100px 0;
     background: #F9FAFB;
   }
+  @media (max-width: 375px) {
+    min-width: 375px;
+  }
 `;
 
 const FooterContent = styled.div`
@@ -33,6 +36,11 @@ const FooterContent = styled.div`
     flex-direction: column;
     gap: 24px;
     align-items: flex-start;
+  }
+  @media (max-width: 375px) {
+    width: 375px;
+    min-width: 375px;
+    padding: 16px;
   }
 `;
 
@@ -266,7 +274,7 @@ const Footer = () => {
               <InfoText>
                 통신판매업 제 2023-서울강남-00798 호
               </InfoText>
-              <InfoText>주소 서울특별시 강남구 언주로85길 23-6, 3층 (역삼동, DW 빌딩)</InfoText>
+              <InfoText>주소 서울특별시 강남구 언주로 85길 23-6, 3층 (역삼동, DW 빌딩)</InfoText>
               <InfoText>
                 전화 070-7732-4869
               </InfoText>

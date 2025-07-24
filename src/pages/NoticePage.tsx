@@ -13,6 +13,20 @@ const UpdateSlideContainer = styled.div`
   border-radius: 16px;
   padding: 40px;
   overflow: hidden;
+  box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    max-width: 90%;
+    padding: 30px;
+    margin: 0 auto 40px auto;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 12px;
+    margin: 0 auto 24px auto;
+    border-radius: 10px;
+  }
 `;
 
 const UpdateSlideContent = styled.div<{ fade: boolean }>`
@@ -26,6 +40,16 @@ const UpdateSlideTitle = styled.h3`
   font-weight: 700;
   color: #33373B;
   margin-bottom: 16px;
+  
+  @media (max-width: 1024px) {
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
 `;
 
 const UpdateSlideText = styled.p`
@@ -33,12 +57,30 @@ const UpdateSlideText = styled.p`
   color: #575C64;
   line-height: 1.6;
   margin-bottom: 12px;
+  
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
 `;
 
 const UpdateSlideDate = styled.div`
   font-size: 16px;
   color: #C6B5F6;
   font-weight: 500;
+  
+  @media (max-width: 1024px) {
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 const UpdateSlideArrow = styled.button`
@@ -59,6 +101,16 @@ const UpdateSlideArrow = styled.button`
     background: rgba(131, 94, 235, 0.1);
     color: #6B4BC4;
   }
+  
+  @media (max-width: 1024px) {
+    font-size: 20px;
+    padding: 6px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 18px;
+    padding: 4px;
+  }
 `;
 
 const UpdateSlideArrowLeft = styled(UpdateSlideArrow)`
@@ -77,6 +129,17 @@ const FaqSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: calc(100vh - 56px - 80px);
+  box-sizing: border-box;
+  overflow-y: auto;
+  
+  @media (max-width: 1024px) {
+    padding: 30px 0 60px 0;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 20px 0 40px 0;
+  }
 `;
 
 const FaqTitle = styled.h2`
@@ -85,6 +148,16 @@ const FaqTitle = styled.h2`
   color: #222;
   margin-bottom: 32px;
   text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
 `;
 
 const FaqList = styled.ul`
@@ -94,6 +167,14 @@ const FaqList = styled.ul`
   padding: 0;
   margin: 0;
   list-style: none;
+  
+  @media (max-width: 1024px) {
+    max-width: 90%;
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 95%;
+  }
 `;
 
 const FaqItem = styled.li`
@@ -128,6 +209,17 @@ const FaqQuestion = styled.button<{ open: boolean }>`
     transform: scale(0.98);
     transition: transform 0.1s ease;
   }
+  
+  @media (max-width: 1024px) {
+    padding: 24px 0 24px 0;
+    font-size: 18px;
+    &:hover { padding-left: 12px; }
+  }
+  @media (max-width: 768px) {
+    padding: 16px 0 16px 0;
+    font-size: 15px;
+    &:hover { padding-left: 8px; }
+  }
 `;
 
 const FaqAnswer = styled.div`
@@ -141,14 +233,20 @@ const FaqAnswer = styled.div`
   border-left: 4px solid #835EEB;
 
   @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    margin: 0 0 24px 0;
+    padding-right: 24px;
+    padding-left: 12px;
+  }
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin: 0 0 16px 0;
+    padding-right: 12px;
+    padding-left: 6px;
   }
 `;
 
@@ -163,10 +261,18 @@ const FaqIcon = styled.span`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-
-  &:hover {
-    background: rgba(131, 94, 235, 0.1);
-    transform: scale(1.1);
+  &:hover { background: rgba(131, 94, 235, 0.1); transform: scale(1.1); }
+  @media (max-width: 1024px) {
+    font-size: 24px;
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+  }
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-left: 6px;
+    width: 18px;
+    height: 18px;
   }
 `;
 
@@ -215,85 +321,202 @@ const allUpdates = [
   { id: 9, title: '알림 시스템 개선', text: '실시간 알림 기능이 더욱 정확하고 빠르게 작동합니다.', date: '2024-05-01' }
 ];
 
+// 미디어 쿼리 훅 추가
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+  return isMobile;
+}
+
+const SectionGuide = styled.div`
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 12px auto;
+  font-size: 16px;
+  color: #835EEB;
+  font-weight: 600;
+  text-align: left;
+  letter-spacing: -0.5px;
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    max-width: 90%;
+  }
+  @media (max-width: 768px) {
+    font-size: 13px;
+    max-width: 95%;
+    margin-bottom: 8px;
+  }
+`;
+
+const SectionTitle = styled.h1`
+  width: 100%;
+  max-width: 800px;
+  margin: 64px auto 56px auto;
+  font-size: 2.7rem;
+  font-weight: 800;
+  color: #1E2231;
+  text-align: center;
+  line-height: 1.28;
+  letter-spacing: -1px;
+  white-space: pre-line;
+  @media (max-width: 1024px) {
+    font-size: 2.1rem;
+    margin: 48px auto 36px auto;
+  }
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin: 36px auto 24px auto;
+  }
+`;
+
+// FAQ 섹션 함수
 function FaqPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  // 모바일 여부를 useIsMobile 훅으로 통일
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const itemsPerPage = isMobile ? 8 : allFaqs.length;
+  const totalPages = Math.ceil(allFaqs.length / itemsPerPage);
+  const pagedFaqs = allFaqs.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
   return (
     <FaqSection>
+      {/* <SectionTitle>자주 묻는 질문을{`\n`}한눈에 확인하세요!</SectionTitle> */}
       <FaqList>
-        {allFaqs.map((faq, idx) => (
-          <FaqItem key={faq.question}>
-            <FaqQuestion open={openIdx === idx} onClick={() => setOpenIdx(openIdx === idx ? null : idx)}>
-              {faq.question}
-              <FaqIcon>{openIdx === idx ? '×' : '+'}</FaqIcon>
-            </FaqQuestion>
-            {openIdx === idx && <FaqAnswer>{faq.answer}</FaqAnswer>}
-          </FaqItem>
-        ))}
+        {pagedFaqs.map((faq, idx) => {
+          const globalIdx = (currentPage-1)*itemsPerPage + idx;
+          return (
+            <FaqItem key={faq.question}>
+              <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)}>
+                {faq.question}
+                <FaqIcon>{openIdx === globalIdx ? '×' : '+'}</FaqIcon>
+              </FaqQuestion>
+              {openIdx === globalIdx && <FaqAnswer>{faq.answer}</FaqAnswer>}
+            </FaqItem>
+          );
+        })}
       </FaqList>
+      {totalPages > 1 && (
+        <Pagination>
+          <button aria-label="이전 페이지" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage-1)}>&lt;</button>
+          <span>{currentPage} / {totalPages}</span>
+          <button aria-label="다음 페이지" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage+1)}>&gt;</button>
+        </Pagination>
+      )}
     </FaqSection>
   );
 }
 
 // 업데이트 슬라이드 컴포넌트
 const UpdateSlide: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const isMobile = useIsMobile();
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = isMobile ? 6 : allUpdates.length;
+  const totalPages = Math.ceil(allUpdates.length / itemsPerPage);
+  const pagedUpdates = allUpdates.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
   const [fade, setFade] = useState(false);
+  const [slideIdx, setSlideIdx] = useState(0);
 
-  // 자동 슬라이드 기능
+  // 슬라이드 자동 전환 (데스크톱/태블릿만)
   useEffect(() => {
+    if (isMobile) return;
     const interval = setInterval(() => {
       setFade(true);
       setTimeout(() => {
-        setCurrentSlide((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
+        setSlideIdx((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
         setFade(false);
       }, 300);
-    }, 4000); // 4초마다 자동 슬라이드
-
+    }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
   const handlePrev = () => {
     setFade(true);
     setTimeout(() => {
-      setCurrentSlide((prev) => (prev === 0 ? allUpdates.length - 1 : prev - 1));
+      setSlideIdx((prev) => (prev === 0 ? allUpdates.length - 1 : prev - 1));
       setFade(false);
     }, 300);
   };
-
   const handleNext = () => {
     setFade(true);
     setTimeout(() => {
-      setCurrentSlide((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
+      setSlideIdx((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
       setFade(false);
     }, 300);
   };
 
+  if (isMobile) {
+    return (
+      <FaqSection as="section">
+        {/* <SectionTitle>수학대왕의 업데이트 된 기능을{`\n`}확인하세요!</SectionTitle> */}
+        <FaqList as="ul">
+          {pagedUpdates.map((notice, idx) => {
+            const globalIdx = (currentPage-1)*itemsPerPage + idx;
+            return (
+              <FaqItem as="li" key={notice.id}>
+                <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)} style={{ textAlign: 'left' }}>
+                  <PinIcon src="/pin.svg" alt="공지" />
+                  <span style={{ fontWeight: 600, textAlign: 'left', flex: 1 }}>{notice.title}</span>
+                  <FaqIcon>{openIdx === globalIdx ? '×' : '+'}</FaqIcon>
+                </FaqQuestion>
+                {openIdx === globalIdx && (
+                  <FaqAnswer style={{ textAlign: 'left' }}>
+                    <div style={{ marginBottom: 8, fontSize: 15, color: '#444', textAlign: 'left' }}>{notice.text}</div>
+                    <div style={{ color: '#C6B5F6', fontSize: 13, textAlign: 'left' }}>{notice.date}</div>
+                  </FaqAnswer>
+                )}
+              </FaqItem>
+            );
+          })}
+        </FaqList>
+        {totalPages > 1 && (
+          <Pagination>
+            <button aria-label="이전 페이지" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage-1)}>&lt;</button>
+            <span>{currentPage} / {totalPages}</span>
+            <button aria-label="다음 페이지" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage+1)}>&gt;</button>
+          </Pagination>
+        )}
+      </FaqSection>
+    );
+  }
+
+  // 데스크톱/태블릿: 기존 슬라이드
   return (
     <UpdateSlideContainer>
       <UpdateSlideContent fade={fade}>
-        <UpdateSlideTitle>{allUpdates[currentSlide].title}</UpdateSlideTitle>
-        <UpdateSlideText>{allUpdates[currentSlide].text}</UpdateSlideText>
-        <UpdateSlideDate>{allUpdates[currentSlide].date}</UpdateSlideDate>
+        <UpdateSlideTitle>{allUpdates[slideIdx].title}</UpdateSlideTitle>
+        <UpdateSlideText>{allUpdates[slideIdx].text}</UpdateSlideText>
+        <UpdateSlideDate>{allUpdates[slideIdx].date}</UpdateSlideDate>
       </UpdateSlideContent>
-      
-      <UpdateSlideArrowLeft onClick={handlePrev}>
-        ‹
-      </UpdateSlideArrowLeft>
-      <UpdateSlideArrowRight onClick={handleNext}>
-        ›
-      </UpdateSlideArrowRight>
+      <UpdateSlideArrowLeft onClick={handlePrev}>‹</UpdateSlideArrowLeft>
+      <UpdateSlideArrowRight onClick={handleNext}>›</UpdateSlideArrowRight>
     </UpdateSlideContainer>
   );
 };
 
 // 페이지 컨테이너 스타일 추가
 const PageContainer = styled.div`
-  min-height: calc(100vh - 60px - 200px); // 헤더(60px)와 Footer(200px) 높이를 제외
-  padding: 0 24px 40px 24px;
+  min-height: calc(100vh - 60px); // 헤더 높이만 제외, 푸터는 패딩으로 확보
+  padding: 0 24px 250px 24px; // 하단 패딩을 250px로 늘림(footer 높이만큼)
   display: flex;
   flex-direction: column;
   background: #ffffff;
   margin-top: 120px; /* header 높이만큼 마진 추가 */
+  
+  @media (max-width: 1024px) {
+    padding: 0 20px 200px 20px;
+    margin-top: 100px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 16px 40px 16px;
+    margin-top: 80px;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -301,6 +524,14 @@ const ContentWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
+  
+  @media (max-width: 1024px) {
+    max-width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 // 탭 스타일 추가
@@ -316,6 +547,17 @@ const TabContainer = styled.div`
   padding: 4px;
   border-radius: 9999px;
   position: relative;
+  
+  @media (max-width: 1024px) {
+    margin-bottom: 40px;
+    max-width: 280px;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 30px;
+    max-width: 260px;
+    padding: 3px;
+  }
 `;
 
 // 토글 슬라이드 배경
@@ -356,6 +598,16 @@ const TabButton = styled(NavLink)`
   &:hover {
     color: #835EEB;
   }
+  
+  @media (max-width: 1024px) {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 5px 12px;
+    font-size: 12px;
+  }
 `;
 
 const CtaContainer = styled.div`
@@ -379,6 +631,17 @@ const CtaButton = styled.a`
     background: #6B4BC4;
     transform: translateY(-2px);
   }
+  
+  @media (max-width: 1024px) {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
 `;
 
 const UpdateQuestion = styled.button<{ open: boolean }>`
@@ -398,6 +661,16 @@ const UpdateQuestion = styled.button<{ open: boolean }>`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  
+  @media (max-width: 1024px) {
+    padding: 24px 0 24px 0;
+    font-size: 18px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 16px 0 16px 0;
+    font-size: 15px;
+  }
 
   &:hover {
     color: #835EEB;
@@ -420,16 +693,21 @@ const UpdateAnswer = styled.div`
   padding-left: 16px;
   animation: slideDown 0.3s ease-out;
   border-left: 4px solid #835EEB;
-
   @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    margin: 0 0 24px 0;
+    padding-right: 24px;
+    padding-left: 12px;
+  }
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin: 0 0 16px 0;
+    padding-right: 12px;
+    padding-left: 6px;
   }
 `;
 
@@ -449,6 +727,70 @@ const UpdateIcon = styled.span`
     background: rgba(131, 94, 235, 0.1);
     transform: scale(1.1);
   }
+  
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    margin-left: 12px;
+    width: 28px;
+    height: 28px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    margin-left: 8px;
+    width: 24px;
+    height: 24px;
+  }
+`;
+
+const PinIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  vertical-align: middle;
+  display: inline-block;
+`;
+
+const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: 20px 0 0 0;
+  font-size: 15px;
+  @media (max-width: 768px) {
+    font-size: 13px;
+    gap: 10px;
+    margin: 14px 0 0 0;
+  }
+  button {
+    background: transparent;
+    color: #835EEB;
+    border: none;
+    border-radius: 50%;
+    padding: 6px 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s, background 0.15s;
+    font-size: 1.2em;
+    outline: none;
+    box-shadow: none;
+    &:disabled {
+      color: #bbb;
+      background: transparent;
+      cursor: default;
+    }
+    &:not(:disabled):hover {
+      background: transparent;
+      color: #6B4BC4;
+    }
+    &:focus, &:active {
+      background: #E5DBFA;
+      color: #835EEB;
+      outline: none;
+      box-shadow: none;
+    }
+  }
 `;
 
 export default function NoticePage() {
@@ -463,10 +805,16 @@ export default function NoticePage() {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  // 타이틀 텍스트 분기
+  const isFaq = location.pathname.includes('/notice/faq');
+  const titleText = isFaq
+    ? '자주 묻는 질문을\n한눈에 확인하세요!'
+    : '수학대왕의 업데이트 된 기능을\n확인하세요!';
+
   return (
     <PageContainer>
       <ContentWrapper>
-      {/* 탭 버튼 */}
+        <SectionTitle>{titleText}</SectionTitle>
         <TabContainer>
           {/* ToggleSlider: 토글 슬라이드 배경 */}
           <ToggleSlider index={tabIndex} />
