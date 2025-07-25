@@ -10,12 +10,16 @@ const FooterContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   
+  @media (max-width: 1024px) {
+    padding: 60px 0 100px;
+  }
+  
   @media (max-width: 768px) {
     padding: 100px 0;
     background: #F9FAFB;
   }
   @media (max-width: 375px) {
-    min-width: 375px;
+    width: 100%;
   }
 `;
 
@@ -29,8 +33,13 @@ const FooterContent = styled.div`
   gap: 64px;
   display: inline-flex;
   
+  @media (max-width: 1024px) {
+    padding: 0 40px;
+    gap: 40px;
+  }
+  
   @media (max-width: 768px) {
-    width: 375px;
+    width: 100%;
     padding: 20px;
     background: #F9FAFB;
     flex-direction: column;
@@ -38,8 +47,7 @@ const FooterContent = styled.div`
     align-items: flex-start;
   }
   @media (max-width: 375px) {
-    width: 375px;
-    min-width: 375px;
+    width: 100%;
     padding: 16px;
   }
 `;
@@ -50,6 +58,10 @@ const LeftSection = styled.div`
   align-items: flex-start;
   gap: 80px;
   display: flex;
+  
+  @media (max-width: 1024px) {
+    gap: 50px;
+  }
   
   @media (max-width: 768px) {
     flex-direction: column;
@@ -94,6 +106,12 @@ const LinkButton = styled.div`
     color: #835EEB;
   }
   
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    height: 36px;
+    padding: 0 14px 0 10px;
+  }
+  
   @media (max-width: 768px) {
     color: #575C64;
     font-size: 15px;
@@ -109,6 +127,11 @@ const CompanyInfo = styled.div`
   gap: 24px;
   display: inline-flex;
   
+  @media (max-width: 1024px) {
+    width: 300px;
+    gap: 16px;
+  }
+  
   @media (max-width: 768px) {
     width: 100%;
     gap: 4px;
@@ -123,6 +146,12 @@ const InfoText = styled.div`
   line-height: 30px;
   white-space: nowrap;
   
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    line-height: 26px;
+    white-space: normal;
+  }
+  
   @media (max-width: 768px) {
     color: #7A828D;
     font-size: 12px;
@@ -136,15 +165,24 @@ const InfoLink = styled(InfoText).attrs({ as: 'a' })`
   cursor: pointer;
   transition: color 0.3s ease;
   font-weight: 500;
+  display: inline-block;
+  white-space: nowrap;
 
   &:hover {
     color: #835EEB;
+  }
+  
+  @media (max-width: 1024px) {
+    font-size: 15px;
+    line-height: 24px;
+    white-space: nowrap;
   }
   
   @media (max-width: 768px) {
     color: #7A828D;
     font-size: 14px;
     line-height: 20px;
+    white-space: nowrap;
   }
 `;
 
@@ -226,24 +264,29 @@ const FooterActions = styled.div`
 `;
 
 const MobileInfoSection = styled.div`
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 2px;
+  display: flex;
+  
   @media (max-width: 768px) {
-    align-self: stretch;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
     gap: 2px;
-    display: flex;
   }
 `;
 
 const MobileLinkSection = styled.div`
-  @media (max-width: 768px) {
-    align-self: stretch;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 8px;
-    display: inline-flex;
-    margin-top: 12px;
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  display: inline-flex;
+  flex-wrap: nowrap;
+  margin-top: 12px;
+  
+  @media (max-width: 1024px) {
+    gap: 16px;
   }
 `;
 
@@ -268,7 +311,7 @@ const Footer = () => {
           </LinkGroup>
           <CompanyInfo>
             <MobileInfoSection>
-              <InfoText>
+              <InfoText style={{ whiteSpace: 'nowrap' }}>
                 사업자등록번호 254-87-01382 | 대표자명 최민규
               </InfoText>
               <InfoText>

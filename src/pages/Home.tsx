@@ -13,13 +13,17 @@ const ChipImage = styled.img<{ visible: boolean }>`
   opacity: ${props => (props.visible ? 1 : 0)};
   transform: translateY(${props => (props.visible ? '0' : '12px')});
   transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1), transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  
+  @media (max-width: 600px) {
+    width: 80px;
+    height: 28px;
+  }
 `;
 
 // Styled Components
 const HomeContainer = styled.div`
   min-height: 100vh;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   overflow-x: hidden;
   box-sizing: border-box;
   display: flex;
@@ -34,8 +38,7 @@ const HomeContainer = styled.div`
 `;
 
 const HeroSection = styled.div`
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   height: 100vh;
   position: relative;
   overflow: hidden;
@@ -49,8 +52,7 @@ const HeroSection = styled.div`
 `;
 
 const ImageSlider = styled.div`
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   height: 100%;
   position: relative;
   box-sizing: border-box;
@@ -61,12 +63,11 @@ const ImageSlider = styled.div`
   }
 `;
 
-const Slide = styled.div<{ isActive: boolean; bgMobile?: string; bgDesktop: string }>`
+const Slide = styled.div<{ isActive: boolean; bgMobile?: string; bgTablet?: string; bgDesktop: string }>`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   height: 100%;
   opacity: ${props => props.isActive ? 1 : 0};
   transition: opacity 1s ease-in-out;
@@ -75,6 +76,9 @@ const Slide = styled.div<{ isActive: boolean; bgMobile?: string; bgDesktop: stri
   background-repeat: no-repeat;
   box-sizing: border-box;
   background-image: url(${props => props.bgDesktop});
+  @media (max-width: 1024px) {
+    background-image: url(${props => props.bgTablet || props.bgDesktop});
+  }
   @media (max-width: 600px) {
     width: 100%;
     height: 100vh;
@@ -100,8 +104,8 @@ const SlideOverlay = styled.div`
 
 const ContentContainer = styled.div`
   position: absolute;
-  top: 60%;
-  left: calc((100vw - 1280px)/2 + 24px);
+  top: 65%;
+  left: 230px;
   transform: translateY(-50%);
   z-index: 2;
   max-width: 600px;
@@ -112,8 +116,13 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  @media (max-width: 1280px) {
-    left: 24px;
+  @media (max-width: 1024px) {
+    left: 120px;
+    top: 70%;
+  }
+  @media (max-width: 768px) {
+    left: 80px;
+    top: 65%;
   }
   @media (max-width: 600px) {
     left: 0;
@@ -950,12 +959,13 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const [chip1Visible, setChip1Visible] = useState(false);
   const [chip2Visible, setChip2Visible] = useState(false);
 
-  // 슬라이드 데이터에 모바일 이미지 경로 추가
+  // 슬라이드 데이터에 태블릿 및 모바일 이미지 경로 추가
   const slides = [
     {
       id: 1,
       image: '/Hero-1.png',
-      imageMobile: '/mobile-hero-1.png',
+      imageTablet: '/Hero_tablet_1.png',
+      imageMobile: '/Hero-mobile-1.png',
       preTitle: 'No.1 AI 학습 솔루션',
       mainTitle: '수학대왕',
       description: '압도적인 AI 기술로 실현하는<br />가장 완벽한 1:1 밀착 관리'
@@ -963,7 +973,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     {
       id: 2,
       image: '/Hero-2.png',
-      imageMobile: '/mobile-hero-2.png',
+      imageTablet: '/Hero_tablet_2.png',
+      imageMobile: '/Hero-mobile-2.png',
       preTitle: 'KTEA 한국브랜드평가대상',
       mainTitle: '2년 연속 1위 수상',
       description: '누적 가입자 200만 명 달성!<br />초중고 모든 교과과정에 최적화된 학습 플랫폼'
@@ -971,7 +982,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     {
       id: 3,
       image: '/Hero-3.png',
-      imageMobile: '/mobile-hero-3.png',
+      imageTablet: '/Hero_tablet_3.png',
+      imageMobile: '/Hero-mobile-3.png',
       preTitle: 'ChatGPT 개발사',
       mainTitle: 'OpenAI 공식 협업 기업',
       description: '서술형 풀이 채점부터 유사문제 검색까지<br />차원이 다른 AI 기술을 제공합니다'
@@ -979,7 +991,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     {
       id: 4,
       image: '/Hero-4.png',
-      imageMobile: '/mobile-hero-4.png',
+      imageTablet: '/Hero_tablet_4.png',
+      imageMobile: '/Hero-mobile-4.png',
       preTitle: '업계 최고의 AI 기술력',
       mainTitle: '특허 19종 등록 완료',
       description: '문제은행을 넘어 AI 튜터로!<br />가장 수학을 잘 하는 AI를 만듭니다'
@@ -987,7 +1000,8 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     {
       id: 5,
       image: '/Hero-5.png',
-      imageMobile: '/mobile-hero-5.png',
+      imageTablet: '/Hero_tablet_5.png',
+      imageMobile: '/Hero-mobile-5.png',
       preTitle: '개념부터 고난도까지',
       mainTitle: '최대 규모의 학습 콘텐츠',
       description: '학생들의 성적 상승,<br />국내 최고의 전문가들이 함께 합니다'
@@ -1175,6 +1189,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               key={slide.id}
               isActive={index === currentSlide}
               bgDesktop={slide.image}
+              bgTablet={slide.imageTablet}
               bgMobile={slide.imageMobile}
             />
           ))}
@@ -1182,7 +1197,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
           <ContentContainer>
             {/* 슬라이드 3번(인덱스 2)에서만 버튼 이미지 노출, 나머지는 placeholder로 높이 맞춤 */}
             {currentSlide === 2 ? (
-              <div style={{ display: 'flex', gap: 16, marginBottom: 32 }}>
+              <div style={{ display: 'flex', gap: 16, marginTop: 30, marginBottom: 20 }}>
                 <ChipImage
                   src="/Hero 3_Open AI.png"
                   alt="OpenAI"

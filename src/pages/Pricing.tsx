@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const PricingPageContainer = styled.div`
@@ -9,7 +9,7 @@ const PricingPageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 0;
-  min-width: 375px;
+  overflow-x: hidden;
   @media (max-width: 1024px) {
     width: 100%;
     overflow-x: hidden;
@@ -105,6 +105,7 @@ const ModalDescription = styled.p`
   line-height: 1.6;
   margin-bottom: 30px;
   text-align: center;
+  white-space: pre-line;
   @media (max-width: 600px) {
     font-size: 14px;
     margin-bottom: 20px;
@@ -188,8 +189,7 @@ const PricingContainer = styled.div`
     padding: 20px;
   }
   @media (max-width: 768px) {
-    width: 375px;
-    min-width: 375px;
+    width: 100%;
     height: auto;
     padding: 20px;
   }
@@ -227,7 +227,7 @@ const PricingSection = styled.div`
 `;
 
 const PricingHeader = styled.div`
-  width: 1150px;
+  width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -239,9 +239,7 @@ const PricingHeader = styled.div`
     text-align: center;
   }
   @media (max-width: 768px) {
-    width: 359px;
-    min-width: 359px;
-    max-width: 359px;
+    width: 100%;
     align-items: center;
     text-align: center;
     gap: 12px;
@@ -285,11 +283,11 @@ const PricingSubtitle = styled.div`
 `;
 
 const PricingCardsContainer = styled.div`
-  width: 1150px;
+  width: 1200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 30px;
   @media (max-width: 1024px) {
     width: 100%;
     flex-direction: column;
@@ -311,12 +309,12 @@ const PricingCardsContainer = styled.div`
 `;
 
 const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>`
-  width: 500px;
-  min-width: 500px;
-  max-width: 500px;
+  width: 550px;
+  min-width: 550px;
+  max-width: 550px;
   height: 200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 30px;
   background: white;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.10);
   border-radius: 10px;
@@ -347,9 +345,9 @@ const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>
   
   @media (max-width: 1024px) {
     width: 100%;
-    max-width: 500px;
-    height: 180px;
-    padding: 0 20px;
+    max-width: 550px;
+    height: 220px;
+    padding: 0 30px;
     margin: 0 auto;
   }
   @media (max-width: 768px) {
@@ -369,7 +367,7 @@ const CardHeader = styled.div`
   overflow: hidden;
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   gap: 8px;
   @media (max-width: 768px) {
     height: 80px;
@@ -379,7 +377,7 @@ const CardHeader = styled.div`
 
 const CardTitle = styled.div<{ isHighlighted?: boolean }>`
   color: ${props => props.isHighlighted ? '#7756D6' : '#33373B'};
-  font-size: 24px;
+  font-size: 28px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   word-wrap: break-word;
@@ -389,7 +387,7 @@ const CardTitle = styled.div<{ isHighlighted?: boolean }>`
   flex-direction: column;
   gap: 4px;
   @media (max-width: 768px) {
-    font-size: 18px;
+    font-size: 20px;
     gap: 2px;
   }
 `;
@@ -428,21 +426,21 @@ const CardDivider = styled.div`
 
 const CardDescription = styled.div`
   color: #7A828D;
-  font-size: 12px;
+  font-size: 16px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 20px;
   word-wrap: break-word;
   white-space: pre-line;
   margin-top: 8px;
   padding-right: 2px;
   @media (max-width: 768px) {
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 18px;
   }
   @media (max-width: 600px) {
-    font-size: 11px;
-    line-height: 15px;
+    font-size: 12px;
+    line-height: 16px;
   }
   @media (max-width: 400px) {
     font-size: 10px;
@@ -550,7 +548,7 @@ const TrialSection = styled.div`
   gap: 50px;
   margin: 0 auto;
   @media (max-width: 1300px) {
-    width: 100vw;
+    width: 100%;
     padding: 60px 20px;
   }
   @media (max-width: 768px) {
@@ -645,10 +643,7 @@ const TrialStepContainer = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    padding: 12px;
-    background: rgba(131, 94, 235, 0.02);
-    border-radius: 16px;
-    border: 1px solid rgba(131, 94, 235, 0.1);
+    padding: 0;
     box-sizing: border-box;
     justify-content: center;
     align-self: center;
@@ -828,7 +823,7 @@ const ComparisonSection = styled.div`
   gap: 50px;
   margin: 0 auto;
   @media (max-width: 1300px) {
-    width: 100vw;
+    width: 100%;
     padding: 60px 20px;
   }
   @media (max-width: 768px) {
@@ -838,9 +833,7 @@ const ComparisonSection = styled.div`
     align-items: center;
   }
   @media (max-width: 375px) {
-    width: 375px;
-    min-width: 375px;
-    max-width: 375px;
+    width: 100%;
     padding: 80px 25px 40px 25px;
     gap: 24px;
     box-sizing: border-box;
@@ -1208,20 +1201,24 @@ const SVGContainer = styled.div`
   width: 1000px;
 
   @media (max-width: 1024px) {
-    width: auto;
-    gap: 60px;
+    width: 100%;
+    gap: 80px;
   }
 
   @media (max-width: 768px) {
-    width: 100%;
-    gap: 40px;
+    display: none; /* 모바일에서는 Swiper 사용 */
   }
 `;
 
 const TopDataContainer = styled.div`
+  display: flex;
+  width: 100%;
+  
   @media (max-width: 768px) {
-    display: flex;
-    width: 100%;
+    display: none; /* 모바일에서는 Swiper 사용 */
+  }
+  
+  @media (min-width: 769px) {
     position: relative;
     background: white;
     border: 1px solid #E5E7EB;
@@ -1246,6 +1243,7 @@ const TopDataFixedColumn = styled.div`
     color: #835EEB;
     text-align: center;
     line-height: 1.2;
+    height: 135px; /* 전체 컨테이너와 동일한 높이 */
   }
 `;
 
@@ -1260,21 +1258,21 @@ const TopDataFixedRow = styled.div`
     font-weight: 600;
     
     &:first-child {
-      height: 26px;
+      height: 45px;
       background: white;
       color: transparent;
       font-weight: 500;
     }
     
     &:nth-child(2) {
-      height: 25px;
+      height: 45px;
       background: #F9F7FF;
       color: #835EEB;
       font-weight: 700;
     }
     
     &:nth-child(3) {
-      height: 25px;
+      height: 45px;
       background: #F9F7FF;
       color: #835EEB;
       font-weight: 700;
@@ -1289,6 +1287,15 @@ const TopDataScrollContainer = styled.div`
     overflow-x: auto;
     overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
+    height: 135px; /* 3행에 맞는 고정 높이 설정 */
+    
+    /* 스크롤바 숨기기 */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
   }
 `;
 
@@ -1299,17 +1306,20 @@ const TopDataImage = styled.img`
   align-self: flex-end;
 
   @media (max-width: 1024px) {
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 1000px;
     align-self: center;
   }
 
   @media (max-width: 768px) {
-    width: 720px;
-    min-width: 720px;
+    width: 800px; /* 스크롤이 가능하도록 충분히 큰 너비 */
+    min-width: 800px;
     max-width: none;
     align-self: flex-start;
-    margin-left: -80px;
+    margin-left: 0;
+    height: 135px; /* 3행에 맞는 고정 높이 */
+    object-fit: cover; /* 이미지 비율 유지하면서 채우기 */
+    object-position: left top; /* 왼쪽 상단부터 보이도록 */
   }
 `;
 
@@ -1337,8 +1347,8 @@ const TopDataFixedImage = styled.img`
   align-self: flex-end;
 
   @media (max-width: 1024px) {
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 1000px;
     align-self: center;
   }
 
@@ -1357,8 +1367,8 @@ const TopDataScrollImage = styled.img`
   align-self: flex-end;
 
   @media (max-width: 1024px) {
-    width: 90%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 1000px;
     align-self: center;
   }
 
@@ -1378,9 +1388,10 @@ const BottomDataContainer = styled.div`
   width: 100%;
 
   @media (max-width: 1024px) {
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+    justify-content: space-between;
   }
 
   @media (max-width: 768px) {
@@ -1399,10 +1410,10 @@ const ClassAlgorithmImage = styled.img`
   opacity: 0.8;
 
   @media (max-width: 1024px) {
-    width: 35%;
-    max-width: 300px;
-    margin-left: 0;
-    margin-top: 0;
+    width: 45%;
+    max-width: 400px;
+    margin-left: 20px;
+    margin-top: -20px;
   }
 
   @media (max-width: 768px) {
@@ -1420,9 +1431,9 @@ const BottomDataImage = styled.img`
   margin-left: auto;
 
   @media (max-width: 1024px) {
-    width: 45%;
-    max-width: 400px;
-    margin-left: 0;
+    width: 55%;
+    max-width: 500px;
+    margin-left: auto;
   }
 
   @media (max-width: 768px) {
@@ -1430,7 +1441,116 @@ const BottomDataImage = styled.img`
     max-width: 325px;
     margin-left: 0;
   }
+  `;
+
+// Swiper 관련 styled components
+const SwiperContainer = styled.div`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    
+    .swiper-pagination {
+      bottom: 8px !important;
+    }
+    
+    .swiper-pagination-bullet {
+      background: #835EEB !important;
+      opacity: 0.3;
+    }
+    
+    .swiper-pagination-bullet-active {
+      opacity: 1 !important;
+    }
+  }
 `;
+
+const SwiperCard = styled.div`
+  padding: 16px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E5E7EB;
+`;
+
+const SwiperCardTitle = styled.h3`
+  margin-bottom: 12px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #835EEB;
+  text-align: center;
+`;
+
+const SwiperCardList = styled.ul`
+  font-size: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+`;
+
+const SwiperCardItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #F3F4F6;
+  
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+
+const SwiperCardLabel = styled.span`
+  color: #374151;
+`;
+
+const SwiperCardValue = styled.span`
+  font-weight: 500;
+  color: #835EEB;
+`;
+
+// 모바일 테이블 데이터
+const mobileTableData = [
+  {
+    title: "시험지 제작 및 평가",
+    items: [
+      { label: "맞춤 문제 추천", value: "✓" },
+      { label: "오답 클리닉", value: "자동·무한" },
+      { label: "AI 채점", value: "✓" },
+      { label: "학습 분석", value: "✓" }
+    ]
+  },
+  {
+    title: "문제지/교재 제작",
+    items: [
+      { label: "문제은행", value: "✓" },
+      { label: "교재 생성", value: "✓" },
+      { label: "PDF 출력", value: "✓" },
+      { label: "커스터마이징", value: "✓" }
+    ]
+  },
+  {
+    title: "유사문제 추천",
+    items: [
+      { label: "AI 추천", value: "✓" },
+      { label: "난이도 조절", value: "✓" },
+      { label: "유형별 분류", value: "✓" },
+      { label: "실시간 생성", value: "✓" }
+    ]
+  },
+  {
+    title: "학습 관리 시스템",
+    items: [
+      { label: "진도 관리", value: "✓" },
+      { label: "성적 분석", value: "✓" },
+      { label: "학습 랭킹", value: "지원" },
+      { label: "리포트 생성", value: "✓" }
+    ]
+  }
+];
 
 // 요금 플랜 데이터
 const pricingPlans = {
@@ -1447,7 +1567,7 @@ const pricingPlans = {
       '기본 리포트 제공',
       '이메일 지원'
     ],
-    fullDescription: '수학대왕의 기본 기능을 체험할 수 있는 플랜입니다. 개인 학습자나 소규모 학원에 적합합니다.'
+    fullDescription: '수학대왕의 기본 기능을 체험할 수 있는 플랜입니다.\n개인 학습자나 소규모 학원에 적합합니다.'
   },
   premium: {
     title: '3개월',
@@ -1464,7 +1584,7 @@ const pricingPlans = {
       '상세한 학습 분석 리포트',
       '전화 및 화상 상담 지원'
     ],
-    fullDescription: '수학대왕의 모든 기능을 3개월간 체험할 수 있는 특별 플랜입니다. AI 기술을 활용한 완벽한 1:1 맞춤 학습을 경험해보세요.'
+    fullDescription: '수학대왕의 모든 기능을 3개월간 체험할 수 있는 특별 플랜입니다.\nAI 기술을 활용한 완벽한 1:1 맞춤 학습을 경험해보세요.'
   }
 };
 
@@ -1485,6 +1605,26 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
     }, 300);
     
     return () => clearTimeout(timer);
+  }, []);
+
+  // Swiper 초기화
+  useEffect(() => {
+    // Swiper가 로드된 후 초기화
+    if ((window as any).Swiper) {
+      new (window as any).Swiper('.mySwiper', {
+        slidesPerView: 1,
+        spaceBetween: 12,
+        pagination: { 
+          el: '.swiper-pagination', 
+          clickable: true 
+        },
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        }
+      });
+    }
   }, []);
 
   // 스크롤 인터랙션을 위한 useEffect
@@ -1730,7 +1870,43 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
 
          {/* SVG 비교표 컨테이너 */}
          <SVGComparisonContainer>
-           {/* 전체 SVG 영역 */}
+           {/* 모바일용 Swiper */}
+           <SwiperContainer>
+             <div className="swiper mySwiper">
+               <div className="swiper-wrapper">
+                 {mobileTableData.map((card, index) => (
+                   <div key={index} className="swiper-slide">
+                     <SwiperCard>
+                       <SwiperCardTitle>{card.title}</SwiperCardTitle>
+                       <SwiperCardList>
+                         {card.items.map((item, itemIndex) => (
+                           <SwiperCardItem key={itemIndex}>
+                             <SwiperCardLabel>{item.label}</SwiperCardLabel>
+                             <SwiperCardValue>{item.value}</SwiperCardValue>
+                           </SwiperCardItem>
+                         ))}
+                       </SwiperCardList>
+                     </SwiperCard>
+                   </div>
+                 ))}
+               </div>
+               <div className="swiper-pagination"></div>
+             </div>
+             {/* 모바일용 Class Algorithm 이미지 */}
+             <img 
+               src="/class algorithm.svg" 
+               alt="Class Algorithm" 
+               style={{
+                 width: '100%',
+                 maxWidth: '325px',
+                 height: 'auto',
+                 marginTop: '40px',
+                 opacity: 0.8
+               }}
+             />
+           </SwiperContainer>
+
+           {/* 전체 SVG 영역 (데스크탑용) */}
            <SVGContainer>
              {/* 상단 데이터 SVG */}
              <TopDataContainer>

@@ -13,6 +13,17 @@ const fadeInUp = keyframes`
   }
 `;
 
+const slideUpChip = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const fadeInLeft = keyframes`
   from {
     opacity: 0;
@@ -56,8 +67,7 @@ const highlightAnimation = keyframes`
 `;
 
 const BodyContainer = styled.div`
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   padding-bottom: 30px;
   background: #fff;
   display: flex;
@@ -68,8 +78,47 @@ const BodyContainer = styled.div`
   scroll-snap-align: start;
 `;
 
+/* 태블릿용 통합 섹션 컨테이너 */
+const IntegratedSection = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  display: none; /* 기본적으로 숨김 */
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  
+  @media (max-width: 1024px) {
+    display: flex; /* 태블릿에서만 표시 */
+    padding: 80px 20px;
+    gap: 60px;
+  }
+  
+  @media (max-width: 600px) {
+    display: none; /* 모바일에서는 기존 레이아웃 사용 */
+  }
+`;
+
+/* 태블릿용 헤더 */
+const TabletHeader = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+`;
+
+/* 태블릿용 카드 그리드 */
+const TabletCardGrid = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
+`;
+
 const HeaderSection = styled.div`
-  width: 100vw;
+  width: 100%;
   max-width: 1280px;
   padding: 160px 0 100px;
   flex-direction: column;
@@ -79,14 +128,20 @@ const HeaderSection = styled.div`
   display: flex;
   box-sizing: border-box;
   scroll-snap-align: start;
+  
+  @media (max-width: 1024px) and (min-width: 601px) {
+    display: none; /* 태블릿에서는 통합 레이아웃 사용 */
+  }
+  
   @media (max-width: 600px) {
-    padding: 100px 0 40px;
+    display: flex; /* 모바일에서는 표시 */
+    padding: 100px 0 20px;
     gap: 12px;
   }
 `;
 
 const Title = styled.div`
-  width: 100vw;
+  width: 100%;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -126,7 +181,7 @@ const TitleText = styled.span`
 `;
 
 const Subtitle = styled.div`
-  width: 100vw;
+  width: 100%;
   text-align: center;
   color: #666666;
   font-size: 24px;
@@ -144,7 +199,7 @@ const Subtitle = styled.div`
 `;
 
 const SectionTitle = styled.div`
-  width: 100vw;
+  width: 100%;
   padding: 120px 0 20px;
   display: flex;
   justify-content: center;
@@ -157,7 +212,7 @@ const SectionTitle = styled.div`
 `;
 
 const SectionTitleText = styled.div`
-  width: 100vw;
+  width: 100%;
   max-width: 1040px;
   text-align: center;
   color: #835EEB;
@@ -174,23 +229,28 @@ const SectionTitleText = styled.div`
 `;
 
 const FeatureGrid = styled.div`
-  width: 100vw;
-  max-width: 1280px;
-  padding: 90px 0;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 50px 80px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 50px;
+  gap: 120px;
   box-sizing: border-box;
-  scroll-snap-align: start;
-  @media (max-width: 900px) {
+  
+  @media (max-width: 1024px) and (min-width: 601px) {
+    display: none; /* 태블릿에서는 통합 레이아웃 사용 */
+  }
+  
+  @media (max-width: 600px) {
     flex-direction: column;
     gap: 24px;
-    padding: 90px 0;
+    padding: 50px 0;
   }
+  
   @media (max-width: 375px) {
-    width: 375px;
-    max-width: 375px;
+    width: 100%;
     padding: 90px 16px;
   }
 `;
@@ -204,7 +264,6 @@ const ImagePlaceholder = styled.div`
   border: 2px #835EEB solid;
   transition: all 0.3s ease;
 
-
   &::before {
     content: '';
     position: absolute;
@@ -215,6 +274,13 @@ const ImagePlaceholder = styled.div`
     background: linear-gradient(120deg, transparent 0%, rgba(131, 94, 235, 0.03) 50%, transparent 100%);
     transform: translateX(-100%);
     transition: transform 0.6s ease;
+  }
+  
+  @media (max-width: 600px) {
+    width: 85%; /* 가로폭 15% 축소 */
+    height: 250px; /* 세로 높이 증가 */
+    border-radius: 16px;
+    margin: 0 auto; /* 중앙 정렬 */
   }
 `;
 
@@ -245,8 +311,19 @@ const FeatureCard = styled.div`
   transition: all 0.3s ease;
   cursor: pointer;
   box-sizing: border-box;
+  
+  /* 태블릿에서 카드 크기 조정 */
+  @media (max-width: 1024px) {
+    flex: none !important;
+    max-width: 80%;
+    width: 600px;
+    gap: 24px;
+    margin: 0 auto;
+  }
+  
   @media (max-width: 600px) {
-    max-width: 95vw;
+    max-width: 100%;
+    width: 100%;
     gap: 12px;
     border-radius: 12px;
   }
@@ -318,6 +395,28 @@ const AnimatedFeatureCard = styled(FeatureCard)`
   }
   &.visible-right {
     animation: ${fadeInRight} 0.8s ease forwards;
+  }
+  
+  @media (max-width: 600px) {
+    /* 모바일에서 순서 변경: 카테고리-텍스트-이미지 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    /* 카테고리는 그대로 첫 번째 */
+    > div:first-child {
+      order: 1;
+    }
+    
+    /* 이미지는 마지막 */
+    > div:nth-child(2) {
+      order: 3;
+    }
+    
+    /* 텍스트는 중간 */
+    > div:last-child {
+      order: 2;
+    }
   }
 `;
 
@@ -405,7 +504,7 @@ const SyncSection = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
 `;
 
@@ -573,7 +672,7 @@ const DemoSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   box-sizing: border-box;
   min-height: 890px;
   padding: 60px 0;
@@ -675,12 +774,9 @@ const DemoContent = styled.div`
   gap: 30px;
   position: relative;
   box-sizing: border-box;
-  @media (max-width: 900px) {
+  @media (max-width: 600px) {
     flex-direction: column;
     gap: 16px;
-    padding: 20px 4px;
-  }
-  @media (max-width: 600px) {
     padding: 16px 4px;
   }
 `;
@@ -729,10 +825,6 @@ const FeatureBoxFlow = styled.div`
   gap: 40px;
   animation: ${slideLeft} 25s linear infinite;
   box-sizing: border-box;
-  @media (max-width: 900px) {
-    gap: 24px;
-    animation: ${slideLeft} 20s linear infinite;
-  }
   @media (max-width: 600px) {
     gap: 8px;
     animation: ${cardFlipMobile} 20s ease-in-out infinite;
@@ -1029,9 +1121,11 @@ interface FeatureProps {
   title: string;
   description: string[];
   index: number;
+  imageSrc?: string;
+  category?: string;
 }
 
-const Feature: React.FC<FeatureProps> = ({ title, description, index }) => {
+const Feature: React.FC<FeatureProps> = ({ title, description, index, imageSrc, category }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1060,7 +1154,27 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index }) => {
 
   return (
     <AnimatedFeatureCard ref={cardRef}>
-      <ImagePlaceholder />
+      {category && (
+        <FeatureCategory>
+          <FeatureCategoryText>
+            {category}
+          </FeatureCategoryText>
+        </FeatureCategory>
+      )}
+      <ImagePlaceholder>
+        {imageSrc && (
+          <img 
+            src={imageSrc}
+            alt={title}
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover', 
+              borderRadius: '18px' 
+            }}
+          />
+        )}
+      </ImagePlaceholder>
       <FeatureContent>
         <FeatureTitle>{title}</FeatureTitle>
         <FeatureDescription>
@@ -1090,6 +1204,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentDemoSlide, setCurrentDemoSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDemoMobile, setIsDemoMobile] = useState(false); // 데모 섹션 전용 모바일 상태
+  
+  // 웹앱 연동 칩 애니메이션 상태
+  const [teacherChipsVisible, setTeacherChipsVisible] = useState([false, false, false, false]);
+  const [studentChipsVisible, setStudentChipsVisible] = useState([false, false, false, false]);
+  const webAppSectionRef = useRef<HTMLDivElement>(null);
 
 
   // 테스티모니얼 데이터
@@ -1125,10 +1245,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     }
   }, []);
 
-  // 모바일 감지
+  // 모바일 및 태블릿 감지 (데모 섹션용)
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 600);
+      setIsMobile(window.innerWidth <= 1024); // 태블릿도 모바일 레이아웃 사용
+      setIsDemoMobile(window.innerWidth <= 600); // 데모 섹션은 600px 이하만 모바일
     };
     
     checkMobile();
@@ -1192,6 +1313,40 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     }, 8000);
     return () => clearInterval(interval);
   }, [testimonials.length]);
+
+  // 웹앱 연동 섹션 칩 애니메이션
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // 선생님용 칩 순차 애니메이션
+            setTeacherChipsVisible([true, false, false, false]);
+            setTimeout(() => setTeacherChipsVisible([true, true, false, false]), 200);
+            setTimeout(() => setTeacherChipsVisible([true, true, true, false]), 400);
+            setTimeout(() => setTeacherChipsVisible([true, true, true, true]), 600);
+            
+            // 학생용 칩 순차 애니메이션 (800ms 후 시작)
+            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 800);
+            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 1000);
+            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1200);
+            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1400);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (webAppSectionRef.current) {
+      observer.observe(webAppSectionRef.current);
+    }
+
+    return () => {
+      if (webAppSectionRef.current) {
+        observer.unobserve(webAppSectionRef.current);
+      }
+    };
+  }, []);
 
   const handleDemoClick = () => {
     const newCount = demoCount + 1;
@@ -1343,6 +1498,80 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           AI 기술로 완성된 체계적인 수학 학습 관리 시스템
         </Subtitle>
       </AnimatedHeaderSection>
+
+      {/* 태블릿용 통합 섹션 */}
+      <IntegratedSection>
+        <TabletHeader>
+          <Title>
+            <TitleText>수학대왕에서만 만날 수 있는<br />특별한 기능을 소개합니다</TitleText>
+          </Title>
+          <Subtitle>
+            AI 기술로 완성된 체계적인 수학 학습 관리 시스템
+          </Subtitle>
+        </TabletHeader>
+        <TabletCardGrid>
+          <Feature
+            title="1:1 개별 맞춤 학습지"
+            description={[
+              "AI가 만들어주는",
+              "학생별로 서로 다른 실력에 맞게, 최적의 문제로 학습지를 자동 생성해 드려요!"
+            ]}
+            index={0}
+            imageSrc="/video/Body-image-1.png"
+            category="학습지 자동 제작"
+          />
+          <Feature
+            title="학습 성과 분석"
+            description={[
+              "개인별 학습 데이터 분석",
+              "자동 오답클리닉으로 모든 취약점을 완벽하게 보완합니다"
+            ]}
+            index={1}
+            imageSrc="/video/Body-image-2.png"
+            category="오답 완벽 정복"
+          />
+          <Feature
+            title="서술형 자동 채점"
+            description={[
+              "필기 인식 기술로",
+              "서술형 답안을 정확하게 자동 채점합니다"
+            ]}
+            index={2}
+            imageSrc="/video/Body-image-3.png"
+            category="AI 채점 시스템"
+          />
+          <Feature
+            title="전국 단위 실력 분석"
+            description={[
+              "AI 채점 시스템으로",
+              "전국 학생들과 비교한 객관적인 실력 분석 리포트를 제공합니다"
+            ]}
+            index={3}
+            imageSrc="/video/Body-image-4.png"
+            category="AI 채점 시스템"
+          />
+          <Feature
+            title="AI 힌트 및 오답 피드백"
+            description={[
+              "실시간 피드백으로",
+              "풀이가 막힐 때 단계별 힌트와 상세한 오답 분석을 제공합니다"
+            ]}
+            index={4}
+            imageSrc="/video/Body-image-5.png"
+            category="실시간 피드백"
+          />
+          <Feature
+            title="실시간 질문 게시판"
+            description={[
+              "실시간 피드백으로",
+              "모르는 문제를 게시판에 질문하고 빠르게 답변을 받아 볼 수 있습니다"
+            ]}
+            index={5}
+            imageSrc="/video/Body-image-6.png"
+            category="실시간 피드백"
+          />
+        </TabletCardGrid>
+      </IntegratedSection>
 
       <FeatureSectionWrapper>
         {/* 1번 FeatureBox */}
@@ -1515,8 +1744,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         </FeatureBox>
       </FeatureSectionWrapper>
 
-
-
       <DemoSection>
         <DemoHeader>
           <DemoTitle>
@@ -1535,7 +1762,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           </DemoButton>
         </DemoHeader>
         <DemoContent>
-          {isMobile ? (
+          {isDemoMobile ? (
             <MobileDemoSlider>
               <MobileDemoSlideContainer>
                 {[
@@ -1616,9 +1843,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       </DemoSection>
 
       {/* 웹-앱 연동 섹션 */}
-      <WebAppSection>
-        <div style={{position:'relative',width:'100vw',maxWidth:'1920px',margin:'0 auto',padding:0,minHeight:'900px'}}>
-          {isMobile ? (
+      <WebAppSection ref={webAppSectionRef}>
+        <div style={{position:'relative',width:'100%',maxWidth:'1920px',margin:'0 auto',padding:0,minHeight:'900px'}}>
+          {window.innerWidth <= 600 ? (
             <>
               <WebAppHeader
                 style={{
@@ -1665,7 +1892,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
+              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'48px 0 0 0'}}>
                 <WebAppInfoBlock>
                   <WebAppInfoTitle style={{ fontSize: 20 }}>선생님용 웹사이트</WebAppInfoTitle>
                   <WebAppInfoChips>
@@ -1676,7 +1903,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
-              <img src="/웹앱연동_모바일 1.png" alt="웹앱연동 모바일1" style={{width:'80vw',maxWidth:220,margin:'24px auto',display:'block'}} />
+              <img src="/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:200,margin:'24px auto',display:'block'}} />
               <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
                 <WebAppInfoBlock>
                   <WebAppInfoTitle style={{ fontSize: 20 }}>학생용 모바일 앱</WebAppInfoTitle>
@@ -1688,7 +1915,97 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
-              <img src="/웹앱연동_모바일 2.png" alt="웹앱연동 모바일2" style={{width:'53vw',maxWidth:146,margin:'24px auto 0 auto',display:'block'}} />
+              <img src="/mockup_mobile 2.png" alt="웹앱연동 모바일2" style={{width:'100%',maxWidth:130,margin:'24px auto 0 auto',display:'block'}} />
+            </>
+          ) : window.innerWidth <= 1024 ? (
+            /* 태블릿 전용 레이아웃 */
+            <>
+              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'0'}}>
+                <WebAppTitle style={{pointerEvents:'auto', fontSize: 36, textAlign: 'center'}}>웹-앱 연동으로 완성되는<br/>교육 시스템</WebAppTitle>
+                <WebAppSubtitle style={{pointerEvents:'auto', fontSize: 18, textAlign: 'center', marginTop: 16}}>교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요</WebAppSubtitle>
+                <WebAppButtons style={{pointerEvents:'auto', marginTop: 24}}>
+                  <WebAppButton 
+                    href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                    </WebAppIcon>
+                    <WebAppButtonText>Google Play</WebAppButtonText>
+                  </WebAppButton>
+                  <WebAppButton 
+                    href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <WebAppIcon>
+                      <img src="/App_Store_logo.svg" alt="App Store" />
+                    </WebAppIcon>
+                    <WebAppButtonText>App Store</WebAppButtonText>
+                  </WebAppButton>
+                </WebAppButtons>
+              </WebAppHeader>
+              
+              {/* 태블릿 메인 콘텐츠 영역 - mockup 이미지 기반 */}
+              <div style={{position: 'relative', width: '100%', margin: '0', padding: '0'}}>
+                {/* 배경 mockup 이미지 */}
+                <img 
+                  src={`/mockup_tablet.png?v=${Date.now()}`} 
+                  alt="웹-앱 연동 mockup" 
+                  style={{
+                    width: '100%', 
+                    height: 'auto', 
+                    display: 'block'
+                  }} 
+                />
+                
+                {/* 좌측 상단: 선생님용 웹사이트 제목과 칩들 */}
+                <div style={{
+                  position: 'absolute',
+                  top: '8%',
+                  right: '5%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-end',
+                  gap: '12px'
+                }}>
+                  <div style={{
+                    color: '#835EEB', 
+                    fontSize: 28, 
+                    fontWeight: 700, 
+                    marginBottom: 8,
+                    textAlign: 'right'
+                  }}>선생님용<br/>웹사이트</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>클래스 및 학생관리</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>맞춤형 문제 출제</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>AI 채점 결과 확인</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>실력 분석 리포트</div>
+                </div>
+                
+                {/* 좌측 하단: 학생용 모바일 앱 제목과 칩들 */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '15%',
+                  left: '5%',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: '12px'
+                }}>
+                  <div style={{
+                    color: '#835EEB', 
+                    fontSize: 28, 
+                    fontWeight: 700, 
+                    marginBottom: 8,
+                    textAlign: 'left'
+                  }}>학생용<br/>모바일 앱</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>맞춤형 학습지 수신</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>AI 힌트 시스템</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>실시간 채점 피드백</div>
+                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>장학금 알림 수신</div>
+                </div>
+              </div>
             </>
           ) : (
             <>
@@ -1718,32 +2035,37 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <WebAppInfoRow>
-                <WebAppInfoBlock>
-                  <WebAppInfoTitle style={{ fontSize: 24 }}>학생용 모바일 앱</WebAppInfoTitle>
-                  <WebAppInfoChips>
-                    <WebAppInfoChip>맞춤형 학습지 수신</WebAppInfoChip>
-                    <WebAppInfoChip>AI 힌트 시스템</WebAppInfoChip>
-                    <WebAppInfoChip>실시간 채점 피드백</WebAppInfoChip>
-                    <WebAppInfoChip>장학금 알림 수신</WebAppInfoChip>
-                  </WebAppInfoChips>
-                </WebAppInfoBlock>
-                <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
-                  <WebAppInfoTitle style={{ fontSize: 24 }}>선생님용 웹사이트</WebAppInfoTitle>
-                  <WebAppInfoChips>
-                    <WebAppInfoChip>클래스 및 학생관리</WebAppInfoChip>
-                    <WebAppInfoChip>맞춤형 문제 출제</WebAppInfoChip>
-                    <WebAppInfoChip>AI 채점 결과 확인</WebAppInfoChip>
-                    <WebAppInfoChip>실력 분석 리포트</WebAppInfoChip>
-                  </WebAppInfoChips>
-                </WebAppInfoBlock>
-              </WebAppInfoRow>
-              <WebAppContent>
+              <WebAppContent style={{position: 'relative'}}>
                 <img 
-                  src="/Class UI.png" 
+                  src="/mockup_web.png" 
                   alt="웹앱 연동 UI" 
-                  style={{ width: '100vw', maxWidth: '1920px', height: 'auto', display: 'block', objectFit: 'cover', margin: '40px auto 0 auto', borderRadius: '16px' }}
+                  style={{ width: '100vw', maxWidth: '1920px', height: 'auto', display: 'block', objectFit: 'cover', margin: '10px auto 0 auto', borderRadius: '16px' }}
                 />
+                {/* 선생님용 웹사이트 - 현재 위치 그대로 */}
+                <div style={{position: 'absolute', top: '120px', right: '50px', zIndex: 10}}>
+                  <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
+                    <WebAppInfoTitle style={{ fontSize: 28 }}>선생님용 웹사이트</WebAppInfoTitle>
+                    <WebAppInfoChips style={{alignItems:'flex-end'}}>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={200}>맞춤형 문제 출제</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={400}>AI 채점 결과 확인</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={600}>실력 분석 리포트</WebAppInfoChip>
+                    </WebAppInfoChips>
+                  </WebAppInfoBlock>
+                </div>
+                
+                {/* 학생용 모바일 앱 - 하단 목업 끝나는 곳 */}
+                <div style={{position: 'absolute', bottom: '100px', left: '50px', zIndex: 10}}>
+                  <WebAppInfoBlock>
+                    <WebAppInfoTitle style={{ fontSize: 28 }}>학생용 모바일 앱</WebAppInfoTitle>
+                    <WebAppInfoChips>
+                      <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={200}>AI 힌트 시스템</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={400}>실시간 채점 피드백</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={600}>장학금 알림 수신</WebAppInfoChip>
+                    </WebAppInfoChips>
+                  </WebAppInfoBlock>
+                </div>
               </WebAppContent>
             </>
           )}
@@ -1823,9 +2145,9 @@ const WebAppSection = styled.section`
   gap: 128px;
   overflow: hidden;
   scroll-snap-align: start;
-  @media (max-width: 900px) {
-    padding: 120px 16px;
-    gap: 80px;
+  @media (max-width: 1024px) and (min-width: 601px) {
+    padding: 60px 0; /* 태블릿에서 좌우 패딩 제거 */
+    gap: 60px;
   }
   @media (max-width: 600px) {
     padding: 80px 12px;
@@ -1909,7 +2231,7 @@ const WebAppButton = styled.a`
   display: flex;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 120px;
+  width: 140px; /* Google Play 텍스트에 맞춰 늘림 */
   text-decoration: none;
   
   &:hover {
@@ -1919,7 +2241,7 @@ const WebAppButton = styled.a`
   
   @media (max-width: 600px) {
     padding: 6px 12px;
-    width: 100px;
+    width: 110px; /* 모바일에서도 비례적으로 늘림 */
   }
 `;
 
@@ -1961,7 +2283,7 @@ const WebAppButtonText = styled.div`
 
 const WebAppContent = styled.div`
   position: relative;
-  width: 100vw;
+  width: 100%;
   max-width: 1920px;
   margin: 0 auto;
   padding: 0;
@@ -1970,8 +2292,7 @@ const WebAppContent = styled.div`
   @media (max-width: 600px) {
     min-height: 0;
     padding: 0;
-    width: 100vw;
-    max-width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2041,7 +2362,7 @@ const ExperienceInner = styled.div`
   align-items: center;
   gap: 64px;
   @media (max-width: 1500px) {
-    width: 100vw;
+    width: 100%;
     min-width: 0;
     padding: 0 16px;
   }
@@ -2212,8 +2533,12 @@ const NameSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  @media (max-width: 1024px) {
+    justify-content: center; /* 태블릿에서 가운데 정렬 */
+  }
   @media (max-width: 900px) {
     align-items: flex-start;
+    justify-content: center; /* 모바일에서 가운데 정렬 */
   }
 `;
 
@@ -2224,11 +2549,16 @@ const VerticalLine = styled.div`
   background: #835EEB;
   margin-right: 16px;
   border-radius: 2px;
+  @media (max-width: 1024px) {
+    display: none; /* 태블릿에서 막대 숨기기 */
+  }
   @media (max-width: 900px) {
+    display: none; /* 모바일에서 막대 숨기기 */
     height: 20px;
     margin-top: 20px;
   }
   @media (max-width: 600px) {
+    display: none; /* 모바일에서 막대 숨기기 */
     height: 16px;
     margin-top: 18px;
   }
@@ -2344,7 +2674,13 @@ const FeatureSectionWrapper = styled.div`
   gap: 150px;
   padding: 0;
   scroll-snap-type: y mandatory;
+  
+  @media (max-width: 1024px) {
+    display: none; /* 태블릿에서는 IntegratedSection 사용 */
+  }
+  
   @media (max-width: 600px) {
+    display: flex; /* 모바일에서는 다시 표시 */
     width: 100%;
     margin: 0 auto 80px auto;
     gap: 40px;
@@ -2626,7 +2962,7 @@ const FeatureTitleSection = styled.div`
   justify-content: center;
 `;
 
-// 모바일 데모 슬라이드 컴포넌트들
+// 모바일 및 태블릿 데모 슬라이드 컴포넌트들
 const MobileDemoSlider = styled.div`
   width: 100%;
   position: relative;
@@ -2634,6 +2970,11 @@ const MobileDemoSlider = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  
+  @media (max-width: 1024px) and (min-width: 601px) {
+    gap: 30px;
+    padding: 0 40px;
+  }
 `;
 
 const MobileDemoSlideContainer = styled.div`
@@ -2642,6 +2983,11 @@ const MobileDemoSlideContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  
+  @media (max-width: 1024px) and (min-width: 601px) {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 `;
 
 const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
@@ -2650,11 +2996,15 @@ const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
   justify-content: center;
   transition: ${props => props.noTransition ? 'none' : 'transform 1.2s ease-in-out'};
   flex-shrink: 0;
+  
+  @media (max-width: 1024px) and (min-width: 601px) {
+    padding: 0 20px;
+  }
 `;
 
 // 웹앱 연동 섹션용 정보 row 스타일
 const WebAppInfoRow = styled.div`
-  width: 100vw;
+  width: 100%;
   max-width: 1920px;
   margin: 0 auto;
   display: flex;
@@ -2686,7 +3036,7 @@ const WebAppInfoBlock = styled.div`
     align-items: center !important;
     text-align: center !important;
     min-width: 0;
-    width: 100vw;
+    width: 100%;
     gap: 14px;
   }
 `;
@@ -2703,22 +3053,28 @@ const WebAppInfoTitle = styled.div`
 `;
 const WebAppInfoChips = styled.div`
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px 12px;
+  flex-direction: column;
+  gap: 10px;
   @media (max-width: 600px) {
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 8px 8px;
   }
 `;
-const WebAppInfoChip = styled.div`
+const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   background: #F3EFFD;
   color: #835EEB;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 600;
-  padding: 6px 18px;
-  border-radius: 16px;
+  padding: 10px 24px;
+  border-radius: 20px;
   display: inline-block;
   width: max-content;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? '0' : '20px'});
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: ${props => props.delay || 0}ms;
   @media (max-width: 600px) {
     font-size: 15px;
     padding: 5px 12px;

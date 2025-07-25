@@ -4,8 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 
 const HeaderContainer = styled.header`
-  width: 100vw;
-  min-width: 100vw;
+  width: 100%;
   height: 60px;
   position: fixed;
   top: 0;
@@ -18,9 +17,6 @@ const HeaderContainer = styled.header`
   backdrop-filter: blur(8px);
   @media (max-width: 768px) {
     height: 48px;
-  }
-  @media (max-width: 375px) {
-    min-width: 375px;
   }
 `;
 
@@ -54,8 +50,7 @@ const HeaderInner = styled.div`
     height: 48px;
   }
   @media (max-width: 375px) {
-    width: 375px;
-    min-width: 375px;
+    width: 100%;
     padding: 0 16px;
     gap: 8px;
   }
@@ -219,19 +214,14 @@ const LoginButton = styled.a`
   transition: all 0.3s ease;
   cursor: pointer;
   background: #835EEB;
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-  @media (max-width: 600px) {
-    font-size: 11px;
-    padding: 6px 12px;
-  }
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 64px;
+  width: auto;
+  min-width: 64px;
   text-align: center;
   display: inline-block;
+  white-space: nowrap;
   &:hover {
     color: #835EEB;
     background: rgba(131, 94, 235, 0.05);
@@ -240,6 +230,14 @@ const LoginButton = styled.a`
   }
   &:active {
     transform: scale(0.98);
+  }
+  @media (max-width: 1024px) {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+  @media (max-width: 768px) {
+    padding: 7px 12px;
+    font-size: 11px;
   }
   @media (max-width: 600px) {
     display: none;
@@ -259,9 +257,11 @@ const DownloadButton = styled.a`
   color: white;
   border: 1px solid #835EEB;
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.10);
-  width: 64px;
+  width: auto;
+  min-width: 80px;
   text-align: center;
   display: inline-block;
+  white-space: nowrap;
   &:hover {
     color: #835EEB;
     background: rgba(131, 94, 235, 0.05);
@@ -271,8 +271,13 @@ const DownloadButton = styled.a`
   &:active {
     transform: scale(0.98);
   }
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
+    padding: 8px 14px;
     font-size: 12px;
+  }
+  @media (max-width: 768px) {
+    padding: 7px 12px;
+    font-size: 11px;
   }
   @media (max-width: 600px) {
     display: none;
@@ -319,7 +324,7 @@ const MobileDrawer = styled.div.withConfig({ shouldForwardProp: (prop) => prop !
     position: fixed;
     top: 0;
     right: 0;
-    width: 65vw;
+    width: 100%;
     max-width: 260px;
     height: 100vh;
     background: #fff;
@@ -333,17 +338,17 @@ const MobileDrawer = styled.div.withConfig({ shouldForwardProp: (prop) => prop !
     }
   }
   @media (max-width: 480px) {
-    width: 70vw;
+    width: 100%;
     max-width: 240px;
     padding: 18px 14px 14px 14px;
   }
   @media (max-width: 375px) {
-    width: 75vw;
+    width: 100%;
     max-width: 220px;
     padding: 16px 12px 12px 12px;
   }
   @media (max-width: 320px) {
-    width: 80vw;
+    width: 100%;
     max-width: 200px;
     padding: 14px 10px 10px 10px;
   }
