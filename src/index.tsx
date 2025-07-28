@@ -33,6 +33,59 @@ const GlobalStyle = createGlobalStyle`
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
+
+  /* 커스텀 스크롤바 - WebKit 브라우저 (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 4px;
+    backdrop-filter: blur(2px);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(131, 94, 235, 0.6);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 70, 193, 0.8);
+    transform: scale(1.1);
+    backdrop-filter: blur(6px);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: rgba(91, 59, 163, 0.9);
+    backdrop-filter: blur(8px);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(2px);
+  }
+
+  /* Firefox 스크롤바 */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(131, 94, 235, 0.6) rgba(0, 0, 0, 0.03);
+  }
+
+  /* 모바일에서 스크롤바 숨김 (선택사항) */
+  @media (max-width: 768px) {
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+    html {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+  }
 `;
 
 const root = ReactDOM.createRoot(

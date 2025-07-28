@@ -26,7 +26,7 @@ const FooterContainer = styled.div`
 const FooterContent = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 0 120px;
+  padding: 0 24px;
   align-self: stretch;
   justify-content: flex-start;
   align-items: flex-start;
@@ -34,7 +34,7 @@ const FooterContent = styled.div`
   display: inline-flex;
   
   @media (max-width: 1024px) {
-    padding: 0 40px;
+    padding: 0 16px;
     gap: 40px;
   }
   
@@ -53,7 +53,8 @@ const FooterContent = styled.div`
 `;
 
 const LeftSection = styled.div`
-  flex: 1 1 0;
+  flex: 1;
+  max-width: calc(100% - 140px);
   justify-content: flex-start;
   align-items: flex-start;
   gap: 80px;
@@ -61,12 +62,15 @@ const LeftSection = styled.div`
   
   @media (max-width: 1024px) {
     gap: 50px;
+    max-width: calc(100% - 120px);
   }
   
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 24px;
     width: 100%;
+    max-width: 100%;
+    flex: none;
   }
 `;
 
@@ -126,15 +130,18 @@ const CompanyInfo = styled.div`
   align-items: flex-start;
   gap: 24px;
   display: inline-flex;
+  margin-left: 50px;
   
   @media (max-width: 1024px) {
     width: 300px;
     gap: 16px;
+    margin-left: 30px;
   }
   
   @media (max-width: 768px) {
     width: 100%;
     gap: 4px;
+    margin-left: 0;
   }
 `;
 
@@ -257,9 +264,17 @@ const FooterActions = styled.div`
   gap: 16px;
   align-items: center;
   margin-top: 0;
+  margin-left: auto;
+  transform: translateX(150px);
+  
+  @media (max-width: 1024px) {
+    transform: translateX(-120px);
+  }
   
   @media (max-width: 768px) {
     gap: 8px;
+    margin-left: 0;
+    transform: translateX(0);
   }
 `;
 

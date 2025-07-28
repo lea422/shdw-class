@@ -20,7 +20,7 @@ const DialogContainer = styled.div`
   border-radius: 15px;
   padding: 1.5rem 1.5rem;
   width: 100%;
-  max-width: 26rem;
+  max-width: 600px;
   position: relative;
   box-shadow: 0 25px 50px -12px rgba(131, 94, 235, 0.25);
   animation: slideUp 0.3s ease-out;
@@ -34,6 +34,13 @@ const DialogContainer = styled.div`
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    margin: 30px;
+    box-shadow: 0 30px 60px -12px rgba(131, 94, 235, 0.3);
   }
 
   @media (max-width: 600px) {
@@ -67,6 +74,11 @@ const DialogTitle = styled.h3`
   margin-bottom: 0.5rem;
   font-family: 'Pretendard', sans-serif;
 
+  @media (min-width: 601px) and (max-width: 1024px) {
+    font-size: 30px;
+    margin-bottom: 0.75rem;
+  }
+
   @media (max-width: 600px) {
     font-size: 1.1rem;
     margin-bottom: 0.25rem;
@@ -78,6 +90,11 @@ const DialogDescription = styled.p`
   font-size: 0.875rem;
   font-family: 'Pretendard', sans-serif;
   line-height: 1.5;
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+    font-size: 18px;
+    line-height: 1.6;
+  }
 
   @media (max-width: 600px) {
     font-size: 0.8rem;

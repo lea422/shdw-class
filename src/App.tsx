@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import SideDrawer from './components/SideDrawer';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
-import Notice from './pages/Notice';
+import NoticePage from './pages/NoticePage';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -36,7 +36,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
             <Route path="/pricing" element={<Pricing isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
-            <Route path="/notice/*" element={<Notice />} />
+            <Route path="/notice/*" element={<NoticePage />} />
           </Routes>
         </MainContent>
         <Footer />

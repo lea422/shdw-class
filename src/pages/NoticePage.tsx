@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Routes, Route, NavLink } from "react-router-dom";
-import { ReactComponent as ArrowIcon } from "../assets/arrow-icon.svg";
 import styled from 'styled-components';
 
 // 업데이트 슬라이드 컨테이너

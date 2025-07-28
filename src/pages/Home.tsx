@@ -117,7 +117,7 @@ const ContentContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   @media (max-width: 1024px) {
-    left: 120px;
+    left: 90px;
     top: 70%;
   }
   @media (max-width: 768px) {

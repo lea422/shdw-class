@@ -314,7 +314,7 @@ const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>
   max-width: 550px;
   height: 200px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 30px;
   background: white;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.10);
   border-radius: 10px;
@@ -686,7 +686,7 @@ const TrialStepContent = styled.div`
 const TrialStepNumber = styled.div`
   position: absolute;
   left: 0px;
-  top: 0px;
+  top: -25px;
   color: #835EEB;
   font-size: 48px;
   font-family: 'Pretendard', sans-serif;
@@ -719,7 +719,7 @@ const TrialStepNumber = styled.div`
 const TrialStepText = styled.div`
   position: absolute;
   left: 0px;
-  top: 92px;
+  top: 30px;
   color: #835EEB;
   font-size: 22px;
   font-family: 'Pretendard', sans-serif;
@@ -746,6 +746,35 @@ const TrialStepText = styled.div`
   @media (max-width: 480px) {
     font-size: 16px;
     line-height: 24px;
+  }
+`;
+
+const TrialStepDescription = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 90px;
+  color: #666;
+  font-size: 16px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 300;
+  line-height: 24px;
+  word-wrap: break-word;
+  opacity: 0.8;
+  
+  @media (max-width: 1100px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    margin-top: 12px;
+  }
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+    margin-top: 8px;
+  }
+  @media (max-width: 480px) {
+    font-size: 13px;
+    line-height: 18px;
   }
 `;
 
@@ -914,7 +943,7 @@ const ComparisonBadge = styled.div`
   font-weight: 700;
   line-height: 1.2;
   padding: 8px 16px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   @media (max-width: 1024px) {
     font-size: 14px;
     padding: 6px 14px;
@@ -1181,16 +1210,16 @@ const SVGComparisonContainer = styled.div`
   position: relative;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 40px 0;
+  padding: 10px 0 40px 0;
 
   @media (max-width: 1024px) {
     max-width: 90%;
-    padding: 30px 0;
+    padding: 10px 0 30px 0;
   }
 
   @media (max-width: 768px) {
     max-width: 100%;
-    padding: 20px 0;
+    padding: 10px 0 20px 0;
   }
 `;
 
@@ -1773,6 +1802,10 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
           <TrialStepContent>
             <TrialStepNumber>01</TrialStepNumber>
             <TrialStepText>체험 신청 시,<br/>무료 체험 계정이 문자로 안내돼요</TrialStepText>
+            <TrialStepDescription>
+              체험 신청 완료 후 즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>
+              별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.
+            </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
             <img src="/무료체험 01.png" alt="무료체험 01"
@@ -1787,7 +1820,11 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         <AnimatedTrialStepContainer isVisible={visibleSteps[1]}>
           <TrialStepContent>
             <TrialStepNumber>02</TrialStepNumber>
-            <TrialStepText>선생님용 계정에 로그인</TrialStepText>
+            <TrialStepText>선생님용 계정에<br/>로그인</TrialStepText>
+            <TrialStepDescription>
+              받으신 선생님용 계정 정보로 웹사이트에 접속하여 로그인하세요.<br/>
+              학생 관리와 학습 현황을 한눈에 확인할 수 있는 대시보드가 제공됩니다.
+            </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
             <img src="/무료체험 02.png" alt="무료체험 02"
@@ -1802,7 +1839,11 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         <AnimatedTrialStepContainer isVisible={visibleSteps[2]}>
           <TrialStepContent>
             <TrialStepNumber>03</TrialStepNumber>
-            <TrialStepText>학생용 앱에 로그인</TrialStepText>
+            <TrialStepText>학생용 앱에<br/>로그인</TrialStepText>
+            <TrialStepDescription>
+              학생들은 모바일 앱을 다운로드하여 계정 정보로 로그인합니다.<br/>
+              직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.
+            </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
             <img src="/무료체험 03.png" alt="무료체험 03"
@@ -1818,6 +1859,10 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
           <TrialStepContent>
             <TrialStepNumber>04</TrialStepNumber>
             <TrialStepText>필요한 경우<br/>학생을 추가 하실 수도 있어요</TrialStepText>
+            <TrialStepDescription>
+              선생님 대시보드에서 간편하게 새로운 학생을 추가하고 관리할 수 있습니다.<br/>
+              체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.
+            </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
             <img src="/무료체험 04.png" alt="무료체험 04"
@@ -1832,7 +1877,11 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         <AnimatedTrialStepContainer isVisible={visibleSteps[4]}>
           <TrialStepContent>
             <TrialStepNumber>05</TrialStepNumber>
-            <TrialStepText>학습지를 배부하고,</TrialStepText>
+            <TrialStepText>학습지를<br/>배부하고,</TrialStepText>
+            <TrialStepDescription>
+              원하는 단원과 난이도를 선택하여 학습지를 생성하고 배부하세요.<br/>
+              학생들은 앱에서 바로 문제를 풀고 실시간으로 채점받을 수 있습니다.
+            </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
             <img src="/무료체험 05.png" alt="무료체험 05"
@@ -1848,8 +1897,19 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
           <TrialStepContent>
             <TrialStepNumber>06</TrialStepNumber>
             <TrialStepText>풀이 결과 대시보드를<br/>확인 하세요!</TrialStepText>
+            <TrialStepDescription>
+              학생들의 학습 진도와 성취도를 실시간으로 확인할 수 있습니다.<br/>
+              취약 단원 분석과 개별 학습 관리로 효과적인 지도가 가능해요.
+            </TrialStepDescription>
           </TrialStepContent>
-          <TrialStepImage>이미지 6</TrialStepImage>
+          <TrialStepImage>
+            <img src="/무료체험 06.png" alt="무료체험 06"
+              style={window.innerWidth <= 600
+                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
+                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
+              }
+            />
+          </TrialStepImage>
         </AnimatedTrialStepContainer>
       </TrialSection>
 

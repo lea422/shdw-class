@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 const fadeInUp = keyframes`
   from {
@@ -87,7 +86,7 @@ const IntegratedSection = styled.div`
   align-items: center;
   box-sizing: border-box;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     display: flex; /* 태블릿에서만 표시 */
     padding: 80px 20px;
     gap: 60px;
@@ -129,7 +128,7 @@ const HeaderSection = styled.div`
   box-sizing: border-box;
   scroll-snap-align: start;
   
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     display: none; /* 태블릿에서는 통합 레이아웃 사용 */
   }
   
@@ -206,6 +205,11 @@ const SectionTitle = styled.div`
   align-items: center;
   box-sizing: border-box;
   scroll-snap-align: start;
+  
+  @media (max-width: 1366px) and (min-width: 601px) {
+    display: none; /* 태블릿에서는 IntegratedSection의 TabletHeader 사용 */
+  }
+  
   @media (max-width: 600px) {
     padding: 80px 0 20px;
   }
@@ -239,7 +243,7 @@ const FeatureGrid = styled.div`
   gap: 120px;
   box-sizing: border-box;
   
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     display: none; /* 태블릿에서는 통합 레이아웃 사용 */
   }
   
@@ -257,12 +261,13 @@ const FeatureGrid = styled.div`
 
 const ImagePlaceholder = styled.div`
   width: 100%;
-  height: 350px;
+  aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
   position: relative;
   background: white;
   border-radius: 20px;
   border: 2px #835EEB solid;
   transition: all 0.3s ease;
+  overflow: hidden;
 
   &::before {
     content: '';
@@ -278,7 +283,6 @@ const ImagePlaceholder = styled.div`
   
   @media (max-width: 600px) {
     width: 85%; /* 가로폭 15% 축소 */
-    height: 250px; /* 세로 높이 증가 */
     border-radius: 16px;
     margin: 0 auto; /* 중앙 정렬 */
   }
@@ -313,7 +317,7 @@ const FeatureCard = styled.div`
   box-sizing: border-box;
   
   /* 태블릿에서 카드 크기 조정 */
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     flex: none !important;
     max-width: 80%;
     width: 600px;
@@ -742,7 +746,23 @@ const DemoButton = styled.a`
   gap: 8px;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  
+  /* 리플 효과를 위한 가상 요소 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(131, 94, 235, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
   
   span {
     color: #835EEB;
@@ -750,6 +770,9 @@ const DemoButton = styled.a`
     font-family: Pretendard;
     font-weight: 700;
     line-height: 29px;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
     @media (max-width: 600px) {
       font-size: 16px;
       line-height: 22px;
@@ -757,8 +780,30 @@ const DemoButton = styled.a`
   }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0px 8px 25px rgba(131, 94, 235, 0.3), 0px 0px 20px rgba(131, 94, 235, 0.1);
+    background: linear-gradient(135deg, #f8f7ff 0%, #efeeff 100%);
+    
+    span {
+      color: #6b46c1;
+    }
+    
+    &::before {
+      width: 300px;
+      height: 300px;
+    }
+  }
+  
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+    transition: all 0.1s ease;
+    box-shadow: 0px 4px 12px rgba(131, 94, 235, 0.4);
+  }
+  
+  /* 포커스 접근성 */
+  &:focus {
+    outline: 3px solid rgba(131, 94, 235, 0.3);
+    outline-offset: 2px;
   }
 `;
 
@@ -865,8 +910,9 @@ const FeatureBoxContent = styled.div`
 `;
 
 const FeatureImage = styled.div<{ image: string }>`
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
   background-image: url(${props => props.image});
   background-size: cover;
   background-position: center;
@@ -885,9 +931,8 @@ const FeatureImage = styled.div<{ image: string }>`
     border-radius: 24px;
   }
   
-  @media (max-width: 900px) {
-    width: 320px;
-    height: 320px;
+    @media (max-width: 900px) {
+    max-width: 320px;
     border-radius: 20px;
     
     &::after {
@@ -896,8 +941,7 @@ const FeatureImage = styled.div<{ image: string }>`
   }
   
   @media (max-width: 600px) {
-    width: 280px;
-    height: 280px;
+    max-width: 280px;
     border-radius: 16px;
     
     &::after {
@@ -1191,13 +1235,13 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index, imageSrc, 
 };
 
 const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
-  const navigate = useNavigate();
   const headerRef = useRef<HTMLDivElement>(null);
   const titleRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeTab, setActiveTab] = useState(0);
   const [activeSlide, setActiveSlide] = useState(0);
   const [demoCount, setDemoCount] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [textVisible, setTextVisible] = useState(true);
   const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
   const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
@@ -1248,7 +1292,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   // 모바일 및 태블릿 감지 (데모 섹션용)
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 1024); // 태블릿도 모바일 레이아웃 사용
+      setIsMobile(window.innerWidth <= 1366); // 태블릿도 모바일 레이아웃 사용
       setIsDemoMobile(window.innerWidth <= 600); // 데모 섹션은 600px 이하만 모바일
     };
     
@@ -1306,13 +1350,28 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => clearTimeout(timer);
   }, [currentTestimonial]);
 
-  // 자동 슬라이드 (8초마다)
+  // 무한 슬라이드 (한쪽 방향으로 계속)
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
+      setCurrentTestimonial((prev) => prev + 1);
+    }, 4000); // 4초마다 다음 슬라이드로
     return () => clearInterval(interval);
-  }, [testimonials.length]);
+  }, []);
+
+  // 무한 루프를 위한 seamless 리셋
+  useEffect(() => {
+    if (currentTestimonial === testimonials.length) {
+      // 복제된 첫 번째 슬라이드에서 실제 첫 번째 슬라이드로 seamless 전환
+      const timer = setTimeout(() => {
+        setIsTransitioning(false);
+        setCurrentTestimonial(0);
+        setTimeout(() => {
+          setIsTransitioning(true);
+        }, 50);
+      }, 1000); // 전환 애니메이션 완료 후
+      return () => clearTimeout(timer);
+    }
+  }, [currentTestimonial, testimonials.length]);
 
   // 웹앱 연동 섹션 칩 애니메이션
   useEffect(() => {
@@ -1787,7 +1846,18 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     noTransition={noTransition}
                     style={{ transform: `translateX(-${currentDemoSlide * 100}%)` }}
                   >
-                    <FeatureImage image={image} />
+                    <div 
+                      style={{
+                        width: '320px',
+                        height: '320px',
+                        backgroundImage: `url(${image})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        borderRadius: '20px',
+                        position: 'relative'
+                      }}
+                    />
                   </MobileDemoSlide>
                 ))}
               </MobileDemoSlideContainer>
@@ -1795,47 +1865,299 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           ) : (
             <FeatureBoxFlow>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-1.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-1.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-2.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-2.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-3.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-3.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-4.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-4.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-5.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-5.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-6.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-6.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-7.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-7.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               {/* 무한 반복을 위한 복제된 이미지들 */}
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-1.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-1.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-2.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-2.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-3.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-3.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-4.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-4.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-5.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-5.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-6.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-6.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <FeatureImage image="/feature-slide-7.png" />
+                <div style={{
+                  width: '400px',
+                  height: '400px',
+                  backgroundImage: 'url(/feature-slide-7.png)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  borderRadius: '24px',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
+                    borderRadius: '24px'
+                  }} />
+                </div>
               </FeatureBoxSlide>
             </FeatureBoxFlow>
           )}
@@ -1961,15 +2283,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 />
                 
                 {/* 좌측 상단: 선생님용 웹사이트 제목과 칩들 */}
-                <div style={{
-                  position: 'absolute',
-                  top: '8%',
-                  right: '5%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-end',
-                  gap: '12px'
-                }}>
+                <TeacherWebsiteContainer>
                   <div style={{
                     color: '#835EEB', 
                     fontSize: 28, 
@@ -1977,22 +2291,38 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     marginBottom: 8,
                     textAlign: 'right'
                   }}>선생님용<br/>웹사이트</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>클래스 및 학생관리</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>맞춤형 문제 출제</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>AI 채점 결과 확인</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>실력 분석 리포트</div>
-                </div>
+                  <WebAppInfoChip 
+                    isVisible={teacherChipsVisible[0]} 
+                    delay={0}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    클래스 및 학생관리
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={teacherChipsVisible[1]} 
+                    delay={200}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    맞춤형 문제 출제
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={teacherChipsVisible[2]} 
+                    delay={400}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    AI 채점 결과 확인
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={teacherChipsVisible[3]} 
+                    delay={600}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    실력 분석 리포트
+                  </WebAppInfoChip>
+                </TeacherWebsiteContainer>
                 
                 {/* 좌측 하단: 학생용 모바일 앱 제목과 칩들 */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: '15%',
-                  left: '5%',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  gap: '12px'
-                }}>
+                <StudentAppContainer>
                   <div style={{
                     color: '#835EEB', 
                     fontSize: 28, 
@@ -2000,16 +2330,40 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     marginBottom: 8,
                     textAlign: 'left'
                   }}>학생용<br/>모바일 앱</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>맞춤형 학습지 수신</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>AI 힌트 시스템</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>실시간 채점 피드백</div>
-                  <div style={{background: '#F3EFFD', color: '#835EEB', fontSize: 14, fontWeight: 600, padding: '6px 12px', borderRadius: 16, whiteSpace: 'nowrap'}}>장학금 알림 수신</div>
-                </div>
+                  <WebAppInfoChip 
+                    isVisible={studentChipsVisible[0]} 
+                    delay={800}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    맞춤형 학습지 수신
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={studentChipsVisible[1]} 
+                    delay={1000}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    AI 힌트 시스템
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={studentChipsVisible[2]} 
+                    delay={1200}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    실시간 채점 피드백
+                  </WebAppInfoChip>
+                  <WebAppInfoChip 
+                    isVisible={studentChipsVisible[3]} 
+                    delay={1400}
+                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
+                  >
+                    장학금 알림 수신
+                  </WebAppInfoChip>
+                </StudentAppContainer>
               </div>
             </>
           ) : (
             <>
-              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'0'}}>
+              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'50px'}}>
                 <WebAppTitle style={{pointerEvents:'auto'}}>웹-앱 연동으로 완성되는<br/>교육 시스템</WebAppTitle>
                 <WebAppSubtitle style={{pointerEvents:'auto'}}>교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요</WebAppSubtitle>
                 <WebAppButtons style={{pointerEvents:'auto'}}>
@@ -2035,14 +2389,113 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <WebAppContent style={{position: 'relative'}}>
-                <img 
-                  src="/mockup_web.png" 
-                  alt="웹앱 연동 UI" 
-                  style={{ width: '100vw', maxWidth: '1920px', height: 'auto', display: 'block', objectFit: 'cover', margin: '10px auto 0 auto', borderRadius: '16px' }}
-                />
-                {/* 선생님용 웹사이트 - 현재 위치 그대로 */}
-                <div style={{position: 'absolute', top: '120px', right: '50px', zIndex: 10}}>
+              <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
+                
+                {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
+                <MockupElement
+                  style={{position: 'absolute', top: '155px', left: '-50px', zIndex: 12}}
+                  onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                >
+                  <img 
+                    src="/03 웹-앱 연동/1.svg" 
+                    alt="선생님용 웹사이트"
+                    style={{ 
+                      width: 'auto', 
+                      height: '550px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.03)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                    }}
+                  />
+                </MockupElement>
+                
+                {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
+                <MockupElement
+                  style={{position: 'absolute', top: '730px', left: '410px', zIndex: 12}}
+                  onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
+                >
+                  <img 
+                    src="/03 웹-앱 연동/2.svg" 
+                    alt="학생용 모바일 앱"
+                    style={{ 
+                      width: 'auto', 
+                      height: '550px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.04)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                    }}
+                  />
+                </MockupElement>
+                
+                {/* 가운데 - 모바일 앱 화면 (세로형) */}
+                <MockupElement
+                  style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
+                >
+                  <img 
+                    src="/03 웹-앱 연동/3.svg" 
+                    alt="모바일 앱 인터페이스"
+                    style={{ 
+                      width: 'auto', 
+                      height: '550px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.03)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
+                    }}
+                  />
+                </MockupElement>
+                
+                {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
+                <MockupElement
+                  style={{position: 'absolute', top: '400px', right: '-280px', zIndex: 11}}
+                  onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                >
+                  <img 
+                    src="/03 웹-앱 연동/4.svg" 
+                    alt="데스크톱 관리 시스템"
+                    style={{ 
+                      width: 'auto', 
+                      height: '650px',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'scale(1.02)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'scale(1)';
+                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                    }}
+                  />
+                </MockupElement>
+
+                {/* 선생님용 웹사이트 정보 텍스트 */}
+                <div style={{position: 'absolute', top: '80px', right: '50px', zIndex: 10}}>
                   <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
                     <WebAppInfoTitle style={{ fontSize: 28 }}>선생님용 웹사이트</WebAppInfoTitle>
                     <WebAppInfoChips style={{alignItems:'flex-end'}}>
@@ -2054,8 +2507,8 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppInfoBlock>
                 </div>
                 
-                {/* 학생용 모바일 앱 - 하단 목업 끝나는 곳 */}
-                <div style={{position: 'absolute', bottom: '100px', left: '50px', zIndex: 10}}>
+                {/* 학생용 모바일 앱 정보 텍스트 */}
+                <div style={{position: 'absolute', bottom: '130px', left: '50px', zIndex: 10}}>
                   <WebAppInfoBlock>
                     <WebAppInfoTitle style={{ fontSize: 28 }}>학생용 모바일 앱</WebAppInfoTitle>
                     <WebAppInfoChips>
@@ -2078,15 +2531,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           <ExperienceTextBlock>
             <AnimatedTextContent className={textVisible ? 'visible' : ''}>
               <ExperienceTitle>
-                {testimonials[currentTestimonial].title.highlight}<br/>{testimonials[currentTestimonial].title.normal}
+                {testimonials[currentTestimonial % testimonials.length].title.highlight}<br/>{testimonials[currentTestimonial % testimonials.length].title.normal}
               </ExperienceTitle>
               <ExperienceQuote>
-                <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial].quote }} />
+                <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial % testimonials.length].quote }} />
               </ExperienceQuote>
               <NameSection>
                 <VerticalLine />
                 <ExperienceName>
-                  {testimonials[currentTestimonial].name.split('<br/>').map((line, idx) => (
+                  {testimonials[currentTestimonial % testimonials.length].name.split('<br/>').map((line, idx) => (
                     <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
                   ))}
                 </ExperienceName>
@@ -2095,35 +2548,47 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           </ExperienceTextBlock>
           <ExperienceImageBlock>
             <VideoSlider>
-              {testimonials.map((testimonial, index) => {
-                // 좌측으로만 흐르도록 계산
-                let slideIndex = index;
-                if (index < currentTestimonial) {
-                  slideIndex = index + testimonials.length;
-                }
-                
-                return (
-                <VideoSlide
-                  key={index}
-                  className={index === currentTestimonial ? 'active' : ''}
-                    style={{ transform: `translateX(${(slideIndex - currentTestimonial) * 100}%)` }}
-                >
+              <VideoTrack
+                style={{
+                  transform: `translateX(-${currentTestimonial * 100}%)`,
+                  transition: isTransitioning ? 'transform 1s ease-in-out' : 'none'
+                }}
+              >
+                {/* 원본 슬라이드들 */}
+                {testimonials.map((testimonial, index) => (
+                  <VideoSlide key={`original-${index}`}>
+                    <YouTubeThumbnail
+                      href={testimonial.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ThumbnailImage
+                        src={testimonial.thumbnailUrl}
+                        alt={testimonial.name}
+                      />
+                      <PlayButton>
+                        <PlayIcon>▶</PlayIcon>
+                      </PlayButton>
+                    </YouTubeThumbnail>
+                  </VideoSlide>
+                ))}
+                {/* 무한 루프를 위한 첫 번째 슬라이드 복제 */}
+                <VideoSlide key="cloned-first">
                   <YouTubeThumbnail
-                    href={testimonial.videoUrl}
+                    href={testimonials[0].videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <ThumbnailImage
-                      src={testimonial.thumbnailUrl}
-                      alt={testimonial.name}
+                      src={testimonials[0].thumbnailUrl}
+                      alt={testimonials[0].name}
                     />
                     <PlayButton>
                       <PlayIcon>▶</PlayIcon>
                     </PlayButton>
                   </YouTubeThumbnail>
                 </VideoSlide>
-                );
-              })}
+              </VideoTrack>
             </VideoSlider>
 
           </ExperienceImageBlock>
@@ -2133,7 +2598,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-// styled-components for the web-app section
+
 const WebAppSection = styled.section`
   width: 100%;
   background: white;
@@ -2145,7 +2610,7 @@ const WebAppSection = styled.section`
   gap: 128px;
   overflow: hidden;
   scroll-snap-align: start;
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     padding: 60px 0; /* 태블릿에서 좌우 패딩 제거 */
     gap: 60px;
   }
@@ -2284,11 +2749,10 @@ const WebAppButtonText = styled.div`
 const WebAppContent = styled.div`
   position: relative;
   width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
   padding: 0;
   display: block;
   min-height: 900px;
+  overflow: hidden;
   @media (max-width: 600px) {
     min-height: 0;
     padding: 0;
@@ -2299,45 +2763,18 @@ const WebAppContent = styled.div`
   }
 `;
 
-const WebAppImage = styled.div`
-  width: 1139px;
-  height: 897px;
-  background: linear-gradient(135deg, #f8f9ff 0%, #f3f4ff 100%);
-  border-radius: 20px;
-  border: 2px solid #e5e7eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+const MockupElement = styled.div`
+  position: absolute;
+  cursor: pointer;
+  transition: all 0.3s ease;
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 200px;
-    height: 200px;
-    background: url('/logo.svg') no-repeat center;
-    background-size: contain;
-    opacity: 0.1;
-  }
-  
-  @media (max-width: 1280px) {
-    width: 100%;
-    max-width: 1139px;
-    height: 600px;
-  }
-  @media (max-width: 900px) {
-    height: 400px;
-  }
-  @media (max-width: 600px) {
-    height: 300px;
-    border-radius: 12px;
+  &:hover {
+    z-index: 15;
   }
 `;
 
-// styled-components for the new section
+
+
 const ExperienceSection = styled.section`
   width: 100%;
   display: flex;
@@ -2469,6 +2906,7 @@ const ExperienceImageBlock = styled.div`
   overflow: hidden;
   outline: 6px #835EED solid;
   background: #F8F6FF;
+  border-radius: 6px;
   @media (max-width: 900px) {
     width: 100%;
     max-width: 864px;
@@ -2533,7 +2971,7 @@ const NameSection = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     justify-content: center; /* 태블릿에서 가운데 정렬 */
   }
   @media (max-width: 900px) {
@@ -2549,7 +2987,7 @@ const VerticalLine = styled.div`
   background: #835EEB;
   margin-right: 16px;
   border-radius: 2px;
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     display: none; /* 태블릿에서 막대 숨기기 */
   }
   @media (max-width: 900px) {
@@ -2564,25 +3002,8 @@ const VerticalLine = styled.div`
   }
 `;
 
-const NameSpacer = styled.div`
-  height: 20px;
-`;
 
-const ArrowGroup = styled.div`
-  display: flex;
-  gap: 8px;
-`;
 
-const Arrow = styled.div`
-  width: 20px;
-  height: 13px;
-  transform: rotate(90deg);
-  transform-origin: top left;
-  outline: 2px #835EEB solid;
-  outline-offset: -1px;
-`;
-
-// 추가 styled-components
 const AnimatedTextContent = styled.div`
   opacity: 0;
   transform: translateY(20px);
@@ -2599,70 +3020,27 @@ const VideoSlider = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: flex;
   overflow: hidden;
+  border-radius: 6px; /* ExperienceImageBlock의 outline과 일치 */
+  contain: layout style paint;
+  isolation: isolate;
+`;
+
+const VideoTrack = styled.div`
+  display: flex;
+  height: 100%;
+  will-change: transform;
+  position: relative;
 `;
 
 const VideoSlide = styled.div`
-  min-width: 100%;
+  width: 100%; /* VideoSlider와 같은 크기 */
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: scale(0.95);
-  z-index: 1;
-  
-  &.active {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 2;
-  }
+  flex-shrink: 0;
+  position: relative;
 `;
 
-const SliderControls = styled.div`
-  position: absolute;
-  bottom: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
-  z-index: 10;
-`;
 
-const SliderArrow = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(131, 94, 235, 0.9);
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 10;
-  
-  &:hover {
-    background: rgba(131, 94, 235, 1);
-    transform: translateY(-50%) scale(1.1);
-  }
-  
-  &.prev {
-    left: 16px;
-  }
-  
-  &.next {
-    right: 16px;
-  }
-`;
 
 const FeatureSectionWrapper = styled.div`
   width: 1280px;
@@ -2675,7 +3053,7 @@ const FeatureSectionWrapper = styled.div`
   padding: 0;
   scroll-snap-type: y mandatory;
   
-  @media (max-width: 1024px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     display: none; /* 태블릿에서는 IntegratedSection 사용 */
   }
   
@@ -2747,14 +3125,7 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
   }
 `;
 
-const FeatureTitleNew = styled.div`
-  color: #33373B;
-  font-size: 24px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 28.8px;
-  text-align: center;
-`;
+
 
 const FeatureMainTitle = styled.div`
   justify-content: center;
@@ -2898,8 +3269,9 @@ const FeatureDesc = styled.div`
 `;
 
 const GifBox = styled.div<{ isZoomed?: boolean }>`
-  width: 730px;
-  height: 487px;
+  width: 100%;
+  max-width: 730px;
+  aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
   background: #F8F6FF !important;
   border-radius: 10px;
   overflow: hidden;
@@ -2919,48 +3291,21 @@ const GifBox = styled.div<{ isZoomed?: boolean }>`
     background: transparent !important;
   }
   @media (max-width: 600px) {
-    width: 300px;
-    height: 200px;
+    width: 100%;
+    max-width: 300px;
     position: relative;
     background: #835EEB;
     border: 1px #835EEB solid;
     transform: none;
+    margin: 0 auto;
   }
   @media (max-width: 375px) {
-    width: 280px;
-    height: 180px;
+    max-width: 280px;
     border-radius: 8px;
   }
 `;
 
-const VideoPlaceholder = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.34;
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: black;
-  font-size: 96px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 124.8px;
-  word-wrap: break-word;
-`;
 
-const FeatureTitleSection = styled.div`
-  align-self: stretch;
-  height: 50px;
-  position: relative;
-  background: #F3EFFD;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 // 모바일 및 태블릿 데모 슬라이드 컴포넌트들
 const MobileDemoSlider = styled.div`
@@ -2971,7 +3316,7 @@ const MobileDemoSlider = styled.div`
   align-items: center;
   gap: 20px;
   
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     gap: 30px;
     padding: 0 40px;
   }
@@ -2984,7 +3329,7 @@ const MobileDemoSlideContainer = styled.div`
   display: flex;
   align-items: center;
   
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     max-width: 600px;
     margin: 0 auto;
   }
@@ -2997,8 +3342,37 @@ const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
   transition: ${props => props.noTransition ? 'none' : 'transform 1.2s ease-in-out'};
   flex-shrink: 0;
   
-  @media (max-width: 1024px) and (min-width: 601px) {
+  @media (max-width: 1366px) and (min-width: 601px) {
     padding: 0 20px;
+  }
+`;
+
+// 태블릿 웹앱 연동 섹션용 컨테이너들
+const TeacherWebsiteContainer = styled.div`
+  position: absolute;
+  top: 8%;
+  right: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  
+  @media (min-width: 1025px) and (max-width: 1366px) {
+    top: calc(8% - 500px);
+  }
+`;
+
+const StudentAppContainer = styled.div`
+  position: absolute;
+  bottom: 15%;
+  left: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  
+  @media (min-width: 1025px) and (max-width: 1366px) {
+    bottom: calc(15% - 500px);
   }
 `;
 

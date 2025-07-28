@@ -12,7 +12,6 @@ const HeaderContainer = styled.header`
   right: 0;
   z-index: 1000;
   background: transparent;
-  border-bottom: 0.5px solid #CDBEF7;
   box-sizing: border-box;
   backdrop-filter: blur(8px);
   @media (max-width: 768px) {
@@ -36,7 +35,7 @@ const HeaderInner = styled.div`
     padding: 0 16px;
   }
   @media (max-width: 1024px) {
-    padding: 0 8px;
+    padding: 0 24px;
     gap: 24px;
   }
   @media (max-width: 768px) {
@@ -452,13 +451,50 @@ const Header = () => {
 
   const handleNavClick = (path: string) => {
     setDrawerOpen(false);
-    navigate(path);
+    
+    // 현재 페이지와 같은 경로면 페이지 이동 없이 스크롤만
+    if (location.pathname === path) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      navigate(path);
+      // 새 페이지로 이동 후 상단으로 스크롤
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
+  };
+
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    
+    // 현재 홈 페이지면 페이지 이동 없이 스크롤만
+    if (location.pathname === '/') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      navigate('/');
+      // 새 페이지로 이동 후 상단으로 스크롤
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }, 100);
+    }
   };
 
   return (
     <HeaderContainer>
       <HeaderInner>
-        <LogoContainer to="/">
+        <LogoContainer to="/" onClick={handleLogoClick}>
           <StyledLogoIcon src="/logo.svg" alt="수학대왕 CLASS 로고" />
           <LogoText1>수학대왕</LogoText1>
           <LogoText2>CLASS</LogoText2>
