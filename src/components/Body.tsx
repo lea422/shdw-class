@@ -12,17 +12,6 @@ const fadeInUp = keyframes`
   }
 `;
 
-const slideUpChip = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
 const fadeInLeft = keyframes`
   from {
     opacity: 0;
@@ -1253,7 +1242,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   // 웹앱 연동 칩 애니메이션 상태
   const [teacherChipsVisible, setTeacherChipsVisible] = useState([false, false, false, false]);
   const [studentChipsVisible, setStudentChipsVisible] = useState([false, false, false, false]);
+  
+  // 웹앱 연동 목업 애니메이션 상태 (태블릿, 왼쪽아이폰, 가운데아이폰, 모니터)
+  const [mockupsVisible, setMockupsVisible] = useState([false, false, false, false]);
   const webAppSectionRef = useRef<HTMLDivElement>(null);
+
+  // 모바일 핵심기능 박스들을 위한 ref 배열
+  const mobileFeatureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
 
 
   // 테스티모니얼 데이터
@@ -1373,23 +1368,29 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     }
   }, [currentTestimonial, testimonials.length]);
 
-  // 웹앱 연동 섹션 칩 애니메이션
+  // 웹앱 연동 섹션 칩 및 목업 애니메이션
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // 선생님용 칩 순차 애니메이션
-            setTeacherChipsVisible([true, false, false, false]);
-            setTimeout(() => setTeacherChipsVisible([true, true, false, false]), 200);
-            setTimeout(() => setTeacherChipsVisible([true, true, true, false]), 400);
-            setTimeout(() => setTeacherChipsVisible([true, true, true, true]), 600);
+            // 목업 이미지 페이드인 애니메이션 (데스크톱에서만 - 먼저 시작)
+            setTimeout(() => setMockupsVisible([true, false, false, false]), 0);     // 태블릿/랩톱
+            setTimeout(() => setMockupsVisible([true, true, false, false]), 150);    // 왼쪽 모바일
+            setTimeout(() => setMockupsVisible([true, true, true, false]), 300);     // 가운데 모바일
+            setTimeout(() => setMockupsVisible([true, true, true, true]), 450);      // 데스크톱 모니터
+
+            // 선생님용 칩 순차 애니메이션 (목업 이미지 후 - 700ms 후 시작)
+            setTimeout(() => setTeacherChipsVisible([true, false, false, false]), 700);
+            setTimeout(() => setTeacherChipsVisible([true, true, false, false]), 850);
+            setTimeout(() => setTeacherChipsVisible([true, true, true, false]), 1000);
+            setTimeout(() => setTeacherChipsVisible([true, true, true, true]), 1150);
             
-            // 학생용 칩 순차 애니메이션 (800ms 후 시작)
-            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 800);
-            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 1000);
-            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1200);
-            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1400);
+            // 학생용 칩 순차 애니메이션 (1350ms 후 시작)
+            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 1350);
+            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 1500);
+            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1650);
+            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1800);
           }
         });
       },
@@ -1426,6 +1427,22 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       }
     );
 
+    // 모바일 핵심기능 박스들을 위한 별도 observer (더 민감한 설정)
+    const mobileObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.boundingClientRect.top > 0) {
+            // 요소가 화면 위에서 아래로 내려올 때만 애니메이션 트리거
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px' // 상하 10% 마진으로 더 정확한 타이밍
+      }
+    );
+
     if (headerRef.current) {
       observer.observe(headerRef.current);
     }
@@ -1436,6 +1453,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       }
     });
 
+    // 모바일 핵심기능 박스들은 별도 observer 사용
+    mobileFeatureBoxRefs.current.forEach(ref => {
+      if (ref) {
+        mobileObserver.observe(ref);
+      }
+    });
+
     return () => {
       if (headerRef.current) {
         observer.unobserve(headerRef.current);
@@ -1443,6 +1467,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       titleRefs.current.forEach(ref => {
         if (ref) {
           observer.unobserve(ref);
+        }
+      });
+      mobileFeatureBoxRefs.current.forEach(ref => {
+        if (ref) {
+          mobileObserver.unobserve(ref);
         }
       });
     };
@@ -1634,7 +1663,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 
       <FeatureSectionWrapper>
         {/* 1번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[0] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[0] = el;
+            mobileFeatureBoxRefs.current[0] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1662,9 +1696,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
         {/* 2번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[1] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[1] = el;
+            mobileFeatureBoxRefs.current[1] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1692,9 +1731,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
         {/* 3번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[2] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[2] = el;
+            mobileFeatureBoxRefs.current[2] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(2)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1719,9 +1763,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
         {/* 4번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[3] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[3] = el;
+            mobileFeatureBoxRefs.current[3] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(3)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1746,9 +1795,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
         {/* 5번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[4] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[4] = el;
+            mobileFeatureBoxRefs.current[4] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(4)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1773,9 +1827,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
         {/* 6번 FeatureBox */}
-        <FeatureBox ref={el => featureBoxRefs.current[5] = el}>
+        <AnimatedFeatureBox 
+          ref={el => {
+            featureBoxRefs.current[5] = el;
+            mobileFeatureBoxRefs.current[5] = el;
+          }}
+        >
           <FeatureTextBlock isVisible={visibleTexts.has(5)}>
             <FeatureCategory>
               <FeatureCategoryText>
@@ -1800,7 +1859,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
           </GifBox>
-        </FeatureBox>
+        </AnimatedFeatureBox>
       </FeatureSectionWrapper>
 
       <DemoSection>
@@ -2215,25 +2274,25 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </WebAppButtons>
               </WebAppHeader>
               <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'48px 0 0 0'}}>
-                <WebAppInfoBlock>
-                  <WebAppInfoTitle style={{ fontSize: 20 }}>선생님용 웹사이트</WebAppInfoTitle>
-                  <WebAppInfoChips>
-                    <WebAppInfoChip>클래스 및 학생관리</WebAppInfoChip>
-                    <WebAppInfoChip>맞춤형 문제 출제</WebAppInfoChip>
-                    <WebAppInfoChip>AI 채점 결과 확인</WebAppInfoChip>
-                    <WebAppInfoChip>실력 분석 리포트</WebAppInfoChip>
+                <WebAppInfoBlock style={{alignItems:'center', textAlign:'center'}}>
+                  <WebAppInfoTitle isVisible={true} style={{ fontSize: 20, textAlign: 'center' }}>선생님용 웹사이트</WebAppInfoTitle>
+                  <WebAppInfoChips style={{alignItems:'center', justifyContent:'center'}}>
+                    <WebAppInfoChip isVisible={true}>클래스 및 학생관리</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>맞춤형 문제 출제</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>AI 채점 결과 확인</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>실력 분석 리포트</WebAppInfoChip>
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
-              <img src="/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:200,margin:'24px auto',display:'block'}} />
+              <img src="/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:400,margin:'24px auto',display:'block'}} />
               <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
-                <WebAppInfoBlock>
-                  <WebAppInfoTitle style={{ fontSize: 20 }}>학생용 모바일 앱</WebAppInfoTitle>
-                  <WebAppInfoChips>
-                    <WebAppInfoChip>맞춤형 학습지 수신</WebAppInfoChip>
-                    <WebAppInfoChip>AI 힌트 시스템</WebAppInfoChip>
-                    <WebAppInfoChip>실시간 채점 피드백</WebAppInfoChip>
-                    <WebAppInfoChip>장학금 알림 수신</WebAppInfoChip>
+                <WebAppInfoBlock style={{alignItems:'center', textAlign:'center'}}>
+                  <WebAppInfoTitle isVisible={true} style={{ fontSize: 20, textAlign: 'center' }}>학생용 모바일 앱</WebAppInfoTitle>
+                  <WebAppInfoChips style={{alignItems:'center', justifyContent:'center'}}>
+                    <WebAppInfoChip isVisible={true}>맞춤형 학습지 수신</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>AI 힌트 시스템</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>실시간 채점 피드백</WebAppInfoChip>
+                    <WebAppInfoChip isVisible={true}>장학금 알림 수신</WebAppInfoChip>
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
@@ -2284,13 +2343,17 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 
                 {/* 좌측 상단: 선생님용 웹사이트 제목과 칩들 */}
                 <TeacherWebsiteContainer>
-                  <div style={{
-                    color: '#835EEB', 
-                    fontSize: 28, 
-                    fontWeight: 700, 
-                    marginBottom: 8,
-                    textAlign: 'right'
-                  }}>선생님용<br/>웹사이트</div>
+                  <WebAppInfoTitle
+                    isVisible={teacherChipsVisible[0]}
+                    delay={0}
+                    style={{
+                      fontSize: 28, 
+                      marginBottom: 8,
+                      textAlign: 'right'
+                    }}
+                  >
+                    선생님용<br/>웹사이트
+                  </WebAppInfoTitle>
                   <WebAppInfoChip 
                     isVisible={teacherChipsVisible[0]} 
                     delay={0}
@@ -2323,13 +2386,17 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 
                 {/* 좌측 하단: 학생용 모바일 앱 제목과 칩들 */}
                 <StudentAppContainer>
-                  <div style={{
-                    color: '#835EEB', 
-                    fontSize: 28, 
-                    fontWeight: 700, 
-                    marginBottom: 8,
-                    textAlign: 'left'
-                  }}>학생용<br/>모바일 앱</div>
+                  <WebAppInfoTitle
+                    isVisible={studentChipsVisible[0]}
+                    delay={0}
+                    style={{
+                      fontSize: 28, 
+                      marginBottom: 8,
+                      textAlign: 'left'
+                    }}
+                  >
+                    학생용<br/>모바일 앱
+                  </WebAppInfoTitle>
                   <WebAppInfoChip 
                     isVisible={studentChipsVisible[0]} 
                     delay={800}
@@ -2392,7 +2459,8 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
                 
                 {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
-                <MockupElement
+                <AnimatedMockupElement
+                  isVisible={mockupsVisible[0]}
                   style={{position: 'absolute', top: '155px', left: '-50px', zIndex: 12}}
                   onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
@@ -2415,10 +2483,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                     }}
                   />
-                </MockupElement>
+                </AnimatedMockupElement>
                 
                 {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
-                <MockupElement
+                <AnimatedMockupElement
+                  isVisible={mockupsVisible[1]}
                   style={{position: 'absolute', top: '730px', left: '410px', zIndex: 12}}
                   onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
                 >
@@ -2441,10 +2510,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                     }}
                   />
-                </MockupElement>
+                </AnimatedMockupElement>
                 
                 {/* 가운데 - 모바일 앱 화면 (세로형) */}
-                <MockupElement
+                <AnimatedMockupElement
+                  isVisible={mockupsVisible[2]}
                   style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
                 >
                   <img 
@@ -2466,10 +2536,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
                     }}
                   />
-                </MockupElement>
+                </AnimatedMockupElement>
                 
                 {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
-                <MockupElement
+                <AnimatedMockupElement
+                  isVisible={mockupsVisible[3]}
                   style={{position: 'absolute', top: '400px', right: '-280px', zIndex: 11}}
                   onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
@@ -2492,12 +2563,18 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                     }}
                   />
-                </MockupElement>
+                </AnimatedMockupElement>
 
                 {/* 선생님용 웹사이트 정보 텍스트 */}
                 <div style={{position: 'absolute', top: '80px', right: '50px', zIndex: 10}}>
                   <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
-                    <WebAppInfoTitle style={{ fontSize: 28 }}>선생님용 웹사이트</WebAppInfoTitle>
+                    <WebAppInfoTitle 
+                      isVisible={teacherChipsVisible[0]} 
+                      delay={0}
+                      style={{ fontSize: 28 }}
+                    >
+                      선생님용 웹사이트
+                    </WebAppInfoTitle>
                     <WebAppInfoChips style={{alignItems:'flex-end'}}>
                       <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
                       <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={200}>맞춤형 문제 출제</WebAppInfoChip>
@@ -2510,7 +2587,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 {/* 학생용 모바일 앱 정보 텍스트 */}
                 <div style={{position: 'absolute', bottom: '130px', left: '50px', zIndex: 10}}>
                   <WebAppInfoBlock>
-                    <WebAppInfoTitle style={{ fontSize: 28 }}>학생용 모바일 앱</WebAppInfoTitle>
+                    <WebAppInfoTitle 
+                      isVisible={studentChipsVisible[0]} 
+                      delay={0}
+                      style={{ fontSize: 28 }}
+                    >
+                      학생용 모바일 앱
+                    </WebAppInfoTitle>
                     <WebAppInfoChips>
                       <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
                       <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={200}>AI 힌트 시스템</WebAppInfoChip>
@@ -2615,7 +2698,7 @@ const WebAppSection = styled.section`
     gap: 60px;
   }
   @media (max-width: 600px) {
-    padding: 80px 12px;
+    padding: 80px 12px 40px 12px;
     gap: 60px;
   }
 `;
@@ -2771,6 +2854,13 @@ const MockupElement = styled.div`
   &:hover {
     z-index: 15;
   }
+`;
+
+const AnimatedMockupElement = styled(MockupElement)<{ isVisible: boolean; delay?: number }>`
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? '0' : '30px'});
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: ${props => props.delay || 0}ms;
 `;
 
 
@@ -3088,6 +3178,13 @@ const FeatureBox = styled.div`
     gap: 16px;
     align-items: center;
     justify-content: center;
+  }
+`;
+
+const AnimatedFeatureBox = styled(FeatureBox)<{ className?: string }>`
+  opacity: 0;
+  &.visible {
+    animation: ${fadeInUp} 0.8s ease forwards;
   }
 `;
 
@@ -3414,12 +3511,16 @@ const WebAppInfoBlock = styled.div`
     gap: 14px;
   }
 `;
-const WebAppInfoTitle = styled.div`
+const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   color: #835EEB;
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 8px;
   white-space: normal;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? '0' : '20px'});
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: ${props => props.delay || 0}ms;
   @media (max-width: 600px) {
     font-size: 26px;
     margin-bottom: 6px;

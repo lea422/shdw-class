@@ -459,7 +459,7 @@ const UpdateSlide: React.FC = () => {
             return (
               <FaqItem as="li" key={notice.id}>
                 <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)} style={{ textAlign: 'left' }}>
-                  <PinIcon src="/pin.svg" alt="공지" />
+                  {globalIdx === 0 && <TwinkleIcon src="/twinkle_color.svg" alt="최신" />}
                   <span style={{ fontWeight: 600, textAlign: 'left', flex: 1 }}>{notice.title}</span>
                   <FaqIcon>{openIdx === globalIdx ? '×' : '+'}</FaqIcon>
                 </FaqQuestion>
@@ -488,7 +488,16 @@ const UpdateSlide: React.FC = () => {
   return (
     <UpdateSlideContainer>
       <UpdateSlideContent fade={fade}>
-        <UpdateSlideTitle>{allUpdates[slideIdx].title}</UpdateSlideTitle>
+        <UpdateSlideTitle>
+          {slideIdx === 0 && (
+            <TwinkleIcon 
+              src="/twinkle_color.svg" 
+              alt="최신" 
+              style={{ marginRight: '10px', verticalAlign: 'middle' }}
+            />
+          )}
+          {allUpdates[slideIdx].title}
+        </UpdateSlideTitle>
         <UpdateSlideText>{allUpdates[slideIdx].text}</UpdateSlideText>
         <UpdateSlideDate>{allUpdates[slideIdx].date}</UpdateSlideDate>
       </UpdateSlideContent>
@@ -742,7 +751,9 @@ const UpdateIcon = styled.span`
   }
 `;
 
-const PinIcon = styled.img`
+
+
+const TwinkleIcon = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 10px;

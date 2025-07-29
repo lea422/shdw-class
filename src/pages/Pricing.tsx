@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 const PricingPageContainer = styled.div`
@@ -115,7 +115,7 @@ const ModalDescription = styled.p`
 const FeatureList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0 0 30px 0;
+  margin: 0;
 `;
 
 const ModalFeatureItem = styled.li`
@@ -153,28 +153,7 @@ const FeatureText = styled.span`
   }
 `;
 
-const ModalButton = styled.button`
-  width: 100%;
-  padding: 16px;
-  background: #835EEB;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
 
-  &:hover {
-    background: #6B4BC4;
-    transform: translateY(-2px);
-  }
-  
-  @media (max-width: 600px) {
-    font-size: 15px;
-    padding: 12px;
-  }
-`;
 
 const PricingContainer = styled.div`
   width: 1280px;
@@ -386,6 +365,7 @@ const CardTitle = styled.div<{ isHighlighted?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-left: 10px;
   @media (max-width: 768px) {
     font-size: 20px;
     gap: 2px;
@@ -412,6 +392,7 @@ const CardPrice = styled.div<{ isHighlighted?: boolean }>`
   flex: 1;
   min-width: 0;
   text-align: right;
+  margin-right: 10px;
   @media (max-width: 768px) {
     font-size: 28px;
   }
@@ -433,6 +414,7 @@ const CardDescription = styled.div`
   word-wrap: break-word;
   white-space: pre-line;
   margin-top: 8px;
+  margin-left: 10px;
   padding-right: 2px;
   @media (max-width: 768px) {
     font-size: 14px;
@@ -533,6 +515,306 @@ const ScrollArrow = styled.button`
       width: 20px;
       height: 20px;
     }
+  }
+`;
+
+// 요금 계산기 섹션
+const CalculatorSection = styled.div`
+  width: 1280px;
+  padding: 100px 50px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  position: relative;
+  
+  @media (max-width: 1300px) {
+    width: 100%;
+    padding: 80px 20px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 60px 25px;
+    flex-direction: column;
+    gap: 40px;
+  }
+`;
+
+const CalculatorContainer = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  position: relative;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 40px;
+    max-width: 400px;
+  }
+`;
+
+const CalculatorContent = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
+
+const CalculatorForm = styled.div`
+  flex: 1;
+  background: white;
+  border-radius: 20px;
+  padding: 50px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 30px;
+    gap: 30px;
+  }
+`;
+
+const CalculatorHeader = styled.div`
+  text-align: left;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+`;
+
+const CalculatorTitle = styled.h2`
+  color: #1E2231;
+  font-size: 48px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
+`;
+
+const StudentCountSelector = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+`;
+
+const DropdownContainer = styled.div`
+  position: relative;
+  width: 200px;
+`;
+
+const DropdownButton = styled.button<{ isOpen: boolean }>`
+  width: 100%;
+  padding: 16px 20px;
+  background: #F8F9FA;
+  border: 2px solid #E5E7EB;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1E2231;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    border-color: #D1D5DB;
+    background: #F3F4F6;
+  }
+  
+  &::after {
+    content: '${props => props.isOpen ? '▲' : '▼'}';
+    font-size: 14px;
+    color: #6B7280;
+    transition: transform 0.3s ease;
+  }
+`;
+
+const DropdownMenu = styled.div<{ isOpen: boolean }>`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  max-height: ${props => props.isOpen ? '200px' : '0'};
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 10;
+`;
+
+const DropdownItem = styled.button`
+  width: 100%;
+  padding: 12px 20px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1E2231;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: #F9F7FF;
+    color: #835EEB;
+  }
+  
+  &:not(:last-child) {
+    border-bottom: 1px solid #F0F0F0;
+  }
+`;
+
+const SliderContainer = styled.div`
+  width: 100%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+`;
+
+const SliderWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const Slider = styled.input<{ progress: number }>`
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #835EEB 0%, #835EEB ${props => props.progress}%, #E5E7EB ${props => props.progress}%, #E5E7EB 100%);
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #835EEB;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(131, 94, 235, 0.3);
+    transition: all 0.2s ease;
+  }
+  
+  &::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(131, 94, 235, 0.4);
+  }
+  
+  &::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #835EEB;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(131, 94, 235, 0.3);
+  }
+  
+  &::-moz-range-track {
+    background: linear-gradient(to right, #835EEB 0%, #835EEB ${props => props.progress}%, #E5E7EB ${props => props.progress}%, #E5E7EB 100%);
+    height: 8px;
+    border-radius: 4px;
+  }
+`;
+
+const PriceDisplay = styled.div`
+  background: #835EEB;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #835EEB;
+  }
+`;
+
+const StudentCountText = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+`;
+
+const PriceText = styled.div`
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'Pretendard', sans-serif;
+`;
+
+const CalculatorDetails = styled.div`
+  text-align: left;
+  color: #575C64;
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.8;
+  
+  @media (max-width: 768px) {
+    text-align: center;
+    font-size: 14px;
+  }
+`;
+
+const CalculatorButton = styled.button`
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #835EEB 0%, #6B4BC4 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  font-family: 'Pretendard', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(131, 94, 235, 0.3);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(131, 94, 235, 0.4);
+    background: linear-gradient(135deg, #9C7EEF 0%, #7756D6 100%);
+  }
+  
+  &:active {
+    transform: translateY(0);
+    transition: all 0.1s ease;
   }
 `;
 
@@ -1626,6 +1908,65 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [visibleSteps, setVisibleSteps] = useState<boolean[]>([false, false, false, false, false, false]);
+  
+  // 계산기 관련 상태
+  const [studentCount, setStudentCount] = useState(30);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  // 학생 수 옵션
+  const studentOptions = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
+  
+  // 요금 계산 함수 (학생 수에 따른 월 요금)
+  const calculatePrice = (count: number) => {
+    const basePrice = 99000; // 30명 기준
+    const pricePerStudent = 3300; // 학생 1명당 추가 요금
+    const basePriceFor30 = basePrice;
+    
+    if (count <= 30) {
+      // 30명 이하는 기본 요금에서 비례 계산
+      return Math.round((basePriceFor30 * count) / 30);
+    } else {
+      // 30명 초과는 기본 요금 + 추가 요금
+      const extraStudents = count - 30;
+      return basePriceFor30 + (extraStudents * pricePerStudent);
+    }
+  };
+  
+  // 드롭다운 핸들러
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+  
+  const handleStudentSelect = (count: number) => {
+    setStudentCount(count);
+    setIsDropdownOpen(false);
+  };
+  
+  // 슬라이더 핸들러
+  const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStudentCount(parseInt(e.target.value));
+  };
+  
+  // 계산기 버튼 핸들러
+  const handleCalculatorSubmit = () => {
+    // 상담 신청으로 연결하거나 모달 열기
+    alert(`${studentCount}명 기준 월 ${calculatePrice(studentCount).toLocaleString()}원으로 상담 신청이 접수되었습니다.`);
+  };
+
+  // 드롭다운 외부 클릭 시 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // 페이지 진입 시 카드 애니메이션 시작
   React.useEffect(() => {
@@ -1726,9 +2067,6 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
                    </ModalFeatureItem>
                  ))}
                </FeatureList>
-              <ModalButton onClick={handleCloseModal}>
-                상담 신청하기
-              </ModalButton>
             </>
           )}
         </ModalContainer>
@@ -1790,6 +2128,67 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         </ScrollArrow>
       </PricingSection>
 
+      {/* 요금 계산기 섹션 */}
+      <CalculatorSection>
+        <CalculatorContainer>
+          <CalculatorContent>
+            <CalculatorHeader>
+              <CalculatorTitle>내 예상 수업료를<br/>확인해 보세요</CalculatorTitle>
+            </CalculatorHeader>
+            <CalculatorDetails>
+              Basic 플랜 기준, 3개월 무료체험 포함<br/>
+              설치비 면제, 홍보자료 제공
+            </CalculatorDetails>
+          </CalculatorContent>
+          
+          <CalculatorForm>
+            <StudentCountSelector>
+              <DropdownContainer ref={dropdownRef}>
+                <DropdownButton 
+                  isOpen={isDropdownOpen} 
+                  onClick={handleDropdownToggle}
+                >
+                  {studentCount}명
+                </DropdownButton>
+                <DropdownMenu isOpen={isDropdownOpen}>
+                  {studentOptions.map((option) => (
+                    <DropdownItem
+                      key={option}
+                      onClick={() => handleStudentSelect(option)}
+                    >
+                      {option}명
+                    </DropdownItem>
+                  ))}
+                </DropdownMenu>
+              </DropdownContainer>
+            </StudentCountSelector>
+            
+            <SliderContainer>
+              <PriceDisplay>
+                <StudentCountText>{studentCount}명</StudentCountText>
+                <PriceText>월 {calculatePrice(studentCount).toLocaleString()}원</PriceText>
+              </PriceDisplay>
+              
+              <SliderWrapper>
+                <Slider
+                  type="range"
+                  min="10"
+                  max="100"
+                  step="5"
+                  value={studentCount}
+                  progress={((studentCount - 10) / (100 - 10)) * 100}
+                  onChange={handleSliderChange}
+                />
+              </SliderWrapper>
+            </SliderContainer>
+            
+            <CalculatorButton onClick={handleCalculatorSubmit}>
+              내 수업료 확인하기
+            </CalculatorButton>
+          </CalculatorForm>
+        </CalculatorContainer>
+      </CalculatorSection>
+
       {/* 두 번째 섹션 - 무료 체험 신청 */}
       <TrialSection data-trial-section>
         <TrialHeader>
@@ -1803,7 +2202,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             <TrialStepNumber>01</TrialStepNumber>
             <TrialStepText>체험 신청 시,<br/>무료 체험 계정이 문자로 안내돼요</TrialStepText>
             <TrialStepDescription>
-              체험 신청 완료 후 즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>
+              체험 신청 완료 후<br/>즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>
               별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.
             </TrialStepDescription>
           </TrialStepContent>
@@ -1820,10 +2219,10 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         <AnimatedTrialStepContainer isVisible={visibleSteps[1]}>
           <TrialStepContent>
             <TrialStepNumber>02</TrialStepNumber>
-            <TrialStepText>선생님용 계정에<br/>로그인</TrialStepText>
+            <TrialStepText>선생님용 계정에 로그인</TrialStepText>
             <TrialStepDescription>
-              받으신 선생님용 계정 정보로 웹사이트에 접속하여 로그인하세요.<br/>
-              학생 관리와 학습 현황을 한눈에 확인할 수 있는 대시보드가 제공됩니다.
+              받으신 선생님용 계정 정보로<br/>웹사이트에 접속하여 로그인하세요.<br/>
+              학생 관리와 학습 현황을 한눈에 확인할 수 있는<br/>대시보드가 제공됩니다.
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -1839,9 +2238,9 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         <AnimatedTrialStepContainer isVisible={visibleSteps[2]}>
           <TrialStepContent>
             <TrialStepNumber>03</TrialStepNumber>
-            <TrialStepText>학생용 앱에<br/>로그인</TrialStepText>
+            <TrialStepText>학생용 앱에 로그인</TrialStepText>
             <TrialStepDescription>
-              학생들은 모바일 앱을 다운로드하여 계정 정보로 로그인합니다.<br/>
+              학생들은 모바일 앱을 다운로드하여<br/>계정 정보로 로그인합니다.<br/>
               직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.
             </TrialStepDescription>
           </TrialStepContent>
@@ -1860,7 +2259,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             <TrialStepNumber>04</TrialStepNumber>
             <TrialStepText>필요한 경우<br/>학생을 추가 하실 수도 있어요</TrialStepText>
             <TrialStepDescription>
-              선생님 대시보드에서 간편하게 새로운 학생을 추가하고 관리할 수 있습니다.<br/>
+              선생님 대시보드에서<br/>간편하게 새로운 학생을 추가하고 관리할 수 있습니다.<br/>
               체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.
             </TrialStepDescription>
           </TrialStepContent>
@@ -1879,8 +2278,8 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             <TrialStepNumber>05</TrialStepNumber>
             <TrialStepText>학습지를<br/>배부하고,</TrialStepText>
             <TrialStepDescription>
-              원하는 단원과 난이도를 선택하여 학습지를 생성하고 배부하세요.<br/>
-              학생들은 앱에서 바로 문제를 풀고 실시간으로 채점받을 수 있습니다.
+              원하는 단원과 난이도를 선택하여<br/>학습지를 생성하고 배부하세요.<br/>
+              학생들은 앱에서 바로 문제를 풀고<br/>실시간으로 채점받을 수 있습니다.
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -1898,8 +2297,8 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             <TrialStepNumber>06</TrialStepNumber>
             <TrialStepText>풀이 결과 대시보드를<br/>확인 하세요!</TrialStepText>
             <TrialStepDescription>
-              학생들의 학습 진도와 성취도를 실시간으로 확인할 수 있습니다.<br/>
-              취약 단원 분석과 개별 학습 관리로 효과적인 지도가 가능해요.
+              학생들의 학습 진도와 성취도를<br/>실시간으로 확인할 수 있습니다.<br/>
+              취약 단원 분석과 개별 학습 관리로<br/>효과적인 지도가 가능해요.
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>

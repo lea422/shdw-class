@@ -2,26 +2,6 @@ import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import ConsultationForm from './ConsultationForm';
 
-const slideIn = keyframes`
-  from {
-    transform: translateX(100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-`;
-
-const slideOut = keyframes`
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(100%);
-  }
-`;
-
-
-
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
   bottom: 30px;
@@ -34,13 +14,13 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
 `;
 
 const FloatingButton = styled.button`
-  width: 88px;
-  height: 88px;
+  width: 108px;
+  height: 108px;
   border-radius: 50%;
-  background: #835EEB;
+  background: linear-gradient(135deg, #835EEB 0%, #6B4BC4 100%);
   border: none;
   color: white;
-  font-size: 15.4px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -48,26 +28,92 @@ const FloatingButton = styled.button`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   line-height: 1.2;
   text-align: center;
   overflow: hidden;
+  box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3), 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
 
+  /* 리플 효과를 위한 가상 요소 */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
 
+  /* 펄스 효과 */
+  &::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid rgba(131, 94, 235, 0.3);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    opacity: 0.7;
+  }
 
-
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+  }
 
   &:hover {
-    transform: translateY(-6px) scale(1.15);
+    transform: translateY(-8px) scale(1.12);
+    box-shadow: 0 15px 35px rgba(131, 94, 235, 0.4), 0 8px 25px rgba(0, 0, 0, 0.15);
+    background: linear-gradient(135deg, #9C7EEF 0%, #7756D6 100%);
+    
+    &::before {
+      width: 120px;
+      height: 120px;
+    }
+    
+    &::after {
+      animation-play-state: paused;
+      opacity: 0;
+    }
   }
 
   &:active {
-    transform: translateY(-2px) scale(0.9);
-    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-4px) scale(1.05);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 20px rgba(131, 94, 235, 0.5);
   }
 
   &:focus {
     outline: none;
+    box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3), 0 0 0 3px rgba(131, 94, 235, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    width: 88px;
+    height: 88px;
+    font-size: 15.4px;
+    gap: 2px;
+    
+    &:hover {
+      transform: translateY(-6px) scale(1.15);
+    }
   }
 `;
 
