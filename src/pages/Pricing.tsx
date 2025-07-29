@@ -177,8 +177,8 @@ const PricingContainer = styled.div`
 // 첫 번째 섹션 - 요금 안내
 const PricingSection = styled.div`
   width: 1280px;
-  height: 100vh;
-  padding: 0 50px;
+  min-height: 100vh;
+  padding: 60px 50px 150px 50px; /* 하단 패딩 크게 증가 */
   background: white;
   display: flex;
   flex-direction: column;
@@ -190,15 +190,15 @@ const PricingSection = styled.div`
   position: relative;
   @media (max-width: 1024px) {
     width: 100%;
-    height: 100vh;
-    padding: 0 20px;
+    min-height: 100vh;
+    padding: 60px 20px 120px 20px; /* 하단 패딩 증가 */
     gap: 60px;
     margin-top: 60px;
   }
   @media (max-width: 768px) {
     width: 100%;
-    height: 100vh;
-    padding: 0 25px;
+    min-height: 100vh;
+    padding: 48px 25px 100px 25px; /* 하단 패딩 증가 */
     gap: 40px;
     margin-top: 48px;
     box-sizing: border-box;
@@ -262,12 +262,12 @@ const PricingSubtitle = styled.div`
 `;
 
 const PricingCardsContainer = styled.div`
-  width: 1200px;
+  width: 1180px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
-  @media (max-width: 1024px) {
+  @media (max-width: 1200px) {
     width: 100%;
     flex-direction: column;
     gap: 24px;
@@ -275,159 +275,236 @@ const PricingCardsContainer = styled.div`
     align-items: center;
   }
   @media (max-width: 768px) {
-    width: 325px;
-    min-width: 325px;
+    width: 100%;
     flex-direction: column;
-    padding: 0;
-    gap: 16px;
+    padding: 0 20px;
+    gap: 20px;
     align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    margin: 0 auto;
   }
 `;
 
-const PricingCard = styled.div<{ isHighlighted?: boolean; isVisible?: boolean }>`
-  width: 550px;
-  min-width: 550px;
-  max-width: 550px;
-  height: 200px;
-  margin: 0 auto;
+const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisible?: boolean }>`
+  width: 360px;
   padding: 30px;
-  background: white;
+  background: ${props => 
+    props.cardType === 'free' ? '#F3F4F6' : 
+    props.cardType === 'basic' ? 'white' : 
+    'black'
+  };
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.10);
-  border-radius: 10px;
-  outline: ${props => props.isHighlighted ? '2px #8F67E8 solid' : '1px #E5E7EB solid'};
-  outline-offset: ${props => props.isHighlighted ? '-2px' : '-1px'};
+  border-radius: 20px;
+  ${props => props.cardType === 'basic' ? 'outline: 2px #8F67E8 solid; outline-offset: -2px;' : ''}
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
   transform: translateY(${props => props.isVisible ? '0' : '50px'});
   opacity: ${props => props.isVisible ? '1' : '0'};
   
   &:hover {
     transform: translateY(-8px) scale(1.02);
     box-shadow: 0px 20px 40px rgba(131, 94, 235, 0.2);
-    outline: ${props => props.isHighlighted ? '3px #8F67E8 solid' : '2px #835EEB solid'};
-    outline-offset: ${props => props.isHighlighted ? '-3px' : '-2px'};
   }
   
-  &:active {
-    transform: translateY(-4px) scale(1.01);
-    transition: all 0.1s ease;
-  }
-  
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
     width: 100%;
-    max-width: 550px;
-    height: 220px;
-    padding: 0 30px;
+    max-width: 360px;
     margin: 0 auto;
-  }
-  @media (max-width: 768px) {
-    width: 325px;
-    min-width: 325px;
-    max-width: 325px;
-    height: 160px;
-    padding: 0 8px;
-    margin: 0 auto;
-    align-self: center;
   }
 `;
 
-const CardHeader = styled.div`
-  width: 100%;
-  height: 100px;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-  @media (max-width: 768px) {
-    height: 80px;
-    gap: 6px;
-  }
-`;
-
-const CardTitle = styled.div<{ isHighlighted?: boolean }>`
-  color: ${props => props.isHighlighted ? '#7756D6' : '#33373B'};
-  font-size: 28px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  word-wrap: break-word;
-  flex: 1;
-  min-width: 0;
+const CardHeaderNew = styled.div`
+  width: 300px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-left: 10px;
-  @media (max-width: 768px) {
-    font-size: 20px;
-    gap: 2px;
-  }
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
 `;
 
-const CardSubtitle = styled.div`
-  color: #7A828D;
-  font-size: 16px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
-  word-wrap: break-word;
-  @media (max-width: 768px) {
-    font-size: 14px;
-  }
+const CardTitleRow = styled.div`
+  width: 268px;
+  height: 27px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
 `;
 
-const CardPrice = styled.div<{ isHighlighted?: boolean }>`
-  color: ${props => props.isHighlighted ? '#7756D6' : '#33373B'};
-  font-size: 40px;
+const CardTitleText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
+  color: ${props => props.cardType === 'plus' ? 'white' : '#33373B'};
+  font-size: 27.33px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
+  line-height: 41px;
   word-wrap: break-word;
-  flex: 1;
-  min-width: 0;
-  text-align: right;
-  margin-right: 10px;
-  @media (max-width: 768px) {
-    font-size: 28px;
+`;
+
+const CardBadge = styled.div<{ badgeType: 'basic' | 'plus' }>`
+  width: ${props => props.badgeType === 'basic' ? '46.80px' : '82px'};
+  height: ${props => props.badgeType === 'basic' ? '26px' : '24.30px'};
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: ${props => 
+      props.badgeType === 'basic' ? '#835EEB' : 
+      'linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%)'
+    };
   }
 `;
 
-const CardDivider = styled.div`
-  width: 100%;
-  height: 0;
-  outline: 0.50px #8D94A0 solid;
-  outline-offset: -0.25px;
-`;
-
-const CardDescription = styled.div`
+const CardSubtitleNew = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   color: #7A828D;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
-  line-height: 20px;
+  font-weight: 500;
+  line-height: 21px;
   word-wrap: break-word;
-  white-space: pre-line;
-  margin-top: 8px;
-  margin-left: 10px;
-  padding-right: 2px;
-  @media (max-width: 768px) {
-    font-size: 14px;
-    line-height: 18px;
-  }
-  @media (max-width: 600px) {
+`;
+
+const CardPriceRow = styled.div`
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+`;
+
+const CardPriceText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
+  color: ${props => 
+    props.cardType === 'free' ? '#33373B' : 
+    props.cardType === 'basic' ? '#835EEB' : 
+    '#FF6DEB'
+  };
+  font-size: 32px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 48px;
+  word-wrap: break-word;
+`;
+
+const CardPriceUnit = styled.div`
+  position: absolute;
+  right: 0;
+  top: 20px;
+  color: #7A828D;
+  font-size: 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  line-height: 21px;
+  word-wrap: break-word;
+`;
+
+const CardFeaturesList = styled.div`
+  width: 300px;
+  height: 245px;
+  position: relative;
+`;
+
+const CardFeatureItem = styled.div<{ top: number }>`
+  width: 300px;
+  position: absolute;
+  left: 0px;
+  top: ${props => props.top}px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  min-height: 41px;
+`;
+
+const FeatureCheckIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  position: relative;
+  
+  &::before {
+    content: '✓';
+    position: absolute;
+    width: 14.45px;
+    height: 9.98px;
+    left: 4.82px;
+    top: 7.22px;
+    color: #835EEB;
+    font-weight: bold;
     font-size: 12px;
-    line-height: 16px;
   }
-  @media (max-width: 400px) {
-    font-size: 10px;
-    line-height: 14px;
+`;
+
+const FeatureContent = styled.div`
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2px;
+`;
+
+const FeatureTitle = styled.div<{ cardType?: 'free' | 'basic' | 'plus'; isPrimary?: boolean }>`
+  color: ${props => {
+    if (props.cardType === 'plus' && props.isPrimary) return '#FF6DEB';
+    if (props.cardType === 'plus') return '#D1D5DB';
+    return '#7A828D';
+  }};
+  font-size: 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: ${props => (props.cardType === 'plus' && props.isPrimary) ? 700 : 500};
+  line-height: 21px;
+  word-wrap: break-word;
+`;
+
+const FeatureDescription = styled.div`
+  color: ${props => props.color || '#9C7EEF'};
+  font-size: 12px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  line-height: 18px;
+  word-wrap: break-word;
+`;
+
+const FeatureSpecialRow = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3px;
+`;
+
+const CardButton = styled.div`
+  width: 100%;
+  height: 50px;
+  padding: 6.37px 8.49px;
+  background: #835EEB;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #7756D6;
+    transform: translateY(-2px);
   }
+`;
+
+const ButtonText = styled.div`
+  color: white;
+  font-size: 15px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  line-height: 22.50px;
+  word-wrap: break-word;
+  text-align: center;
 `;
 
 const ScrollArrow = styled.button`
@@ -2084,42 +2161,171 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         </PricingHeader>
         
         <PricingCardsContainer>
-          <PricingCard 
+          {/* 무료 체험 카드 */}
+          <NewPricingCard 
+            cardType="free"
             isVisible={isCardVisible} 
             onClick={() => handleCardClick('basic')}
             style={{ transitionDelay: '0ms' }}
           >
-            <CardHeader>
-              <CardTitle>
-                Basic
-                <CardSubtitle>학생 수30명 기준</CardSubtitle>
-              </CardTitle>
-              <CardPrice>99,000원</CardPrice>
-            </CardHeader>
-            <CardDivider />
-            <CardDescription>
-              홍보자료 제공<br/>가입비 면제
-            </CardDescription>
-          </PricingCard>
+            <CardHeaderNew>
+              <CardTitleRow>
+                <CardTitleText cardType="free">수학대왕</CardTitleText>
+              </CardTitleRow>
+              <CardSubtitleNew cardType="free">최대 ~명까지 무료로 사용해보세요</CardSubtitleNew>
+              <CardPriceRow>
+                <CardPriceText cardType="free">최대 0명</CardPriceText>
+              </CardPriceRow>
+            </CardHeaderNew>
+            
+            <CardFeaturesList>
+              <CardFeatureItem top={0}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>매달 장학금</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={51}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>무제한 문제 풀기</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={102}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>AI 필기 채점</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={153}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>유사문제</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+            </CardFeaturesList>
+            
+            <CardButton>
+              <ButtonText>지금 바로 시작하기</ButtonText>
+            </CardButton>
+          </NewPricingCard>
           
-          <PricingCard 
-            isHighlighted 
+          {/* 기본 플랜 카드 */}
+          <NewPricingCard 
+            cardType="basic"
             isVisible={isCardVisible} 
             onClick={() => handleCardClick('premium')}
             style={{ transitionDelay: '200ms' }}
           >
-            <CardHeader>
-              <CardTitle isHighlighted>
-                3개월
-                <CardSubtitle>학생 수30명 기준</CardSubtitle>
-              </CardTitle>
-              <CardPrice isHighlighted>99,000원</CardPrice>
-            </CardHeader>
-            <CardDivider />
-            <CardDescription>
-              홍보자료 제공<br/>가입비 면제
-            </CardDescription>
-          </PricingCard>
+            <CardHeaderNew>
+              <CardTitleRow>
+                <CardTitleText cardType="basic">수학대왕</CardTitleText>
+                <CardBadge badgeType="basic" />
+              </CardTitleRow>
+              <CardSubtitleNew cardType="basic">기본 기능</CardSubtitleNew>
+              <CardPriceRow>
+                <CardPriceText cardType="basic">월 ~6,900</CardPriceText>
+                <CardPriceUnit>/인당</CardPriceUnit>
+              </CardPriceRow>
+            </CardHeaderNew>
+            
+            <CardFeaturesList>
+              <CardFeatureItem top={0}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>매달 장학금</FeatureTitle>
+                  <FeatureDescription>30,000원</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={51}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>무제한 문제 풀기</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={102}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>AI 필기 채점</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={153}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>유사문제</FeatureTitle>
+                </FeatureContent>
+              </CardFeatureItem>
+            </CardFeaturesList>
+            
+            <CardButton>
+              <ButtonText>지금 바로 시작하기</ButtonText>
+            </CardButton>
+          </NewPricingCard>
+          
+          {/* 플러스 플랜 카드 */}
+          <NewPricingCard 
+            cardType="plus"
+            isVisible={isCardVisible} 
+            onClick={() => handleCardClick('premium')}
+            style={{ transitionDelay: '400ms' }}
+          >
+            <CardHeaderNew>
+              <CardTitleRow>
+                <CardTitleText cardType="plus">수학대왕</CardTitleText>
+                <CardBadge badgeType="plus" />
+              </CardTitleRow>
+              <CardSubtitleNew cardType="plus">플러스 기능</CardSubtitleNew>
+              <CardPriceRow>
+                <CardPriceText cardType="plus">월 ~12,900</CardPriceText>
+                <CardPriceUnit>/인당</CardPriceUnit>
+              </CardPriceRow>
+            </CardHeaderNew>
+            
+            <CardFeaturesList>
+              <CardFeatureItem top={0}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureSpecialRow>
+                    <FeatureTitle cardType="plus">모든</FeatureTitle>
+                    <CardBadge badgeType="basic" />
+                    <FeatureTitle cardType="plus">기능</FeatureTitle>
+                  </FeatureSpecialRow>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={51}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle cardType="plus" isPrimary>AI 학습 관리</FeatureTitle>
+                  <FeatureDescription color="#7A828D">자동 숙제 및 클리닉 (오답 노트)</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={102}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle cardType="plus" isPrimary>AI 리포트</FeatureTitle>
+                  <FeatureDescription color="#7A828D">매주 학습 데이터 기반 리포트</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={153}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle cardType="plus" isPrimary>AI 실시간 채팅</FeatureTitle>
+                  <FeatureDescription color="#7A828D">언제 어디서나 AI에게 질문</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={204}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle cardType="plus" isPrimary>학부모 관리 서비스</FeatureTitle>
+                  <FeatureDescription color="#7A828D">수학대왕 클래스 계정 제공</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+            </CardFeaturesList>
+            
+            <CardButton>
+              <ButtonText>지금 바로 시작하기</ButtonText>
+            </CardButton>
+          </NewPricingCard>
         </PricingCardsContainer>
         <ScrollArrow onClick={scrollToTrialSection} aria-label="다음 섹션으로 스크롤">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
