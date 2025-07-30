@@ -1,6 +1,81 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+// 계산기 모달 스타일
+const CalculatorModalOverlay = styled.div<{ isOpen: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: ${props => props.isOpen ? 'flex' : 'none'};
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const CalculatorModalContainer = styled.div`
+  width: 500px;
+  max-width: 90vw;
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  @media (max-width: 600px) {
+    width: 350px;
+    padding: 30px;
+  }
+`;
+
+const CalculatorModalClose = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #f5f5f5;
+    color: #333;
+  }
+`;
+
+const CalculatorModalTitle = styled.h2`
+  color: #1E2231;
+  font-size: 28px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-align: center;
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
+`;
+
+const CalculatorModalSubtitle = styled.p`
+  color: #7A828D;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  @media (max-width: 600px) {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+`;
+
 const PricingPageContainer = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -210,7 +285,8 @@ const PricingHeader = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   gap: 20px;
   @media (max-width: 1024px) {
     width: 100%;
@@ -299,20 +375,65 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(${props => props.isVisible ? '0' : '50px'});
+  cursor: default;
+  
+  /* 성능 최적화 */
+  will-change: transform, box-shadow, opacity;
+  backface-visibility: hidden;
+  
+  /* 부드러운 애니메이션 */
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+              
+  transform: translate3d(0, ${props => props.isVisible ? '0' : '50px'}, 0);
   opacity: ${props => props.isVisible ? '1' : '0'};
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(131, 94, 235, 0.08) 0%, rgba(255, 109, 235, 0.08) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 20px;
+    z-index: 0;
+    will-change: opacity;
+  }
   
   &:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translate3d(0, -10px, 0) scale(1.03);
     box-shadow: 0px 20px 40px rgba(131, 94, 235, 0.2);
+    
+    &::before {
+      opacity: 1;
+    }
+  }
+  
+  &:active {
+    transform: translate3d(0, -8px, 0) scale(1.02);
+    transition: transform 0.15s ease;
+  }
+  
+  & > * {
+    position: relative;
+    z-index: 1;
   }
   
   @media (max-width: 768px) {
     width: 100%;
     max-width: 360px;
     margin: 0 auto;
+    
+    &:hover {
+      transform: translate3d(0, -6px, 0) scale(1.02);
+      box-shadow: 0px 15px 30px rgba(131, 94, 235, 0.15);
+    }
   }
 `;
 
@@ -324,6 +445,18 @@ const CardHeaderNew = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 8px;
+  
+  @media (max-width: 1024px) {
+    width: 280px;
+    padding: 14px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 280px;
+    padding: 12px;
+    align-items: center;
+  }
 `;
 
 const CardTitleRow = styled.div`
@@ -333,6 +466,23 @@ const CardTitleRow = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2px;
+  
+  @media (max-width: 1024px) {
+    width: 248px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 248px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: auto;
+    min-height: 27px;
+  }
 `;
 
 const CardTitleText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
@@ -342,6 +492,37 @@ const CardTitleText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   font-weight: 700;
   line-height: 41px;
   word-wrap: break-word;
+  text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 22px;
+    line-height: 33px;
+    text-align: center;
+  }
+`;
+
+const CardIcon = styled.img<{ iconType: 'light' | 'plus'; size?: 'small' | 'normal' }>`
+  width: ${props => {
+    if (props.size === 'small') return '46.80px';
+    return props.iconType === 'light' ? '46.80px' : '82px';
+  }};
+  height: ${props => {
+    if (props.size === 'small') return '26px';
+    return props.iconType === 'light' ? '26px' : '24.30px';
+  }};
+  object-fit: contain;
+  will-change: transform;
+  transition: transform 0.2s ease;
+  
+  ${NewPricingCard}:hover & {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
 `;
 
 const CardBadge = styled.div<{ badgeType: 'basic' | 'plus' }>`
@@ -369,6 +550,19 @@ const CardSubtitleNew = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   font-weight: 500;
   line-height: 21px;
   word-wrap: break-word;
+  text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+  }
 `;
 
 const CardPriceRow = styled.div`
@@ -378,24 +572,56 @@ const CardPriceRow = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+  
+  @media (max-width: 1024px) {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const CardPriceText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
-  color: ${props => 
-    props.cardType === 'free' ? '#33373B' : 
-    props.cardType === 'basic' ? '#835EEB' : 
-    '#FF6DEB'
-  };
+  ${props => 
+    props.cardType === 'free' ? 'color: #33373B;' : 
+    props.cardType === 'basic' ? 'color: #835EEB;' : 
+    `background: linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
+     -webkit-background-clip: text;
+     -webkit-text-fill-color: transparent;
+     background-clip: text;`
+  }
   font-size: 32px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   line-height: 48px;
   word-wrap: break-word;
+  text-align: center;
+  
+  @media (max-width: 1024px) {
+    font-size: 28px;
+    line-height: 42px;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+  }
 `;
 
-const CardPriceUnit = styled.div`
+const CardPriceUnit = styled.div<{ cardType?: 'basic' | 'plus' }>`
   position: absolute;
-  right: 0;
+  right: ${props => {
+    if (props.cardType === 'basic') return '25px';
+    if (props.cardType === 'plus') return '20px';
+    return '0';
+  }};
   top: 20px;
   color: #7A828D;
   font-size: 14px;
@@ -403,12 +629,43 @@ const CardPriceUnit = styled.div`
   font-weight: 500;
   line-height: 21px;
   word-wrap: break-word;
+  
+  @media (max-width: 1024px) {
+    font-size: 13px;
+    line-height: 20px;
+    top: 18px;
+    right: ${props => {
+      if (props.cardType === 'basic') return '25px';
+      if (props.cardType === 'plus') return '20px';
+      return '0';
+    }};
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+    line-height: 18px;
+    top: 15px;
+    right: ${props => {
+      if (props.cardType === 'basic') return '25px';
+      if (props.cardType === 'plus') return '20px';
+      return '0';
+    }};
+  }
 `;
 
 const CardFeaturesList = styled.div`
   width: 300px;
-  height: 245px;
+  min-height: 245px;
   position: relative;
+  
+  @media (max-width: 1024px) {
+    width: 280px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 280px;
+  }
 `;
 
 const CardFeatureItem = styled.div<{ top: number }>`
@@ -421,9 +678,18 @@ const CardFeatureItem = styled.div<{ top: number }>`
   align-items: center;
   gap: 10px;
   min-height: 41px;
+  
+  @media (max-width: 1024px) {
+    width: 280px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 280px;
+  }
 `;
 
-const FeatureCheckIcon = styled.div`
+const FeatureCheckIcon = styled.div<{ cardType?: 'plus' }>`
   width: 24px;
   height: 24px;
   position: relative;
@@ -435,41 +701,58 @@ const FeatureCheckIcon = styled.div`
     height: 9.98px;
     left: 4.82px;
     top: 7.22px;
-    color: #835EEB;
     font-weight: bold;
     font-size: 12px;
+    ${props => props.cardType === 'plus' ? `
+      background: linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    ` : `
+      color: #835EEB;
+    `}
   }
 `;
 
 const FeatureContent = styled.div`
-  width: 160px;
+  width: 260px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 2px;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: nowrap;
 `;
 
 const FeatureTitle = styled.div<{ cardType?: 'free' | 'basic' | 'plus'; isPrimary?: boolean }>`
-  color: ${props => {
-    if (props.cardType === 'plus' && props.isPrimary) return '#FF6DEB';
-    if (props.cardType === 'plus') return '#D1D5DB';
-    return '#7A828D';
-  }};
-  font-size: 14px;
+  ${props => {
+    if (props.cardType === 'plus' && props.isPrimary) {
+      return `
+        background: linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      `;
+    }
+    if (props.cardType === 'plus') return 'color: #D1D5DB;';
+    return 'color: #7A828D;';
+  }}
+  font-size: 15px;
   font-family: 'Pretendard', sans-serif;
   font-weight: ${props => (props.cardType === 'plus' && props.isPrimary) ? 700 : 500};
   line-height: 21px;
   word-wrap: break-word;
+  white-space: nowrap;
 `;
 
 const FeatureDescription = styled.div`
   color: ${props => props.color || '#9C7EEF'};
-  font-size: 12px;
+  font-size: 13px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 500;
-  line-height: 18px;
+  font-weight: 600;
+  line-height: 19.5px;
   word-wrap: break-word;
+  white-space: nowrap;
 `;
 
 const FeatureSpecialRow = styled.div`
@@ -479,11 +762,15 @@ const FeatureSpecialRow = styled.div`
   gap: 3px;
 `;
 
-const CardButton = styled.div`
+const CardButton = styled.div<{ cardType?: 'plus' }>`
   width: 100%;
   height: 50px;
   padding: 6.37px 8.49px;
-  background: #835EEB;
+  background: ${props => 
+    props.cardType === 'plus' 
+      ? 'linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%)' 
+      : '#835EEB'
+  };
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -492,17 +779,21 @@ const CardButton = styled.div`
   transition: all 0.3s ease;
   
   &:hover {
-    background: #7756D6;
+    background: ${props => 
+      props.cardType === 'plus' 
+        ? 'linear-gradient(135deg, #E856D3 0%, #7B5FDD 50%, #4F89E6 100%)' 
+        : '#7756D6'
+    };
     transform: translateY(-2px);
   }
 `;
 
 const ButtonText = styled.div`
   color: white;
-  font-size: 15px;
+  font-size: 17px;
   font-family: 'Pretendard', sans-serif;
-  font-weight: 500;
-  line-height: 22.50px;
+  font-weight: 700;
+  line-height: 25.5px;
   word-wrap: break-word;
   text-align: center;
 `;
@@ -689,21 +980,21 @@ const StudentCountSelector = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
 `;
 
 const DropdownContainer = styled.div`
   position: relative;
-  width: 200px;
+  width: 160px;
 `;
 
 const DropdownButton = styled.button<{ isOpen: boolean }>`
   width: 100%;
-  padding: 16px 20px;
+  padding: 12px 16px;
   background: #F8F9FA;
   border: 2px solid #E5E7EB;
-  border-radius: 12px;
-  font-size: 18px;
+  border-radius: 10px;
+  font-size: 16px;
   font-weight: 600;
   color: #1E2231;
   cursor: pointer;
@@ -719,7 +1010,7 @@ const DropdownButton = styled.button<{ isOpen: boolean }>`
   
   &::after {
     content: '${props => props.isOpen ? '▲' : '▼'}';
-    font-size: 14px;
+    font-size: 12px;
     color: #6B7280;
     transition: transform 0.3s ease;
   }
@@ -733,9 +1024,9 @@ const DropdownMenu = styled.div<{ isOpen: boolean }>`
   background: white;
   border: 1px solid #E5E7EB;
   border-top: none;
-  border-radius: 0 0 12px 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-  max-height: ${props => props.isOpen ? '200px' : '0'};
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  max-height: ${props => props.isOpen ? '180px' : '0'};
   overflow: hidden;
   transition: all 0.3s ease;
   z-index: 10;
@@ -743,10 +1034,10 @@ const DropdownMenu = styled.div<{ isOpen: boolean }>`
 
 const DropdownItem = styled.button`
   width: 100%;
-  padding: 12px 20px;
+  padding: 10px 16px;
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   color: #1E2231;
   cursor: pointer;
@@ -822,36 +1113,36 @@ const Slider = styled.input<{ progress: number }>`
 `;
 
 const PriceDisplay = styled.div`
-  background: #835EEB;
+  background: #33373B;
   color: white;
-  padding: 20px 30px;
-  border-radius: 16px;
+  padding: 12px 20px;
+  border-radius: 12px;
   text-align: center;
   position: relative;
-  box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3);
+  box-shadow: 0 6px 20px rgba(51, 55, 59, 0.3);
   
   &::after {
     content: '';
     position: absolute;
-    bottom: -8px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid #835EEB;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #33373B;
   }
 `;
 
 const StudentCountText = styled.div`
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 `;
 
 const PriceText = styled.div`
-  font-size: 32px;
+  font-size: 24px;
   font-weight: 700;
   font-family: 'Pretendard', sans-serif;
 `;
@@ -1976,13 +2267,9 @@ const pricingPlans = {
   }
 };
 
-interface PricingProps {
-  isModalOpen?: boolean;
-  setIsModalOpen?: (isOpen: boolean) => void;
-}
+interface PricingProps {}
 
-const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }) => {
-  const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
+const Pricing: React.FC<PricingProps> = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [visibleSteps, setVisibleSteps] = useState<boolean[]>([false, false, false, false, false, false]);
   
@@ -1995,19 +2282,9 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
   const studentOptions = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
   
   // 요금 계산 함수 (학생 수에 따른 월 요금)
-  const calculatePrice = (count: number) => {
-    const basePrice = 99000; // 30명 기준
-    const pricePerStudent = 3300; // 학생 1명당 추가 요금
-    const basePriceFor30 = basePrice;
-    
-    if (count <= 30) {
-      // 30명 이하는 기본 요금에서 비례 계산
-      return Math.round((basePriceFor30 * count) / 30);
-    } else {
-      // 30명 초과는 기본 요금 + 추가 요금
-      const extraStudents = count - 30;
-      return basePriceFor30 + (extraStudents * pricePerStudent);
-    }
+  const calculatePrice = (count: number, cardType: 'basic' | 'plus' | null = currentCardType) => {
+    const perStudentPrice = cardType === 'plus' ? 12900 : 6900; // Plus: 12,900원, Light: 6,900원
+    return count * perStudentPrice;
   };
   
   // 드롭다운 핸들러
@@ -2025,11 +2302,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
     setStudentCount(parseInt(e.target.value));
   };
   
-  // 계산기 버튼 핸들러
-  const handleCalculatorSubmit = () => {
-    // 상담 신청으로 연결하거나 모달 열기
-    alert(`${studentCount}명 기준 월 ${calculatePrice(studentCount).toLocaleString()}원으로 상담 신청이 접수되었습니다.`);
-  };
+  // 계산기 버튼 핸들러는 위에서 재정의됨
 
   // 드롭다운 외부 클릭 시 닫기
   useEffect(() => {
@@ -2103,15 +2376,27 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
     return () => window.removeEventListener('scroll', handleScroll);
   }, [visibleSteps]);
 
-  const handleCardClick = (plan: string) => {
-    setSelectedPlan(plan);
-    setIsModalOpen?.(true);
+  // 계산기 모달 상태
+  const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
+  const [currentCardType, setCurrentCardType] = useState<'basic' | 'plus' | null>(null);
+
+  const handleCardClick = (cardType: 'free' | 'basic' | 'plus') => {
+    if (cardType === 'free') {
+      // 무료 카드는 클래스 사이트로 바로 이동
+      window.open('https://class.iammathking.com', '_blank');
+    } else {
+      // Light, Plus 카드는 계산기 모달 열기
+      setCurrentCardType(cardType);
+      setIsCalculatorModalOpen(true);
+    }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen?.(false);
-    setSelectedPlan(null);
+  const handleCloseCalculatorModal = () => {
+    setIsCalculatorModalOpen(false);
+    setCurrentCardType(null);
   };
+
+
 
   const scrollToTrialSection = () => {
     const trialSection = document.querySelector('[data-trial-section]');
@@ -2123,40 +2408,70 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
     }
   };
 
-  const selectedPlanData = selectedPlan ? pricingPlans[selectedPlan as keyof typeof pricingPlans] : null;
-
   return (
     <PricingPageContainer>
-      {/* 모달 */}
-      <ModalOverlay isOpen={isModalOpen} onClick={handleCloseModal}>
-        <ModalContainer onClick={(e) => e.stopPropagation()}>
-          <ModalCloseButton onClick={handleCloseModal}>×</ModalCloseButton>
-          {selectedPlanData && (
-            <>
-              <ModalTitle>{selectedPlanData.title} 플랜</ModalTitle>
-              <ModalPrice>{selectedPlanData.price}</ModalPrice>
-              <ModalDescription>{selectedPlanData.fullDescription}</ModalDescription>
-                             <FeatureList>
-                 {selectedPlanData.features.map((feature, index) => (
-                   <ModalFeatureItem key={index}>
-                     <FeatureIcon>✓</FeatureIcon>
-                     <FeatureText>{feature}</FeatureText>
-                   </ModalFeatureItem>
-                 ))}
-               </FeatureList>
-            </>
-          )}
-        </ModalContainer>
-      </ModalOverlay>
+      {/* 계산기 모달 */}
+      <CalculatorModalOverlay isOpen={isCalculatorModalOpen} onClick={handleCloseCalculatorModal}>
+        <CalculatorModalContainer onClick={(e) => e.stopPropagation()}>
+          <CalculatorModalClose onClick={handleCloseCalculatorModal}>×</CalculatorModalClose>
+          <CalculatorModalTitle>
+            {currentCardType === 'basic' ? '수학대왕 Light' : '수학대왕 Plus'} 플랜
+          </CalculatorModalTitle>
+          <CalculatorModalSubtitle>
+            내 예상 수업료를 확인해 보세요<br/>
+            {currentCardType === 'basic' ? 'Light' : 'Plus'} 플랜 기준, 3개월 무료체험 포함
+          </CalculatorModalSubtitle>
+          
+          <StudentCountSelector>
+            <DropdownContainer ref={dropdownRef}>
+              <DropdownButton 
+                isOpen={isDropdownOpen} 
+                onClick={handleDropdownToggle}
+              >
+                {studentCount}명
+              </DropdownButton>
+              <DropdownMenu isOpen={isDropdownOpen}>
+                {studentOptions.map((option) => (
+                  <DropdownItem
+                    key={option}
+                    onClick={() => handleStudentSelect(option)}
+                  >
+                    {option}명
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </DropdownContainer>
+          </StudentCountSelector>
+          
+          <SliderContainer>
+            <PriceDisplay>
+              <StudentCountText>{studentCount}명</StudentCountText>
+              <PriceText>월 {calculatePrice(studentCount, currentCardType).toLocaleString()}원</PriceText>
+            </PriceDisplay>
+            
+            <SliderWrapper>
+              <Slider
+                type="range"
+                min="10"
+                max="100"
+                step="5"
+                value={studentCount}
+                progress={((studentCount - 10) / (100 - 10)) * 100}
+                onChange={handleSliderChange}
+              />
+            </SliderWrapper>
+          </SliderContainer>
+        </CalculatorModalContainer>
+      </CalculatorModalOverlay>
 
       {/* 첫 번째 섹션 - 요금 안내 */}
       <PricingSection>
         <PricingHeader>
           <PricingTitle>
-            AI로 시작하는<br/>1:1 실시간 밀착 관리
+            AI로 시작하는 1:1 실시간 밀착 관리
           </PricingTitle>
           <PricingSubtitle>
-            단순한 문제은행을 넘어,<br/>AI 맞춤형 수학 학습 시스템을<br/>학원에 체계적으로 도입해 보세요
+            단순한 문제은행을 넘어, AI 맞춤형 수학 학습 시스템을<br/>학원에 체계적으로 도입해 보세요
           </PricingSubtitle>
         </PricingHeader>
         
@@ -2165,16 +2480,18 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
           <NewPricingCard 
             cardType="free"
             isVisible={isCardVisible} 
-            onClick={() => handleCardClick('basic')}
             style={{ transitionDelay: '0ms' }}
           >
             <CardHeaderNew>
               <CardTitleRow>
                 <CardTitleText cardType="free">수학대왕</CardTitleText>
+                <CardTitleText cardType="free" style={{ color: '#835EEB' }}>FREE</CardTitleText>
               </CardTitleRow>
-              <CardSubtitleNew cardType="free">최대 ~명까지 무료로 사용해보세요</CardSubtitleNew>
+              <CardSubtitleNew cardType="free">
+                최대 ~명까지 <span style={{ fontWeight: 700 }}>무료로</span> 사용해보세요
+              </CardSubtitleNew>
               <CardPriceRow>
-                <CardPriceText cardType="free">최대 0명</CardPriceText>
+                <CardPriceText cardType="free">최대 5명</CardPriceText>
               </CardPriceRow>
             </CardHeaderNew>
             
@@ -2182,50 +2499,60 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
               <CardFeatureItem top={0}>
                 <FeatureCheckIcon />
                 <FeatureContent>
-                  <FeatureTitle>매달 장학금</FeatureTitle>
+                  <FeatureTitle>최대 5명까지</FeatureTitle>
+                  <FeatureDescription color="#835EEB">무료 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={51}>
+              <CardFeatureItem top={41}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>매달 장학금</FeatureTitle>
+                  <FeatureDescription color="#835EEB">30,000원</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={82}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>무제한 문제 풀기</FeatureTitle>
+                  <FeatureDescription color="#835EEB">8만 개의 콘텐츠 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={102}>
+              <CardFeatureItem top={123}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>AI 필기 채점</FeatureTitle>
+                  <FeatureDescription color="#835EEB">필기 분석 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={153}>
+              <CardFeatureItem top={164}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>유사문제</FeatureTitle>
+                  <FeatureDescription color="#835EEB">검색 기능 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
             </CardFeaturesList>
             
-            <CardButton>
+            <CardButton onClick={() => handleCardClick('free')}>
               <ButtonText>지금 바로 시작하기</ButtonText>
             </CardButton>
           </NewPricingCard>
           
-          {/* 기본 플랜 카드 */}
+          {/* Light 플랜 카드 */}
           <NewPricingCard 
             cardType="basic"
             isVisible={isCardVisible} 
-            onClick={() => handleCardClick('premium')}
             style={{ transitionDelay: '200ms' }}
           >
             <CardHeaderNew>
               <CardTitleRow>
                 <CardTitleText cardType="basic">수학대왕</CardTitleText>
-                <CardBadge badgeType="basic" />
+                <CardIcon src="/Assets/icon/light.svg" alt="Light" iconType="light" />
               </CardTitleRow>
               <CardSubtitleNew cardType="basic">기본 기능</CardSubtitleNew>
               <CardPriceRow>
                 <CardPriceText cardType="basic">월 ~6,900</CardPriceText>
-                <CardPriceUnit>/인당</CardPriceUnit>
+                <CardPriceUnit cardType="basic">/인당</CardPriceUnit>
               </CardPriceRow>
             </CardHeaderNew>
             
@@ -2233,97 +2560,105 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
               <CardFeatureItem top={0}>
                 <FeatureCheckIcon />
                 <FeatureContent>
-                  <FeatureTitle>매달 장학금</FeatureTitle>
-                  <FeatureDescription>30,000원</FeatureDescription>
+                  <FeatureTitle>6명</FeatureTitle>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={51}>
+              <CardFeatureItem top={41}>
+                <FeatureCheckIcon />
+                <FeatureContent>
+                  <FeatureTitle>매달 장학금</FeatureTitle>
+                  <FeatureDescription color="#835EEB">30,000원</FeatureDescription>
+                </FeatureContent>
+              </CardFeatureItem>
+              <CardFeatureItem top={82}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>무제한 문제 풀기</FeatureTitle>
+                  <FeatureDescription color="#835EEB">8만 개의 콘텐츠 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={102}>
+              <CardFeatureItem top={123}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>AI 필기 채점</FeatureTitle>
+                  <FeatureDescription color="#835EEB">필기 분석 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
-              <CardFeatureItem top={153}>
+              <CardFeatureItem top={164}>
                 <FeatureCheckIcon />
                 <FeatureContent>
                   <FeatureTitle>유사문제</FeatureTitle>
+                  <FeatureDescription color="#835EEB">검색 기능 제공</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
             </CardFeaturesList>
             
-            <CardButton>
-              <ButtonText>지금 바로 시작하기</ButtonText>
+            <CardButton onClick={() => handleCardClick('basic')}>
+              <ButtonText>예상 요금 확인하기</ButtonText>
             </CardButton>
           </NewPricingCard>
           
-          {/* 플러스 플랜 카드 */}
+          {/* Plus 플랜 카드 */}
           <NewPricingCard 
             cardType="plus"
             isVisible={isCardVisible} 
-            onClick={() => handleCardClick('premium')}
             style={{ transitionDelay: '400ms' }}
           >
             <CardHeaderNew>
               <CardTitleRow>
                 <CardTitleText cardType="plus">수학대왕</CardTitleText>
-                <CardBadge badgeType="plus" />
+                <CardIcon src="/Assets/icon/Plus.svg" alt="Plus" iconType="plus" />
               </CardTitleRow>
               <CardSubtitleNew cardType="plus">플러스 기능</CardSubtitleNew>
               <CardPriceRow>
                 <CardPriceText cardType="plus">월 ~12,900</CardPriceText>
-                <CardPriceUnit>/인당</CardPriceUnit>
+                <CardPriceUnit cardType="plus">/인당</CardPriceUnit>
               </CardPriceRow>
             </CardHeaderNew>
             
-            <CardFeaturesList>
-              <CardFeatureItem top={0}>
-                <FeatureCheckIcon />
+            <CardFeaturesList style={{ height: 'auto', gap: '27px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minHeight: '24px' }}>
+                <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureSpecialRow>
                     <FeatureTitle cardType="plus">모든</FeatureTitle>
-                    <CardBadge badgeType="basic" />
+                    <CardIcon src="/Assets/icon/light.svg" alt="Light" iconType="light" size="small" />
                     <FeatureTitle cardType="plus">기능</FeatureTitle>
                   </FeatureSpecialRow>
                 </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={51}>
-                <FeatureCheckIcon />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 학습 관리</FeatureTitle>
                   <FeatureDescription color="#7A828D">자동 숙제 및 클리닉 (오답 노트)</FeatureDescription>
                 </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={102}>
-                <FeatureCheckIcon />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 리포트</FeatureTitle>
                   <FeatureDescription color="#7A828D">매주 학습 데이터 기반 리포트</FeatureDescription>
                 </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={153}>
-                <FeatureCheckIcon />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 실시간 채팅</FeatureTitle>
                   <FeatureDescription color="#7A828D">언제 어디서나 AI에게 질문</FeatureDescription>
                 </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={204}>
-                <FeatureCheckIcon />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>학부모 관리 서비스</FeatureTitle>
                   <FeatureDescription color="#7A828D">수학대왕 클래스 계정 제공</FeatureDescription>
                 </FeatureContent>
-              </CardFeatureItem>
+              </div>
             </CardFeaturesList>
             
-            <CardButton>
-              <ButtonText>지금 바로 시작하기</ButtonText>
+            <CardButton cardType="plus" onClick={() => handleCardClick('plus')}>
+              <ButtonText>예상 요금 확인하기</ButtonText>
             </CardButton>
           </NewPricingCard>
         </PricingCardsContainer>
@@ -2334,66 +2669,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         </ScrollArrow>
       </PricingSection>
 
-      {/* 요금 계산기 섹션 */}
-      <CalculatorSection>
-        <CalculatorContainer>
-          <CalculatorContent>
-            <CalculatorHeader>
-              <CalculatorTitle>내 예상 수업료를<br/>확인해 보세요</CalculatorTitle>
-            </CalculatorHeader>
-            <CalculatorDetails>
-              Basic 플랜 기준, 3개월 무료체험 포함<br/>
-              설치비 면제, 홍보자료 제공
-            </CalculatorDetails>
-          </CalculatorContent>
-          
-          <CalculatorForm>
-            <StudentCountSelector>
-              <DropdownContainer ref={dropdownRef}>
-                <DropdownButton 
-                  isOpen={isDropdownOpen} 
-                  onClick={handleDropdownToggle}
-                >
-                  {studentCount}명
-                </DropdownButton>
-                <DropdownMenu isOpen={isDropdownOpen}>
-                  {studentOptions.map((option) => (
-                    <DropdownItem
-                      key={option}
-                      onClick={() => handleStudentSelect(option)}
-                    >
-                      {option}명
-                    </DropdownItem>
-                  ))}
-                </DropdownMenu>
-              </DropdownContainer>
-            </StudentCountSelector>
-            
-            <SliderContainer>
-              <PriceDisplay>
-                <StudentCountText>{studentCount}명</StudentCountText>
-                <PriceText>월 {calculatePrice(studentCount).toLocaleString()}원</PriceText>
-              </PriceDisplay>
-              
-              <SliderWrapper>
-                <Slider
-                  type="range"
-                  min="10"
-                  max="100"
-                  step="5"
-                  value={studentCount}
-                  progress={((studentCount - 10) / (100 - 10)) * 100}
-                  onChange={handleSliderChange}
-                />
-              </SliderWrapper>
-            </SliderContainer>
-            
-            <CalculatorButton onClick={handleCalculatorSubmit}>
-              내 수업료 확인하기
-            </CalculatorButton>
-          </CalculatorForm>
-        </CalculatorContainer>
-      </CalculatorSection>
+
 
       {/* 두 번째 섹션 - 무료 체험 신청 */}
       <TrialSection data-trial-section>
@@ -2413,7 +2689,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 01.png" alt="무료체험 01"
+                            <img src="/Pricing/무료체험 01.png" alt="무료체험 01"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2432,7 +2708,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 02.png" alt="무료체험 02"
+                            <img src="/Pricing/무료체험 02.png" alt="무료체험 02"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2451,7 +2727,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 03.png" alt="무료체험 03"
+                            <img src="/Pricing/무료체험 03.png" alt="무료체험 03"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2470,7 +2746,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 04.png" alt="무료체험 04"
+                            <img src="/Pricing/무료체험 04.png" alt="무료체험 04"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2489,7 +2765,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 05.png" alt="무료체험 05"
+                            <img src="/Pricing/무료체험 05.png" alt="무료체험 05"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2508,7 +2784,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-            <img src="/무료체험 06.png" alt="무료체험 06"
+                            <img src="/Pricing/무료체험 06.png" alt="무료체험 06"
               style={window.innerWidth <= 600
                 ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
                 : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
@@ -2559,7 +2835,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
              </div>
              {/* 모바일용 Class Algorithm 이미지 */}
              <img 
-               src="/class algorithm.svg" 
+               src="/Pricing/class algorithm.svg" 
                alt="Class Algorithm" 
                style={{
                  width: '100%',
@@ -2582,7 +2858,7 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
         </TopDataFixedColumn>
                <TopDataScrollContainer>
                  <TopDataImage 
-                   src="/상단 데이터.svg" 
+                   src="/Pricing/상단 데이터.svg" 
                    alt="기능 비교표 상단" 
                  />
                </TopDataScrollContainer>
@@ -2592,13 +2868,13 @@ const Pricing: React.FC<PricingProps> = ({ isModalOpen = false, setIsModalOpen }
              <BottomDataContainer>
                {/* Class Algorithm SVG - 상단 데이터 왼쪽 끝과 정렬 */}
                <ClassAlgorithmImage 
-                 src="/class algorithm.svg" 
+                 src="/Pricing/class algorithm.svg" 
                  alt="Class Algorithm" 
                />
                
                {/* 하단 데이터 SVG - 상단 데이터 오른쪽 끝에 맞춤 */}
                <BottomDataImage 
-                 src="/하단 데이터.svg" 
+                                   src="/Pricing/하단 데이터.svg" 
                  alt="기능 비교표 하단" 
                />
              </BottomDataContainer>

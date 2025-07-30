@@ -495,7 +495,7 @@ const Header = () => {
     <HeaderContainer>
       <HeaderInner>
         <LogoContainer to="/" onClick={handleLogoClick}>
-          <StyledLogoIcon src="/logo.svg" alt="수학대왕 CLASS 로고" />
+          <StyledLogoIcon src="/Common/logo.svg" alt="수학대왕 CLASS 로고" />
           <LogoText1>수학대왕</LogoText1>
           <LogoText2>CLASS</LogoText2>
         </LogoContainer>

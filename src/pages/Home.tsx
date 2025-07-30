@@ -963,45 +963,45 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const slides = [
     {
       id: 1,
-      image: '/Hero-1.png',
-      imageTablet: '/Hero_tablet_1.png',
-      imageMobile: '/Hero-mobile-1.png',
+      image: '/Home/hero/Hero-1.png',
+      imageTablet: '/Home/hero/Hero_tablet_1.png',
+      imageMobile: '/Home/hero/Hero-mobile-1.png',
       preTitle: 'No.1 AI 학습 솔루션',
       mainTitle: '수학대왕',
       description: '압도적인 AI 기술로 실현하는<br />가장 완벽한 1:1 밀착 관리'
     },
     {
       id: 2,
-      image: '/Hero-2.png',
-      imageTablet: '/Hero_tablet_2.png',
-      imageMobile: '/Hero-mobile-2.png',
+      image: '/Home/hero/Hero-2.png',
+      imageTablet: '/Home/hero/Hero_tablet_2.png',
+      imageMobile: '/Home/hero/Hero-mobile-2.png',
       preTitle: 'KTEA 한국브랜드평가대상',
       mainTitle: '2년 연속 1위 수상',
       description: '누적 가입자 200만 명 달성!<br />초중고 모든 교과과정에 최적화된 학습 플랫폼'
     },
     {
       id: 3,
-      image: '/Hero-3.png',
-      imageTablet: '/Hero_tablet_3.png',
-      imageMobile: '/Hero-mobile-3.png',
+      image: '/Home/hero/Hero-3.png',
+      imageTablet: '/Home/hero/Hero_tablet_3.png',
+      imageMobile: '/Home/hero/Hero-mobile-3.png',
       preTitle: 'ChatGPT 개발사',
       mainTitle: 'OpenAI 공식 협업 기업',
       description: '서술형 풀이 채점부터 유사문제 검색까지<br />차원이 다른 AI 기술을 제공합니다'
     },
     {
       id: 4,
-      image: '/Hero-4.png',
-      imageTablet: '/Hero_tablet_4.png',
-      imageMobile: '/Hero-mobile-4.png',
+      image: '/Home/hero/Hero-4.png',
+      imageTablet: '/Home/hero/Hero_tablet_4.png',
+      imageMobile: '/Home/hero/Hero-mobile-4.png',
       preTitle: '업계 최고의 AI 기술력',
       mainTitle: '특허 19종 등록 완료',
       description: '문제은행을 넘어 AI 튜터로!<br />가장 수학을 잘 하는 AI를 만듭니다'
     },
     {
       id: 5,
-      image: '/Hero-5.png',
-      imageTablet: '/Hero_tablet_5.png',
-      imageMobile: '/Hero-mobile-5.png',
+      image: '/Home/hero/Hero-5.png',
+      imageTablet: '/Home/hero/Hero_tablet_5.png',
+      imageMobile: '/Home/hero/Hero-mobile-5.png',
       preTitle: '개념부터 고난도까지',
       mainTitle: '최대 규모의 학습 콘텐츠',
       description: '학생들의 성적 상승,<br />국내 최고의 전문가들이 함께 합니다'
@@ -1199,12 +1199,12 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
             {currentSlide === 2 ? (
               <div style={{ display: 'flex', gap: 16, marginTop: 30, marginBottom: 20 }}>
                 <ChipImage
-                  src="/Hero 3_Open AI.png"
+                  src="/Home/chips/Hero 3_Open AI.png"
                   alt="OpenAI"
                   visible={chip1Visible}
                 />
                 <ChipImage
-                  src="/Hero 3_Chat GPT.png"
+                  src="/Home/chips/Hero 3_Chat GPT.png"
                   alt="ChatGPT"
                   visible={chip2Visible}
                 />

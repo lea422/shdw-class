@@ -35,7 +35,7 @@ function App() {
         <MainContent>
           <Routes>
             <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
-            <Route path="/pricing" element={<Pricing isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="/notice/*" element={<NoticePage />} />
           </Routes>
         </MainContent>

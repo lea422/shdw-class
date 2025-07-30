@@ -313,13 +313,13 @@ const Footer = () => {
           <LinkGroup>
             <div style={{ gap: '16px', display: 'flex', flexDirection: 'column' }}>
               <LinkButton as="a" href="https://accounts.kakao.com/login/?continue=https%3A%2F%2Fpf.kakao.com%2F_xexdrDxj%2Fchat#login" target="_blank" rel="noopener noreferrer">
-                <img src="/footer-headphone.svg" alt="고객센터" style={{ width: '18px', height: '18px' }} />
+                <img src="/Common/footer-headphone.svg" alt="고객센터" style={{ width: '18px', height: '18px' }} />
                 고객센터
               </LinkButton>
             </div>
             <div style={{ gap: '16px', display: 'flex', flexDirection: 'column' }}>
               <LinkButton as="a" href="https://www.teamturing.com/" target="_blank" rel="noopener noreferrer">
-                <img src="/footer-problem.svg" alt="회사소개" style={{ width: '18px', height: '18px' }} />
+                <img src="/Common/footer-problem.svg" alt="회사소개" style={{ width: '18px', height: '18px' }} />
                 회사소개
               </LinkButton>
             </div>

@@ -1605,7 +1605,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "학생별로 서로 다른 실력에 맞게, 최적의 문제로 학습지를 자동 생성해 드려요!"
             ]}
             index={0}
-            imageSrc="/video/Body-image-1.png"
+            imageSrc="/Body/images/Body-image-1.png"
             category="학습지 자동 제작"
           />
           <Feature
@@ -1615,7 +1615,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "자동 오답클리닉으로 모든 취약점을 완벽하게 보완합니다"
             ]}
             index={1}
-            imageSrc="/video/Body-image-2.png"
+            imageSrc="/Body/images/Body-image-2.png"
             category="오답 완벽 정복"
           />
           <Feature
@@ -1625,7 +1625,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "서술형 답안을 정확하게 자동 채점합니다"
             ]}
             index={2}
-            imageSrc="/video/Body-image-3.png"
+            imageSrc="/Body/images/Body-image-3.png"
             category="AI 채점 시스템"
           />
           <Feature
@@ -1635,7 +1635,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "전국 학생들과 비교한 객관적인 실력 분석 리포트를 제공합니다"
             ]}
             index={3}
-            imageSrc="/video/Body-image-4.png"
+            imageSrc="/Body/images/Body-image-4.png"
             category="AI 채점 시스템"
           />
           <Feature
@@ -1645,7 +1645,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "풀이가 막힐 때 단계별 힌트와 상세한 오답 분석을 제공합니다"
             ]}
             index={4}
-            imageSrc="/video/Body-image-5.png"
+            imageSrc="/Body/images/Body-image-5.png"
             category="실시간 피드백"
           />
           <Feature
@@ -1655,7 +1655,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               "모르는 문제를 게시판에 질문하고 빠르게 답변을 받아 볼 수 있습니다"
             ]}
             index={5}
-            imageSrc="/video/Body-image-6.png"
+            imageSrc="/Body/images/Body-image-6.png"
             category="실시간 피드백"
           />
         </TabletCardGrid>
@@ -1691,7 +1691,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-1.png"
+              src="/Body/images/Body-image-1.png"
               alt="핵심기능1"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1726,7 +1726,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-2.png"
+              src="/Body/images/Body-image-2.png"
               alt="핵심기능2"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1758,7 +1758,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-3.png"
+              src="/Body/images/Body-image-3.png"
               alt="핵심기능3"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1790,7 +1790,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-4.png"
+              src="/Body/images/Body-image-4.png"
               alt="핵심기능4"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1822,7 +1822,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-5.png"
+              src="/Body/images/Body-image-5.png"
               alt="핵심기능5"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1854,7 +1854,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             style={{ cursor: 'pointer' }}
           >
             <img 
-              src="/video/Body-image-6.png"
+              src="/Body/images/Body-image-6.png"
               alt="핵심기능6"
               style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
             />
@@ -1884,21 +1884,21 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             <MobileDemoSlider>
               <MobileDemoSlideContainer>
                 {[
-                  "/feature-slide-1.png",
-                  "/feature-slide-2.png", 
-                  "/feature-slide-3.png",
-                  "/feature-slide-4.png",
-                  "/feature-slide-5.png",
-                  "/feature-slide-6.png",
-                  "/feature-slide-7.png",
+                  "/Body/slides/feature-slide-1.png",
+                  "/Body/slides/feature-slide-2.png", 
+                  "/Body/slides/feature-slide-3.png",
+                  "/Body/slides/feature-slide-4.png",
+                  "/Body/slides/feature-slide-5.png",
+                  "/Body/slides/feature-slide-6.png",
+                  "/Body/slides/feature-slide-7.png",
                   // 무한 스크롤을 위한 복제된 이미지들
-                  "/feature-slide-1.png",
-                  "/feature-slide-2.png", 
-                  "/feature-slide-3.png",
-                  "/feature-slide-4.png",
-                  "/feature-slide-5.png",
-                  "/feature-slide-6.png",
-                  "/feature-slide-7.png"
+                  "/Body/slides/feature-slide-1.png",
+                  "/Body/slides/feature-slide-2.png", 
+                  "/Body/slides/feature-slide-3.png",
+                  "/Body/slides/feature-slide-4.png",
+                  "/Body/slides/feature-slide-5.png",
+                  "/Body/slides/feature-slide-6.png",
+                  "/Body/slides/feature-slide-7.png"
                 ].map((image, index) => (
                   <MobileDemoSlide 
                     key={index}
@@ -1927,7 +1927,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-1.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-1.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -1948,7 +1948,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-2.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-2.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -1969,7 +1969,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-3.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-3.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -1990,7 +1990,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-4.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-4.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2011,7 +2011,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-5.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-5.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2032,7 +2032,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-6.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-6.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2053,7 +2053,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-7.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-7.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2075,7 +2075,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-1.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-1.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2096,7 +2096,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-2.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-2.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2117,7 +2117,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-3.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-3.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2138,7 +2138,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-4.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-4.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2159,7 +2159,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-5.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-5.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2180,7 +2180,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-6.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-6.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2201,7 +2201,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 <div style={{
                   width: '400px',
                   height: '400px',
-                  backgroundImage: 'url(/feature-slide-7.png)',
+                  backgroundImage: 'url(/Body/slides/feature-slide-7.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   borderRadius: '24px',
@@ -2257,7 +2257,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                      <img src="/Common/Google_Play_logo.svg" alt="Google Play" />
                     </WebAppIcon>
                     <WebAppButtonText>Google Play</WebAppButtonText>
                   </WebAppButton>
@@ -2267,7 +2267,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/App_Store_logo.svg" alt="App Store" />
+                      <img src="/Common/App_Store_logo.svg" alt="App Store" />
                     </WebAppIcon>
                     <WebAppButtonText>App Store</WebAppButtonText>
                   </WebAppButton>
@@ -2284,7 +2284,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
-              <img src="/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:400,margin:'24px auto',display:'block'}} />
+              <img src="/Body/mockups/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:400,margin:'24px auto',display:'block'}} />
               <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
                 <WebAppInfoBlock style={{alignItems:'center', textAlign:'center'}}>
                   <WebAppInfoTitle isVisible={true} style={{ fontSize: 20, textAlign: 'center' }}>학생용 모바일 앱</WebAppInfoTitle>
@@ -2296,7 +2296,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppInfoChips>
                 </WebAppInfoBlock>
               </WebAppInfoRow>
-              <img src="/mockup_mobile 2.png" alt="웹앱연동 모바일2" style={{width:'100%',maxWidth:130,margin:'24px auto 0 auto',display:'block'}} />
+              <img src="/Body/mockups/mockup_mobile 2.png" alt="웹앱연동 모바일2" style={{width:'100%',maxWidth:130,margin:'24px auto 0 auto',display:'block'}} />
             </>
           ) : window.innerWidth <= 1024 ? (
             /* 태블릿 전용 레이아웃 */
@@ -2311,7 +2311,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                      <img src="/Common/Google_Play_logo.svg" alt="Google Play" />
                     </WebAppIcon>
                     <WebAppButtonText>Google Play</WebAppButtonText>
                   </WebAppButton>
@@ -2321,7 +2321,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/App_Store_logo.svg" alt="App Store" />
+                      <img src="/Common/App_Store_logo.svg" alt="App Store" />
                     </WebAppIcon>
                     <WebAppButtonText>App Store</WebAppButtonText>
                   </WebAppButton>
@@ -2332,7 +2332,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <div style={{position: 'relative', width: '100%', margin: '0', padding: '0'}}>
                 {/* 배경 mockup 이미지 */}
                 <img 
-                  src={`/mockup_tablet.png?v=${Date.now()}`} 
+                  src={`/Body/mockups/mockup_tablet.png?v=${Date.now()}`} 
                   alt="웹-앱 연동 mockup" 
                   style={{
                     width: '100%', 
@@ -2440,7 +2440,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/Google_Play_logo.svg" alt="Google Play" />
+                      <img src="/Common/Google_Play_logo.svg" alt="Google Play" />
                     </WebAppIcon>
                     <WebAppButtonText>Google Play</WebAppButtonText>
                   </WebAppButton>
@@ -2450,7 +2450,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     rel="noopener noreferrer"
                   >
                     <WebAppIcon>
-                      <img src="/App_Store_logo.svg" alt="App Store" />
+                      <img src="/Common/App_Store_logo.svg" alt="App Store" />
                     </WebAppIcon>
                     <WebAppButtonText>App Store</WebAppButtonText>
                   </WebAppButton>
@@ -2465,7 +2465,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
                   <img 
-                    src="/03 웹-앱 연동/1.svg" 
+                    src="/WebApp/integration/1.svg" 
                     alt="선생님용 웹사이트"
                     style={{ 
                       width: 'auto', 
@@ -2492,7 +2492,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
                 >
                   <img 
-                    src="/03 웹-앱 연동/2.svg" 
+                    src="/WebApp/integration/2.svg" 
                     alt="학생용 모바일 앱"
                     style={{ 
                       width: 'auto', 
@@ -2518,7 +2518,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
                 >
                   <img 
-                    src="/03 웹-앱 연동/3.svg" 
+                    src="/WebApp/integration/3.svg" 
                     alt="모바일 앱 인터페이스"
                     style={{ 
                       width: 'auto', 
@@ -2545,7 +2545,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
                   <img 
-                    src="/03 웹-앱 연동/4.svg" 
+                    src="/WebApp/integration/4.svg" 
                     alt="데스크톱 관리 시스템"
                     style={{ 
                       width: 'auto', 

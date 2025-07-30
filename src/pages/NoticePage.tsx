@@ -459,7 +459,7 @@ const UpdateSlide: React.FC = () => {
             return (
               <FaqItem as="li" key={notice.id}>
                 <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)} style={{ textAlign: 'left' }}>
-                  {globalIdx === 0 && <TwinkleIcon src="/twinkle_color.svg" alt="최신" />}
+                  {globalIdx === 0 && <TwinkleIcon src="/Assets/icons/twinkle_color.svg" alt="최신" />}
                   <span style={{ fontWeight: 600, textAlign: 'left', flex: 1 }}>{notice.title}</span>
                   <FaqIcon>{openIdx === globalIdx ? '×' : '+'}</FaqIcon>
                 </FaqQuestion>
@@ -491,7 +491,7 @@ const UpdateSlide: React.FC = () => {
         <UpdateSlideTitle>
           {slideIdx === 0 && (
             <TwinkleIcon 
-              src="/twinkle_color.svg" 
+                                src="/Assets/icons/twinkle_color.svg" 
               alt="최신" 
               style={{ marginRight: '10px', verticalAlign: 'middle' }}
             />
