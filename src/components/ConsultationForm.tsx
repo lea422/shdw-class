@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { submitConsultation, validateConsultationData } from '../lib/consultationApi';
+import { ConsultationFormData, OrganizationType } from '../lib/types';
 
 const Form = styled.form`
   display: flex;
@@ -177,6 +179,55 @@ const FieldError = styled.span`
   }
 `;
 
+const SuccessMessage = styled.div`
+  background: linear-gradient(135deg, #10B981, #059669);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 600;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: slideDown 0.3s ease-out;
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &::before {
+    content: '✅';
+    font-size: 16px;
+  }
+`;
+
+const LoadingSpinner = styled.div`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
 const StyledInput = styled(Input)<{ hasError?: boolean }>`
   border: 2px solid ${props => props.hasError ? '#FF6B6B' : '#E5E7EB'};
   transition: all 0.3s ease;
@@ -187,48 +238,62 @@ const StyledInput = styled(Input)<{ hasError?: boolean }>`
   }
 `;
 
+const RadioGroup = styled.div`
+  display: flex;
+  gap: 20px;
+  margin-bottom: 0.5rem;
+`;
+
+const RadioOption = styled.label`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-family: 'Pretendard', sans-serif;
+  color: #374151;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #835EEB;
+  }
+`;
+
+const RadioInput = styled.input`
+  width: 16px;
+  height: 16px;
+  accent-color: #835EEB;
+  cursor: pointer;
+`;
+
 interface ConsultationFormProps {
   onClose: () => void;
 }
 
 const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ConsultationFormData>({
     name: '',
     phone: '',
     email: '',
-    academy: ''
+    academy: '',
+    organization_type: 'academy'
   });
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = '이름을 입력해주세요.';
-    }
-
-    if (!formData.phone.trim()) {
-      newErrors.phone = '연락처를 입력해주세요.';
-    } else if (!/^010-\d{4}-\d{4}$/.test(formData.phone)) {
-      newErrors.phone = '올바른 연락처 형식을 입력해주세요. (010-0000-0000)';
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = '이메일을 입력해주세요.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = '올바른 이메일 형식을 입력해주세요.';
-    }
-
-    if (!formData.academy.trim()) {
-      newErrors.academy = '학원명을 입력해주세요.';
-    }
-
-    return newErrors;
-  };
 
   const handleChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, [field]: e.target.value }));
+    let value = e.target.value;
+    
+    // 전화번호 필드인 경우 하이픈 자동 제거
+    if (field === 'phone') {
+      value = value.replace(/-/g, '');
+    }
+    
+    setFormData(prev => ({ ...prev, [field]: value }));
     // 입력 시 해당 필드 에러 제거
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
@@ -238,31 +303,97 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newErrors = validateForm();
     
-    if (Object.keys(newErrors).length > 0) {
+    // 기존 메시지들 초기화
+    setShowErrorMessage(false);
+    setShowSuccessMessage(false);
+    
+    // 유효성 검사
+    const validation = validateConsultationData(formData);
+    if (!validation.isValid) {
+      const newErrors: {[key: string]: string} = {};
+      validation.errors.forEach(error => {
+        if (error.includes('이름')) newErrors.name = error;
+        else if (error.includes('연락처')) newErrors.phone = error;
+        else if (error.includes('이메일')) newErrors.email = error;
+        else if (error.includes('학원명')) newErrors.academy = error;
+      });
       setErrors(newErrors);
       setShowErrorMessage(true);
       return;
     }
 
-    // 폼이 유효한 경우 제출 로직
-    // TODO: 실제 폼 제출 API 호출
-    onClose(); // 폼 제출 후 모달 닫기
+    // 로딩 상태 시작
+    setIsLoading(true);
+    
+    try {
+      // API 호출
+      const response = await submitConsultation(formData);
+      
+      if (response.success) {
+        setShowSuccessMessage(true);
+        // 성공 시 3초 후 모달 닫기
+        setTimeout(() => {
+          onClose();
+        }, 3000);
+      } else {
+        setShowErrorMessage(true);
+        // 에러 메시지를 표시하기 위해 임시로 에러 상태 설정
+        setErrors({ general: response.message });
+      }
+    } catch (error) {
+      console.error('폼 제출 오류:', error);
+      setShowErrorMessage(true);
+      setErrors({ general: '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const hasAnyError = Object.values(errors).some(error => error);
 
   return (
     <Form onSubmit={handleSubmit} noValidate>
-      {showErrorMessage && hasAnyError && (
+      {showSuccessMessage && (
+        <SuccessMessage>
+          무료체험 신청이 완료되었습니다! 곧 연락드리겠습니다.
+        </SuccessMessage>
+      )}
+      
+      {showErrorMessage && (hasAnyError || errors.general) && (
         <ErrorMessage>
-          모든 필수 항목을 올바르게 입력해주세요.
+          {errors.general || '모든 필수 항목을 올바르게 입력해주세요.'}
         </ErrorMessage>
       )}
       
+      <FormGroup>
+        <RadioGroup>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="organization_type"
+              value="academy"
+              checked={formData.organization_type === 'academy'}
+              onChange={(e) => setFormData(prev => ({ ...prev, organization_type: e.target.value as OrganizationType }))}
+            />
+            학원
+          </RadioOption>
+          <RadioOption>
+            <RadioInput
+              type="radio"
+              name="organization_type"
+              value="school"
+              checked={formData.organization_type === 'school'}
+              onChange={(e) => setFormData(prev => ({ ...prev, organization_type: e.target.value as OrganizationType }))}
+            />
+            학교
+          </RadioOption>
+        </RadioGroup>
+        {errors.organization_type && <FieldError>{errors.organization_type}</FieldError>}
+      </FormGroup>
+
       <FormGroup>
         <Label>이름</Label>
         <StyledInput 
@@ -279,7 +410,7 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
         <Label>연락처</Label>
         <StyledInput 
           type="tel" 
-          placeholder="010-0000-0000" 
+          placeholder="01000000000" 
           value={formData.phone}
           onChange={handleChange('phone')}
           hasError={!!errors.phone}
@@ -300,10 +431,10 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
       </FormGroup>
 
       <FormGroup>
-        <Label>학원명</Label>
+        <Label>{formData.organization_type === 'school' ? '학교명' : '학원명'}</Label>
         <StyledInput 
           type="text" 
-          placeholder="ㅇㅇ학원" 
+          placeholder={formData.organization_type === 'school' ? 'ㅇㅇ학교' : 'ㅇㅇ학원'} 
           value={formData.academy}
           onChange={handleChange('academy')}
           hasError={!!errors.academy}
@@ -311,7 +442,16 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
         {errors.academy && <FieldError>{errors.academy}</FieldError>}
       </FormGroup>
 
-      <SubmitButton type="submit">무료 체험 신청하기</SubmitButton>
+      <SubmitButton type="submit" disabled={isLoading}>
+        {isLoading ? (
+          <>
+            <LoadingSpinner />
+            신청 중...
+          </>
+        ) : (
+          '무료 체험 신청하기'
+        )}
+      </SubmitButton>
       <PrivacyNotice>
         제출하시면 개인정보 수집 및 이용에 동의하게 됩니다.
       </PrivacyNotice>
