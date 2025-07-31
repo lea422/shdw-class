@@ -259,7 +259,7 @@ const PricingSection = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 80px;
+  gap: 60px;
   margin: 0 auto;
   margin-top: 60px; /* 헤더 아래 여백 추가 */
   position: relative;
@@ -346,7 +346,7 @@ const PricingCardsContainer = styled.div`
   @media (max-width: 1200px) {
     width: 100%;
     flex-direction: column;
-    gap: 24px;
+    gap: 30px;
     padding: 0 20px;
     align-items: center;
   }
@@ -375,15 +375,15 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
   justify-content: flex-start;
   align-items: flex-start;
   gap: 10px;
-  cursor: default;
+  cursor: pointer;
   
   /* 성능 최적화 */
   will-change: transform, box-shadow, opacity;
   backface-visibility: hidden;
   
   /* 부드러운 애니메이션 */
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              box-shadow 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
               opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
               
   transform: translate3d(0, ${props => props.isVisible ? '0' : '50px'}, 0);
@@ -400,24 +400,19 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
     bottom: 0;
     background: linear-gradient(135deg, rgba(131, 94, 235, 0.08) 0%, rgba(255, 109, 235, 0.08) 100%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     border-radius: 20px;
     z-index: 0;
     will-change: opacity;
   }
   
   &:hover {
-    transform: translate3d(0, -10px, 0) scale(1.03);
-    box-shadow: 0px 20px 40px rgba(131, 94, 235, 0.2);
+    transform: translate3d(0, -12px, 0) scale(1.05);
+    box-shadow: 0px 25px 50px rgba(131, 94, 235, 0.25);
     
     &::before {
       opacity: 1;
     }
-  }
-  
-  &:active {
-    transform: translate3d(0, -8px, 0) scale(1.02);
-    transition: transform 0.15s ease;
   }
   
   & > * {
@@ -425,10 +420,23 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
     z-index: 1;
   }
   
+  @media (max-width: 1024px) {
+    width: 600px;
+    align-items: center;
+    gap: 30px;
+    
+    &:hover {
+      transform: translate3d(0, -8px, 0) scale(1.03);
+      box-shadow: 0px 20px 40px rgba(131, 94, 235, 0.2);
+    }
+  }
+  
   @media (max-width: 768px) {
     width: 100%;
     max-width: 360px;
     margin: 0 auto;
+    align-items: flex-start;
+    gap: 10px;
     
     &:hover {
       transform: translate3d(0, -6px, 0) scale(1.02);
@@ -447,14 +455,18 @@ const CardHeaderNew = styled.div`
   gap: 8px;
   
   @media (max-width: 1024px) {
-    width: 280px;
-    padding: 14px;
+    width: 100%;
+    padding: 10px 16px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
   
   @media (max-width: 768px) {
     width: 100%;
     max-width: 280px;
     padding: 12px;
+    flex-direction: column;
     align-items: center;
   }
 `;
@@ -468,10 +480,12 @@ const CardTitleRow = styled.div`
   gap: 2px;
   
   @media (max-width: 1024px) {
-    width: 248px;
-    justify-content: center;
+    width: auto;
+    justify-content: flex-start;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    height: auto;
+    min-height: 27px;
   }
   
   @media (max-width: 768px) {
@@ -493,17 +507,20 @@ const CardTitleText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   line-height: 41px;
   word-wrap: break-word;
   text-align: center;
+  white-space: nowrap;
   
   @media (max-width: 1024px) {
     font-size: 24px;
     line-height: 36px;
-    text-align: center;
+    text-align: left;
+    white-space: nowrap;
   }
   
   @media (max-width: 768px) {
     font-size: 22px;
     line-height: 33px;
     text-align: center;
+    white-space: nowrap;
   }
 `;
 
@@ -518,10 +535,10 @@ const CardIcon = styled.img<{ iconType: 'light' | 'plus'; size?: 'small' | 'norm
   }};
   object-fit: contain;
   will-change: transform;
-  transition: transform 0.2s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
   ${NewPricingCard}:hover & {
-    transform: translate3d(0, 0, 0) scale(1.05);
+    transform: translate3d(0, -2px, 0) scale(1.1);
   }
 `;
 
@@ -551,17 +568,20 @@ const CardSubtitleNew = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   line-height: 21px;
   word-wrap: break-word;
   text-align: center;
+  white-space: nowrap;
   
   @media (max-width: 1024px) {
-    font-size: 13px;
-    line-height: 20px;
-    text-align: center;
+    font-size: 14px;
+    line-height: 21px;
+    text-align: left;
+    white-space: nowrap;
   }
   
   @media (max-width: 768px) {
     font-size: 12px;
     line-height: 18px;
     text-align: center;
+    white-space: nowrap;
   }
 `;
 
@@ -574,9 +594,9 @@ const CardPriceRow = styled.div`
   gap: 5px;
   
   @media (max-width: 1024px) {
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    text-align: center;
+    text-align: right;
   }
   
   @media (max-width: 768px) {
@@ -601,17 +621,20 @@ const CardPriceText = styled.div<{ cardType: 'free' | 'basic' | 'plus' }>`
   line-height: 48px;
   word-wrap: break-word;
   text-align: center;
+  white-space: nowrap;
   
   @media (max-width: 1024px) {
     font-size: 28px;
     line-height: 42px;
-    text-align: center;
+    text-align: right;
+    white-space: nowrap;
   }
   
   @media (max-width: 768px) {
-    font-size: 24px;
-    line-height: 36px;
+    font-size: 34px;
+    line-height: 46px;
     text-align: center;
+    white-space: nowrap;
   }
 `;
 
@@ -631,25 +654,21 @@ const CardPriceUnit = styled.div<{ cardType?: 'basic' | 'plus' }>`
   word-wrap: break-word;
   
   @media (max-width: 1024px) {
-    font-size: 13px;
-    line-height: 20px;
-    top: 18px;
-    right: ${props => {
-      if (props.cardType === 'basic') return '25px';
-      if (props.cardType === 'plus') return '20px';
-      return '0';
-    }};
+    position: static;
+    font-size: 16px;
+    line-height: 24px;
+    color: #7A828D;
+    margin-left: 5px;
+    align-self: flex-end;
   }
   
   @media (max-width: 768px) {
-    font-size: 12px;
-    line-height: 18px;
-    top: 15px;
-    right: ${props => {
-      if (props.cardType === 'basic') return '25px';
-      if (props.cardType === 'plus') return '20px';
-      return '0';
-    }};
+    position: static;
+    font-size: 14px;
+    line-height: 20px;
+    color: #7A828D;
+    margin-left: 3px;
+    align-self: flex-end;
   }
 `;
 
@@ -659,12 +678,18 @@ const CardFeaturesList = styled.div`
   position: relative;
   
   @media (max-width: 1024px) {
-    width: 280px;
+    width: 100%;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
   }
   
   @media (max-width: 768px) {
     width: 100%;
     max-width: 280px;
+    min-height: 245px;
+    position: relative;
   }
 `;
 
@@ -680,12 +705,16 @@ const CardFeatureItem = styled.div<{ top: number }>`
   min-height: 41px;
   
   @media (max-width: 1024px) {
-    width: 280px;
+    width: 100%;
+    position: static;
+    min-height: 30px;
   }
   
   @media (max-width: 768px) {
     width: 100%;
     max-width: 280px;
+    position: absolute;
+    top: ${props => props.top}px;
   }
 `;
 
@@ -722,6 +751,14 @@ const FeatureContent = styled.div`
   align-items: center;
   gap: 5px;
   flex-wrap: nowrap;
+  
+  @media (max-width: 768px) {
+    width: 300px;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    margin-left: 0;
+  }
 `;
 
 const FeatureTitle = styled.div<{ cardType?: 'free' | 'basic' | 'plus'; isPrimary?: boolean }>`
@@ -743,6 +780,13 @@ const FeatureTitle = styled.div<{ cardType?: 'free' | 'basic' | 'plus'; isPrimar
   line-height: 21px;
   word-wrap: break-word;
   white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    font-size: 15px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-align: left;
+  }
 `;
 
 const FeatureDescription = styled.div`
@@ -753,6 +797,14 @@ const FeatureDescription = styled.div`
   line-height: 19.5px;
   word-wrap: break-word;
   white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    font-size: 13px;
+    line-height: 18px;
+    white-space: nowrap;
+    text-align: left;
+    margin-left: 0;
+  }
 `;
 
 const FeatureSpecialRow = styled.div`
@@ -785,6 +837,10 @@ const CardButton = styled.div<{ cardType?: 'plus' }>`
         : '#7756D6'
     };
     transform: translateY(-2px);
+  }
+  
+  @media (max-width: 1024px) {
+    align-self: stretch;
   }
 `;
 
@@ -2468,7 +2524,7 @@ const Pricing: React.FC<PricingProps> = () => {
       <PricingSection>
         <PricingHeader>
           <PricingTitle>
-            AI로 시작하는 1:1 실시간 밀착 관리
+            AI로 시작하는<br/>1:1 실시간 밀착 관리
           </PricingTitle>
           <PricingSubtitle>
             단순한 문제은행을 넘어, AI 맞춤형 수학 학습 시스템을<br/>학원에 체계적으로 도입해 보세요
@@ -2616,8 +2672,8 @@ const Pricing: React.FC<PricingProps> = () => {
               </CardPriceRow>
             </CardHeaderNew>
             
-            <CardFeaturesList style={{ height: 'auto', gap: '27px', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', minHeight: '24px' }}>
+            <CardFeaturesList style={{ height: 'auto', gap: '22px', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minHeight: '24px' }}>
                 <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureSpecialRow>
@@ -2627,32 +2683,32 @@ const Pricing: React.FC<PricingProps> = () => {
                   </FeatureSpecialRow>
                 </FeatureContent>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 학습 관리</FeatureTitle>
-                  <FeatureDescription color="#7A828D">자동 숙제 및 클리닉 (오답 노트)</FeatureDescription>
+                  <FeatureDescription color="#7A828D">자동 숙제 및 오답 노트</FeatureDescription>
                 </FeatureContent>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 리포트</FeatureTitle>
-                  <FeatureDescription color="#7A828D">매주 학습 데이터 기반 리포트</FeatureDescription>
+                  <FeatureDescription color="#7A828D">주간 학습 분석 리포트</FeatureDescription>
                 </FeatureContent>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>AI 실시간 채팅</FeatureTitle>
-                  <FeatureDescription color="#7A828D">언제 어디서나 AI에게 질문</FeatureDescription>
+                  <FeatureDescription color="#7A828D">무제한 AI 질문답변</FeatureDescription>
                 </FeatureContent>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FeatureCheckIcon cardType="plus" />
                 <FeatureContent>
                   <FeatureTitle cardType="plus" isPrimary>학부모 관리 서비스</FeatureTitle>
-                  <FeatureDescription color="#7A828D">수학대왕 클래스 계정 제공</FeatureDescription>
+                  <FeatureDescription color="#7A828D">클래스 계정 제공</FeatureDescription>
                 </FeatureContent>
               </div>
             </CardFeaturesList>
@@ -2675,7 +2731,7 @@ const Pricing: React.FC<PricingProps> = () => {
       <TrialSection data-trial-section>
         <TrialHeader>
           <TrialTitle>
-            무료 체험 신청 <span>a to z</span>
+            무료 체험 신청<br/><span>a to z</span>
           </TrialTitle>
         </TrialHeader>
 

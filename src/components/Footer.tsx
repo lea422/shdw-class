@@ -9,6 +9,8 @@ const FooterContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  z-index: 1;
   
   @media (max-width: 1024px) {
     padding: 60px 0 100px;

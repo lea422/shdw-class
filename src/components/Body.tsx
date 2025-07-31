@@ -64,6 +64,10 @@ const BodyContainer = styled.div`
   align-items: center;
   box-sizing: border-box;
   scroll-snap-align: start;
+  @media (max-width: 600px) {
+    scroll-snap-align: none;
+    padding-bottom: 20px;
+  }
 `;
 
 /* 태블릿용 통합 섹션 컨테이너 */

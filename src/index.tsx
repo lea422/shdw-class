@@ -14,11 +14,24 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    @media (max-width: 600px) {
+      height: auto;
+      min-height: 100vh;
+    }
+  }
+  
+  body {
+    overflow-y: auto;
+    scroll-behavior: smooth;
   }
 
   #root {
     width: 100%;
     overflow-x: hidden;
+    @media (max-width: 600px) {
+      height: auto;
+      min-height: 100vh;
+    }
   }
 
   body {
