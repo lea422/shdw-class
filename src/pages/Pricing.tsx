@@ -303,13 +303,17 @@ const PricingHeader = styled.div`
   }
 `;
 
-const PricingTitle = styled.div`
+const PricingTitle = styled.div<{ isVisible: boolean }>`
   color: #1E2231;
   font-size: 48px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   line-height: 62.4px;
   word-wrap: break-word;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
   @media (max-width: 1024px) {
     font-size: 36px;
     line-height: 46px;
@@ -320,13 +324,18 @@ const PricingTitle = styled.div`
   }
 `;
 
-const PricingSubtitle = styled.div`
+const PricingSubtitle = styled.div<{ isVisible: boolean }>`
   color: #1E2231;
   font-size: 24px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
   line-height: 36px;
   word-wrap: break-word;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.3s;
+  
   @media (max-width: 1024px) {
     font-size: 20px;
     line-height: 30px;
@@ -928,7 +937,7 @@ const ScrollArrow = styled.button`
   }
   
   @media (max-width: 768px) {
-    bottom: 80px;
+    bottom: 120px;
     
     &::before {
       width: 36px;
@@ -938,6 +947,20 @@ const ScrollArrow = styled.button`
     svg {
       width: 20px;
       height: 20px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    bottom: 20px;
+    
+    &::before {
+      width: 32px;
+      height: 32px;
+    }
+    
+    svg {
+      width: 18px;
+      height: 18px;
     }
   }
 `;
@@ -2328,6 +2351,7 @@ interface PricingProps {}
 const Pricing: React.FC<PricingProps> = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
   const [visibleSteps, setVisibleSteps] = useState<boolean[]>([false, false, false, false, false, false]);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   
   // 계산기 관련 상태
   const [studentCount, setStudentCount] = useState(30);
@@ -2374,13 +2398,20 @@ const Pricing: React.FC<PricingProps> = () => {
     };
   }, []);
 
-  // 페이지 진입 시 카드 애니메이션 시작
+  // 페이지 진입 시 헤더와 카드 애니메이션 시작
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsCardVisible(true);
-    }, 300);
+    const headerTimer = setTimeout(() => {
+      setIsHeaderVisible(true);
+    }, 100);
     
-    return () => clearTimeout(timer);
+    const cardTimer = setTimeout(() => {
+      setIsCardVisible(true);
+    }, 800);
+    
+    return () => {
+      clearTimeout(headerTimer);
+      clearTimeout(cardTimer);
+    };
   }, []);
 
   // Swiper 초기화
@@ -2523,10 +2554,10 @@ const Pricing: React.FC<PricingProps> = () => {
       {/* 첫 번째 섹션 - 요금 안내 */}
       <PricingSection>
         <PricingHeader>
-          <PricingTitle>
+          <PricingTitle isVisible={isHeaderVisible}>
             AI로 시작하는<br/>1:1 실시간 밀착 관리
           </PricingTitle>
-          <PricingSubtitle>
+          <PricingSubtitle isVisible={isHeaderVisible}>
             단순한 문제은행을 넘어, AI 맞춤형 수학 학습 시스템을<br/>학원에 체계적으로 도입해 보세요
           </PricingSubtitle>
         </PricingHeader>

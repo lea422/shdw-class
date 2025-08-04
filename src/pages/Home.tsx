@@ -671,6 +671,286 @@ const MoreButton = styled.button`
   }
 `;
 
+// 무료체험 신청 방법 섹션 스타일
+const TrialSection = styled.section`
+  width: 100%;
+  background: #835EEB;
+  padding: 40px 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  
+  @media (max-width: 1200px) {
+    padding: 15px 60px 10px 60px;
+    gap: 20px;
+    min-height: 35vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 40px 40px;
+    gap: 30px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  
+  @media (max-width: 600px) {
+    min-height: 100vh;
+    padding: 60px 20px 40px 20px;
+    gap: 30px;
+    flex-direction: column !important;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+`;
+
+const TrialContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin: 0;
+  
+  @media (max-width: 1200px) {
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 15px;
+    margin-left: 0;
+  }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 20px;
+    margin-left: 0;
+  }
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    margin-left: 0;
+    margin-bottom: 30px;
+  }
+`;
+
+const TrialBadge = styled.div`
+  color: #E0DDF5;
+  font-size: 14px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 18.20px;
+  word-wrap: break-word;
+`;
+
+const TrialTitle = styled.div`
+  color: white;
+  font-size: 32px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 41.60px;
+  word-wrap: break-word;
+  
+  @media (max-width: 768px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+`;
+
+const TrialTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 20px;
+  
+  @media (max-width: 1200px) {
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    align-items: center;
+    text-align: center;
+  }
+  
+  @media (max-width: 600px) {
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+`;
+
+const TrialDescription = styled.div`
+  width: 184px;
+  color: white;
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 20.80px;
+  word-wrap: break-word;
+  text-align: left;
+  
+  @media (max-width: 1200px) {
+    width: auto;
+    max-width: 300px;
+    white-space: nowrap;
+  }
+  
+  @media (max-width: 600px) {
+    width: auto;
+    max-width: 280px;
+    font-size: 16px;
+    line-height: 22px;
+  }
+`;
+
+const TrialSteps = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  
+  @media (max-width: 1200px) {
+    height: 140px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  @media (max-width: 600px) {
+    flex-direction: column !important;
+    gap: 16px;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+  }
+`;
+
+const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
+  width: 140px;
+  height: 168px;
+  padding: 20px;
+  background: ${props => {
+    if (props.isHovered) return 'rgba(255, 255, 255, 0.1)';
+    return 'transparent';
+  }};
+  overflow: hidden;
+  border-radius: 10px;
+  outline: 2px ${props => {
+    if (props.isHovered) return 'rgba(255, 255, 255, 0.8)';
+    return 'white';
+  }} solid;
+  outline-offset: -2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: ${props => props.isHovered ? 'translateY(-4px)' : 'translateY(0)'};
+  box-shadow: ${props => props.isHovered ? '0 8px 25px rgba(0, 0, 0, 0.15)' : 'none'};
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  @media (max-width: 768px) {
+    width: 130px;
+    height: 150px;
+    padding: 16px;
+  }
+  
+  @media (max-width: 600px) {
+    width: 100%;
+    max-width: 320px;
+    height: 80px;
+    padding: 16px 20px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 8px;
+    flex-shrink: 0;
+  }
+`;
+
+const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: ${props => {
+    if (props.isHovered) return 'white';
+    return 'white';
+  }};
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 24px;
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+  
+  @media (max-width: 600px) {
+    font-size: 16px;
+    line-height: 20px;
+    min-width: 60px;
+  }
+`;
+
+const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: ${props => {
+    if (props.isHovered) return 'white';
+    return 'white';
+  }};
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+  transition: color 0.3s ease;
+  
+  @media (max-width: 600px) {
+    font-size: 14px;
+    line-height: 18px;
+    flex: 1;
+    flex-direction: row;
+    white-space: nowrap;
+    justify-content: flex-start;
+    text-align: left;
+  }
+`;
+
 const UpdateBarContainer = styled.div`
   padding: 30px 50px;
   overflow: hidden;
@@ -966,6 +1246,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const navigate = useNavigate();
   const [chip1Visible, setChip1Visible] = useState(false);
   const [chip2Visible, setChip2Visible] = useState(false);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   // 슬라이드 데이터에 태블릿 및 모바일 이미지 경로 추가
   const slides = [
@@ -1076,7 +1357,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     }
   ];
 
-  // 무한 슬라이드 애니메이션
+  // 무무료 슬라이드 애니메이션
   useEffect(() => {
     const slideWidth = 330; // 카드 너비 + 간격
     
@@ -1258,6 +1539,57 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
           </ScrollDownButton>
         </ImageSlider>
       </HeroSection>
+      <TrialSection>
+        <TrialContent>
+          <TrialTextContainer>
+            <TrialBadge>수학대왕 CLASS</TrialBadge>
+            <TrialTitle dangerouslySetInnerHTML={{ __html: '무료체험 신청 방법' }} />
+            <TrialDescription dangerouslySetInnerHTML={{ __html: '수학대왕 CLASS를 2주동안 무료로 사용해보세요' }} />
+          </TrialTextContainer>
+        </TrialContent>
+        <TrialSteps>
+            <TrialStep 
+              isHovered={hoveredStep === 1}
+              onMouseEnter={() => setHoveredStep(1)}
+              onMouseLeave={() => setHoveredStep(null)}
+            >
+              <StepNumber isHovered={hoveredStep === 1}>STEP 1</StepNumber>
+              <StepDescription isHovered={hoveredStep === 1} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 학교/학원 선택' }} />
+            </TrialStep>
+            <TrialStep 
+              isHovered={hoveredStep === 2}
+              onMouseEnter={() => setHoveredStep(2)}
+              onMouseLeave={() => setHoveredStep(null)}
+            >
+              <StepNumber isHovered={hoveredStep === 2}>STEP 2</StepNumber>
+              <StepDescription isHovered={hoveredStep === 2} dangerouslySetInnerHTML={{ __html: '체험용 계정 이메일 수령' }} />
+            </TrialStep>
+            <TrialStep 
+              isHovered={hoveredStep === 3}
+              onMouseEnter={() => setHoveredStep(3)}
+              onMouseLeave={() => setHoveredStep(null)}
+            >
+              <StepNumber isHovered={hoveredStep === 3}>STEP 3</StepNumber>
+              <StepDescription isHovered={hoveredStep === 3} dangerouslySetInnerHTML={{ __html: '5인 미만 무료 사용' }} />
+            </TrialStep>
+            <TrialStep 
+              isHovered={hoveredStep === 4}
+              onMouseEnter={() => setHoveredStep(4)}
+              onMouseLeave={() => setHoveredStep(null)}
+            >
+              <StepNumber isHovered={hoveredStep === 4}>STEP 4</StepNumber>
+              <StepDescription isHovered={hoveredStep === 4} dangerouslySetInnerHTML={{ __html: '사용 인원 증원 시 가입 (선택)' }} />
+            </TrialStep>
+            <TrialStep 
+              isHovered={hoveredStep === 5}
+              onMouseEnter={() => setHoveredStep(5)}
+              onMouseLeave={() => setHoveredStep(null)}
+            >
+              <StepNumber isHovered={hoveredStep === 5}>STEP 5</StepNumber>
+              <StepDescription isHovered={hoveredStep === 5} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 버튼 누르기' }} />
+            </TrialStep>
+          </TrialSteps>
+      </TrialSection>
       <Body ref={bodyRef} />
       
       <Dialog 

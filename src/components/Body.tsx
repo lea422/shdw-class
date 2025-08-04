@@ -148,11 +148,15 @@ const Title = styled.div`
 
 const TitleHighlight = styled.span`
   color: #835EEB;
-  font-size: 56px;
+  font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
+  @media (max-width: 1200px) {
+    font-size: 32px;
+    line-height: 1.2;
+  }
   @media (max-width: 600px) {
     font-size: 30px;
     line-height: 1.2;
@@ -161,11 +165,15 @@ const TitleHighlight = styled.span`
 
 const TitleText = styled.span`
   color: black;
-  font-size: 56px;
+  font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
   line-height: 1.3;
   word-wrap: break-word;
+  @media (max-width: 1200px) {
+    font-size: 32px;
+    line-height: 1.2;
+  }
   @media (max-width: 600px) {
     font-size: 30px;
     line-height: 1.2;
@@ -213,12 +221,16 @@ const SectionTitleText = styled.div`
   max-width: 1040px;
   text-align: center;
   color: #835EEB;
-  font-size: 32px;
+  font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 41.60px;
+  line-height: 1.3;
   word-wrap: break-word;
   box-sizing: border-box;
+  @media (max-width: 1200px) {
+    font-size: 32px;
+    line-height: 1.2;
+  }
   @media (max-width: 600px) {
     font-size: 20px;
     line-height: 26px;
@@ -699,11 +711,15 @@ const DemoTitle = styled.div`
   align-self: stretch;
   text-align: center;
   color: white;
-  font-size: 48px;
+  font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 62.40px;
+  line-height: 1.3;
   word-wrap: break-word;
+  @media (max-width: 1200px) {
+    font-size: 32px;
+    line-height: 1.2;
+  }
   @media (max-width: 600px) {
     font-size: 24px;
     line-height: 30px;
@@ -3142,7 +3158,7 @@ const FeatureSectionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 150px;
   padding: 0;
   scroll-snap-type: y mandatory;
@@ -3166,7 +3182,7 @@ const FeatureBox = styled.div`
   flex-direction: row;
   gap: 50px;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   overflow: visible;
   padding-left: 0px;
   scroll-snap-align: center;
@@ -3229,7 +3245,7 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
 
 
 const FeatureMainTitle = styled.div`
-  justify-content: center;
+  justify-content: flex-start;
   display: flex;
   flex-direction: column;
   color: #835EEB;
@@ -3240,6 +3256,10 @@ const FeatureMainTitle = styled.div`
   word-wrap: break-word;
   text-align: left;
   width: 100%;
+  @media (max-width: 1200px) {
+    font-size: 32px;
+    line-height: 1.2;
+  }
   @media (max-width: 600px) {
     text-align: center !important;
     justify-content: center;

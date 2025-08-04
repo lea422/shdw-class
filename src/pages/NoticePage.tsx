@@ -10,13 +10,13 @@ const UpdateSlideContainer = styled.div`
   position: relative;
   background: #F3EFFD;
   border-radius: 16px;
-  padding: 40px;
+  padding: 30px;
   overflow: hidden;
   box-sizing: border-box;
 
   @media (max-width: 1024px) {
     max-width: 90%;
-    padding: 30px;
+    padding: 25px;
     margin: 0 auto 40px auto;
   }
 
@@ -31,18 +31,19 @@ const UpdateSlideContainer = styled.div`
 const UpdateSlideContent = styled.div<{ fade: boolean }>`
   text-align: center;
   opacity: ${props => props.fade ? 0 : 1};
-  transition: opacity 0.6s ease;
+  transform: translateY(${props => props.fade ? '20px' : '0'});
+  transition: all 0.6s ease;
 `;
 
 const UpdateSlideTitle = styled.h3`
   font-size: 24px;
   font-weight: 700;
   color: #33373B;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   
   @media (max-width: 1024px) {
     font-size: 22px;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
   
   @media (max-width: 768px) {
@@ -55,11 +56,11 @@ const UpdateSlideText = styled.p`
   font-size: 18px;
   color: #575C64;
   line-height: 1.6;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   
   @media (max-width: 1024px) {
     font-size: 16px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
   
   @media (max-width: 768px) {
@@ -307,17 +308,41 @@ const allFaqs = [
   }
 ];
 
+// 카테고리 칩 스타일
+const CategoryChip = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  background: #F3EFFD;
+  color: #835EEB;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+  margin-right: 12px;
+  white-space: nowrap;
+  width: 60px;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    padding: 3px 10px;
+    margin-right: 8px;
+    width: 50px;
+  }
+`;
+
 // 모든 업데이트를 하나의 배열로 합치기
 const allUpdates = [
-  { id: 1, title: '수학대왕 클래스 신규 기능 출시!', text: 'AI 기반 맞춤형 학습지 제작 기능이 새롭게 추가되었습니다.', date: '2024-06-01' },
-  { id: 2, title: '실시간 채점 시스템 업그레이드', text: '필기 인식 정확도가 99% 이상으로 향상되었습니다.', date: '2024-05-25' },
-  { id: 3, title: '학생 대시보드 UI 개선', text: '더 직관적이고 사용하기 쉬운 학생용 인터페이스로 개선되었습니다.', date: '2024-05-20' },
-  { id: 4, title: '장학금 시스템 업그레이드 안내', text: '장학금 지급 시스템이 더욱 공정하고 투명하게 개선되었습니다.', date: '2024-05-20' },
-  { id: 5, title: '서버 성능 최적화', text: '전체적인 시스템 성능이 향상되어 더 빠른 응답 속도를 제공합니다.', date: '2024-05-15' },
-  { id: 6, title: '보안 시스템 강화', text: '학생 개인정보 보호를 위한 보안 시스템이 강화되었습니다.', date: '2024-05-10' },
-  { id: 7, title: '선생님 대시보드 UI 개선', text: '선생님용 대시보드가 더욱 직관적이고 효율적으로 개선되었습니다.', date: '2024-05-10' },
-  { id: 8, title: '모바일 앱 반응형 개선', text: '모바일 환경에서의 사용성이 크게 향상되었습니다.', date: '2024-05-05' },
-  { id: 9, title: '알림 시스템 개선', text: '실시간 알림 기능이 더욱 정확하고 빠르게 작동합니다.', date: '2024-05-01' }
+  { id: 1, title: '서술형 출제 및 첨삭 기능 출시', text: '문제를 추가할 때, 서술형 문제를 출제할 수 있어요.', date: '25-06-09', category: 'CLASS' },
+  { id: 2, title: '[학생용 앱] 학습 탭 개편', text: '학습 탭이 개편됐어요.', date: '25-05-20', category: 'APP' },
+  { id: 3, title: '분석 개편', text: '[개별 숙제 분석] 숙제별로 학생 실력을 분석해 드려요.', date: '24-05-20', category: 'CLASS' },
+  { id: 4, title: '담당 클래스 및 학생만 보기', text: '이제 원하면 담당 클래스 및 학생만 볼 수 있어요.', date: '25-05-16', category: 'CLASS' },
+  { id: 5, title: 'OX 채점 출시', text: 'OX를 선택해서 학생 정오답을 기록할 수 있어요.', date: '25-05-16', category: 'CLASS' },
+  { id: 6, title: '기출 추가 및 학습지 개선', text: '[기출] 수능, 모의고사 기출을 시험지 단위로 배부할 수 있어요.', date: '25-04-28', category: 'CLASS' },
+  { id: 7, title: '출력물 채점 출시', text: '선생님용 대시보드가 더욱 직관적이고 효율적으로 개선되었습니다.', date: '25-03-21', category: 'CLASS' },
+  { id: 8, title: '[학생용 웹] 개념집 암기모드 추가', text: '학생용 웹에서 개념집 암기 모드를 사용할 수 있어요.', date: '25-04-18', category: 'WEB' },
+  { id: 9, title: '자동 클리닉 / 무한 클리닉 출시', text: '[자동 클리닉] 클리닉이 자동으로 배부되게 설정할 수 있어요.', date: '25-04-15', category: 'CLASS' }
 ];
 
 // 미디어 쿼리 훅 추가
@@ -459,8 +484,9 @@ const UpdateSlide: React.FC = () => {
             return (
               <FaqItem as="li" key={notice.id}>
                 <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)} style={{ textAlign: 'left' }}>
-                  {globalIdx === 0 && <TwinkleIcon src="/Assets/icons/twinkle_color.svg" alt="최신" />}
-                  <span style={{ fontWeight: 600, textAlign: 'left', flex: 1 }}>{notice.title}</span>
+                  <CategoryChip>{notice.category}</CategoryChip>
+                  <span style={{ fontWeight: 600, textAlign: 'left', flex: 1, fontSize: '14px' }}>{notice.title}</span>
+                  <span style={{ color: '#9C7EEF', fontSize: 14, fontWeight: 300, marginRight: 8 }}>{notice.date}</span>
                   <FaqIcon>{openIdx === globalIdx ? '×' : '+'}</FaqIcon>
                 </FaqQuestion>
                 {openIdx === globalIdx && (
@@ -484,26 +510,30 @@ const UpdateSlide: React.FC = () => {
     );
   }
 
-  // 데스크톱/태블릿: 기존 슬라이드
+  // 데스크톱/태블릿: 토글리스트만 표시
   return (
-    <UpdateSlideContainer>
-      <UpdateSlideContent fade={fade}>
-        <UpdateSlideTitle>
-          {slideIdx === 0 && (
-            <TwinkleIcon 
-                                src="/Assets/icons/twinkle_color.svg" 
-              alt="최신" 
-              style={{ marginRight: '10px', verticalAlign: 'middle' }}
-            />
-          )}
-          {allUpdates[slideIdx].title}
-        </UpdateSlideTitle>
-        <UpdateSlideText>{allUpdates[slideIdx].text}</UpdateSlideText>
-        <UpdateSlideDate>{allUpdates[slideIdx].date}</UpdateSlideDate>
-      </UpdateSlideContent>
-      <UpdateSlideArrowLeft onClick={handlePrev}>‹</UpdateSlideArrowLeft>
-      <UpdateSlideArrowRight onClick={handleNext}>›</UpdateSlideArrowRight>
-    </UpdateSlideContainer>
+    <FaqSection as="section">
+      <FaqList as="ul">
+        {allUpdates.map((notice, idx) => {
+          return (
+            <FaqItem as="li" key={notice.id}>
+              <FaqQuestion open={openIdx === idx} onClick={() => setOpenIdx(openIdx === idx ? null : idx)} style={{ textAlign: 'left' }}>
+                <CategoryChip>{notice.category}</CategoryChip>
+                <span style={{ fontWeight: 600, textAlign: 'left', flex: 1 }}>{notice.title}</span>
+                <span style={{ color: '#9C7EEF', fontSize: 16, fontWeight: 300, marginRight: 8 }}>{notice.date}</span>
+                <FaqIcon>{openIdx === idx ? '×' : '+'}</FaqIcon>
+              </FaqQuestion>
+              {openIdx === idx && (
+                <FaqAnswer style={{ textAlign: 'left' }}>
+                  <div style={{ marginBottom: 8, fontSize: 15, color: '#444', textAlign: 'left' }}>{notice.text}</div>
+                  <div style={{ color: '#C6B5F6', fontSize: 13, textAlign: 'left' }}>{notice.date}</div>
+                </FaqAnswer>
+              )}
+            </FaqItem>
+          );
+        })}
+      </FaqList>
+    </FaqSection>
   );
 };
 
@@ -849,4 +879,4 @@ export default function NoticePage() {
       </ContentWrapper>
     </PageContainer>
   );
-} 
+}
