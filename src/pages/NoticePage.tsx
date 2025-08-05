@@ -14,12 +14,6 @@ const UpdateSlideContainer = styled.div`
   overflow: hidden;
   box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    max-width: 90%;
-    padding: 25px;
-    margin: 0 auto 40px auto;
-  }
-
   @media (max-width: 768px) {
     max-width: 100%;
     padding: 12px;
@@ -41,11 +35,6 @@ const UpdateSlideTitle = styled.h3`
   color: #33373B;
   margin-bottom: 12px;
   
-  @media (max-width: 1024px) {
-    font-size: 22px;
-    margin-bottom: 10px;
-  }
-  
   @media (max-width: 768px) {
     font-size: 20px;
     margin-bottom: 12px;
@@ -58,11 +47,6 @@ const UpdateSlideText = styled.p`
   line-height: 1.6;
   margin-bottom: 8px;
   
-  @media (max-width: 1024px) {
-    font-size: 16px;
-    margin-bottom: 6px;
-  }
-  
   @media (max-width: 768px) {
     font-size: 14px;
     margin-bottom: 8px;
@@ -73,10 +57,6 @@ const UpdateSlideDate = styled.div`
   font-size: 16px;
   color: #C6B5F6;
   font-weight: 500;
-  
-  @media (max-width: 1024px) {
-    font-size: 14px;
-  }
   
   @media (max-width: 768px) {
     font-size: 12px;
@@ -100,11 +80,6 @@ const UpdateSlideArrow = styled.button`
   &:hover {
     background: rgba(131, 94, 235, 0.1);
     color: #6B4BC4;
-  }
-  
-  @media (max-width: 1024px) {
-    font-size: 20px;
-    padding: 6px;
   }
   
   @media (max-width: 768px) {
@@ -133,9 +108,7 @@ const FaqSection = styled.section`
   box-sizing: border-box;
   overflow-y: auto;
   
-  @media (max-width: 1024px) {
-    padding: 30px 0 60px 0;
-  }
+
   
   @media (max-width: 768px) {
     padding: 20px 0 40px 0;
@@ -149,10 +122,7 @@ const FaqTitle = styled.h2`
   margin-bottom: 32px;
   text-align: center;
   
-  @media (max-width: 1024px) {
-    font-size: 28px;
-    margin-bottom: 24px;
-  }
+
   
   @media (max-width: 768px) {
     font-size: 24px;
@@ -168,9 +138,7 @@ const FaqList = styled.ul`
   margin: 0;
   list-style: none;
   
-  @media (max-width: 1024px) {
-    max-width: 90%;
-  }
+
   
   @media (max-width: 768px) {
     max-width: 95%;
@@ -210,11 +178,6 @@ const FaqQuestion = styled.button<{ open: boolean }>`
     transition: transform 0.1s ease;
   }
   
-  @media (max-width: 1024px) {
-    padding: 24px 0 24px 0;
-    font-size: 18px;
-    &:hover { padding-left: 12px; }
-  }
   @media (max-width: 768px) {
     padding: 16px 0 16px 0;
     font-size: 15px;
@@ -236,12 +199,6 @@ const FaqAnswer = styled.div`
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    margin: 0 0 24px 0;
-    padding-right: 24px;
-    padding-left: 12px;
-  }
   @media (max-width: 768px) {
     font-size: 13px;
     margin: 0 0 16px 0;
@@ -262,12 +219,6 @@ const FaqIcon = styled.span`
   height: 32px;
   border-radius: 50%;
   &:hover { background: rgba(131, 94, 235, 0.1); transform: scale(1.1); }
-  @media (max-width: 1024px) {
-    font-size: 24px;
-    margin-left: 10px;
-    width: 24px;
-    height: 24px;
-  }
   @media (max-width: 768px) {
     font-size: 18px;
     margin-left: 6px;
@@ -366,10 +317,6 @@ const SectionGuide = styled.div`
   font-weight: 600;
   text-align: left;
   letter-spacing: -0.5px;
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    max-width: 90%;
-  }
   @media (max-width: 768px) {
     font-size: 13px;
     max-width: 95%;
@@ -388,10 +335,6 @@ const SectionTitle = styled.h1`
   line-height: 1.28;
   letter-spacing: -1px;
   white-space: pre-line;
-  @media (max-width: 1024px) {
-    font-size: 2.1rem;
-    margin: 48px auto 36px auto;
-  }
   @media (max-width: 768px) {
     font-size: 1.5rem;
     margin: 36px auto 24px auto;
@@ -546,11 +489,6 @@ const PageContainer = styled.div`
   background: #ffffff;
   margin-top: 120px; /* header 높이만큼 마진 추가 */
   
-  @media (max-width: 1024px) {
-    padding: 0 20px 200px 20px;
-    margin-top: 100px;
-  }
-  
   @media (max-width: 768px) {
     padding: 0 16px 40px 16px;
     margin-top: 80px;
@@ -562,10 +500,6 @@ const ContentWrapper = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  
-  @media (max-width: 1024px) {
-    max-width: 100%;
-  }
   
   @media (max-width: 768px) {
     max-width: 100%;
@@ -585,11 +519,6 @@ const TabContainer = styled.div`
   padding: 4px;
   border-radius: 9999px;
   position: relative;
-  
-  @media (max-width: 1024px) {
-    margin-bottom: 40px;
-    max-width: 280px;
-  }
   
   @media (max-width: 768px) {
     margin-bottom: 30px;
@@ -637,11 +566,6 @@ const TabButton = styled(NavLink)`
     color: #835EEB;
   }
   
-  @media (max-width: 1024px) {
-    padding: 6px 14px;
-    font-size: 13px;
-  }
-  
   @media (max-width: 768px) {
     padding: 5px 12px;
     font-size: 12px;
@@ -670,11 +594,6 @@ const CtaButton = styled.a`
     transform: translateY(-2px);
   }
   
-  @media (max-width: 1024px) {
-    padding: 10px 20px;
-    font-size: 14px;
-  }
-  
   @media (max-width: 768px) {
     padding: 8px 16px;
     font-size: 13px;
@@ -699,11 +618,6 @@ const UpdateQuestion = styled.button<{ open: boolean }>`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  
-  @media (max-width: 1024px) {
-    padding: 24px 0 24px 0;
-    font-size: 18px;
-  }
   
   @media (max-width: 768px) {
     padding: 16px 0 16px 0;
@@ -735,12 +649,6 @@ const UpdateAnswer = styled.div`
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @media (max-width: 1024px) {
-    font-size: 15px;
-    margin: 0 0 24px 0;
-    padding-right: 24px;
-    padding-left: 12px;
-  }
   @media (max-width: 768px) {
     font-size: 13px;
     margin: 0 0 16px 0;
@@ -764,13 +672,6 @@ const UpdateIcon = styled.span`
   &:hover {
     background: rgba(131, 94, 235, 0.1);
     transform: scale(1.1);
-  }
-  
-  @media (max-width: 1024px) {
-    font-size: 28px;
-    margin-left: 12px;
-    width: 28px;
-    height: 28px;
   }
   
   @media (max-width: 768px) {

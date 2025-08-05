@@ -218,7 +218,7 @@ const SectionTitle = styled.div`
 
 const SectionTitleText = styled.div`
   width: 100%;
-  max-width: 1040px;
+  max-width: 1280px;
   text-align: center;
   color: #835EEB;
   font-size: 40px;
@@ -239,9 +239,9 @@ const SectionTitleText = styled.div`
 
 const FeatureGrid = styled.div`
   width: 100%;
-  max-width: 1920px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 50px 80px;
+  padding: 50px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -255,12 +255,7 @@ const FeatureGrid = styled.div`
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 24px;
-    padding: 50px 0;
-  }
-  
-  @media (max-width: 375px) {
-    width: 100%;
-    padding: 90px 16px;
+    padding: 50px 20px;
   }
 `;
 
@@ -1284,14 +1279,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       title: { highlight: "현장의 목소리로", normal: "증명된 효과" },
       quote: "AI 추천 문제를 통해<br/>취약한 단원을 완벽 보완할 수 있어요.",
       name: "을지대 의예과<br/>24학번 김영우 학생",
-      videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQM",
+      videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQ",
       thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
     },
     {
       title: { highlight: "AI 기술로", normal: "완성된 학습" },
       quote: "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
       name: "학부모 후기<br/>초등 5학년 학부모",
-      videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQ",
+      videoUrl: "https://www.youtube.com/watch?v=SaM59JVLZms",
       thumbnailUrl: "https://img.youtube.com/vi/SaM59JVLZms/maxresdefault.jpg"
     }
   ];
@@ -1893,10 +1888,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           </DemoSubtitle>
           <DemoButton 
             href="https://www.iammathking.com/demo" 
+            target="_blank"
             rel="noopener noreferrer"
             onClick={handleDemoClick}
           >
-            <span>데모 체험하기</span>
+            <span>앱 기능 미리보기</span>
           </DemoButton>
         </DemoHeader>
         <DemoContent>
@@ -2478,6 +2474,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               </WebAppHeader>
               <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
                 
+                {/* 태블릿용 목업 컨테이너 (1024px 이하에서만 표시) */}
+                <TabletMockupContainer>
+                  <TabletMockupImage 
+                    src="/Body/mockups/mockup_tablet.png" 
+                    alt="태블릿 목업"
+                  />
+                </TabletMockupContainer>
+                
+                {/* 웹버전 목업들 (1024px 초과에서만 표시) */}
                 {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
                 <AnimatedMockupElement
                   isVisible={mockupsVisible[0]}
@@ -2586,7 +2591,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </AnimatedMockupElement>
 
                 {/* 선생님용 웹사이트 정보 텍스트 */}
-                <div style={{position: 'absolute', top: '80px', right: '50px', zIndex: 10}}>
+                <WebAppInfoTextContainer style={{position: 'absolute', top: '80px', right: '50px', zIndex: 10}}>
                   <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
                     <WebAppInfoTitle 
                       isVisible={teacherChipsVisible[0]} 
@@ -2602,10 +2607,10 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={600}>실력 분석 리포트</WebAppInfoChip>
                     </WebAppInfoChips>
                   </WebAppInfoBlock>
-                </div>
+                </WebAppInfoTextContainer>
                 
                 {/* 학생용 모바일 앱 정보 텍스트 */}
-                <div style={{position: 'absolute', bottom: '130px', left: '50px', zIndex: 10}}>
+                <WebAppInfoTextContainer style={{position: 'absolute', bottom: '130px', left: '50px', zIndex: 10}}>
                   <WebAppInfoBlock>
                     <WebAppInfoTitle 
                       isVisible={studentChipsVisible[0]} 
@@ -2621,7 +2626,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={600}>장학금 알림 수신</WebAppInfoChip>
                     </WebAppInfoChips>
                   </WebAppInfoBlock>
-                </div>
+                </WebAppInfoTextContainer>
               </WebAppContent>
             </>
           )}
@@ -2856,10 +2861,28 @@ const WebAppContent = styled.div`
   display: block;
   min-height: 900px;
   overflow: hidden;
+  
+  /* 웹버전 목업 고정 크기 - 스케일링 없음 */
+  width: 100%;
+  max-width: none;
+  
+  /* 가로 사이즈가 줄어들면 바로 태블릿 버전으로 전환 */
+  @media (max-width: 1600px) {
+    min-width: auto;
+    transform: none;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+  
   @media (max-width: 600px) {
     min-height: 0;
     padding: 0;
     width: 100%;
+    min-width: auto;
+    transform: none;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2881,6 +2904,45 @@ const AnimatedMockupElement = styled(MockupElement)<{ isVisible: boolean; delay?
   transform: translateY(${props => props.isVisible ? '0' : '30px'});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  /* 1600px 이하에서 웹버전 목업 즉시 숨기기 */
+  @media (max-width: 1600px) {
+    display: none;
+  }
+`;
+
+/* 태블릿용 목업 컨테이너 */
+const TabletMockupContainer = styled.div`
+  display: none;
+  
+  @media (max-width: 1600px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+`;
+
+const TabletMockupImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15));
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(0 15px 30px rgba(131, 94, 235, 0.25));
+  }
+`;
+
+/* 웹앱 정보 텍스트 컨테이너 */
+const WebAppInfoTextContainer = styled.div`
+  @media (max-width: 1600px) {
+    display: none;
+  }
 `;
 
 
@@ -3048,6 +3110,20 @@ const ThumbnailImage = styled.img`
   height: 100%;
   object-fit: cover;
   display: block;
+  background: #f0f0f0;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const PlayButton = styled.div`

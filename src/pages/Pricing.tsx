@@ -281,7 +281,8 @@ const PricingSection = styled.div`
 `;
 
 const PricingHeader = styled.div`
-  width: 1200px;
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -347,7 +348,8 @@ const PricingSubtitle = styled.div<{ isVisible: boolean }>`
 `;
 
 const PricingCardsContainer = styled.div`
-  width: 1180px;
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -991,7 +993,7 @@ const CalculatorSection = styled.div`
 
 const CalculatorContainer = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1280px;
   background: white;
   display: flex;
   align-items: center;
@@ -1296,7 +1298,8 @@ const TrialSection = styled.div`
 `;
 
 const TrialHeader = styled.div`
-  width: 1150px;
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -1600,7 +1603,8 @@ const ComparisonSection = styled.div`
 `;
 
 const ComparisonHeader = styled.div`
-  width: 1150px;
+  width: 100%;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

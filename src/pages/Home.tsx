@@ -107,10 +107,45 @@ const SlideOverlay = styled.div`
   z-index: 1;
 `;
 
+const HeroContentWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 2;
+  
+  @media (max-width: 600px) {
+    position: static;
+    height: auto;
+    display: block;
+  }
+`;
+
+const HeroInner = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  position: relative;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+  
+  @media (max-width: 600px) {
+    padding: 0;
+    height: auto;
+    position: static;
+    max-width: 100%;
+  }
+`;
+
 const ContentContainer = styled.div`
   position: absolute;
   top: 65%;
-  left: 230px;
+  left: 20px;
   transform: translateY(-50%);
   z-index: 2;
   max-width: 600px;
@@ -121,15 +156,17 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  
   @media (max-width: 1024px) {
-    left: 90px;
+    left: 40px;
     top: 70%;
   }
   @media (max-width: 768px) {
-    left: 80px;
+    left: 40px;
     top: 65%;
   }
   @media (max-width: 600px) {
+    position: absolute;
     left: 0;
     max-width: 100%;
     padding: 20px;
@@ -139,6 +176,7 @@ const ContentContainer = styled.div`
     justify-content: center;
     gap: 20px;
     width: 100%;
+    text-align: center;
   }
 `;
 
@@ -675,75 +713,54 @@ const MoreButton = styled.button`
 const TrialSection = styled.section`
   width: 100%;
   background: #835EEB;
-  padding: 40px 80px;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 태블릿 */
+  @media (max-width: 1024px) {
+    padding: 40px 0;
+  }
+  
+  /* 모바일 */
+  @media (max-width: 600px) {
+    padding: 60px 0 40px 0;
+  }
+`;
+
+const TrialInner = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 50px;
+  box-sizing: border-box;
   
-  @media (max-width: 1200px) {
-    padding: 15px 60px 10px 60px;
-    gap: 20px;
-    min-height: 35vh;
+  /* 태블릿 */
+  @media (max-width: 1024px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
+    padding: 0 40px;
   }
   
-  @media (max-width: 768px) {
-    padding: 40px 40px;
-    gap: 30px;
+  /* 모바일 */
+  @media (max-width: 600px) {
     flex-direction: column;
     justify-content: flex-start;
-    align-items: flex-start;
-  }
-  
-  @media (max-width: 600px) {
-    min-height: 100vh;
-    padding: 60px 20px 40px 20px;
-    gap: 30px;
-    flex-direction: column !important;
-    justify-content: flex-start;
     align-items: center;
-    flex-wrap: nowrap;
+    gap: 30px;
+    padding: 0 20px;
   }
 `;
 
-const TrialContent = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  margin: 0;
-  
-  @media (max-width: 1200px) {
-    gap: 20px;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 15px;
-    margin-left: 0;
-  }
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    gap: 20px;
-    margin-left: 0;
-  }
-  
-  @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 16px;
-    margin-left: 0;
-    margin-bottom: 30px;
-  }
-`;
+
 
 const TrialBadge = styled.div`
   color: #E0DDF5;
@@ -762,11 +779,7 @@ const TrialTitle = styled.div`
   line-height: 41.60px;
   word-wrap: break-word;
   
-  @media (max-width: 768px) {
-    font-size: 28px;
-    line-height: 36px;
-  }
-  
+  /* 모바일 */
   @media (max-width: 600px) {
     font-size: 28px;
     line-height: 36px;
@@ -780,18 +793,15 @@ const TrialTextContainer = styled.div`
   align-items: flex-start;
   gap: 20px;
   
-  @media (max-width: 1200px) {
+  /* 태블릿 */
+  @media (max-width: 1024px) {
     align-items: center;
     text-align: center;
-    gap: 12px;
+    gap: 16px;
     width: 100%;
   }
   
-  @media (max-width: 768px) {
-    align-items: center;
-    text-align: center;
-  }
-  
+  /* 모바일 */
   @media (max-width: 600px) {
     align-items: center;
     text-align: center;
@@ -809,12 +819,14 @@ const TrialDescription = styled.div`
   word-wrap: break-word;
   text-align: left;
   
-  @media (max-width: 1200px) {
+  /* 태블릿 */
+  @media (max-width: 1024px) {
     width: auto;
     max-width: 300px;
     white-space: nowrap;
   }
   
+  /* 모바일 */
   @media (max-width: 600px) {
     width: auto;
     max-width: 280px;
@@ -829,21 +841,17 @@ const TrialSteps = styled.div`
   align-items: center;
   gap: 20px;
   
-  @media (max-width: 1200px) {
-    height: 140px;
+  /* 태블릿 */
+  @media (max-width: 1024px) {
     justify-content: center;
     align-items: center;
-    gap: 10px;
-  }
-  
-  @media (max-width: 768px) {
-    justify-content: flex-start;
-    flex-wrap: wrap;
     gap: 16px;
+    flex-wrap: wrap;
   }
   
+  /* 모바일 */
   @media (max-width: 600px) {
-    flex-direction: column !important;
+    flex-direction: column;
     gap: 16px;
     width: 100%;
     align-items: center;
@@ -1483,7 +1491,9 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
             />
           ))}
           <SlideOverlay />
-          <ContentContainer>
+          <HeroContentWrapper>
+            <HeroInner>
+              <ContentContainer>
             {/* 슬라이드 3번(인덱스 2)에서만 버튼 이미지 노출, 나머지는 placeholder로 높이 맞춤 */}
             {currentSlide === 2 ? (
               <div style={{ display: 'flex', gap: 16, marginTop: 30, marginBottom: 20 }}>
@@ -1531,7 +1541,9 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
                 {isPaused ? '▶' : '⏸'}
               </IndicatorPause>
             </IndicatorBarContainer>
-          </ContentContainer>
+              </ContentContainer>
+            </HeroInner>
+          </HeroContentWrapper>
           <ScrollDownButton onClick={scrollToBody} aria-label="다음 섹션으로 스크롤">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -1540,14 +1552,13 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
         </ImageSlider>
       </HeroSection>
       <TrialSection>
-        <TrialContent>
+        <TrialInner>
           <TrialTextContainer>
             <TrialBadge>수학대왕 CLASS</TrialBadge>
             <TrialTitle dangerouslySetInnerHTML={{ __html: '무료체험 신청 방법' }} />
             <TrialDescription dangerouslySetInnerHTML={{ __html: '수학대왕 CLASS를 2주동안 무료로 사용해보세요' }} />
           </TrialTextContainer>
-        </TrialContent>
-        <TrialSteps>
+          <TrialSteps>
             <TrialStep 
               isHovered={hoveredStep === 1}
               onMouseEnter={() => setHoveredStep(1)}
@@ -1589,6 +1600,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               <StepDescription isHovered={hoveredStep === 5} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 버튼 누르기' }} />
             </TrialStep>
           </TrialSteps>
+        </TrialInner>
       </TrialSection>
       <Body ref={bodyRef} />
       
