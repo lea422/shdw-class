@@ -365,6 +365,11 @@ const Footer = () => {
                 </svg>
               </SNSIcon>
             </SNSButton>
+            <SNSButton href="https://blog.naver.com/PostList.naver?blogId=iammathking&parentCategoryNo=25&skinType=&skinId=&from=menu&userSelectMenu=true" target="_blank" rel="noopener noreferrer">
+              <SNSIcon>
+                <img src="/Assets/icon/blog.svg" alt="네이버블로그" style={{ width: '24px', height: '24px' }} />
+              </SNSIcon>
+            </SNSButton>
           </SNSButtonGroup>
         </FooterActions>
       </FooterContent>

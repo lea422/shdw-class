@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -22,31 +22,41 @@ const MainContent = styled.main`
   overflow-x: hidden;
 `;
 
-function App() {
+function AppInner() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const location = useLocation();
 
   const handleDrawerStateChange = (isOpen: boolean) => {
     setIsDrawerOpen(isOpen);
   };
 
+  // Pricing 페이지일 때 헤더 배경을 화이트로 설정
+  const isPricingPage = location.pathname === '/pricing';
+
+  return (
+    <AppContainer>
+      <Header hasWhiteBackground={isPricingPage} />
+      <MainContent>
+        <Routes>
+          <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/notice/*" element={<NoticePage />} />
+        </Routes>
+      </MainContent>
+      <Footer />
+      <SideDrawer 
+        isModalOpen={isModalOpen || isDrawerOpen} 
+        onDrawerStateChange={handleDrawerStateChange}
+      />
+    </AppContainer>
+  );
+}
+
+function App() {
   return (
     <Router>
-      <AppContainer>
-        <Header />
-        <MainContent>
-          <Routes>
-            <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/notice/*" element={<NoticePage />} />
-          </Routes>
-        </MainContent>
-        <Footer />
-        <SideDrawer 
-          isModalOpen={isModalOpen || isDrawerOpen} 
-          onDrawerStateChange={handleDrawerStateChange}
-        />
-      </AppContainer>
+      <AppInner />
     </Router>
   );
 }

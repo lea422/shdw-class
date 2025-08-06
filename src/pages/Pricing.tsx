@@ -1,6 +1,224 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+// 띠배너 스타일
+const TopBanner = styled.div<{ isVisible: boolean }>`
+  position: fixed;
+  top: 60px; /* 헤더 바로 하단에 맞춤 */
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
+  background: #835EEB;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  display: inline-flex;
+  z-index: 999;
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(-100%)'};
+  transition: transform 0.3s ease-in-out;
+  
+  @media (max-width: 1280px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    display: none; /* 데스크탑 띠배너는 모바일에서 숨김 */
+  }
+`;
+
+// 모바일 띠배너 스타일
+const MobileTopBanner = styled.div<{ isVisible: boolean }>`
+  position: fixed;
+  top: 48px; /* 모바일 헤더 높이만큼 아래로 */
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 5px 10px;
+  background: #835EEB;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  z-index: 999;
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(-100%)'};
+  transition: transform 0.3s ease-in-out;
+  
+  @media (min-width: 769px) {
+    display: none; /* 데스크탑에서는 숨김 */
+  }
+`;
+
+const MobileBannerLogo = styled.div`
+  width: 262px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3.33px;
+  display: inline-flex;
+  margin-bottom: 0px;
+`;
+
+const MobileBannerLogoText = styled.div<{ fontFamily?: string }>`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #C0AEF5;
+  font-size: 10.67px;
+  font-family: ${props => props.fontFamily || 'Pretendard'};
+  font-weight: ${props => props.fontFamily === 'Godo M' || props.fontFamily === 'Playwrite CA' ? '400' : '600'};
+  line-height: 16px;
+  word-wrap: break-word;
+`;
+
+const MobileBannerCenter = styled.div`
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  display: flex;
+`;
+
+const MobileBannerTextArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+`;
+
+const MobileBannerMessage = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 15px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 22.50px;
+  word-wrap: break-word;
+`;
+
+const MobileBannerButton = styled.button`
+  height: 28px;
+  padding-left: 12px;
+  padding-right: 12px;
+  background: black;
+  border-radius: 14px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #333;
+  }
+`;
+
+const MobileBannerButtonText = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 11px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 16px;
+  word-wrap: break-word;
+`;
+
+const BannerLeftLogo = styled.div`
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  
+  @media (max-width: 1200px) {
+    display: none; /* 중간 크기 화면에서는 숨김 */
+  }
+`;
+
+const BannerLogoText = styled.div<{ fontFamily?: string }>`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #C0AEF5;
+  font-size: 16px;
+  font-family: ${props => props.fontFamily || 'Pretendard'};
+  font-weight: ${props => props.fontFamily === 'Godo M' ? '400' : '600'};
+  line-height: 24px;
+  word-wrap: break-word;
+`;
+
+const BannerCenter = styled.div`
+  height: 36px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  display: flex;
+  
+  @media (max-width: 1200px) {
+    justify-content: center; /* 중간 크기 화면에서는 중앙 정렬 */
+  }
+`;
+
+const BannerMessage = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 20px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 30px;
+  word-wrap: break-word;
+`;
+
+const BannerButton = styled.button`
+  height: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: black;
+  border-radius: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  display: flex;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #333;
+  }
+`;
+
+const BannerButtonText = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 12px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 18px;
+  word-wrap: break-word;
+`;
+
+const BannerRightLogo = styled.div`
+  justify-content: flex-start;
+  align-items: center;
+  gap: 5px;
+  display: flex;
+  
+  @media (max-width: 1200px) {
+    display: none; /* 중간 크기 화면에서는 숨김 */
+  }
+`;
+
 // 계산기 모달 스타일
 const CalculatorModalOverlay = styled.div<{ isOpen: boolean }>`
   position: fixed;
@@ -85,6 +303,8 @@ const PricingPageContainer = styled.div`
   align-items: center;
   gap: 0;
   overflow-x: hidden;
+  padding-top: 110px; /* 헤더(60px) + 띠배너(50px) 높이만큼 여백 */
+  
   @media (max-width: 1024px) {
     width: 100%;
     overflow-x: hidden;
@@ -92,6 +312,7 @@ const PricingPageContainer = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     overflow-x: hidden;
+    padding-top: 120px; /* 모바일 헤더(48px) + 모바일 띠배너 높이만큼 여백 */
   }
 `;
 
@@ -253,7 +474,7 @@ const PricingContainer = styled.div`
 const PricingSection = styled.div`
   width: 1280px;
   min-height: 100vh;
-  padding: 60px 50px 150px 50px; /* 하단 패딩 크게 증가 */
+  padding: 40px 50px 150px 50px; /* 상단 패딩 조정 */
   background: white;
   display: flex;
   flex-direction: column;
@@ -261,21 +482,21 @@ const PricingSection = styled.div`
   align-items: center;
   gap: 60px;
   margin: 0 auto;
-  margin-top: 60px; /* 헤더 아래 여백 추가 */
+  margin-top: 60px; /* 헤더 아래 여백 - 총 100px (40px + 60px) */
   position: relative;
   @media (max-width: 1024px) {
     width: 100%;
     min-height: 100vh;
-    padding: 60px 20px 120px 20px; /* 하단 패딩 증가 */
+    padding: 40px 20px 120px 20px; /* 상단 패딩 조정 */
     gap: 60px;
     margin-top: 60px;
   }
   @media (max-width: 768px) {
     width: 100%;
     min-height: 100vh;
-    padding: 48px 25px 100px 25px; /* 하단 패딩 증가 */
-    gap: 40px;
-    margin-top: 48px;
+    padding: 6px 25px 100px 25px; /* 상단 패딩 조정 */
+    gap: 30px;
+    margin-top: 24px; /* 총 30px (6px + 24px) */
     box-sizing: border-box;
   }
 `;
@@ -298,9 +519,48 @@ const PricingHeader = styled.div`
     width: 100%;
     align-items: center;
     text-align: center;
-    gap: 12px;
+    gap: 8px;
     box-sizing: border-box;
     margin: 0 auto;
+  }
+`;
+
+const PricingTopText = styled.div<{ isVisible: boolean }>`
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  display: inline-flex;
+  margin-bottom: 24px;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  @media (max-width: 1024px) {
+    margin-bottom: 20px;
+  }
+  @media (max-width: 768px) {
+    margin-bottom: 12px;
+  }
+`;
+
+const PricingTopTextPart = styled.div<{ color?: string; fontFamily?: string }>`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: ${props => props.color || '#33373B'};
+  font-size: 27.33px;
+  font-family: ${props => props.fontFamily || 'Pretendard'};
+  font-weight: ${props => props.fontFamily === 'Playwrite CA' ? '400' : '700'};
+  line-height: 41px;
+  word-wrap: break-word;
+  
+  @media (max-width: 1024px) {
+    font-size: 22px;
+    line-height: 33px;
+  }
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 27px;
   }
 `;
 
@@ -315,13 +575,28 @@ const PricingTitle = styled.div<{ isVisible: boolean }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
+  }
+  
   @media (max-width: 1024px) {
     font-size: 36px;
     line-height: 46px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
   @media (max-width: 768px) {
     font-size: 28px;
     line-height: 36px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 
@@ -337,13 +612,28 @@ const PricingSubtitle = styled.div<{ isVisible: boolean }>`
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: 0.3s;
   
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
+  }
+  
   @media (max-width: 1024px) {
     font-size: 20px;
     line-height: 30px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
   @media (max-width: 768px) {
     font-size: 16px;
     line-height: 24px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 
@@ -1270,13 +1560,14 @@ const CalculatorButton = styled.button`
 // 무료 체험 신청 섹션
 const TrialSection = styled.div`
   width: 1280px;
-  padding: 100px 50px;
+  padding-top: 50px;
+  padding-bottom: 50px;
   background: white;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 50px;
+  display: inline-flex;
   margin: 0 auto;
   @media (max-width: 1300px) {
     width: 100%;
@@ -1294,6 +1585,230 @@ const TrialSection = styled.div`
     gap: 24px;
     box-sizing: border-box;
     align-items: center;
+  }
+`;
+
+// 새로운 무료체험신청방법 섹션 스타일
+const TrialStepRow = styled.div`
+  width: 1220px;
+  justify-content: space-between;
+  align-items: flex-end;
+  display: inline-flex;
+  gap: 80px;
+  @media (max-width: 1024px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+  }
+`;
+
+const TrialStepContent = styled.div`
+  width: 500px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 7px;
+  display: inline-flex;
+  @media (max-width: 1024px) {
+    width: 403px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+  }
+`;
+
+const TrialStepHeader = styled.div`
+  align-self: stretch;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 7px;
+  display: inline-flex;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+`;
+
+const TrialStepNumber = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #835EEB;
+  font-size: 64px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 83.20px;
+  word-wrap: break-word;
+  @media (max-width: 1024px) {
+    font-size: 40px;
+    line-height: 52px;
+  }
+  @media (max-width: 768px) {
+    font-size: 40px;
+    line-height: 52px;
+  }
+`;
+
+const TrialStepTitle = styled.div`
+  flex: 1 1 0;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #835EEB;
+  font-size: 22px;
+  font-family: Pretendard;
+  font-weight: 600;
+  line-height: 33px;
+  word-wrap: break-word;
+  @media (max-width: 768px) {
+    font-size: 18px;
+    line-height: 27px;
+  }
+`;
+
+const TrialStepDescription = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  color: #7A828D;
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 24px;
+  gap: 4px;
+  
+  @media (max-width: 1024px) {
+    align-self: stretch;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+const TrialStepDescriptionLine = styled.div`
+  display: block;
+  color: #7A828D;
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 24px;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  
+  @media (max-width: 1024px) {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+const TrialSectionTitle = styled.div`
+  width: 100%;
+  text-align: center;
+  color: #1E2231;
+  font-size: 48px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  line-height: 62.4px;
+  word-wrap: break-word;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 42px;
+  }
+  @media (max-width: 480px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+`;
+
+const TrialSectionSubtitle = styled.div`
+  width: 100%;
+  text-align: center;
+  color: #7A828D;
+  font-size: 18px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  line-height: 27px;
+  word-wrap: break-word;
+  margin-bottom: 50px;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
+`;
+
+const TrialStepButton = styled.button`
+  padding-left: 13.33px;
+  padding-right: 13.33px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  background: #835EEB;
+  border-radius: 6.67px;
+  justify-content: center;
+  align-items: center;
+  gap: 6.67px;
+  display: inline-flex;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #6B4BC4;
+    transform: translateY(-2px);
+  }
+`;
+
+const TrialStepButtonText = styled.div`
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 23.20px;
+  word-wrap: break-word;
+`;
+
+const TrialStepImage = styled.div`
+  width: 655px;
+  height: 360px;
+  position: relative;
+  background: #F6F6F6;
+  overflow: hidden;
+  border-radius: 15.65px;
+  margin-left: 80px;
+  @media (max-width: 1024px) {
+    width: 350px;
+    height: 250px;
+    margin-left: 0;
+  }
+  @media (max-width: 768px) {
+    width: 350px;
+    height: 250px;
+    margin-left: 0;
   }
 `;
 
@@ -1351,226 +1866,13 @@ const TrialTitle = styled.div`
   }
 `;
 
-const TrialStepContainer = styled.div`
-  width: 1000px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-  }
-  
-  @media (max-width: 1024px) {
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    margin: 0 auto;
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-    max-width: 325px;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding: 0;
-    box-sizing: border-box;
-    justify-content: center;
-    align-self: center;
-  }
-`;
 
-const TrialStepContent = styled.div`
-  width: 403px;
-  height: 158px;
-  position: relative;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.02);
-  }
-  
-  @media (max-width: 1024px) {
-    width: 100%;
-    max-width: 403px;
-    text-align: center;
-    height: auto;
-    margin: 0 auto;
-  }
-  @media (max-width: 768px) {
-    width: 277px;
-    min-width: 277px;
-    max-width: 277px;
-    text-align: center;
-    height: auto;
-    padding: 0;
-    box-sizing: border-box;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-  }
-`;
 
-const TrialStepNumber = styled.div`
-  position: absolute;
-  left: 0px;
-  top: -25px;
-  color: #835EEB;
-  font-size: 48px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 700;
-  line-height: 62.4px;
-  word-wrap: break-word;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: scale(1.1);
-    color: #6B4BC4;
-  }
-  
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-  }
-  @media (max-width: 768px) {
-    font-size: 36px;
-    line-height: 48px;
-    margin-bottom: 8px;
-  }
-  @media (max-width: 480px) {
-    font-size: 32px;
-    line-height: 40px;
-  }
-`;
 
-const TrialStepText = styled.div`
-  position: absolute;
-  left: 0px;
-  top: 30px;
-  color: #835EEB;
-  font-size: 22px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 400;
-  line-height: 33px;
-  word-wrap: break-word;
-  transition: all 0.3s ease;
-  
-  &:hover {
-    color: #6B4BC4;
-  }
-  
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin-top: 20px;
-  }
-  @media (max-width: 768px) {
-    font-size: 18px;
-    line-height: 26px;
-    margin-top: 12px;
-  }
-  @media (max-width: 480px) {
-    font-size: 16px;
-    line-height: 24px;
-  }
-`;
 
-const TrialStepDescription = styled.div`
-  position: absolute;
-  left: 0px;
-  top: 90px;
-  color: #666;
-  font-size: 16px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 300;
-  line-height: 24px;
-  word-wrap: break-word;
-  opacity: 0.8;
-  
-  @media (max-width: 1100px) {
-    position: relative;
-    left: auto;
-    top: auto;
-    margin-top: 12px;
-  }
-  @media (max-width: 768px) {
-    font-size: 14px;
-    line-height: 20px;
-    margin-top: 8px;
-  }
-  @media (max-width: 480px) {
-    font-size: 13px;
-    line-height: 18px;
-  }
-`;
 
-const TrialStepImage = styled.div`
-  width: 500px;
-  height: 300px;
-  background: #F6F6F6;
-  border-radius: 15.65px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #999;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 30px rgba(131, 94, 235, 0.2);
-    background: #F0F0F0;
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(131, 94, 235, 0.1), transparent);
-    transition: left 0.5s ease;
-  }
-  
-  &:hover::before {
-    left: 100%;
-  }
-  
-  @media (max-width: 1024px) {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    margin: 0 auto;
-  }
-  @media (max-width: 768px) {
-    width: 301px;
-    max-width: 301px;
-    height: 191px;
-    border-radius: 12px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-  }
-`;
 
-// 애니메이션을 위한 스타일 컴포넌트
-const AnimatedTrialStepContainer = styled(TrialStepContainer)<{ isVisible: boolean }>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(30px)'};
-  transition: all 0.6s ease;
-`;
+
 
 // 세 번째 섹션 - 기능 비교
 const ComparisonSection = styled.div`
@@ -2354,8 +2656,8 @@ interface PricingProps {}
 
 const Pricing: React.FC<PricingProps> = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
-  const [visibleSteps, setVisibleSteps] = useState<boolean[]>([false, false, false, false, false, false]);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
+  const [isBannerVisible, setIsBannerVisible] = useState(true);
   
   // 계산기 관련 상태
   const [studentCount, setStudentCount] = useState(30);
@@ -2440,32 +2742,30 @@ const Pricing: React.FC<PricingProps> = () => {
 
   // 스크롤 인터랙션을 위한 useEffect
   React.useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
     const handleScroll = () => {
-      const trialSection = document.querySelector('[data-trial-section]');
-      if (trialSection) {
-        const rect = trialSection.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight * 0.8;
-        
-        if (isVisible) {
-          // 각 단계를 순차적으로 나타나게 함
-          visibleSteps.forEach((_, index) => {
-            setTimeout(() => {
-              setVisibleSteps(prev => {
-                const newSteps = [...prev];
-                newSteps[index] = true;
-                return newSteps;
-              });
-            }, index * 200);
-          });
-        }
+      const currentScrollY = window.scrollY;
+      
+      // 띠배너 표시/숨김 로직
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // 아래로 스크롤하고 100px 이상 스크롤했을 때 숨김
+        setIsBannerVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        // 위로 스크롤할 때 표시
+        setIsBannerVisible(true);
       }
+      
+      lastScrollY = currentScrollY;
+      
+
     };
 
     window.addEventListener('scroll', handleScroll);
     handleScroll(); // 초기 로드 시에도 체크
     
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [visibleSteps]);
+  }, []);
 
   // 계산기 모달 상태
   const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
@@ -2501,6 +2801,39 @@ const Pricing: React.FC<PricingProps> = () => {
 
   return (
     <PricingPageContainer>
+      {/* 데스크탑 띠배너 */}
+      <TopBanner isVisible={isBannerVisible}>
+        <BannerLeftLogo>
+          <BannerLogoText fontFamily="Godo M">수학대왕</BannerLogoText>
+          <BannerLogoText>CLASS</BannerLogoText>
+          <BannerLogoText fontFamily="Playwrite CA">for</BannerLogoText>
+          <BannerLogoText>School</BannerLogoText>
+        </BannerLeftLogo>
+        <BannerCenter>
+          <BannerMessage>혹시 학교 선생님이신가요?</BannerMessage>
+          <BannerButton onClick={() => {/* 링크 추후 추가 */}}>
+            <BannerButtonText>학교 도입 바로가기</BannerButtonText>
+          </BannerButton>
+        </BannerCenter>
+      </TopBanner>
+      
+      {/* 모바일 띠배너 */}
+      <MobileTopBanner isVisible={isBannerVisible}>
+        <MobileBannerCenter>
+          <MobileBannerTextArea>
+            <MobileBannerLogo>
+              <MobileBannerLogoText fontFamily="Godo M">수학대왕</MobileBannerLogoText>
+              <MobileBannerLogoText>CLASS</MobileBannerLogoText>
+              <MobileBannerLogoText fontFamily="Playwrite CA">for</MobileBannerLogoText>
+              <MobileBannerLogoText>School</MobileBannerLogoText>
+            </MobileBannerLogo>
+            <MobileBannerMessage>혹시 학교 선생님이신가요?</MobileBannerMessage>
+          </MobileBannerTextArea>
+          <MobileBannerButton onClick={() => {/* 링크 추후 추가 */}}>
+            <MobileBannerButtonText>학교 도입 바로가기</MobileBannerButtonText>
+          </MobileBannerButton>
+        </MobileBannerCenter>
+      </MobileTopBanner>
       {/* 계산기 모달 */}
       <CalculatorModalOverlay isOpen={isCalculatorModalOpen} onClick={handleCloseCalculatorModal}>
         <CalculatorModalContainer onClick={(e) => e.stopPropagation()}>
@@ -2558,6 +2891,11 @@ const Pricing: React.FC<PricingProps> = () => {
       {/* 첫 번째 섹션 - 요금 안내 */}
       <PricingSection>
         <PricingHeader>
+          <PricingTopText isVisible={isHeaderVisible}>
+            <PricingTopTextPart>수학대왕 CLASS</PricingTopTextPart>
+            <PricingTopTextPart color="#835EEB" fontFamily="Playwrite CA">for</PricingTopTextPart>
+            <PricingTopTextPart>Academy</PricingTopTextPart>
+          </PricingTopText>
           <PricingTitle isVisible={isHeaderVisible}>
             AI로 시작하는<br/>1:1 실시간 밀착 관리
           </PricingTitle>
@@ -2764,125 +3102,106 @@ const Pricing: React.FC<PricingProps> = () => {
 
       {/* 두 번째 섹션 - 무료 체험 신청 */}
       <TrialSection data-trial-section>
-        <TrialHeader>
-          <TrialTitle>
-            무료 체험 신청<br/><span>a to z</span>
-          </TrialTitle>
-        </TrialHeader>
+        <TrialSectionTitle>무료 체험 신청 방법</TrialSectionTitle>
+        <TrialSectionSubtitle>수학대왕 CLASS를 간편하게 체험해보세요</TrialSectionSubtitle>
+        <TrialStepRow>
+          <TrialStepContent>
+            <TrialStepHeader>
+              <TrialStepNumber>01</TrialStepNumber>
+              <TrialStepTitle>체험 신청 시, <br/>무료 체험 계정이 문자로 안내돼요</TrialStepTitle>
+            </TrialStepHeader>
+            <TrialStepDescription>
+              <TrialStepDescriptionLine>체험 신청 완료 후 즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.</TrialStepDescriptionLine>
+            </TrialStepDescription>
+            <TrialStepButton>
+              <TrialStepButtonText>무료 체험 시작하기</TrialStepButtonText>
+            </TrialStepButton>
+          </TrialStepContent>
+          <TrialStepImage>
+            <img src="/Pricing/무료체험 01.png" alt="무료체험 01" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </TrialStepImage>
+        </TrialStepRow>
 
-        <AnimatedTrialStepContainer isVisible={visibleSteps[0]}>
+        <TrialStepRow>
           <TrialStepContent>
-            <TrialStepNumber>01</TrialStepNumber>
-            <TrialStepText>체험 신청 시,<br/>무료 체험 계정이 문자로 안내돼요</TrialStepText>
+            <TrialStepHeader>
+              <TrialStepNumber>02</TrialStepNumber>
+              <TrialStepTitle>선생님용 계정에 로그인</TrialStepTitle>
+            </TrialStepHeader>
             <TrialStepDescription>
-              체험 신청 완료 후<br/>즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>
-              별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.
+              <TrialStepDescriptionLine>받으신 선생님용 계정 정보로 웹사이트에 접속하여 로그인하세요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>학생 관리와 학습 현황을 한눈에 확인할 수 있는 대시보드가 제공됩니다.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-                            <img src="/Pricing/무료체험 01.png" alt="무료체험 01"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
+            <img src="/Pricing/무료체험 02.png" alt="무료체험 02" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </TrialStepImage>
-        </AnimatedTrialStepContainer>
-          
-        <AnimatedTrialStepContainer isVisible={visibleSteps[1]}>
-          <TrialStepContent>
-            <TrialStepNumber>02</TrialStepNumber>
-            <TrialStepText>선생님용 계정에 로그인</TrialStepText>
-            <TrialStepDescription>
-              받으신 선생님용 계정 정보로<br/>웹사이트에 접속하여 로그인하세요.<br/>
-              학생 관리와 학습 현황을 한눈에 확인할 수 있는<br/>대시보드가 제공됩니다.
-            </TrialStepDescription>
-          </TrialStepContent>
-          <TrialStepImage>
-                            <img src="/Pricing/무료체험 02.png" alt="무료체험 02"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
-          </TrialStepImage>
-        </AnimatedTrialStepContainer>
-          
-        <AnimatedTrialStepContainer isVisible={visibleSteps[2]}>
-          <TrialStepContent>
-            <TrialStepNumber>03</TrialStepNumber>
-            <TrialStepText>학생용 앱에 로그인</TrialStepText>
-            <TrialStepDescription>
-              학생들은 모바일 앱을 다운로드하여<br/>계정 정보로 로그인합니다.<br/>
-              직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.
-            </TrialStepDescription>
-          </TrialStepContent>
-          <TrialStepImage>
-                            <img src="/Pricing/무료체험 03.png" alt="무료체험 03"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
-          </TrialStepImage>
-        </AnimatedTrialStepContainer>
+        </TrialStepRow>
 
-        <AnimatedTrialStepContainer isVisible={visibleSteps[3]}>
+        <TrialStepRow>
           <TrialStepContent>
-            <TrialStepNumber>04</TrialStepNumber>
-            <TrialStepText>필요한 경우<br/>학생을 추가 하실 수도 있어요</TrialStepText>
+            <TrialStepHeader>
+              <TrialStepNumber>03</TrialStepNumber>
+              <TrialStepTitle>학생용 계정에 로그인</TrialStepTitle>
+            </TrialStepHeader>
             <TrialStepDescription>
-              선생님 대시보드에서<br/>간편하게 새로운 학생을 추가하고 관리할 수 있습니다.<br/>
-              체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.
+              <TrialStepDescriptionLine>학생들은 모바일 앱을 다운로드하여 계정 정보로 로그인합니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-                            <img src="/Pricing/무료체험 04.png" alt="무료체험 04"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
+            <img src="/Pricing/무료체험 03.png" alt="무료체험 03" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </TrialStepImage>
-        </AnimatedTrialStepContainer>
+        </TrialStepRow>
 
-        <AnimatedTrialStepContainer isVisible={visibleSteps[4]}>
+        <TrialStepRow>
           <TrialStepContent>
-            <TrialStepNumber>05</TrialStepNumber>
-            <TrialStepText>학습지를<br/>배부하고,</TrialStepText>
+            <TrialStepHeader>
+              <TrialStepNumber>04</TrialStepNumber>
+              <TrialStepTitle>필요한 경우,<br/>학생을 추가 하실 수도 있어요</TrialStepTitle>
+            </TrialStepHeader>
             <TrialStepDescription>
-              원하는 단원과 난이도를 선택하여<br/>학습지를 생성하고 배부하세요.<br/>
-              학생들은 앱에서 바로 문제를 풀고<br/>실시간으로 채점받을 수 있습니다.
+              <TrialStepDescriptionLine>선생님 대시보드에서 간편하게 새로운 학생을 추가하고 관리할 수 있습니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-                            <img src="/Pricing/무료체험 05.png" alt="무료체험 05"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
+            <img src="/Pricing/무료체험 04.png" alt="무료체험 04" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </TrialStepImage>
-        </AnimatedTrialStepContainer>
+        </TrialStepRow>
 
-        <AnimatedTrialStepContainer isVisible={visibleSteps[5]}>
+        <TrialStepRow>
           <TrialStepContent>
-            <TrialStepNumber>06</TrialStepNumber>
-            <TrialStepText>풀이 결과 대시보드를<br/>확인 하세요!</TrialStepText>
+            <TrialStepHeader>
+              <TrialStepNumber>05</TrialStepNumber>
+              <TrialStepTitle>학습지를 배부하고</TrialStepTitle>
+            </TrialStepHeader>
             <TrialStepDescription>
-              학생들의 학습 진도와 성취도를<br/>실시간으로 확인할 수 있습니다.<br/>
-              취약 단원 분석과 개별 학습 관리로<br/>효과적인 지도가 가능해요.
+              <TrialStepDescriptionLine>원하는 단원과 난이도를 선택하여 학습지를 생성하고 배부하세요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>학생들은 앱에서 바로 문제를 풀고 실시간으로 채점받을 수 있습니다.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
-                            <img src="/Pricing/무료체험 06.png" alt="무료체험 06"
-              style={window.innerWidth <= 600
-                ? { width: '100%', height: 'auto', objectFit: 'contain', margin: 0, display: 'block' }
-                : { width: '100%', height: '100%', objectFit: 'cover', margin: 0, display: 'block' }
-              }
-            />
+            <img src="/Pricing/무료체험 05.png" alt="무료체험 05" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </TrialStepImage>
-        </AnimatedTrialStepContainer>
+        </TrialStepRow>
+
+        <TrialStepRow>
+          <TrialStepContent>
+            <TrialStepHeader>
+              <TrialStepNumber>06</TrialStepNumber>
+              <TrialStepTitle>풀이 결과 대시보드를<br/>확인하세요!</TrialStepTitle>
+            </TrialStepHeader>
+            <TrialStepDescription>
+              <TrialStepDescriptionLine>학생들의 학습 진도와 성취도를 실시간으로 확인할 수 있습니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>취약 단원 분석과 개별 학습 관리로 효과적인 지도가 가능해요.</TrialStepDescriptionLine>
+            </TrialStepDescription>
+          </TrialStepContent>
+          <TrialStepImage>
+            <img src="/Pricing/무료체험 06.png" alt="무료체험 06" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </TrialStepImage>
+        </TrialStepRow>
       </TrialSection>
 
              {/* 세 번째 섹션 - 기능 비교 */}

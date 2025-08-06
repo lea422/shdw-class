@@ -1607,7 +1607,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
       <Dialog 
         isOpen={isDialogOpen} 
         onClose={handleCloseDialog}
-        title="무료 체험 상담 신청"
+        title="무료 체험 신청"
         description="아래 정보를 입력해 주시면 담당자가 빠르게 연락드립니다."
       >
         <ConsultationForm onClose={handleCloseDialog} />

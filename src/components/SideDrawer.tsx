@@ -243,7 +243,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
         <DrawerContent>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <h2 style={{ margin: 0, color: '#33373B', fontSize: '20px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
-              상담 신청
+              무료 체험 신청
             </h2>
             <CloseButton data-close-button onClick={handleClose} aria-label="닫기">
               ×

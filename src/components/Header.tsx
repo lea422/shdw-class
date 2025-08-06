@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-const HeaderContainer = styled.header`
+const HeaderContainer = styled.header<{ hasWhiteBackground?: boolean }>`
   width: 100%;
   height: 60px;
   position: fixed;
@@ -11,9 +11,10 @@ const HeaderContainer = styled.header`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: transparent;
+  background: ${props => props.hasWhiteBackground ? '#ffffff !important' : 'transparent'};
   box-sizing: border-box;
-  backdrop-filter: blur(8px);
+  backdrop-filter: ${props => props.hasWhiteBackground ? 'none !important' : 'blur(8px)'};
+  box-shadow: ${props => props.hasWhiteBackground ? '0 2px 8px rgba(0, 0, 0, 0.08) !important' : 'none'};
   @media (max-width: 768px) {
     height: 48px;
   }
@@ -428,7 +429,11 @@ const MobileDrawerButton = styled.a`
   }
 `;
 
-const Header = () => {
+interface HeaderProps {
+  hasWhiteBackground?: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const isHome = location.pathname === '/';
@@ -492,7 +497,7 @@ const Header = () => {
   };
 
   return (
-    <HeaderContainer>
+    <HeaderContainer hasWhiteBackground={hasWhiteBackground}>
       <HeaderInner>
         <LogoContainer to="/" onClick={handleLogoClick}>
           <StyledLogoIcon src="/Common/logo.svg" alt="수학대왕 CLASS 로고" />
