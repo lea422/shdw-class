@@ -54,6 +54,101 @@ const highlightAnimation = keyframes`
   }
 `;
 
+const arrowPulse = keyframes`
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+`;
+
+const arrowGlow = keyframes`
+  0%, 100% {
+    filter: drop-shadow(0 0 5px rgba(131, 94, 235, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(131, 94, 235, 0.6));
+  }
+`;
+
+const arrowBreathe = keyframes`
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+`;
+
+const textSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
+const textSlideOut = keyframes`
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+`;
+
+const textFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const titleSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
+const quoteSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(25px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
+const nameSlideIn = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+`;
+
 const BodyContainer = styled.div`
   width: 100%;
   padding-bottom: 30px;
@@ -1064,12 +1159,12 @@ const Tabs = styled.div`
   }
 `;
 
-const TabButton = styled.button<{ active: boolean }>`
+const TabButton = styled.button<{ $active: boolean }>`
   padding: 12px 32px;
   border-radius: 24px;
   border: none;
-  background: ${({ active }) => (active ? '#835EEB' : '#E5D8FB')};
-  color: ${({ active }) => (active ? 'white' : '#835EEB')};
+  background: ${({ $active }) => ($active ? '#835EEB' : '#E5D8FB')};
+  color: ${({ $active }) => ($active ? 'white' : '#835EEB')};
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
@@ -1247,6 +1342,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [textVisible, setTextVisible] = useState(true);
+  const [textAnimationState, setTextAnimationState] = useState<'visible' | 'slide-out' | 'slide-in'>('visible');
   const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
   const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
   const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -1260,6 +1356,10 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   
   // 웹앱 연동 목업 애니메이션 상태 (태블릿, 왼쪽아이폰, 가운데아이폰, 모니터)
   const [mockupsVisible, setMockupsVisible] = useState([false, false, false, false]);
+  // 실시간 동기화 텍스트 애니메이션 상태
+  const [syncTextVisible, setSyncTextVisible] = useState(false);
+  // 화살표 애니메이션 상태
+  const [arrowVisible, setArrowVisible] = useState(false);
   const webAppSectionRef = useRef<HTMLDivElement>(null);
 
   // 모바일 핵심기능 박스들을 위한 ref 배열
@@ -1350,15 +1450,29 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => clearInterval(interval);
   }, [isMobile]);
 
-  // 테스티모니얼 변경 시 자연스러운 전환 효과
+  // 테스티모니얼 변경 시 자연스러운 전환 효과 (무한 루프 리셋 시 제외)
   useEffect(() => {
-    // 텍스트가 부드럽게 슬라이드되면서 변경
-    setTextVisible(false);
-    const timer = setTimeout(() => {
-      setTextVisible(true);
-    }, 150); // 더 빠른 전환
-    return () => clearTimeout(timer);
-  }, [currentTestimonial]);
+    // 무한 루프 리셋 시에는 애니메이션 건너뛰기
+    if (currentTestimonial === testimonials.length) {
+      return;
+    }
+    
+    // 슬라이드 아웃 → 슬라이드 인 순서로 자연스러운 전환
+    setTextAnimationState('slide-out');
+    
+    const slideOutTimer = setTimeout(() => {
+      setTextAnimationState('slide-in');
+    }, 400); // 슬라이드 아웃 완료 후
+    
+    const slideInTimer = setTimeout(() => {
+      setTextAnimationState('visible');
+    }, 1000); // 슬라이드 인 완료 후
+    
+    return () => {
+      clearTimeout(slideOutTimer);
+      clearTimeout(slideInTimer);
+    };
+  }, [currentTestimonial, testimonials.length]);
 
   // 무한 슬라이드 (한쪽 방향으로 계속)
   useEffect(() => {
@@ -1394,6 +1508,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             setTimeout(() => setMockupsVisible([true, true, false, false]), 150);    // 왼쪽 모바일
             setTimeout(() => setMockupsVisible([true, true, true, false]), 300);     // 가운데 모바일
             setTimeout(() => setMockupsVisible([true, true, true, true]), 450);      // 데스크톱 모니터
+
+            // 실시간 동기화 텍스트 애니메이션 (가운데 모바일과 동시에 나타남)
+            setTimeout(() => setSyncTextVisible(true), 300);
+            
+            // 화살표 애니메이션 (텍스트보다 약간 늦게 나타남)
+            setTimeout(() => setArrowVisible(true), 400);
 
             // 선생님용 칩 순차 애니메이션 (목업 이미지 후 - 700ms 후 시작)
             setTimeout(() => setTeacherChipsVisible([true, false, false, false]), 700);
@@ -2241,8 +2361,8 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection ref={webAppSectionRef}>
-        <div style={{position:'relative',width:'100%',maxWidth:'1920px',margin:'0 auto',padding:0,minHeight:'900px'}}>
-          {window.innerWidth <= 600 ? (
+        <div style={{position:'relative',width:'100%',maxWidth:'100%',margin:'0',padding:0,minHeight:'900px',zIndex:2}}>
+          {window.innerWidth <= 820 ? (
             <>
               <WebAppHeader
                 style={{
@@ -2289,32 +2409,336 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'48px 0 0 0'}}>
-                <WebAppInfoBlock style={{alignItems:'center', textAlign:'center'}}>
-                  <WebAppInfoTitle isVisible={true} style={{ fontSize: 20, textAlign: 'center' }}>선생님용 웹사이트</WebAppInfoTitle>
-                  <WebAppInfoChips style={{alignItems:'center', justifyContent:'center'}}>
-                    <WebAppInfoChip isVisible={true}>클래스 및 학생관리</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>맞춤형 문제 출제</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>AI 채점 결과 확인</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>실력 분석 리포트</WebAppInfoChip>
-                  </WebAppInfoChips>
-                </WebAppInfoBlock>
-              </WebAppInfoRow>
-              <img src="/Body/mockups/mockup_mobile 1.png" alt="웹앱연동 모바일1" style={{width:'100%',maxWidth:400,margin:'24px auto',display:'block'}} />
-              <WebAppInfoRow style={{flexDirection:'column',alignItems:'center',gap: '32px',padding:'24px 0 0 0'}}>
-                <WebAppInfoBlock style={{alignItems:'center', textAlign:'center'}}>
-                  <WebAppInfoTitle isVisible={true} style={{ fontSize: 20, textAlign: 'center' }}>학생용 모바일 앱</WebAppInfoTitle>
-                  <WebAppInfoChips style={{alignItems:'center', justifyContent:'center'}}>
-                    <WebAppInfoChip isVisible={true}>맞춤형 학습지 수신</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>AI 힌트 시스템</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>실시간 채점 피드백</WebAppInfoChip>
-                    <WebAppInfoChip isVisible={true}>장학금 알림 수신</WebAppInfoChip>
-                  </WebAppInfoChips>
-                </WebAppInfoBlock>
-              </WebAppInfoRow>
-              <img src="/Body/mockups/mockup_mobile 2.png" alt="웹앱연동 모바일2" style={{width:'100%',maxWidth:130,margin:'24px auto 0 auto',display:'block'}} />
+              <div style={{width: '100%', height: '987px', position: 'relative', overflow: 'hidden', margin: '0 auto', paddingBottom: '200px'}}>
+
+                
+                {/* 실시간 동기화 텍스트 - 목업 이미지들 사이 중앙 */}
+                <AnimatedMobileSyncText isVisible={syncTextVisible}>
+                  실시간<br/>동기화
+                </AnimatedMobileSyncText>
+                
+                {/* 실시간 동기화 텍스트에서 뻗어 나오는 화살표 */}
+                <AnimatedArrow isVisible={arrowVisible} />
+                
+                {/* 목업 이미지 3번 - 선생님용 웹사이트 */}
+                <img 
+                  src="/WebApp/integration/3.svg" 
+                  alt="선생님용 웹사이트 목업"
+                  style={{
+                    position: 'absolute',
+                    bottom: '60px',
+                    left: 'calc(50% + 100px)',
+                    transform: 'translateX(-50%)',
+                    width: 'auto',
+                    height: '375px',
+                    zIndex: 1,
+                    opacity: 0.8
+                  }}
+                />
+                
+                {/* 목업 이미지 4번 - 학생용 모바일 앱 */}
+                <img 
+                  src="/WebApp/integration/4.svg" 
+                  alt="학생용 모바일 앱 목업"
+                  style={{
+                    position: 'absolute',
+                    top: '80px',
+                    right: '130px',
+                    width: 'auto',
+                    height: '300px',
+                    zIndex: 1,
+                    opacity: 0.8
+                  }}
+                />
+                
+                {/* 선생님용 웹사이트 정보 - 우측 상단 */}
+                <div style={{
+                  paddingLeft: '10px', 
+                  paddingRight: '10px', 
+                  left: '230px', 
+                  top: '85.72px', 
+                  position: 'absolute', 
+                  overflow: 'hidden', 
+                  flexDirection: 'column', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  gap: '10px', 
+                  display: 'inline-flex',
+                  zIndex: 2
+                }}>
+                  <div style={{
+                    justifyContent: 'center', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    color: '#835EEB', 
+                    fontSize: '16px', 
+                    fontFamily: 'Pretendard', 
+                    fontWeight: '700', 
+                    lineHeight: '20.80px', 
+                    wordWrap: 'break-word'
+                  }}>
+                    선생님용 웹사이트
+                  </div>
+                  <div style={{
+                    flexDirection: 'column', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    gap: '10px', 
+                    display: 'flex'
+                  }}>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        맞춤형 문제 출제
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        클래스 및 학생관리
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        AI 채점 결과 확인
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        실력 분석 리포트
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* 학생용 모바일 앱 정보 - 좌측 하단 */}
+                <div style={{
+                  paddingLeft: '10px', 
+                  paddingRight: '10px', 
+                  paddingTop: '20px', 
+                  paddingBottom: '20px', 
+                  left: '30px', 
+                  top: '733.72px', 
+                  position: 'absolute', 
+                  overflow: 'hidden', 
+                  flexDirection: 'column', 
+                  justifyContent: 'center', 
+                  alignItems: 'center', 
+                  gap: '10px', 
+                  display: 'inline-flex',
+                  zIndex: 2
+                }}>
+                  <div style={{
+                    justifyContent: 'center', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    color: '#835EEB', 
+                    fontSize: '16px', 
+                    fontFamily: 'Pretendard', 
+                    fontWeight: '700', 
+                    lineHeight: '20.80px', 
+                    wordWrap: 'break-word'
+                  }}>
+                    학생용 모바일 앱
+                  </div>
+                  <div style={{
+                    flexDirection: 'column', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    gap: '10px', 
+                    display: 'flex'
+                  }}>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        AI 힌트 시스템
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        실시간 채점 피드백
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        장학금 알림 수신
+                      </div>
+                    </div>
+                    <div style={{
+                      width: '130px', 
+                      paddingLeft: '15px', 
+                      paddingRight: '15px', 
+                      background: '#F3EFFD', 
+                      overflow: 'hidden', 
+                      borderRadius: '50px', 
+                      flexDirection: 'column', 
+                      justifyContent: 'center', 
+                      alignItems: 'center', 
+                      display: 'flex'
+                    }}>
+                      <div style={{
+                        justifyContent: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        color: '#33373B', 
+                        fontSize: '13px', 
+                        fontFamily: 'Pretendard', 
+                        fontWeight: '400', 
+                        lineHeight: '19.50px', 
+                        wordWrap: 'break-word'
+                      }}>
+                        맞춤형 학습지 수신
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </>
-          ) : window.innerWidth <= 1024 ? (
+          ) : window.innerWidth <= 820 ? (
             /* 태블릿 전용 레이아웃 */
             <>
               <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'0'}}>
@@ -2474,100 +2898,98 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               </WebAppHeader>
               <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
                 
-                {/* 태블릿용 목업 컨테이너 (1024px 이하에서만 표시) */}
-                <TabletMockupContainer>
-                  <TabletMockupImage 
-                    src="/Body/mockups/mockup_tablet.png" 
-                    alt="태블릿 목업"
-                  />
-                </TabletMockupContainer>
-                
-                {/* 웹버전 목업들 (1024px 초과에서만 표시) */}
-                {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
-                <AnimatedMockupElement
-                  isVisible={mockupsVisible[0]}
-                  style={{position: 'absolute', top: '155px', left: '-50px', zIndex: 12}}
-                  onClick={() => window.open('https://class.iammathking.com', '_blank')}
-                >
-                  <img 
-                    src="/WebApp/integration/1.svg" 
-                    alt="선생님용 웹사이트"
-                    style={{ 
-                      width: 'auto', 
-                      height: '550px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.03)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
-                    }}
-                  />
-                </AnimatedMockupElement>
-                
-                {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
-                <AnimatedMockupElement
-                  isVisible={mockupsVisible[1]}
-                  style={{position: 'absolute', top: '730px', left: '410px', zIndex: 12}}
-                  onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
-                >
-                  <img 
-                    src="/WebApp/integration/2.svg" 
-                    alt="학생용 모바일 앱"
-                    style={{ 
-                      width: 'auto', 
-                      height: '550px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.04)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
-                    }}
-                  />
-                </AnimatedMockupElement>
-                
-                {/* 가운데 - 모바일 앱 화면 (세로형) */}
-                <AnimatedMockupElement
-                  isVisible={mockupsVisible[2]}
-                  style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
-                >
-                  <img 
-                    src="/WebApp/integration/3.svg" 
-                    alt="모바일 앱 인터페이스"
-                    style={{ 
-                      width: 'auto', 
-                      height: '550px',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.03)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
-                    }}
-                  />
-                </AnimatedMockupElement>
-                
-                {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
-                <AnimatedMockupElement
-                  isVisible={mockupsVisible[3]}
-                  style={{position: 'absolute', top: '400px', right: '-280px', zIndex: 11}}
-                  onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                {/* 웹버전 목업들 (820px 초과에서만 표시) */}
+                <DesktopMockupGroup>
+                  {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
+                  <AnimatedMockupElement
+                    $isVisible={mockupsVisible[0]}
+                    style={{position: 'absolute', top: '155px', left: '-50px', zIndex: 12}}
+                    onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                  >
+                    <img 
+                      src="/WebApp/integration/1.svg" 
+                      alt="선생님용 웹사이트"
+                      style={{ 
+                        width: 'auto', 
+                        height: '550px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.03)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                      }}
+                    />
+                  </AnimatedMockupElement>
+                  
+                  {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
+                  <AnimatedMockupElement
+                    $isVisible={mockupsVisible[1]}
+                    style={{position: 'absolute', top: '730px', left: '410px', zIndex: 12}}
+                    onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
+                  >
+                    <img 
+                      src="/WebApp/integration/2.svg" 
+                      alt="학생용 모바일 앱"
+                      style={{ 
+                        width: 'auto', 
+                        height: '550px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.04)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                      }}
+                    />
+                  </AnimatedMockupElement>
+                  
+                  {/* 실시간 동기화 텍스트 - 가운데 폰 목업 위 */}
+                  <AnimatedSyncText isVisible={syncTextVisible}>
+                    실시간<br/>동기화
+                  </AnimatedSyncText>
+                  
+                  {/* 가운데 - 모바일 앱 화면 (세로형) */}
+                  <AnimatedMockupElement
+                    $isVisible={mockupsVisible[2]}
+                    style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
+                  >
+                    <img 
+                      src="/WebApp/integration/3.svg" 
+                      alt="모바일 앱 인터페이스"
+                      style={{ 
+                        width: 'auto', 
+                        height: '550px',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'scale(1.03)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'scale(1)';
+                        e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
+                      }}
+                    />
+                  </AnimatedMockupElement>
+                  
+                  {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
+                  <AnimatedMockupElement
+                    $isVisible={mockupsVisible[3]}
+                    style={{position: 'absolute', top: '400px', right: '-280px', zIndex: 11}}
+                    onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
                   <img 
                     src="/WebApp/integration/4.svg" 
@@ -2627,6 +3049,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     </WebAppInfoChips>
                   </WebAppInfoBlock>
                 </WebAppInfoTextContainer>
+                </DesktopMockupGroup>
               </WebAppContent>
             </>
           )}
@@ -2637,20 +3060,26 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       <ExperienceSection>
         <ExperienceInner>
           <ExperienceTextBlock>
-            <AnimatedTextContent className={textVisible ? 'visible' : ''}>
-              <ExperienceTitle>
-                {testimonials[currentTestimonial % testimonials.length].title.highlight}<br/>{testimonials[currentTestimonial % testimonials.length].title.normal}
-              </ExperienceTitle>
-              <ExperienceQuote>
-                <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial % testimonials.length].quote }} />
-              </ExperienceQuote>
+            <AnimatedTextContent className={textAnimationState}>
+              <AnimatedTitle isVisible={textAnimationState === 'visible'}>
+                <ExperienceTitle>
+                  {testimonials[currentTestimonial % testimonials.length].title.highlight}<br/>{testimonials[currentTestimonial % testimonials.length].title.normal}
+                </ExperienceTitle>
+              </AnimatedTitle>
+              <AnimatedQuote isVisible={textAnimationState === 'visible'}>
+                <ExperienceQuote>
+                  <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial % testimonials.length].quote }} />
+                </ExperienceQuote>
+              </AnimatedQuote>
               <NameSection>
                 <VerticalLine />
-                <ExperienceName>
-                  {testimonials[currentTestimonial % testimonials.length].name.split('<br/>').map((line, idx) => (
-                    <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
-                  ))}
-                </ExperienceName>
+                <AnimatedName isVisible={textAnimationState === 'visible'}>
+                  <ExperienceName>
+                    {testimonials[currentTestimonial % testimonials.length].name.split('<br/>').map((line, idx) => (
+                      <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
+                    ))}
+                  </ExperienceName>
+                </AnimatedName>
               </NameSection>
             </AnimatedTextContent>
           </ExperienceTextBlock>
@@ -2710,7 +3139,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 const WebAppSection = styled.section`
   width: 100%;
   background: white;
-  padding: 192px 20px;
+  padding: 192px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -2718,15 +3147,18 @@ const WebAppSection = styled.section`
   gap: 128px;
   overflow: hidden;
   scroll-snap-align: start;
+  position: relative;
   @media (max-width: 1366px) and (min-width: 601px) {
     padding: 60px 0; /* 태블릿에서 좌우 패딩 제거 */
     gap: 60px;
   }
   @media (max-width: 600px) {
-    padding: 80px 12px 40px 12px;
+    padding: 80px 0 20px 0;
     gap: 60px;
   }
 `;
+
+
 
 const WebAppHeader = styled.div`
   align-self: stretch;
@@ -2866,15 +3298,9 @@ const WebAppContent = styled.div`
   width: 100%;
   max-width: none;
   
-  /* 가로 사이즈가 줄어들면 바로 태블릿 버전으로 전환 */
-  @media (max-width: 1600px) {
-    min-width: auto;
-    transform: none;
-    min-height: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 20px;
+  /* 820px 이하에서 데스크탑 버전 숨기기 */
+  @media (max-width: 820px) {
+    display: none;
   }
   
   @media (max-width: 600px) {
@@ -2889,6 +3315,27 @@ const WebAppContent = styled.div`
   }
 `;
 
+/* 데스크탑 목업 그룹 컨테이너 */
+const DesktopMockupGroup = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    transform: scale(0.75);
+    transform-origin: center center;
+  }
+`;
+
 const MockupElement = styled.div`
   position: absolute;
   cursor: pointer;
@@ -2899,14 +3346,95 @@ const MockupElement = styled.div`
   }
 `;
 
-const AnimatedMockupElement = styled(MockupElement)<{ isVisible: boolean; delay?: number }>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? '0' : '30px'});
+const AnimatedMockupElement = styled(MockupElement)<{ $isVisible: boolean; delay?: number }>`
+  opacity: ${props => props.$isVisible ? 1 : 0};
+  transform: translateY(${props => props.$isVisible ? '0' : '30px'});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
   
-  /* 1600px 이하에서 웹버전 목업 즉시 숨기기 */
-  @media (max-width: 1600px) {
+  /* 820px 이하에서 웹버전 목업 숨기기 */
+  @media (max-width: 820px) {
+    display: none;
+  }
+`;
+
+const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
+  position: absolute;
+  top: 200px;
+  left: calc(50% - 10px);
+  transform: translateX(-50%);
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #835EEB;
+  font-size: 42px;
+  font-family: 'Godo B';
+  font-weight: 400;
+  line-height: 54px;
+  word-wrap: break-word;
+  z-index: 10;
+  text-align: center;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateX(-50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 820px 이하에서 웹버전 목업 숨기기 */
+  @media (max-width: 820px) {
+    display: none;
+  }
+`;
+
+const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
+  left: 50%; 
+  top: calc(50% - 30px); 
+  transform: translate(-50%, -50%);
+  position: absolute; 
+  justify-content: center; 
+  display: flex; 
+  flex-direction: column; 
+  color: #835EEB; 
+  font-size: 32px; 
+  font-family: 'Godo B'; 
+  font-weight: 400; 
+  line-height: 41.60px; 
+  word-wrap: break-word;
+  z-index: 1;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translate(-50%, -50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 600px 초과에서 모바일 버전 숨기기 */
+  @media (min-width: 601px) {
+    display: none;
+  }
+`;
+
+const AnimatedArrow = styled.div<{ isVisible: boolean }>`
+  position: absolute;
+  top: calc(50% - 30px);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 500px;
+  z-index: -1;
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* 기본 스타일 */
+  background: url('/WebApp/integration/circle.svg') no-repeat center;
+  background-size: contain;
+  
+  /* 애니메이션 조합 */
+  animation: ${arrowBreathe} 3s ease-in-out infinite,
+             ${arrowGlow} 2s ease-in-out infinite;
+  
+  /* 호버 효과 */
+  &:hover {
+    animation: ${arrowPulse} 1s ease-in-out infinite;
+  }
+  
+  /* 600px 초과에서 모바일 버전 숨기기 */
+  @media (min-width: 601px) {
     display: none;
   }
 `;
@@ -2915,7 +3443,7 @@ const AnimatedMockupElement = styled(MockupElement)<{ isVisible: boolean; delay?
 const TabletMockupContainer = styled.div`
   display: none;
   
-  @media (max-width: 1600px) {
+  @media (max-width: 820px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -2940,7 +3468,18 @@ const TabletMockupImage = styled.img`
 
 /* 웹앱 정보 텍스트 컨테이너 */
 const WebAppInfoTextContainer = styled.div`
-  @media (max-width: 1600px) {
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    transform: scale(0.75);
+    transform-origin: center center;
+  }
+  
+  @media (max-width: 820px) {
     display: none;
   }
 `;
@@ -3193,13 +3732,41 @@ const VerticalLine = styled.div`
 const AnimatedTextContent = styled.div`
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   
   &.visible {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
+  
+  &.slide-out {
+    animation: ${textSlideOut} 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  }
+  
+  &.slide-in {
+    animation: ${textSlideIn} 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  }
+`;
+
+const AnimatedTitle = styled.div<{ isVisible: boolean }>`
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? 0 : '30px'}) scale(${props => props.isVisible ? 1 : 0.95});
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.1s;
+`;
+
+const AnimatedQuote = styled.div<{ isVisible: boolean }>`
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? 0 : '25px'}) scale(${props => props.isVisible ? 1 : 0.98});
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.2s;
+`;
+
+const AnimatedName = styled.div<{ isVisible: boolean }>`
+  opacity: ${props => props.isVisible ? 1 : 0};
+  transform: translateY(${props => props.isVisible ? 0 : '20px'}) scale(${props => props.isVisible ? 1 : 0.97});
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-delay: 0.3s;
 `;
 
 const VideoSlider = styled.div`
@@ -3582,19 +4149,35 @@ const WebAppInfoRow = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
-  padding: 48px 7vw 0 7vw;
+  padding: 48px 0 0 0;
   box-sizing: border-box;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    transform: scale(0.9);
+    transform-origin: center center;
+    gap: 36px;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    transform: scale(0.75);
+    transform-origin: center center;
+    gap: 30px;
+  }
+  
   @media (max-width: 900px) {
     flex-direction: column;
     gap: 32px;
     padding: 32px 4vw 0 4vw;
     align-items: stretch;
+    transform: none;
   }
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 40px;
     padding: 24px 0 0 0;
     align-items: center;
+    transform: none;
   }
 `;
 const WebAppInfoBlock = styled.div`
@@ -3603,6 +4186,18 @@ const WebAppInfoBlock = styled.div`
   align-items: flex-start;
   gap: 18px;
   min-width: 220px;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    gap: 16px;
+    min-width: 200px;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    gap: 14px;
+    min-width: 180px;
+  }
+  
   @media (max-width: 600px) {
     align-items: center !important;
     text-align: center !important;
@@ -3621,6 +4216,16 @@ const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: translateY(${props => props.isVisible ? '0' : '20px'});
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    font-size: 32px;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    font-size: 28px;
+  }
+  
   @media (max-width: 600px) {
     font-size: 26px;
     margin-bottom: 6px;
@@ -3630,6 +4235,16 @@ const WebAppInfoChips = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    gap: 9px;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    gap: 8px;
+  }
+  
   @media (max-width: 600px) {
     flex-direction: row;
     flex-wrap: wrap;
@@ -3650,6 +4265,18 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: translateY(${props => props.isVisible ? '0' : '20px'});
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    font-size: 20px;
+    padding: 9px 22px;
+  }
+  
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    font-size: 18px;
+    padding: 8px 20px;
+  }
+  
   @media (max-width: 600px) {
     font-size: 15px;
     padding: 5px 12px;

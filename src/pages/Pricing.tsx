@@ -1665,9 +1665,13 @@ const TrialStepTitle = styled.div`
   font-weight: 600;
   line-height: 33px;
   word-wrap: break-word;
+  @media (max-width: 1024px) {
+    text-align: center;
+  }
   @media (max-width: 768px) {
     font-size: 18px;
     line-height: 27px;
+    text-align: center;
   }
 `;
 
@@ -1750,11 +1754,17 @@ const TrialSectionSubtitle = styled.div`
   font-weight: 400;
   line-height: 27px;
   word-wrap: break-word;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   
   @media (max-width: 768px) {
     font-size: 16px;
     line-height: 24px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 480px) {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 15px;
   }
 `;
 
@@ -3111,8 +3121,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>체험 신청 시, <br/>무료 체험 계정이 문자로 안내돼요</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>체험 신청 완료 후 즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>체험 신청 완료 후<br/>즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.</TrialStepDescriptionLine>
             </TrialStepDescription>
             <TrialStepButton>
               <TrialStepButtonText>무료 체험 시작하기</TrialStepButtonText>
@@ -3130,8 +3139,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>선생님용 계정에 로그인</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>받으신 선생님용 계정 정보로 웹사이트에 접속하여 로그인하세요.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>학생 관리와 학습 현황을 한눈에 확인할 수 있는 대시보드가 제공됩니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>받으신 선생님용 계정 정보로<br/>웹사이트에 접속하여 로그인하세요.<br/>학생 관리와 학습 현황을<br/>한눈에 확인할 수 있는 대시보드가 제공됩니다.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -3146,8 +3154,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>학생용 계정에 로그인</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>학생들은 모바일 앱을 다운로드하여 계정 정보로 로그인합니다.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>학생들은 모바일 앱을 다운로드하여<br/>계정 정보로 로그인합니다.<br/>직관적인 인터페이스로 누구나 쉽게 사용할 수 있어요.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -3162,8 +3169,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>필요한 경우,<br/>학생을 추가 하실 수도 있어요</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>선생님 대시보드에서 간편하게 새로운 학생을 추가하고 관리할 수 있습니다.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>선생님 대시보드에서 간편하게<br/>새로운 학생을 추가하고 관리할 수 있습니다.<br/>체험 기간 중에도 학원 상황에 맞춰 자유롭게 조정하세요.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -3178,8 +3184,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>학습지를 배부하고</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>원하는 단원과 난이도를 선택하여 학습지를 생성하고 배부하세요.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>학생들은 앱에서 바로 문제를 풀고 실시간으로 채점받을 수 있습니다.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>원하는 단원과 난이도를 선택하여<br/>학습지를 생성하고 배부하세요.<br/>학생들은 앱에서 바로 문제를 풀고<br/>실시간으로 채점받을 수 있습니다.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>
@@ -3194,8 +3199,7 @@ const Pricing: React.FC<PricingProps> = () => {
               <TrialStepTitle>풀이 결과 대시보드를<br/>확인하세요!</TrialStepTitle>
             </TrialStepHeader>
             <TrialStepDescription>
-              <TrialStepDescriptionLine>학생들의 학습 진도와 성취도를 실시간으로 확인할 수 있습니다.</TrialStepDescriptionLine>
-              <TrialStepDescriptionLine>취약 단원 분석과 개별 학습 관리로 효과적인 지도가 가능해요.</TrialStepDescriptionLine>
+              <TrialStepDescriptionLine>학생들의 학습 진도와 성취도를<br/>실시간으로 확인할 수 있습니다.<br/>취약 단원 분석과 개별 학습 관리로<br/>효과적인 지도가 가능해요.</TrialStepDescriptionLine>
             </TrialStepDescription>
           </TrialStepContent>
           <TrialStepImage>

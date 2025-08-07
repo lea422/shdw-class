@@ -67,13 +67,13 @@ const ImageSlider = styled.div`
   }
 `;
 
-const Slide = styled.div<{ isActive: boolean; bgMobile?: string; bgTablet?: string; bgDesktop: string }>`
+const Slide = styled.div<{ $isActive: boolean; bgMobile?: string; bgTablet?: string; bgDesktop: string }>`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: ${props => props.isActive ? 1 : 0};
+  opacity: ${props => props.$isActive ? 1 : 0};
   transition: opacity 1s ease-in-out;
   background-size: cover;
   background-position: center;
@@ -381,11 +381,11 @@ const IndicatorPause = styled.button`
     display: none;
   }
 `;
-const IndicatorDot = styled.button<{ active: boolean }>`
-  width: ${props => (props.active ? '24px' : '8px')};
+const IndicatorDot = styled.button<{ $active: boolean }>`
+  width: ${props => (props.$active ? '24px' : '8px')};
   height: 8px;
   border-radius: 6px;
-  background: ${props => (props.active ? '#fff' : 'rgba(255,255,255,0.4)')};
+  background: ${props => (props.$active ? '#fff' : 'rgba(255,255,255,0.4)')};
   border: none;
   transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
   cursor: pointer;
@@ -394,7 +394,7 @@ const IndicatorDot = styled.button<{ active: boolean }>`
   justify-content: center;
   padding: 0;
   @media (max-width: 600px) {
-    width: ${props => (props.active ? '20px' : '8px')};
+    width: ${props => (props.$active ? '20px' : '8px')};
     height: 8px;
     border-radius: 4px;
   }
@@ -1484,7 +1484,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
           {slides.map((slide, index) => (
             <Slide
               key={slide.id}
-              isActive={index === currentSlide}
+              $isActive={index === currentSlide}
               bgDesktop={slide.image}
               bgTablet={slide.imageTablet}
               bgMobile={slide.imageMobile}
@@ -1528,7 +1528,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
                 {slides.map((_, idx) => (
                   <IndicatorDot
                     key={idx}
-                    active={currentSlide === idx}
+                    $active={currentSlide === idx}
                     aria-label={`슬라이드 ${idx + 1}`}
                     onClick={() => setCurrentSlide(idx)}
                   />
