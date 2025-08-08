@@ -1342,13 +1342,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [textVisible, setTextVisible] = useState(true);
-  const [textAnimationState, setTextAnimationState] = useState<'visible' | 'slide-out' | 'slide-in'>('visible');
+  const [textAnimationState, setTextAnimationState] = useState<'visible' | 'fade-out' | 'fade-in'>('visible');
   const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
   const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
   const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentDemoSlide, setCurrentDemoSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isDemoMobile, setIsDemoMobile] = useState(false); // 데모 섹션 전용 모바일 상태
+  const [isWebAppMobile, setIsWebAppMobile] = useState(false); // 웹앱 연동 섹션 전용 모바일 상태
   
   // 웹앱 연동 칩 애니메이션 상태
   const [teacherChipsVisible, setTeacherChipsVisible] = useState([false, false, false, false]);
@@ -1404,6 +1405,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1366); // 태블릿도 모바일 레이아웃 사용
       setIsDemoMobile(window.innerWidth <= 600); // 데모 섹션은 600px 이하만 모바일
+      setIsWebAppMobile(window.innerWidth <= 600); // 웹앱 연동 섹션은 600px 이하에서 모바일
     };
     
     checkMobile();
@@ -1450,55 +1452,50 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => clearInterval(interval);
   }, [isMobile]);
 
-  // 테스티모니얼 변경 시 자연스러운 전환 효과 (무한 루프 리셋 시 제외)
+  // 테스티모니얼 변경 시 자연스러운 전환 효과
   useEffect(() => {
-    // 무한 루프 리셋 시에는 애니메이션 건너뛰기
-    if (currentTestimonial === testimonials.length) {
-      return;
-    }
+    // 이미지 슬라이드와 동기화된 텍스트 페이드 효과
+    // 이미지 슬라이드가 시작되면 텍스트 페이드 아웃
+    setTextAnimationState('fade-out');
     
-    // 슬라이드 아웃 → 슬라이드 인 순서로 자연스러운 전환
-    setTextAnimationState('slide-out');
+    // 이미지 슬라이드 전환이 완료된 후 텍스트 페이드 인
+    const fadeInTimer = setTimeout(() => {
+      setTextAnimationState('fade-in');
+    }, 400); // 이미지 슬라이드 전환 중간에 텍스트 페이드 인 시작
     
-    const slideOutTimer = setTimeout(() => {
-      setTextAnimationState('slide-in');
-    }, 400); // 슬라이드 아웃 완료 후
-    
-    const slideInTimer = setTimeout(() => {
+    const visibleTimer = setTimeout(() => {
       setTextAnimationState('visible');
-    }, 1000); // 슬라이드 인 완료 후
+    }, 900); // 이미지 슬라이드 완료 후 텍스트 완전히 보이기
     
     return () => {
-      clearTimeout(slideOutTimer);
-      clearTimeout(slideInTimer);
+      clearTimeout(fadeInTimer);
+      clearTimeout(visibleTimer);
     };
-  }, [currentTestimonial, testimonials.length]);
+  }, [currentTestimonial]);
 
   // 무한 슬라이드 (한쪽 방향으로 계속)
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => prev + 1);
+      setCurrentTestimonial((prev) => {
+        const next = prev + 1;
+        // testimonials.length에 도달하면 0으로 리셋 (3번 슬라이드 건너뛰기)
+        return next >= testimonials.length ? 0 : next;
+      });
     }, 4000); // 4초마다 다음 슬라이드로
     return () => clearInterval(interval);
-  }, []);
+  }, [testimonials.length]);
 
-  // 무한 루프를 위한 seamless 리셋
-  useEffect(() => {
-    if (currentTestimonial === testimonials.length) {
-      // 복제된 첫 번째 슬라이드에서 실제 첫 번째 슬라이드로 seamless 전환
-      const timer = setTimeout(() => {
-        setIsTransitioning(false);
-        setCurrentTestimonial(0);
-        setTimeout(() => {
-          setIsTransitioning(true);
-        }, 50);
-      }, 1000); // 전환 애니메이션 완료 후
-      return () => clearTimeout(timer);
-    }
-  }, [currentTestimonial, testimonials.length]);
+
 
   // 웹앱 연동 섹션 칩 및 목업 애니메이션
   useEffect(() => {
+    // 초기 상태 리셋
+    setMockupsVisible([false, false, false, false]);
+    setSyncTextVisible(false);
+    setArrowVisible(false);
+    setTeacherChipsVisible([false, false, false, false]);
+    setStudentChipsVisible([false, false, false, false]);
+    
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1521,15 +1518,18 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             setTimeout(() => setTeacherChipsVisible([true, true, true, false]), 1000);
             setTimeout(() => setTeacherChipsVisible([true, true, true, true]), 1150);
             
-            // 학생용 칩 순차 애니메이션 (1350ms 후 시작)
-            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 1350);
-            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 1500);
-            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1650);
-            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1800);
+            // 학생용 칩 순차 애니메이션 (선생님용 칩과 동시에 시작하도록 수정)
+            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 700);
+            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 850);
+            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1000);
+            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1150);
+            
+            // 한 번 실행 후 observer 해제
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (webAppSectionRef.current) {
@@ -2362,7 +2362,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection ref={webAppSectionRef}>
         <div style={{position:'relative',width:'100%',maxWidth:'100%',margin:'0',padding:0,minHeight:'900px',zIndex:2}}>
-          {window.innerWidth <= 820 ? (
+          {isWebAppMobile ? (
             <>
               <WebAppHeader
                 style={{
@@ -2451,13 +2451,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   }}
                 />
                 
-                {/* 선생님용 웹사이트 정보 - 우측 상단 */}
+                {/* 선생님용 웹사이트 정보 - 좌측 상단 */}
                 <div style={{
                   paddingLeft: '10px', 
                   paddingRight: '10px', 
-                  left: '230px', 
-                  top: '85.72px', 
                   position: 'absolute', 
+                  top: '90px',
+                  left: '230px',
                   overflow: 'hidden', 
                   flexDirection: 'column', 
                   justifyContent: 'center', 
@@ -2593,15 +2593,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </div>
                 </div>
                 
-                {/* 학생용 모바일 앱 정보 - 좌측 하단 */}
+                {/* 학생용 모바일 앱 정보 - 우측 하단 */}
                 <div style={{
                   paddingLeft: '10px', 
                   paddingRight: '10px', 
                   paddingTop: '20px', 
                   paddingBottom: '20px', 
-                  left: '30px', 
-                  top: '733.72px', 
                   position: 'absolute', 
+                  bottom: '80px',
+                  right: '210px',
                   overflow: 'hidden', 
                   flexDirection: 'column', 
                   justifyContent: 'center', 
@@ -2738,136 +2738,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 </div>
               </div>
             </>
-          ) : window.innerWidth <= 820 ? (
-            /* 태블릿 전용 레이아웃 */
-            <>
-              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'0'}}>
-                <WebAppTitle style={{pointerEvents:'auto', fontSize: 36, textAlign: 'center'}}>웹-앱 연동으로 완성되는<br/>교육 시스템</WebAppTitle>
-                <WebAppSubtitle style={{pointerEvents:'auto', fontSize: 18, textAlign: 'center', marginTop: 16}}>교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요</WebAppSubtitle>
-                <WebAppButtons style={{pointerEvents:'auto', marginTop: 24}}>
-                  <WebAppButton 
-                    href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WebAppIcon>
-                      <img src="/Common/Google_Play_logo.svg" alt="Google Play" />
-                    </WebAppIcon>
-                    <WebAppButtonText>Google Play</WebAppButtonText>
-                  </WebAppButton>
-                  <WebAppButton 
-                    href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WebAppIcon>
-                      <img src="/Common/App_Store_logo.svg" alt="App Store" />
-                    </WebAppIcon>
-                    <WebAppButtonText>App Store</WebAppButtonText>
-                  </WebAppButton>
-                </WebAppButtons>
-              </WebAppHeader>
-              
-              {/* 태블릿 메인 콘텐츠 영역 - mockup 이미지 기반 */}
-              <div style={{position: 'relative', width: '100%', margin: '0', padding: '0'}}>
-                {/* 배경 mockup 이미지 */}
-                <img 
-                  src={`/Body/mockups/mockup_tablet.png?v=${Date.now()}`} 
-                  alt="웹-앱 연동 mockup" 
-                  style={{
-                    width: '100%', 
-                    height: 'auto', 
-                    display: 'block'
-                  }} 
-                />
-                
-                {/* 좌측 상단: 선생님용 웹사이트 제목과 칩들 */}
-                <TeacherWebsiteContainer>
-                  <WebAppInfoTitle
-                    isVisible={teacherChipsVisible[0]}
-                    delay={0}
-                    style={{
-                      fontSize: 28, 
-                      marginBottom: 8,
-                      textAlign: 'right'
-                    }}
-                  >
-                    선생님용<br/>웹사이트
-                  </WebAppInfoTitle>
-                  <WebAppInfoChip 
-                    isVisible={teacherChipsVisible[0]} 
-                    delay={0}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    클래스 및 학생관리
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={teacherChipsVisible[1]} 
-                    delay={200}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    맞춤형 문제 출제
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={teacherChipsVisible[2]} 
-                    delay={400}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    AI 채점 결과 확인
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={teacherChipsVisible[3]} 
-                    delay={600}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    실력 분석 리포트
-                  </WebAppInfoChip>
-                </TeacherWebsiteContainer>
-                
-                {/* 좌측 하단: 학생용 모바일 앱 제목과 칩들 */}
-                <StudentAppContainer>
-                  <WebAppInfoTitle
-                    isVisible={studentChipsVisible[0]}
-                    delay={0}
-                    style={{
-                      fontSize: 28, 
-                      marginBottom: 8,
-                      textAlign: 'left'
-                    }}
-                  >
-                    학생용<br/>모바일 앱
-                  </WebAppInfoTitle>
-                  <WebAppInfoChip 
-                    isVisible={studentChipsVisible[0]} 
-                    delay={800}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    맞춤형 학습지 수신
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={studentChipsVisible[1]} 
-                    delay={1000}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    AI 힌트 시스템
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={studentChipsVisible[2]} 
-                    delay={1200}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    실시간 채점 피드백
-                  </WebAppInfoChip>
-                  <WebAppInfoChip 
-                    isVisible={studentChipsVisible[3]} 
-                    delay={1400}
-                    style={{fontSize: 14, padding: '6px 12px', borderRadius: 16}}
-                  >
-                    장학금 알림 수신
-                  </WebAppInfoChip>
-                </StudentAppContainer>
-              </div>
-            </>
           ) : (
             <>
               <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'50px'}}>
@@ -2901,9 +2771,8 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 {/* 웹버전 목업들 (820px 초과에서만 표시) */}
                 <DesktopMockupGroup>
                   {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
-                  <AnimatedMockupElement
+                  <TeacherMockupElement
                     $isVisible={mockupsVisible[0]}
-                    style={{position: 'absolute', top: '155px', left: '-50px', zIndex: 12}}
                     onClick={() => window.open('https://class.iammathking.com', '_blank')}
                   >
                     <img 
@@ -2911,7 +2780,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       alt="선생님용 웹사이트"
                       style={{ 
                         width: 'auto', 
-                        height: '550px',
+                        height: 'var(--mockup-height-1, 550px)',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
@@ -2925,12 +2794,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                         e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                       }}
                     />
-                  </AnimatedMockupElement>
+                  </TeacherMockupElement>
                   
                   {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
-                  <AnimatedMockupElement
+                  <StudentMockupElement
                     $isVisible={mockupsVisible[1]}
-                    style={{position: 'absolute', top: '730px', left: '410px', zIndex: 12}}
                     onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
                   >
                     <img 
@@ -2938,7 +2806,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       alt="학생용 모바일 앱"
                       style={{ 
                         width: 'auto', 
-                        height: '550px',
+                        height: 'var(--mockup-height-2, 550px)',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
@@ -2952,7 +2820,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                         e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                       }}
                     />
-                  </AnimatedMockupElement>
+                  </StudentMockupElement>
                   
                   {/* 실시간 동기화 텍스트 - 가운데 폰 목업 위 */}
                   <AnimatedSyncText isVisible={syncTextVisible}>
@@ -2960,16 +2828,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </AnimatedSyncText>
                   
                   {/* 가운데 - 모바일 앱 화면 (세로형) */}
-                  <AnimatedMockupElement
+                  <CenterMockupElement
                     $isVisible={mockupsVisible[2]}
-                    style={{position: 'absolute', top: '330px', left: '50%', transform: 'translateX(-50%)', zIndex: 11}}
                   >
                     <img 
                       src="/WebApp/integration/3.svg" 
                       alt="모바일 앱 인터페이스"
                       style={{ 
                         width: 'auto', 
-                        height: '550px',
+                        height: 'var(--mockup-height-3, 550px)',
                         cursor: 'pointer',
                         transition: 'all 0.3s ease',
                         filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
@@ -2983,12 +2850,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                         e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
                       }}
                     />
-                  </AnimatedMockupElement>
+                  </CenterMockupElement>
                   
                   {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
-                  <AnimatedMockupElement
+                  <DesktopMockupElement
                     $isVisible={mockupsVisible[3]}
-                    style={{position: 'absolute', top: '400px', right: '-280px', zIndex: 11}}
                     onClick={() => window.open('https://class.iammathking.com', '_blank')}
                 >
                   <img 
@@ -2996,7 +2862,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     alt="데스크톱 관리 시스템"
                     style={{ 
                       width: 'auto', 
-                      height: '650px',
+                      height: 'var(--mockup-height-4, 650px)',
                       cursor: 'pointer',
                       transition: 'all 0.3s ease',
                       filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
@@ -3010,10 +2876,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                       e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
                     }}
                   />
-                </AnimatedMockupElement>
+                </DesktopMockupElement>
 
+                </DesktopMockupGroup>
+                
                 {/* 선생님용 웹사이트 정보 텍스트 */}
-                <WebAppInfoTextContainer style={{position: 'absolute', top: '80px', right: '50px', zIndex: 10}}>
+                <TeacherInfoContainer>
                   <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
                     <WebAppInfoTitle 
                       isVisible={teacherChipsVisible[0]} 
@@ -3024,15 +2892,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     </WebAppInfoTitle>
                     <WebAppInfoChips style={{alignItems:'flex-end'}}>
                       <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={200}>맞춤형 문제 출제</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={400}>AI 채점 결과 확인</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={600}>실력 분석 리포트</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={150}>맞춤형 문제 출제</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={300}>AI 채점 결과 확인</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={450}>실력 분석 리포트</WebAppInfoChip>
                     </WebAppInfoChips>
                   </WebAppInfoBlock>
-                </WebAppInfoTextContainer>
+                </TeacherInfoContainer>
                 
                 {/* 학생용 모바일 앱 정보 텍스트 */}
-                <WebAppInfoTextContainer style={{position: 'absolute', bottom: '130px', left: '50px', zIndex: 10}}>
+                <StudentInfoContainer>
                   <WebAppInfoBlock>
                     <WebAppInfoTitle 
                       isVisible={studentChipsVisible[0]} 
@@ -3043,13 +2911,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     </WebAppInfoTitle>
                     <WebAppInfoChips>
                       <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={200}>AI 힌트 시스템</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={400}>실시간 채점 피드백</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={600}>장학금 알림 수신</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={150}>AI 힌트 시스템</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={300}>실시간 채점 피드백</WebAppInfoChip>
+                      <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={450}>장학금 알림 수신</WebAppInfoChip>
                     </WebAppInfoChips>
                   </WebAppInfoBlock>
-                </WebAppInfoTextContainer>
-                </DesktopMockupGroup>
+                </StudentInfoContainer>
               </WebAppContent>
             </>
           )}
@@ -3061,25 +2928,25 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <ExperienceInner>
           <ExperienceTextBlock>
             <AnimatedTextContent className={textAnimationState}>
-              <AnimatedTitle isVisible={textAnimationState === 'visible'}>
+              <div>
                 <ExperienceTitle>
                   {testimonials[currentTestimonial % testimonials.length].title.highlight}<br/>{testimonials[currentTestimonial % testimonials.length].title.normal}
                 </ExperienceTitle>
-              </AnimatedTitle>
-              <AnimatedQuote isVisible={textAnimationState === 'visible'}>
+              </div>
+              <div>
                 <ExperienceQuote>
                   <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial % testimonials.length].quote }} />
                 </ExperienceQuote>
-              </AnimatedQuote>
+              </div>
               <NameSection>
                 <VerticalLine />
-                <AnimatedName isVisible={textAnimationState === 'visible'}>
+                <div>
                   <ExperienceName>
                     {testimonials[currentTestimonial % testimonials.length].name.split('<br/>').map((line, idx) => (
                       <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
                     ))}
                   </ExperienceName>
-                </AnimatedName>
+                </div>
               </NameSection>
             </AnimatedTextContent>
           </ExperienceTextBlock>
@@ -3091,9 +2958,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   transition: isTransitioning ? 'transform 1s ease-in-out' : 'none'
                 }}
               >
-                {/* 원본 슬라이드들 */}
+                {/* 슬라이드들 */}
                 {testimonials.map((testimonial, index) => (
-                  <VideoSlide key={`original-${index}`}>
+                  <VideoSlide key={index}>
                     <YouTubeThumbnail
                       href={testimonial.videoUrl}
                       target="_blank"
@@ -3109,22 +2976,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     </YouTubeThumbnail>
                   </VideoSlide>
                 ))}
-                {/* 무한 루프를 위한 첫 번째 슬라이드 복제 */}
-                <VideoSlide key="cloned-first">
-                  <YouTubeThumbnail
-                    href={testimonials[0].videoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <ThumbnailImage
-                      src={testimonials[0].thumbnailUrl}
-                      alt={testimonials[0].name}
-                    />
-                    <PlayButton>
-                      <PlayIcon>▶</PlayIcon>
-                    </PlayButton>
-                  </YouTubeThumbnail>
-                </VideoSlide>
               </VideoTrack>
             </VideoSlider>
 
@@ -3152,6 +3003,10 @@ const WebAppSection = styled.section`
     padding: 60px 0; /* 태블릿에서 좌우 패딩 제거 */
     gap: 60px;
   }
+  @media (max-width: 820px) {
+    padding: 40px 0;
+    gap: 40px;
+  }
   @media (max-width: 600px) {
     padding: 80px 0 20px 0;
     gap: 60px;
@@ -3167,6 +3022,27 @@ const WebAppHeader = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 40px;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    gap: 36px;
+  }
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    gap: 32px;
+  }
+  
+  /* 1366px에서 1025px까지 점진적으로 축소 */
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    gap: 28px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    gap: 24px;
+  }
+  
   @media (max-width: 600px) {
     gap: 24px;
   }
@@ -3182,6 +3058,31 @@ const WebAppTitle = styled.div`
   font-weight: 700;
   line-height: 67.20px;
   word-wrap: break-word;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    font-size: 44px;
+    line-height: 62px;
+  }
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    font-size: 40px;
+    line-height: 56px;
+  }
+  
+  /* 1366px에서 1025px까지 점진적으로 축소 */
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    font-size: 36px;
+    line-height: 50px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    font-size: 32px;
+    line-height: 44px;
+  }
+  
   @media (max-width: 900px) {
     font-size: 36px;
     line-height: 50px;
@@ -3205,6 +3106,31 @@ const WebAppSubtitle = styled.div`
   font-weight: 400;
   line-height: 36.40px;
   word-wrap: break-word;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    font-size: 26px;
+    line-height: 34px;
+  }
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  
+  /* 1366px에서 1025px까지 점진적으로 축소 */
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    font-size: 22px;
+    line-height: 30px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    font-size: 20px;
+    line-height: 28px;
+  }
+  
   @media (max-width: 900px) {
     font-size: 22px;
     line-height: 30px;
@@ -3298,9 +3224,134 @@ const WebAppContent = styled.div`
   width: 100%;
   max-width: none;
   
-  /* 820px 이하에서 데스크탑 버전 숨기기 */
-  @media (max-width: 820px) {
+  /* CSS 변수로 동적 위치 조정 */
+  --scale-factor: 1;
+  --teacher-top: 80px;
+  --teacher-right: 50px;
+  --student-left: 50px;
+  --mockup-left: -50px;
+  --mockup-right: -280px;
+  --mockup-center-top: 350px;
+  --mockup-height-1: 550px;
+  --mockup-height-2: 550px;
+  --mockup-height-3: 550px;
+  --mockup-height-4: 650px;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    --scale-factor: 0.95;
+    --teacher-top: 70px;
+    --teacher-right: 45px;
+    --student-left: 45px;
+    --mockup-left: -45px;
+    --mockup-right: -260px;
+    --mockup-center-top: 333px;
+    --mockup-height-1: 523px;
+    --mockup-height-2: 523px;
+    --mockup-height-3: 523px;
+    --mockup-height-4: 618px;
+  }
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    --scale-factor: 0.85;
+    --teacher-top: 60px;
+    --teacher-right: 40px;
+    --student-left: 40px;
+    --mockup-left: -40px;
+    --mockup-right: -240px;
+    --mockup-center-top: 298px;
+    --mockup-height-1: 468px;
+    --mockup-height-2: 468px;
+    --mockup-height-3: 468px;
+    --mockup-height-4: 553px;
+  }
+  
+  /* 1366px에서 1025px까지 점진적으로 축소 */
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    --scale-factor: 0.7;
+    --teacher-top: 50px;
+    --teacher-right: 35px;
+    --student-left: 35px;
+    --mockup-left: -35px;
+    --mockup-right: -220px;
+    --mockup-center-top: 245px;
+    --mockup-height-1: 385px;
+    --mockup-height-2: 385px;
+    --mockup-height-3: 385px;
+    --mockup-height-4: 455px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    --scale-factor: 0.6;
+    --teacher-top: 40px;
+    --teacher-right: 30px;
+    --student-left: 30px;
+    --mockup-left: -30px;
+    --mockup-right: -200px;
+    --mockup-center-top: 210px;
+    --mockup-height-1: 330px;
+    --mockup-height-2: 330px;
+    --mockup-height-3: 330px;
+    --mockup-height-4: 390px;
+  }
+  
+  /* 추가 안전장치: 더 작은 화면에서 칩 위치 강제 조정 */
+  @media (max-width: 1200px) and (min-width: 1025px) {
+    --teacher-right: 25px;
+    --student-left: 25px;
+  }
+  
+  @media (max-width: 1100px) and (min-width: 1025px) {
+    --teacher-right: 20px;
+    --student-left: 20px;
+  }
+  
+  @media (max-width: 1000px) and (min-width: 821px) {
+    --teacher-right: 15px;
+    --student-left: 15px;
+  }
+  
+  @media (max-width: 900px) and (min-width: 821px) {
+    --teacher-right: 10px;
+    --student-left: 10px;
+  }
+  
+  /* 820px 이하에서 작은 화면용 레이아웃 */
+  @media (max-width: 820px) and (min-width: 601px) {
+    --scale-factor: 0.5;
+    --teacher-top: 20px;
+    --teacher-right: 20px;
+    --student-left: 20px;
+    --mockup-left: -20px;
+    --mockup-right: -150px;
+    --mockup-center-top: 175px;
+    --mockup-height-1: 275px;
+    --mockup-height-2: 275px;
+    --mockup-height-3: 275px;
+    --mockup-height-4: 325px;
+  }
+  
+  /* 600px 이하에서 데스크탑 버전 숨기기 */
+  @media (max-width: 600px) {
     display: none;
+  }
+  
+  /* 최후의 안전장치: 매우 작은 화면에서 칩 위치 강제 조정 */
+  @media (max-width: 850px) and (min-width: 821px) {
+    --teacher-right: 5px;
+    --student-left: 5px;
+  }
+  
+  @media (max-width: 830px) and (min-width: 821px) {
+    --teacher-right: 0px;
+    --student-left: 0px;
+  }
+  
+  /* 820px 이하에서 작은 화면용 높이 조정 */
+  @media (max-width: 820px) and (min-width: 601px) {
+    min-height: 600px;
   }
   
   @media (max-width: 600px) {
@@ -3323,17 +3374,6 @@ const DesktopMockupGroup = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    transform: scale(0.9);
-    transform-origin: center center;
-  }
-  
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    transform: scale(0.75);
-    transform-origin: center center;
-  }
 `;
 
 const MockupElement = styled.div`
@@ -3352,42 +3392,143 @@ const AnimatedMockupElement = styled(MockupElement)<{ $isVisible: boolean; delay
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
   
-  /* 820px 이하에서 웹버전 목업 숨기기 */
-  @media (max-width: 820px) {
+  /* 600px 이하에서 웹버전 목업 숨기기 */
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+/* 선생님용 웹사이트 목업 요소 */
+const TeacherMockupElement = styled(AnimatedMockupElement)`
+  position: absolute;
+  top: calc(155px * var(--scale-factor, 1));
+  left: var(--mockup-left, -50px);
+  z-index: 12;
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 */
+  @media (min-width: 1281px) {
+    left: calc(var(--mockup-left, -50px) + 50px);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+/* 학생용 모바일 앱 목업 요소 */
+const StudentMockupElement = styled(AnimatedMockupElement)`
+  position: absolute;
+  top: calc(750px * var(--scale-factor, 1));
+  left: calc(410px * var(--scale-factor, 1));
+  z-index: 12;
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 */
+  @media (min-width: 1281px) {
+    left: calc(calc(410px * var(--scale-factor, 1)) + 50px);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+/* 가운데 모바일 앱 목업 요소 */
+const CenterMockupElement = styled(AnimatedMockupElement)`
+  position: absolute;
+  top: var(--mockup-center-top, 350px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 11;
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 - 가운데 맞춤 유지 */
+  @media (min-width: 1281px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+/* 데스크톱 모니터 목업 요소 */
+const DesktopMockupElement = styled(AnimatedMockupElement)`
+  position: absolute;
+  top: calc(400px * var(--scale-factor, 1));
+  right: var(--mockup-right, -280px);
+  z-index: 11;
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 */
+  @media (min-width: 1281px) {
+    right: calc(var(--mockup-right, -280px) + 40px);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
     display: none;
   }
 `;
 
 const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   position: absolute;
-  top: 200px;
-  left: calc(50% - 10px);
-  transform: translateX(-50%);
+  top: calc(220px * var(--scale-factor, 1));
+  left: calc(50% - 15px * var(--scale-factor, 1));
   justify-content: center;
   display: flex;
   flex-direction: column;
   color: #835EEB;
-  font-size: 42px;
+  font-size: calc(42px * var(--scale-factor, 1));
   font-family: 'Godo B';
   font-weight: 400;
-  line-height: 54px;
+  line-height: calc(54px * var(--scale-factor, 1));
   word-wrap: break-word;
-  z-index: 10;
+  z-index: 20;
   text-align: center;
   opacity: ${props => props.isVisible ? 1 : 0};
   transform: translateX(-50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
   
-  /* 820px 이하에서 웹버전 목업 숨기기 */
-  @media (max-width: 820px) {
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    --scale-factor: 0.95;
+  }
+  
+  /* 1600px에서 1366px까지 점진적으로 축소 */
+  @media (max-width: 1600px) and (min-width: 1367px) {
+    --scale-factor: 0.85;
+  }
+  
+  /* 1366px에서 1025px까지 점진적으로 축소 */
+  @media (max-width: 1366px) and (min-width: 1025px) {
+    --scale-factor: 0.7;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    --scale-factor: 0.6;
+  }
+  
+  /* 820px 이하에서 작은 화면용 크기 조정 */
+  @media (max-width: 820px) and (min-width: 601px) {
+    font-size: 32px;
+    line-height: 42px;
+    top: calc(120px * var(--scale-factor, 1));
+    left: calc(50% - 10px * var(--scale-factor, 1));
+  }
+  
+  /* 600px 이하에서 웹버전 목업 숨기기 */
+  @media (max-width: 600px) {
     display: none;
   }
 `;
 
 const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   left: 50%; 
-  top: calc(50% - 30px); 
-  transform: translate(-50%, -50%);
+  top: 50%; 
   position: absolute; 
   justify-content: center; 
   display: flex; 
@@ -3407,11 +3548,22 @@ const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   @media (min-width: 601px) {
     display: none;
   }
+  
+  /* 반응형 크기 조정 */
+  @media (max-width: 600px) {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
 `;
 
 const AnimatedArrow = styled.div<{ isVisible: boolean }>`
   position: absolute;
-  top: calc(50% - 30px);
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
@@ -3436,6 +3588,17 @@ const AnimatedArrow = styled.div<{ isVisible: boolean }>`
   /* 600px 초과에서 모바일 버전 숨기기 */
   @media (min-width: 601px) {
     display: none;
+  }
+  
+  /* 반응형 크기 조정 */
+  @media (max-width: 600px) {
+    width: 250px;
+    height: 400px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 200px;
+    height: 300px;
   }
 `;
 
@@ -3468,18 +3631,123 @@ const TabletMockupImage = styled.img`
 
 /* 웹앱 정보 텍스트 컨테이너 */
 const WebAppInfoTextContainer = styled.div`
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    transform: scale(0.95);
+    transform-origin: center center;
+  }
+  
   /* 1600px에서 1366px까지 점진적으로 축소 */
   @media (max-width: 1600px) and (min-width: 1367px) {
     transform: scale(0.9);
     transform-origin: center center;
   }
   
+  /* 1366px에서 1025px까지 점진적으로 축소 */
   @media (max-width: 1366px) and (min-width: 1025px) {
     transform: scale(0.75);
     transform-origin: center center;
   }
   
-  @media (max-width: 820px) {
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    transform: scale(0.65);
+    transform-origin: center center;
+  }
+`;
+
+/* 선생님용 웹사이트 정보 텍스트 컨테이너 */
+const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
+  position: absolute;
+  top: var(--teacher-top, 80px);
+  right: var(--teacher-right, 50px);
+  z-index: 10;
+  transform: scale(var(--scale-factor, 1));
+  transform-origin: top right;
+  
+  /* 1920px 이상에서 추가 위치 조정 */
+  @media (min-width: 1921px) {
+    right: calc(100px + (100vw - 1920px) / 2);
+  }
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 */
+  @media (min-width: 1281px) and (max-width: 1920px) {
+    right: calc(50px + (100vw - 1280px) / 2);
+  }
+  
+  /* 추가 안전장치: 칩이 목업과 겹치지 않도록 최소 거리 보장 */
+  @media (max-width: 1200px) {
+    right: max(var(--teacher-right, 50px), 25px);
+  }
+  
+  @media (max-width: 1100px) {
+    right: max(var(--teacher-right, 50px), 20px);
+  }
+  
+  @media (max-width: 1000px) {
+    right: max(var(--teacher-right, 50px), 15px);
+  }
+  
+  @media (max-width: 900px) {
+    right: max(var(--teacher-right, 50px), 10px);
+  }
+  
+  /* 820px 이하에서 작은 화면용 조정 */
+  @media (max-width: 820px) and (min-width: 601px) {
+    right: max(var(--teacher-right, 50px), 15px);
+    transform: scale(0.6);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+/* 학생용 모바일 앱 정보 텍스트 컨테이너 */
+const StudentInfoContainer = styled(WebAppInfoTextContainer)`
+  position: absolute;
+  top: calc(var(--mockup-center-top, 350px) + var(--mockup-height-3, 550px) + 70px);
+  left: var(--student-left, 20px);
+  z-index: 10;
+  transform: scale(var(--scale-factor, 1));
+  transform-origin: top left;
+  
+  /* 1920px 이상에서 추가 위치 조정 */
+  @media (min-width: 1921px) {
+    left: calc(200px + (100vw - 1920px) / 2);
+  }
+  
+  /* 1280px 가이드 안쪽으로 위치 조정 */
+  @media (min-width: 1281px) and (max-width: 1920px) {
+    left: calc(20px + (100vw - 1280px) / 2);
+  }
+  
+  /* 추가 안전장치: 칩이 목업과 겹치지 않도록 최소 거리 보장 */
+  @media (max-width: 1200px) {
+    left: max(var(--student-left, 20px), 25px);
+  }
+  
+  @media (max-width: 1100px) {
+    left: max(var(--student-left, 20px), 20px);
+  }
+  
+  @media (max-width: 1000px) {
+    left: max(var(--student-left, 20px), 15px);
+  }
+  
+  @media (max-width: 900px) {
+    left: max(var(--student-left, 20px), 10px);
+  }
+  
+  /* 820px 이하에서 작은 화면용 조정 */
+  @media (max-width: 820px) and (min-width: 601px) {
+    left: max(var(--student-left, 20px), 15px);
+    transform: scale(0.6);
+  }
+  
+  /* 600px 이하에서 모바일 레이아웃 적용 */
+  @media (max-width: 600px) {
     display: none;
   }
 `;
@@ -3534,16 +3802,16 @@ const ExperienceTextBlock = styled.div`
   @media (max-width: 900px) {
     width: 100%;
     height: auto;
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
   }
   @media (max-width: 600px) {
     width: 100%;
     height: auto;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     gap: 8px;
-    text-align: center;
+    text-align: left;
   }
 `;
 
@@ -3558,13 +3826,13 @@ const ExperienceTitle = styled.div`
   text-align: left;
   width: 100%;
   @media (max-width: 900px) {
-    text-align: center;
+    text-align: left;
   }
   @media (max-width: 600px) {
     font-size: 28px;
     line-height: 36px;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
   }
 `;
 
@@ -3579,13 +3847,13 @@ const ExperienceQuote = styled.div`
   text-align: left;
   width: 100%;
   @media (max-width: 900px) {
-    text-align: center;
+    text-align: left;
   }
   @media (max-width: 600px) {
     font-size: 16px;
     line-height: 24px;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
   }
 `;
 
@@ -3601,12 +3869,12 @@ const ExperienceName = styled.div`
   span { display: block; }
   span:last-child { font-weight: 400; }
   @media (max-width: 900px) {
-    text-align: center;
+    text-align: left;
   }
   @media (max-width: 600px) {
     font-size: 14px;
     line-height: 18px;
-    text-align: center;
+    text-align: left;
   }
 `;
 
@@ -3697,11 +3965,11 @@ const NameSection = styled.div`
   flex-direction: row;
   align-items: center;
   @media (max-width: 1366px) and (min-width: 601px) {
-    justify-content: center; /* 태블릿에서 가운데 정렬 */
+    justify-content: flex-start; /* 태블릿에서 왼쪽 정렬 */
   }
   @media (max-width: 900px) {
     align-items: flex-start;
-    justify-content: center; /* 모바일에서 가운데 정렬 */
+    justify-content: flex-start; /* 모바일에서 왼쪽 정렬 */
   }
 `;
 
@@ -3713,15 +3981,15 @@ const VerticalLine = styled.div`
   margin-right: 16px;
   border-radius: 2px;
   @media (max-width: 1366px) and (min-width: 601px) {
-    display: none; /* 태블릿에서 막대 숨기기 */
+    display: block; /* 태블릿에서 막대 표시 */
   }
   @media (max-width: 900px) {
-    display: none; /* 모바일에서 막대 숨기기 */
+    display: block; /* 모바일에서 막대 표시 */
     height: 20px;
     margin-top: 20px;
   }
   @media (max-width: 600px) {
-    display: none; /* 모바일에서 막대 숨기기 */
+    display: block; /* 모바일에서 막대 표시 */
     height: 16px;
     margin-top: 18px;
   }
@@ -3730,44 +3998,29 @@ const VerticalLine = styled.div`
 
 
 const AnimatedTextContent = styled.div`
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 1;
+  transform: translateY(0);
   
   &.visible {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.4s ease-in;
   }
   
-  &.slide-out {
-    animation: ${textSlideOut} 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19) forwards;
+  &.fade-out {
+    opacity: 0;
+    transform: translateY(0);
+    transition: all 0.2s ease-out;
   }
   
-  &.slide-in {
-    animation: ${textSlideIn} 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  &.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.4s ease-in;
   }
 `;
 
-const AnimatedTitle = styled.div<{ isVisible: boolean }>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? 0 : '30px'}) scale(${props => props.isVisible ? 1 : 0.95});
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition-delay: 0.1s;
-`;
 
-const AnimatedQuote = styled.div<{ isVisible: boolean }>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? 0 : '25px'}) scale(${props => props.isVisible ? 1 : 0.98});
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition-delay: 0.2s;
-`;
-
-const AnimatedName = styled.div<{ isVisible: boolean }>`
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? 0 : '20px'}) scale(${props => props.isVisible ? 1 : 0.97});
-  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transition-delay: 0.3s;
-`;
 
 const VideoSlider = styled.div`
   width: 100%;
@@ -4213,17 +4466,28 @@ const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   margin-bottom: 8px;
   white-space: normal;
   opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? '0' : '20px'});
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    font-size: 34px;
+  }
   
   /* 1600px에서 1366px까지 점진적으로 축소 */
   @media (max-width: 1600px) and (min-width: 1367px) {
     font-size: 32px;
   }
   
+  /* 1366px에서 1025px까지 점진적으로 축소 */
   @media (max-width: 1366px) and (min-width: 1025px) {
     font-size: 28px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    font-size: 24px;
   }
   
   @media (max-width: 600px) {
@@ -4236,13 +4500,24 @@ const WebAppInfoChips = styled.div`
   flex-direction: column;
   gap: 10px;
   
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    gap: 9px;
+  }
+  
   /* 1600px에서 1366px까지 점진적으로 축소 */
   @media (max-width: 1600px) and (min-width: 1367px) {
     gap: 9px;
   }
   
+  /* 1366px에서 1025px까지 점진적으로 축소 */
   @media (max-width: 1366px) and (min-width: 1025px) {
     gap: 8px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    gap: 7px;
   }
   
   @media (max-width: 600px) {
@@ -4262,9 +4537,15 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   display: inline-block;
   width: max-content;
   opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateY(${props => props.isVisible ? '0' : '20px'});
+  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  /* 1920px에서 1600px까지 점진적으로 축소 */
+  @media (max-width: 1920px) and (min-width: 1601px) {
+    font-size: 21px;
+    padding: 9px 23px;
+  }
   
   /* 1600px에서 1366px까지 점진적으로 축소 */
   @media (max-width: 1600px) and (min-width: 1367px) {
@@ -4272,9 +4553,16 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
     padding: 9px 22px;
   }
   
+  /* 1366px에서 1025px까지 점진적으로 축소 */
   @media (max-width: 1366px) and (min-width: 1025px) {
     font-size: 18px;
     padding: 8px 20px;
+  }
+  
+  /* 1025px에서 820px까지 점진적으로 축소 */
+  @media (max-width: 1024px) and (min-width: 821px) {
+    font-size: 16px;
+    padding: 7px 18px;
   }
   
   @media (max-width: 600px) {

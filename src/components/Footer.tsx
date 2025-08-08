@@ -28,16 +28,16 @@ const FooterContainer = styled.div`
 const FooterContent = styled.div`
   width: 100%;
   max-width: 1280px;
-  padding: 0 24px;
+  padding: 0 20px;
   align-self: stretch;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 64px;
+  gap: 40px;
   display: inline-flex;
   
   @media (max-width: 1024px) {
     padding: 0 16px;
-    gap: 40px;
+    gap: 30px;
   }
   
   @media (max-width: 768px) {
@@ -56,15 +56,17 @@ const FooterContent = styled.div`
 
 const LeftSection = styled.div`
   flex: 1;
-  max-width: calc(100% - 140px);
+  max-width: calc(100% - 120px);
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 80px;
+  gap: 50px;
   display: flex;
+  margin-left: 200px;
   
   @media (max-width: 1024px) {
-    gap: 50px;
-    max-width: calc(100% - 120px);
+    gap: 30px;
+    max-width: calc(100% - 100px);
+    margin-left: 150px;
   }
   
   @media (max-width: 768px) {
@@ -73,6 +75,7 @@ const LeftSection = styled.div`
     width: 100%;
     max-width: 100%;
     flex: none;
+    margin-left: 0;
   }
 `;
 
@@ -90,20 +93,20 @@ const LinkGroup = styled.div`
 `;
 
 const LinkButton = styled.div`
-  height: 38px;
-  padding: 0 16px 0 12px;
+  height: 32px;
+  padding: 0 12px 0 10px;
   background: rgba(255, 255, 255, 0);
   overflow: hidden;
   border-radius: 9999px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   display: flex;
   color: #D1D5DB;
-  font-size: 18px;
+  font-size: 14px;
   font-family: Pretendard;
   font-weight: 500;
-  line-height: 30px;
+  line-height: 29px;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -113,31 +116,31 @@ const LinkButton = styled.div`
   }
   
   @media (max-width: 1024px) {
-    font-size: 16px;
-    height: 36px;
-    padding: 0 14px 0 10px;
+    font-size: 13px;
+    height: 30px;
+    padding: 0 10px 0 8px;
   }
   
   @media (max-width: 768px) {
     color: #575C64;
     font-size: 15px;
-    line-height: 30px;
+    line-height: 35px;
   }
 `;
 
 const CompanyInfo = styled.div`
-  width: 335px;
+  width: 300px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: 24px;
+  gap: 16px;
   display: inline-flex;
-  margin-left: 50px;
+  margin-left: 30px;
   
   @media (max-width: 1024px) {
-    width: 300px;
-    gap: 16px;
-    margin-left: 30px;
+    width: 280px;
+    gap: 12px;
+    margin-left: 20px;
   }
   
   @media (max-width: 768px) {
@@ -149,22 +152,22 @@ const CompanyInfo = styled.div`
 
 const InfoText = styled.div`
   color: #D1D5DB;
-  font-size: 18px;
+  font-size: 14px;
   font-family: Pretendard;
   font-weight: 300;
-  line-height: 30px;
+  line-height: 27px;
   white-space: nowrap;
   
   @media (max-width: 1024px) {
-    font-size: 16px;
-    line-height: 26px;
+    font-size: 13px;
+    line-height: 25px;
     white-space: normal;
   }
   
   @media (max-width: 768px) {
     color: #7A828D;
     font-size: 12px;
-    line-height: 18px;
+    line-height: 23px;
     white-space: normal;
   }
 `;
@@ -182,15 +185,15 @@ const InfoLink = styled(InfoText).attrs({ as: 'a' })`
   }
   
   @media (max-width: 1024px) {
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 13px;
+    line-height: 25px;
     white-space: nowrap;
   }
   
   @media (max-width: 768px) {
     color: #7A828D;
     font-size: 14px;
-    line-height: 20px;
+    line-height: 25px;
     white-space: nowrap;
   }
 `;
@@ -263,14 +266,15 @@ const SNSIcon = styled.div`
 const FooterActions = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
   margin-top: 0;
   margin-left: auto;
-  transform: translateX(150px);
+  transform: translateX(200px);
   
   @media (max-width: 1024px) {
-    transform: translateX(-120px);
+    gap: 10px;
+    transform: translateX(150px);
   }
   
   @media (max-width: 768px) {
@@ -329,6 +333,9 @@ const Footer = () => {
           <CompanyInfo>
             <MobileInfoSection>
               <InfoText style={{ whiteSpace: 'nowrap' }}>
+                (주) 튜링
+              </InfoText>
+              <InfoText style={{ whiteSpace: 'nowrap' }}>
                 사업자등록번호 254-87-01382 | 대표자명 최민규
               </InfoText>
               <InfoText>
@@ -337,6 +344,9 @@ const Footer = () => {
               <InfoText>주소 서울특별시 강남구 언주로 85길 23-6, 3층 (역삼동, DW 빌딩)</InfoText>
               <InfoText>
                 전화 070-7732-4869
+              </InfoText>
+              <InfoText>
+                사업제휴/PR 문의 business@teamturing.com
               </InfoText>
               <InfoText>
                 ⓒTuring Co.,Ltd. All rights reserved.
