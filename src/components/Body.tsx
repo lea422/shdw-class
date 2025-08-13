@@ -2796,31 +2796,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     />
                   </TeacherMockupElement>
                   
-                  {/* 왼쪽 하단 - 학생용 모바일 앱 (세로형 앱 화면들) */}
-                  <StudentMockupElement
-                    $isVisible={mockupsVisible[1]}
-                    onClick={() => window.open('https://apps.apple.com/app/수학대왕-ai디지털문제집/id1501165233', '_blank')}
-                  >
-                    <img 
-                      src="/WebApp/integration/2.svg" 
-                      alt="학생용 모바일 앱"
-                      style={{ 
-                        width: 'auto', 
-                        height: 'var(--mockup-height-2, 550px)',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.04)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
-                      }}
-                    />
-                  </StudentMockupElement>
+
                   
                   {/* 실시간 동기화 텍스트 - 가운데 폰 목업 위 */}
                   <AnimatedSyncText isVisible={syncTextVisible}>
@@ -2999,18 +2975,6 @@ const WebAppSection = styled.section`
   overflow: hidden;
   scroll-snap-align: start;
   position: relative;
-  @media (max-width: 1366px) and (min-width: 601px) {
-    padding: 60px 0; /* 태블릿에서 좌우 패딩 제거 */
-    gap: 60px;
-  }
-  @media (max-width: 820px) {
-    padding: 40px 0;
-    gap: 40px;
-  }
-  @media (max-width: 600px) {
-    padding: 80px 0 20px 0;
-    gap: 60px;
-  }
 `;
 
 
@@ -3022,30 +2986,6 @@ const WebAppHeader = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 40px;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    gap: 36px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    gap: 32px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    gap: 28px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    gap: 24px;
-  }
-  
-  @media (max-width: 600px) {
-    gap: 24px;
-  }
 `;
 
 const WebAppTitle = styled.div`
@@ -3058,39 +2998,6 @@ const WebAppTitle = styled.div`
   font-weight: 700;
   line-height: 67.20px;
   word-wrap: break-word;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    font-size: 44px;
-    line-height: 62px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    font-size: 40px;
-    line-height: 56px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    font-size: 36px;
-    line-height: 50px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    font-size: 32px;
-    line-height: 44px;
-  }
-  
-  @media (max-width: 900px) {
-    font-size: 36px;
-    line-height: 50px;
-  }
-  @media (max-width: 600px) {
-    font-size: 28px;
-    line-height: 38px;
-  }
 `;
 
 const WebAppSubtitle = styled.div`
@@ -3106,39 +3013,6 @@ const WebAppSubtitle = styled.div`
   font-weight: 400;
   line-height: 36.40px;
   word-wrap: break-word;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    font-size: 26px;
-    line-height: 34px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    font-size: 24px;
-    line-height: 32px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    font-size: 22px;
-    line-height: 30px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    font-size: 20px;
-    line-height: 28px;
-  }
-  
-  @media (max-width: 900px) {
-    font-size: 22px;
-    line-height: 30px;
-  }
-  @media (max-width: 600px) {
-    font-size: 18px;
-    line-height: 24px;
-  }
 `;
 
 const WebAppButtons = styled.div`
@@ -3146,9 +3020,6 @@ const WebAppButtons = styled.div`
   align-items: center;
   gap: 12px;
   display: flex;
-  @media (max-width: 600px) {
-    gap: 8px;
-  }
 `;
 
 const WebAppButton = styled.a`
@@ -3162,17 +3033,12 @@ const WebAppButton = styled.a`
   display: flex;
   cursor: pointer;
   transition: all 0.3s ease;
-  width: 140px; /* Google Play 텍스트에 맞춰 늘림 */
+  width: 140px;
   text-decoration: none;
   
   &:hover {
     background: #835EEB;
     transform: translateY(-2px);
-  }
-  
-  @media (max-width: 600px) {
-    padding: 6px 12px;
-    width: 110px; /* 모바일에서도 비례적으로 늘림 */
   }
 `;
 
@@ -3188,11 +3054,6 @@ const WebAppIcon = styled.div`
     height: 100%;
     object-fit: contain;
   }
-  
-  @media (max-width: 600px) {
-    width: 14px;
-    height: 14px;
-  }
 `;
 
 const WebAppButtonText = styled.div`
@@ -3206,10 +3067,6 @@ const WebAppButtonText = styled.div`
   font-weight: 700;
   line-height: 21px;
   word-wrap: break-word;
-  @media (max-width: 600px) {
-    font-size: 12px;
-    line-height: 18px;
-  }
 `;
 
 const WebAppContent = styled.div`
@@ -3219,151 +3076,6 @@ const WebAppContent = styled.div`
   display: block;
   min-height: 900px;
   overflow: hidden;
-  
-  /* 웹버전 목업 고정 크기 - 스케일링 없음 */
-  width: 100%;
-  max-width: none;
-  
-  /* CSS 변수로 동적 위치 조정 */
-  --scale-factor: 1;
-  --teacher-top: 80px;
-  --teacher-right: 50px;
-  --student-left: 50px;
-  --mockup-left: -50px;
-  --mockup-right: -280px;
-  --mockup-center-top: 350px;
-  --mockup-height-1: 550px;
-  --mockup-height-2: 550px;
-  --mockup-height-3: 550px;
-  --mockup-height-4: 650px;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    --scale-factor: 0.95;
-    --teacher-top: 70px;
-    --teacher-right: 45px;
-    --student-left: 45px;
-    --mockup-left: -45px;
-    --mockup-right: -260px;
-    --mockup-center-top: 333px;
-    --mockup-height-1: 523px;
-    --mockup-height-2: 523px;
-    --mockup-height-3: 523px;
-    --mockup-height-4: 618px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    --scale-factor: 0.85;
-    --teacher-top: 60px;
-    --teacher-right: 40px;
-    --student-left: 40px;
-    --mockup-left: -40px;
-    --mockup-right: -240px;
-    --mockup-center-top: 298px;
-    --mockup-height-1: 468px;
-    --mockup-height-2: 468px;
-    --mockup-height-3: 468px;
-    --mockup-height-4: 553px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    --scale-factor: 0.7;
-    --teacher-top: 50px;
-    --teacher-right: 35px;
-    --student-left: 35px;
-    --mockup-left: -35px;
-    --mockup-right: -220px;
-    --mockup-center-top: 245px;
-    --mockup-height-1: 385px;
-    --mockup-height-2: 385px;
-    --mockup-height-3: 385px;
-    --mockup-height-4: 455px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    --scale-factor: 0.6;
-    --teacher-top: 40px;
-    --teacher-right: 30px;
-    --student-left: 30px;
-    --mockup-left: -30px;
-    --mockup-right: -200px;
-    --mockup-center-top: 210px;
-    --mockup-height-1: 330px;
-    --mockup-height-2: 330px;
-    --mockup-height-3: 330px;
-    --mockup-height-4: 390px;
-  }
-  
-  /* 추가 안전장치: 더 작은 화면에서 칩 위치 강제 조정 */
-  @media (max-width: 1200px) and (min-width: 1025px) {
-    --teacher-right: 25px;
-    --student-left: 25px;
-  }
-  
-  @media (max-width: 1100px) and (min-width: 1025px) {
-    --teacher-right: 20px;
-    --student-left: 20px;
-  }
-  
-  @media (max-width: 1000px) and (min-width: 821px) {
-    --teacher-right: 15px;
-    --student-left: 15px;
-  }
-  
-  @media (max-width: 900px) and (min-width: 821px) {
-    --teacher-right: 10px;
-    --student-left: 10px;
-  }
-  
-  /* 820px 이하에서 작은 화면용 레이아웃 */
-  @media (max-width: 820px) and (min-width: 601px) {
-    --scale-factor: 0.5;
-    --teacher-top: 20px;
-    --teacher-right: 20px;
-    --student-left: 20px;
-    --mockup-left: -20px;
-    --mockup-right: -150px;
-    --mockup-center-top: 175px;
-    --mockup-height-1: 275px;
-    --mockup-height-2: 275px;
-    --mockup-height-3: 275px;
-    --mockup-height-4: 325px;
-  }
-  
-  /* 600px 이하에서 데스크탑 버전 숨기기 */
-  @media (max-width: 600px) {
-    display: none;
-  }
-  
-  /* 최후의 안전장치: 매우 작은 화면에서 칩 위치 강제 조정 */
-  @media (max-width: 850px) and (min-width: 821px) {
-    --teacher-right: 5px;
-    --student-left: 5px;
-  }
-  
-  @media (max-width: 830px) and (min-width: 821px) {
-    --teacher-right: 0px;
-    --student-left: 0px;
-  }
-  
-  /* 820px 이하에서 작은 화면용 높이 조정 */
-  @media (max-width: 820px) and (min-width: 601px) {
-    min-height: 600px;
-  }
-  
-  @media (max-width: 600px) {
-    min-height: 0;
-    padding: 0;
-    width: 100%;
-    min-width: auto;
-    transform: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 `;
 
 /* 데스크탑 목업 그룹 컨테이너 */
@@ -3401,89 +3113,48 @@ const AnimatedMockupElement = styled(MockupElement)<{ $isVisible: boolean; delay
 /* 선생님용 웹사이트 목업 요소 */
 const TeacherMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: calc(155px * var(--scale-factor, 1));
-  left: var(--mockup-left, -50px);
+  top: 155px;
+  left: -50px;
   z-index: 12;
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 */
-  @media (min-width: 1281px) {
-    left: calc(var(--mockup-left, -50px) + 50px);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 /* 학생용 모바일 앱 목업 요소 */
 const StudentMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: calc(750px * var(--scale-factor, 1));
-  left: calc(410px * var(--scale-factor, 1));
+  top: 750px;
+  left: 410px;
   z-index: 12;
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 */
-  @media (min-width: 1281px) {
-    left: calc(calc(410px * var(--scale-factor, 1)) + 50px);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 /* 가운데 모바일 앱 목업 요소 */
 const CenterMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: var(--mockup-center-top, 350px);
+  top: 350px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 11;
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 - 가운데 맞춤 유지 */
-  @media (min-width: 1281px) {
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 /* 데스크톱 모니터 목업 요소 */
 const DesktopMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: calc(400px * var(--scale-factor, 1));
-  right: var(--mockup-right, -280px);
+  top: 400px;
+  right: -280px;
   z-index: 11;
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 */
-  @media (min-width: 1281px) {
-    right: calc(var(--mockup-right, -280px) + 40px);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   position: absolute;
-  top: calc(220px * var(--scale-factor, 1));
-  left: calc(50% - 15px * var(--scale-factor, 1));
+  top: 220px;
+  left: calc(50% - 15px);
   justify-content: center;
   display: flex;
   flex-direction: column;
   color: #835EEB;
-  font-size: calc(42px * var(--scale-factor, 1));
+  font-size: 42px;
   font-family: 'Godo B';
   font-weight: 400;
-  line-height: calc(54px * var(--scale-factor, 1));
+  line-height: 54px;
   word-wrap: break-word;
   z-index: 20;
   text-align: center;
@@ -3491,39 +3162,6 @@ const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   transform: translateX(-50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    --scale-factor: 0.95;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    --scale-factor: 0.85;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    --scale-factor: 0.7;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    --scale-factor: 0.6;
-  }
-  
-  /* 820px 이하에서 작은 화면용 크기 조정 */
-  @media (max-width: 820px) and (min-width: 601px) {
-    font-size: 32px;
-    line-height: 42px;
-    top: calc(120px * var(--scale-factor, 1));
-    left: calc(50% - 10px * var(--scale-factor, 1));
-  }
-  
-  /* 600px 이하에서 웹버전 목업 숨기기 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
@@ -3543,22 +3181,6 @@ const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   opacity: ${props => props.isVisible ? 1 : 0};
   transform: translate(-50%, -50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  
-  /* 600px 초과에서 모바일 버전 숨기기 */
-  @media (min-width: 601px) {
-    display: none;
-  }
-  
-  /* 반응형 크기 조정 */
-  @media (max-width: 600px) {
-    font-size: 28px;
-    line-height: 36px;
-  }
-  
-  @media (max-width: 480px) {
-    font-size: 24px;
-    line-height: 32px;
-  }
 `;
 
 const AnimatedArrow = styled.div<{ isVisible: boolean }>`
@@ -3584,35 +3206,15 @@ const AnimatedArrow = styled.div<{ isVisible: boolean }>`
   &:hover {
     animation: ${arrowPulse} 1s ease-in-out infinite;
   }
-  
-  /* 600px 초과에서 모바일 버전 숨기기 */
-  @media (min-width: 601px) {
-    display: none;
-  }
-  
-  /* 반응형 크기 조정 */
-  @media (max-width: 600px) {
-    width: 250px;
-    height: 400px;
-  }
-  
-  @media (max-width: 480px) {
-    width: 200px;
-    height: 300px;
-  }
 `;
 
 /* 태블릿용 목업 컨테이너 */
 const TabletMockupContainer = styled.div`
-  display: none;
-  
-  @media (max-width: 820px) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
 `;
 
 const TabletMockupImage = styled.img`
@@ -3631,125 +3233,23 @@ const TabletMockupImage = styled.img`
 
 /* 웹앱 정보 텍스트 컨테이너 */
 const WebAppInfoTextContainer = styled.div`
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    transform: scale(0.95);
-    transform-origin: center center;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    transform: scale(0.9);
-    transform-origin: center center;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    transform: scale(0.75);
-    transform-origin: center center;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    transform: scale(0.65);
-    transform-origin: center center;
-  }
+  /* 기본 스타일 */
 `;
 
 /* 선생님용 웹사이트 정보 텍스트 컨테이너 */
 const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
-  top: var(--teacher-top, 80px);
-  right: var(--teacher-right, 50px);
+  top: 80px;
+  right: 50px;
   z-index: 10;
-  transform: scale(var(--scale-factor, 1));
-  transform-origin: top right;
-  
-  /* 1920px 이상에서 추가 위치 조정 */
-  @media (min-width: 1921px) {
-    right: calc(100px + (100vw - 1920px) / 2);
-  }
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 */
-  @media (min-width: 1281px) and (max-width: 1920px) {
-    right: calc(50px + (100vw - 1280px) / 2);
-  }
-  
-  /* 추가 안전장치: 칩이 목업과 겹치지 않도록 최소 거리 보장 */
-  @media (max-width: 1200px) {
-    right: max(var(--teacher-right, 50px), 25px);
-  }
-  
-  @media (max-width: 1100px) {
-    right: max(var(--teacher-right, 50px), 20px);
-  }
-  
-  @media (max-width: 1000px) {
-    right: max(var(--teacher-right, 50px), 15px);
-  }
-  
-  @media (max-width: 900px) {
-    right: max(var(--teacher-right, 50px), 10px);
-  }
-  
-  /* 820px 이하에서 작은 화면용 조정 */
-  @media (max-width: 820px) and (min-width: 601px) {
-    right: max(var(--teacher-right, 50px), 15px);
-    transform: scale(0.6);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 /* 학생용 모바일 앱 정보 텍스트 컨테이너 */
 const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
-  top: calc(var(--mockup-center-top, 350px) + var(--mockup-height-3, 550px) + 70px);
-  left: var(--student-left, 20px);
+  top: 970px;
+  left: 20px;
   z-index: 10;
-  transform: scale(var(--scale-factor, 1));
-  transform-origin: top left;
-  
-  /* 1920px 이상에서 추가 위치 조정 */
-  @media (min-width: 1921px) {
-    left: calc(200px + (100vw - 1920px) / 2);
-  }
-  
-  /* 1280px 가이드 안쪽으로 위치 조정 */
-  @media (min-width: 1281px) and (max-width: 1920px) {
-    left: calc(20px + (100vw - 1280px) / 2);
-  }
-  
-  /* 추가 안전장치: 칩이 목업과 겹치지 않도록 최소 거리 보장 */
-  @media (max-width: 1200px) {
-    left: max(var(--student-left, 20px), 25px);
-  }
-  
-  @media (max-width: 1100px) {
-    left: max(var(--student-left, 20px), 20px);
-  }
-  
-  @media (max-width: 1000px) {
-    left: max(var(--student-left, 20px), 15px);
-  }
-  
-  @media (max-width: 900px) {
-    left: max(var(--student-left, 20px), 10px);
-  }
-  
-  /* 820px 이하에서 작은 화면용 조정 */
-  @media (max-width: 820px) and (min-width: 601px) {
-    left: max(var(--student-left, 20px), 15px);
-    transform: scale(0.6);
-  }
-  
-  /* 600px 이하에서 모바일 레이아웃 적용 */
-  @media (max-width: 600px) {
-    display: none;
-  }
 `;
 
 
@@ -4439,25 +3939,6 @@ const WebAppInfoBlock = styled.div`
   align-items: flex-start;
   gap: 18px;
   min-width: 220px;
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    gap: 16px;
-    min-width: 200px;
-  }
-  
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    gap: 14px;
-    min-width: 180px;
-  }
-  
-  @media (max-width: 600px) {
-    align-items: center !important;
-    text-align: center !important;
-    min-width: 0;
-    width: 100%;
-    gap: 14px;
-  }
 `;
 const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   color: #835EEB;
@@ -4469,63 +3950,11 @@ const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    font-size: 34px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    font-size: 32px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    font-size: 28px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    font-size: 24px;
-  }
-  
-  @media (max-width: 600px) {
-    font-size: 26px;
-    margin-bottom: 6px;
-  }
 `;
 const WebAppInfoChips = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    gap: 9px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    gap: 9px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    gap: 8px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    gap: 7px;
-  }
-  
-  @media (max-width: 600px) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 8px;
-  }
 `;
 const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   background: #F3EFFD;
@@ -4540,36 +3969,6 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
-  
-  /* 1920px에서 1600px까지 점진적으로 축소 */
-  @media (max-width: 1920px) and (min-width: 1601px) {
-    font-size: 21px;
-    padding: 9px 23px;
-  }
-  
-  /* 1600px에서 1366px까지 점진적으로 축소 */
-  @media (max-width: 1600px) and (min-width: 1367px) {
-    font-size: 20px;
-    padding: 9px 22px;
-  }
-  
-  /* 1366px에서 1025px까지 점진적으로 축소 */
-  @media (max-width: 1366px) and (min-width: 1025px) {
-    font-size: 18px;
-    padding: 8px 20px;
-  }
-  
-  /* 1025px에서 820px까지 점진적으로 축소 */
-  @media (max-width: 1024px) and (min-width: 821px) {
-    font-size: 16px;
-    padding: 7px 18px;
-  }
-  
-  @media (max-width: 600px) {
-    font-size: 15px;
-    padding: 5px 12px;
-    border-radius: 12px;
-  }
 `;
 
 export default Body;
