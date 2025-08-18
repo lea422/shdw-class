@@ -510,6 +510,11 @@ const PricingHeader = styled.div`
   align-items: center;
   text-align: center;
   gap: 20px;
+  
+  /* 1920px 이상에서 위로 30px 이동 */
+  @media (min-width: 1920px) {
+    transform: translateY(-30px);
+  }
   @media (max-width: 1024px) {
     width: 100%;
     align-items: center;
@@ -644,6 +649,11 @@ const PricingCardsContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
+  
+  /* 1920px 이상에서 위로 30px 이동 */
+  @media (min-width: 1920px) {
+    transform: translateY(-30px);
+  }
   @media (max-width: 1200px) {
     width: 100%;
     flex-direction: column;
@@ -2822,7 +2832,7 @@ const Pricing: React.FC<PricingProps> = () => {
         <BannerCenter>
           <BannerMessage>혹시 학교 선생님이신가요?</BannerMessage>
           <BannerButton onClick={() => {/* 링크 추후 추가 */}}>
-            <BannerButtonText>학교 도입 바로가기</BannerButtonText>
+            <BannerButtonText>학교 도입 문의하기</BannerButtonText>
           </BannerButton>
         </BannerCenter>
       </TopBanner>
@@ -2840,7 +2850,7 @@ const Pricing: React.FC<PricingProps> = () => {
             <MobileBannerMessage>혹시 학교 선생님이신가요?</MobileBannerMessage>
           </MobileBannerTextArea>
           <MobileBannerButton onClick={() => {/* 링크 추후 추가 */}}>
-            <MobileBannerButtonText>학교 도입 바로가기</MobileBannerButtonText>
+            <MobileBannerButtonText>학교 도입 문의하기</MobileBannerButtonText>
           </MobileBannerButton>
         </MobileBannerCenter>
       </MobileTopBanner>

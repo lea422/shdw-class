@@ -28,12 +28,12 @@ const FooterContainer = styled.div`
 const FooterContent = styled.div`
   width: 100%;
   max-width: 1280px;
+  margin: 0 auto; /* 가운데 정렬 */
   padding: 0 20px;
-  align-self: stretch;
-  justify-content: flex-start;
+  display: flex; /* 행 레이아웃 */
+  justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
-  display: inline-flex;
   
   @media (max-width: 1024px) {
     padding: 0 16px;
@@ -44,7 +44,7 @@ const FooterContent = styled.div`
     width: 100%;
     padding: 20px;
     background: #F9FAFB;
-    flex-direction: column;
+    flex-direction: column; /* 세로 스택 */
     gap: 24px;
     align-items: flex-start;
   }
@@ -56,26 +56,20 @@ const FooterContent = styled.div`
 
 const LeftSection = styled.div`
   flex: 1;
-  max-width: calc(100% - 120px);
+  display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   gap: 50px;
-  display: flex;
-  margin-left: 200px;
+  min-width: 0;
   
   @media (max-width: 1024px) {
     gap: 30px;
-    max-width: calc(100% - 100px);
-    margin-left: 150px;
   }
   
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 24px;
     width: 100%;
-    max-width: 100%;
-    flex: none;
-    margin-left: 0;
   }
 `;
 
@@ -85,10 +79,12 @@ const LinkGroup = styled.div`
   align-items: flex-start;
   gap: 4px;
   display: inline-flex;
+  min-width: 0;
   
   @media (max-width: 768px) {
     flex-direction: row;
-    gap: 2px;
+    gap: 8px;
+    flex-wrap: wrap; /* 좁을 때 다음 줄로 자연스럽게 */
   }
 `;
 
@@ -107,6 +103,9 @@ const LinkButton = styled.div`
   font-family: Pretendard;
   font-weight: 500;
   line-height: 29px;
+  white-space: nowrap; /* 줄바꿈 방지로 세로깨짐 방지 */
+  word-break: keep-all; /* 한국어 단어 중간 줄바꿈 방지 */
+  min-width: max-content; /* 텍스트 길이만큼 버튼 너비 보장 */
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -136,6 +135,7 @@ const CompanyInfo = styled.div`
   gap: 16px;
   display: inline-flex;
   margin-left: 30px;
+  min-width: 300px; /* 텍스트가 세로깨짐 방지 */
   
   @media (max-width: 1024px) {
     width: 280px;
@@ -156,12 +156,15 @@ const InfoText = styled.div`
   font-family: Pretendard;
   font-weight: 300;
   line-height: 27px;
-  white-space: nowrap;
+  white-space: nowrap; /* 기본은 한줄 */
+  word-break: keep-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
   
   @media (max-width: 1024px) {
     font-size: 13px;
     line-height: 25px;
-    white-space: normal;
+    white-space: normal; /* 태블릿 이하에서는 줄바꿈 허용 */
   }
   
   @media (max-width: 768px) {
@@ -269,18 +272,15 @@ const FooterActions = styled.div`
   gap: 12px;
   align-items: center;
   margin-top: 0;
-  margin-left: auto;
-  transform: translateX(200px);
+  margin-left: auto; /* 우측 정렬 */
   
   @media (max-width: 1024px) {
     gap: 10px;
-    transform: translateX(150px);
   }
   
   @media (max-width: 768px) {
     gap: 8px;
     margin-left: 0;
-    transform: translateX(0);
   }
 `;
 

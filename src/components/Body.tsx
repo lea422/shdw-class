@@ -1361,7 +1361,88 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [syncTextVisible, setSyncTextVisible] = useState(false);
   // 화살표 애니메이션 상태
   const [arrowVisible, setArrowVisible] = useState(false);
+  
+  // 칩과 텍스트 위치 조정을 위한 상태
+  const [teacherInfoPosition, setTeacherInfoPosition] = useState<{top: string, left: string}>(() => {
+    // localStorage에서 저장된 값 불러오기
+    const saved = localStorage.getItem('teacherInfoPosition');
+    return saved ? JSON.parse(saved) : { top: '90px', left: '230px' };
+  });
+  
+  const [studentInfoPosition, setStudentInfoPosition] = useState<{bottom: string, right: string}>(() => {
+    // localStorage에서 저장된 값 불러오기
+    const saved = localStorage.getItem('studentInfoPosition');
+    return saved ? JSON.parse(saved) : { bottom: '80px', right: '210px' };
+  });
+
+  // 위치 고정 모드 (화면 크기 변경 시에도 위치 유지)
+  const [lockPositions, setLockPositions] = useState<boolean>(() => {
+    const saved = localStorage.getItem('lockPositions');
+    return saved ? JSON.parse(saved) : false;
+  });
+  
+  // 칩과 텍스트 위치 조정 함수
+  const adjustInfoPositions = (teacherTop: string, teacherLeft: string, studentBottom: string, studentRight: string) => {
+    console.log('위치 조정 함수 호출:', { teacherTop, teacherLeft, studentBottom, studentRight });
+    
+    const newTeacherPosition = { top: teacherTop, left: teacherLeft };
+    const newStudentPosition = { bottom: studentBottom, right: studentRight };
+    
+    setTeacherInfoPosition(newTeacherPosition);
+    setStudentInfoPosition(newStudentPosition);
+    
+    // localStorage에 저장
+    localStorage.setItem('teacherInfoPosition', JSON.stringify(newTeacherPosition));
+    localStorage.setItem('studentInfoPosition', JSON.stringify(newStudentPosition));
+    
+    // 데스크톱 레이아웃 CSS 변수도 설정
+    document.documentElement.style.setProperty('--teacher-top', teacherTop);
+    document.documentElement.style.setProperty('--teacher-right', teacherLeft);
+    document.documentElement.style.setProperty('--student-top', studentBottom);
+    document.documentElement.style.setProperty('--student-left', studentRight);
+  };
+  
+  // 기본 위치로 리셋하는 함수
+  const resetInfoPositions = () => {
+    console.log('기본 위치로 리셋');
+    
+    const defaultTeacherPosition = { top: '90px', left: '230px' };
+    const defaultStudentPosition = { bottom: '80px', right: '210px' };
+    
+    setTeacherInfoPosition(defaultTeacherPosition);
+    setStudentInfoPosition(defaultStudentPosition);
+    
+    // localStorage에 기본값 저장
+    localStorage.setItem('teacherInfoPosition', JSON.stringify(defaultTeacherPosition));
+    localStorage.setItem('studentInfoPosition', JSON.stringify(defaultStudentPosition));
+    
+    // 데스크톱 레이아웃 CSS 변수도 리셋
+    document.documentElement.style.setProperty('--teacher-top', '80px');
+    document.documentElement.style.setProperty('--teacher-right', '50px');
+    document.documentElement.style.setProperty('--student-top', '970px');
+    document.documentElement.style.setProperty('--student-left', '20px');
+  };
+
+  // 위치 상태 변경 감지
+  useEffect(() => {
+    console.log('선생님 정보 위치 변경:', teacherInfoPosition);
+  }, [teacherInfoPosition]);
+
+  useEffect(() => {
+    console.log('학생 정보 위치 변경:', studentInfoPosition);
+  }, [studentInfoPosition]);
+
+  // 초기화 시 CSS 변수 설정
+  useEffect(() => {
+    // localStorage에서 불러온 값으로 CSS 변수 설정
+    document.documentElement.style.setProperty('--teacher-top', teacherInfoPosition.top);
+    document.documentElement.style.setProperty('--teacher-right', teacherInfoPosition.left);
+    document.documentElement.style.setProperty('--student-top', studentInfoPosition.bottom);
+    document.documentElement.style.setProperty('--student-left', studentInfoPosition.right);
+  }, [teacherInfoPosition, studentInfoPosition]);
+  
   const webAppSectionRef = useRef<HTMLDivElement>(null);
+  const mockupCanvasWrapperRef = useRef<HTMLDivElement>(null);
 
   // 모바일 핵심기능 박스들을 위한 ref 배열
   const mobileFeatureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -1406,6 +1487,21 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       setIsMobile(window.innerWidth <= 1366); // 태블릿도 모바일 레이아웃 사용
       setIsDemoMobile(window.innerWidth <= 600); // 데모 섹션은 600px 이하만 모바일
       setIsWebAppMobile(window.innerWidth <= 600); // 웹앱 연동 섹션은 600px 이하에서 모바일
+      
+      // 위치 고정 모드가 활성화된 경우, 화면 크기 변경 시에도 위치 유지
+      if (lockPositions) {
+        console.log('화면 크기 변경됨, 위치 고정 모드로 위치 유지:', {
+          width: window.innerWidth,
+          teacherPosition: teacherInfoPosition,
+          studentPosition: studentInfoPosition
+        });
+        
+        // 데스크톱 레이아웃 CSS 변수 업데이트
+        document.documentElement.style.setProperty('--teacher-top', teacherInfoPosition.top);
+        document.documentElement.style.setProperty('--teacher-right', teacherInfoPosition.left);
+        document.documentElement.style.setProperty('--student-top', studentInfoPosition.bottom);
+        document.documentElement.style.setProperty('--student-left', studentInfoPosition.right);
+      }
     };
     
     checkMobile();
@@ -1414,6 +1510,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => {
       window.removeEventListener('resize', checkMobile);
     };
+  }, [lockPositions, teacherInfoPosition, studentInfoPosition]);
+
+  // 이미지 캔버스를 항상 1배율로 고정 (콘솔/뷰포트 축소 시에도 캔버스는 고정)
+  useEffect(() => {
+    const wrapper = mockupCanvasWrapperRef.current;
+    if (!wrapper) return;
+    wrapper.style.setProperty('--mockup-scale', '1');
   }, []);
 
   // 모바일 슬라이드 핸들러
@@ -2361,6 +2464,147 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection ref={webAppSectionRef}>
+        {/* 위치 조정 컨트롤 패널 (개발용) */}
+        {process.env.NODE_ENV === 'development' && (
+          <div style={{
+            position: 'fixed',
+            top: '20px',
+            right: '20px',
+            background: 'rgba(0,0,0,0.8)',
+            color: 'white',
+            padding: '15px',
+            borderRadius: '8px',
+            zIndex: 9999,
+            fontSize: '12px'
+          }}>
+            <div style={{marginBottom: '10px', fontWeight: 'bold'}}>위치 조정</div>
+            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8}}>
+              현재: T({teacherInfoPosition.top}, {teacherInfoPosition.left}) S({studentInfoPosition.bottom}, {studentInfoPosition.right})
+            </div>
+            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8, color: '#4CAF50'}}>
+              💾 자동 저장됨 (localStorage)
+            </div>
+            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8, color: '#2196F3'}}>
+              📱 화면: {typeof window !== 'undefined' ? window.innerWidth : 'N/A'}px | 레이아웃: {isWebAppMobile ? '모바일' : '데스크톱'}
+            </div>
+            <div style={{marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px'}}>
+              <label style={{fontSize: '11px'}}>
+                <input 
+                  type="checkbox" 
+                  checked={lockPositions}
+                  onChange={(e) => {
+                    const newLockState = e.target.checked;
+                    setLockPositions(newLockState);
+                    localStorage.setItem('lockPositions', JSON.stringify(newLockState));
+                    console.log('위치 고정 모드:', newLockState ? '활성화' : '비활성화');
+                  }}
+                  style={{marginRight: '5px'}}
+                />
+                위치 고정 모드
+              </label>
+              <span style={{fontSize: '10px', opacity: 0.7}}>
+                {lockPositions ? '🔒 고정됨' : '🔓 자유'}
+              </span>
+            </div>
+            <div style={{marginBottom: '5px'}}>
+              <label>선생님 정보:</label>
+              <input 
+                type="text" 
+                placeholder="top" 
+                value={teacherInfoPosition.top}
+                onChange={(e) => {
+                  console.log('선생님 top 변경:', e.target.value);
+                  const newPosition = {...teacherInfoPosition, top: e.target.value};
+                  setTeacherInfoPosition(newPosition);
+                  // localStorage에 저장
+                  localStorage.setItem('teacherInfoPosition', JSON.stringify(newPosition));
+                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
+                  document.documentElement.style.setProperty('--teacher-top', e.target.value);
+                }}
+                style={{width: '60px', marginLeft: '5px', marginRight: '5px'}}
+              />
+              <input 
+                type="text" 
+                placeholder="left" 
+                value={teacherInfoPosition.left}
+                onChange={(e) => {
+                  console.log('선생님 left 변경:', e.target.value);
+                  const newPosition = {...teacherInfoPosition, left: e.target.value};
+                  setTeacherInfoPosition(newPosition);
+                  // localStorage에 저장
+                  localStorage.setItem('teacherInfoPosition', JSON.stringify(newPosition));
+                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
+                  document.documentElement.style.setProperty('--teacher-right', e.target.value);
+                }}
+                style={{width: '60px', marginLeft: '5px'}}
+              />
+            </div>
+            <div style={{marginBottom: '10px'}}>
+              <label>학생 정보:</label>
+              <input 
+                type="text" 
+                placeholder="bottom" 
+                value={studentInfoPosition.bottom}
+                onChange={(e) => {
+                  console.log('학생 bottom 변경:', e.target.value);
+                  const newPosition = {...studentInfoPosition, bottom: e.target.value};
+                  setStudentInfoPosition(newPosition);
+                  // localStorage에 저장
+                  localStorage.setItem('studentInfoPosition', JSON.stringify(newPosition));
+                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
+                  document.documentElement.style.setProperty('--student-top', e.target.value);
+                }}
+                style={{width: '60px', marginLeft: '5px', marginRight: '5px'}}
+              />
+              <input 
+                type="text" 
+                placeholder="right" 
+                value={studentInfoPosition.right}
+                onChange={(e) => {
+                  const newPosition = {...studentInfoPosition, right: e.target.value};
+                  setStudentInfoPosition(newPosition);
+                  // localStorage에 저장
+                  localStorage.setItem('studentInfoPosition', JSON.stringify(newPosition));
+                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
+                  document.documentElement.style.setProperty('--student-left', e.target.value);
+                }}
+                style={{width: '60px', marginLeft: '5px'}}
+              />
+            </div>
+            <div style={{marginBottom: '10px', fontSize: '10px', opacity: 0.8}}>
+              데스크톱: T({document.documentElement.style.getPropertyValue('--teacher-top') || '80px'}, {document.documentElement.style.getPropertyValue('--teacher-right') || '50px'}) S({document.documentElement.style.getPropertyValue('--student-top') || '970px'}, {document.documentElement.style.getPropertyValue('--student-left') || '20px'})
+            </div>
+            <button 
+              onClick={resetInfoPositions}
+              style={{
+                background: '#835eeb',
+                color: 'white',
+                border: 'none',
+                padding: '5px 10px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '11px',
+                marginRight: '5px'
+              }}
+            >
+              기본 위치로
+            </button>
+            <button 
+              onClick={() => adjustInfoPositions('120px', '250px', '100px', '180px')}
+              style={{
+                background: '#ff6b6b',
+                color: 'white',
+                border: 'none',
+                padding: '5px 10px',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '11px'
+              }}
+            >
+              테스트 위치
+            </button>
+          </div>
+        )}
         <div style={{position:'relative',width:'100%',maxWidth:'100%',margin:'0',padding:0,minHeight:'900px',zIndex:2}}>
           {isWebAppMobile ? (
             <>
@@ -2420,14 +2664,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 {/* 실시간 동기화 텍스트에서 뻗어 나오는 화살표 */}
                 <AnimatedArrow isVisible={arrowVisible} />
                 
-                {/* 목업 이미지 3번 - 선생님용 웹사이트 */}
+                {/* 목업 이미지 3번 - 선생님용 웹사이트 (모바일 위치 보정: 아래 +30px, 오른쪽 오프셋 유지) */}
                 <img 
                   src="/WebApp/integration/3.svg" 
                   alt="선생님용 웹사이트 목업"
                   style={{
                     position: 'absolute',
-                    bottom: '60px',
-                    left: 'calc(50% + 100px)',
+                    bottom: '30px',
+                    left: 'calc(50% + 120px)',
                     transform: 'translateX(-50%)',
                     width: 'auto',
                     height: '375px',
@@ -2436,14 +2680,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   }}
                 />
                 
-                {/* 목업 이미지 4번 - 학생용 모바일 앱 */}
+                {/* 목업 이미지 4번 - 학생용 모바일 앱 (모바일 위치 고정: 화면 중앙 기준 오프셋, 왼쪽으로 100px 반영) */}
                 <img 
                   src="/WebApp/integration/4.svg" 
                   alt="학생용 모바일 앱 목업"
                   style={{
                     position: 'absolute',
-                    top: '80px',
-                    right: '130px',
+                    top: '70px',
+                    left: 'calc(50% - 160px)',
+                    transform: 'translateX(-50%)',
                     width: 'auto',
                     height: '300px',
                     zIndex: 1,
@@ -2451,13 +2696,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   }}
                 />
                 
-                {/* 선생님용 웹사이트 정보 - 좌측 상단 */}
+                {/* 선생님용 웹사이트 정보 - 모바일: 오른쪽 20px 고정 */}
                 <div style={{
                   paddingLeft: '10px', 
                   paddingRight: '10px', 
                   position: 'absolute', 
-                  top: '90px',
-                  left: '230px',
+                  top: teacherInfoPosition.top,
+                  right: '20px',
                   overflow: 'hidden', 
                   flexDirection: 'column', 
                   justifyContent: 'center', 
@@ -2593,15 +2838,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </div>
                 </div>
                 
-                {/* 학생용 모바일 앱 정보 - 우측 하단 */}
+                {/* 학생용 모바일 앱 정보 - 모바일: 왼쪽 20px 고정 */}
                 <div style={{
                   paddingLeft: '10px', 
                   paddingRight: '10px', 
                   paddingTop: '20px', 
                   paddingBottom: '20px', 
                   position: 'absolute', 
-                  bottom: '80px',
-                  right: '210px',
+                  bottom: studentInfoPosition.bottom,
+                  left: '20px',
                   overflow: 'hidden', 
                   flexDirection: 'column', 
                   justifyContent: 'center', 
@@ -2768,131 +3013,130 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               </WebAppHeader>
               <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
                 
-                {/* 웹버전 목업들 (820px 초과에서만 표시) */}
-                <DesktopMockupGroup>
-                  {/* 왼쪽 상단 - 선생님용 웹사이트 (태블릿/랩톱 화면) - 반 잘리게 */}
-                  <TeacherMockupElement
-                    $isVisible={mockupsVisible[0]}
-                    onClick={() => window.open('https://class.iammathking.com', '_blank')}
-                  >
-                    <img 
-                      src="/WebApp/integration/1.svg" 
-                      alt="선생님용 웹사이트"
-                      style={{ 
-                        width: 'auto', 
-                        height: 'var(--mockup-height-1, 550px)',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.03)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
-                      }}
-                    />
-                  </TeacherMockupElement>
-                  
+                {/* 웹버전 목업들 (820px 초과에서만 표시) - 3개 그룹, 1920 캔버스로 스케일 */}
+                <div ref={mockupCanvasWrapperRef} style={{ width: '100%', maxWidth: '100%', margin: '0 auto', display: 'flex', justifyContent: 'center', overflowX: 'hidden' }}>
+                  <MockupCanvas>
+                    <DesktopMockupGroup>
+                      <MockupStage>
+                        {/* 중앙 텍스트 및 가운데 폰(3번) 기준 배치 */}
+                        <AnimatedSyncText isVisible={syncTextVisible}>
+                          실시간<br/>동기화
+                        </AnimatedSyncText>
+                        <CenterMockupElement $isVisible={mockupsVisible[2]}>
+                          <img 
+                            src="/WebApp/integration/3.svg" 
+                            alt="모바일 앱 인터페이스"
+                            style={{ 
+                              width: 'auto', 
+                              height: 'var(--mockup-height-3, 550px)',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.03)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
+                            }}
+                          />
+                        </CenterMockupElement>
 
-                  
-                  {/* 실시간 동기화 텍스트 - 가운데 폰 목업 위 */}
-                  <AnimatedSyncText isVisible={syncTextVisible}>
-                    실시간<br/>동기화
-                  </AnimatedSyncText>
-                  
-                  {/* 가운데 - 모바일 앱 화면 (세로형) */}
-                  <CenterMockupElement
-                    $isVisible={mockupsVisible[2]}
-                  >
-                    <img 
-                      src="/WebApp/integration/3.svg" 
-                      alt="모바일 앱 인터페이스"
-                      style={{ 
-                        width: 'auto', 
-                        height: 'var(--mockup-height-3, 550px)',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'scale(1.03)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'scale(1)';
-                        e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
-                      }}
-                    />
-                  </CenterMockupElement>
-                  
-                  {/* 오른쪽 - 데스크톱 모니터 화면 - 반 잘리게 */}
-                  <DesktopMockupElement
-                    $isVisible={mockupsVisible[3]}
-                    onClick={() => window.open('https://class.iammathking.com', '_blank')}
-                >
-                  <img 
-                    src="/WebApp/integration/4.svg" 
-                    alt="데스크톱 관리 시스템"
-                    style={{ 
-                      width: 'auto', 
-                      height: 'var(--mockup-height-4, 650px)',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease',
-                      filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'scale(1.02)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                      e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
-                    }}
-                  />
-                </DesktopMockupElement>
+                        {/* 1번 목업 - 좌측 */}
+                        <TeacherMockupElement
+                          $isVisible={mockupsVisible[0]}
+                          onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                        >
+                          <img 
+                            src="/WebApp/integration/1.svg" 
+                            alt="선생님용 웹사이트"
+                            style={{ 
+                              width: 'auto', 
+                              height: 'var(--mockup-height-1, 550px)',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.03)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                            }}
+                          />
+                        </TeacherMockupElement>
 
-                </DesktopMockupGroup>
-                
-                {/* 선생님용 웹사이트 정보 텍스트 */}
-                <TeacherInfoContainer>
-                  <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
-                    <WebAppInfoTitle 
-                      isVisible={teacherChipsVisible[0]} 
-                      delay={0}
-                      style={{ fontSize: 28 }}
-                    >
-                      선생님용 웹사이트
-                    </WebAppInfoTitle>
-                    <WebAppInfoChips style={{alignItems:'flex-end'}}>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={150}>맞춤형 문제 출제</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={300}>AI 채점 결과 확인</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={450}>실력 분석 리포트</WebAppInfoChip>
-                    </WebAppInfoChips>
-                  </WebAppInfoBlock>
-                </TeacherInfoContainer>
-                
-                {/* 학생용 모바일 앱 정보 텍스트 */}
-                <StudentInfoContainer>
-                  <WebAppInfoBlock>
-                    <WebAppInfoTitle 
-                      isVisible={studentChipsVisible[0]} 
-                      delay={0}
-                      style={{ fontSize: 28 }}
-                    >
-                      학생용 모바일 앱
-                    </WebAppInfoTitle>
-                    <WebAppInfoChips>
-                      <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={150}>AI 힌트 시스템</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={300}>실시간 채점 피드백</WebAppInfoChip>
-                      <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={450}>장학금 알림 수신</WebAppInfoChip>
-                    </WebAppInfoChips>
-                  </WebAppInfoBlock>
-                </StudentInfoContainer>
+                        {/* 4번 목업 - 우측 */}
+                        <DesktopMockupElement
+                          $isVisible={mockupsVisible[3]}
+                          onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                        >
+                          <img 
+                            src="/WebApp/integration/4.svg" 
+                            alt="데스크톱 관리 시스템"
+                            style={{ 
+                              width: 'auto', 
+                              height: 'var(--mockup-height-4, 650px)',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.transform = 'scale(1.02)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.transform = 'scale(1)';
+                              e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                            }}
+                          />
+                        </DesktopMockupElement>
+                      </MockupStage>
+                    </DesktopMockupGroup>
+                    {/* 웹앱 정보 텍스트 (캔버스 내부에서 함께 스케일) */}
+                    <CanvasOverlay>
+                      <TeacherInfoContainer style={{ pointerEvents: 'auto' }}>
+                      <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
+                        <WebAppInfoTitle 
+                          isVisible={teacherChipsVisible[0]} 
+                          delay={0}
+                          style={{ fontSize: 28 }}
+                        >
+                          선생님용 웹사이트
+                        </WebAppInfoTitle>
+                        <WebAppInfoChips style={{alignItems:'flex-end'}}>
+                          <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={150}>맞춤형 문제 출제</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={300}>AI 채점 결과 확인</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={450}>실력 분석 리포트</WebAppInfoChip>
+                        </WebAppInfoChips>
+                      </WebAppInfoBlock>
+                    </TeacherInfoContainer>
+                    
+                    <StudentInfoContainer style={{ pointerEvents: 'auto' }}>
+                      <WebAppInfoBlock>
+                        <WebAppInfoTitle 
+                          isVisible={studentChipsVisible[0]} 
+                          delay={0}
+                          style={{ fontSize: 28 }}
+                        >
+                          학생용 모바일 앱
+                        </WebAppInfoTitle>
+                        <WebAppInfoChips>
+                          <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={150}>AI 힌트 시스템</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={300}>실시간 채점 피드백</WebAppInfoChip>
+                          <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={450}>장학금 알림 수신</WebAppInfoChip>
+                        </WebAppInfoChips>
+                      </WebAppInfoBlock>
+                    </StudentInfoContainer>
+                    </CanvasOverlay>
+                  </MockupCanvas>
+                </div>
               </WebAppContent>
             </>
           )}
@@ -2966,7 +3210,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
 const WebAppSection = styled.section`
   width: 100%;
   background: white;
-  padding: 192px 0;
+  padding: 150px 0 30px 0; /* 기본 하단 30px로 조정 (>=1025px 합계 70px) */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -2975,6 +3219,21 @@ const WebAppSection = styled.section`
   overflow: hidden;
   scroll-snap-align: start;
   position: relative;
+  
+  /* 데스크탑(>=1920px)에서 조금 더 타이트하게 */
+  @media (min-width: 1920px) {
+    padding: 150px 0 30px 0; /* 유지 */
+  }
+  
+  /* 태블릿~노트북 구간 */
+  @media (max-width: 1024px) {
+    padding: 140px 0 30px 0; /* 901–1024px에서도 합계 70px */
+  }
+  
+  /* 모바일 */
+  @media (max-width: 600px) {
+    padding: 120px 0 30px 0;
+  }
 `;
 
 
@@ -3088,6 +3347,64 @@ const DesktopMockupGroup = styled.div`
   align-items: center;
 `;
 
+/* 1920 기준으로 전체 목업을 스케일하는 캔버스 래퍼 */
+const MockupCanvas = styled.div`
+  width: 1920px; /* 고정 캔버스 너비 */
+  position: relative;
+  transform-origin: top center;
+  /* 외부 컨테이너에서 --mockup-scale을 주입 */
+  transform: scale(var(--mockup-scale, 1));
+`;
+
+/* 캔버스 전체를 덮는 오버레이 레이어 (텍스트/칩 배치용) */
+const CanvasOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1200px; /* MockupStage와 동일 높이 */
+  pointer-events: none; /* 기본적으로 클릭 통과 */
+  z-index: 50; /* 목업 이미지 위 */
+`;
+
+/* 절대 배치용 스테이지: 중앙(3번 목업)을 기준으로 고정 좌표 배치 */
+const MockupStage = styled.div`
+  position: relative;
+  width: 1920px;
+  height: 1200px; /* 스테이지 높이 (필요시 조정) */
+`;
+
+/* 1280px 고정 3열 목업 그룹 래퍼 */
+const MockupGroupsRow = styled.div`
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  min-height: 900px;
+
+  @media (max-width: 1920px) {
+    max-width: 100vw;
+    padding: 0;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+`;
+
+const MockupGroupCol = styled.div<{ align?: 'left' | 'center' | 'right' }>`
+  position: relative;
+  min-height: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: ${({ align }) => (align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start')};
+  justify-content: flex-start;
+`;
+
 const MockupElement = styled.div`
   position: absolute;
   cursor: pointer;
@@ -3113,8 +3430,8 @@ const AnimatedMockupElement = styled(MockupElement)<{ $isVisible: boolean; delay
 /* 선생님용 웹사이트 목업 요소 */
 const TeacherMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: 155px;
-  left: -50px;
+  top: 145px;
+  left: 0px;
   z-index: 12;
 `;
 
@@ -3138,8 +3455,8 @@ const CenterMockupElement = styled(AnimatedMockupElement)`
 /* 데스크톱 모니터 목업 요소 */
 const DesktopMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
-  top: 400px;
-  right: -280px;
+  top: 430px;
+  right: -240px;
   z-index: 11;
 `;
 
@@ -3236,20 +3553,39 @@ const WebAppInfoTextContainer = styled.div`
   /* 기본 스타일 */
 `;
 
+/* 웹앱 텍스트 컨테이너 (1280px 고정) */
+const WebAppTextContainer = styled.div`
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  height: 100%;
+  z-index: 20; /* 목업 이미지보다 위로 */
+  
+  @media (max-width: 1280px) {
+    max-width: 100vw;
+    padding: 0 24px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 16px;
+  }
+`;
+
 /* 선생님용 웹사이트 정보 텍스트 컨테이너 */
 const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
-  top: 80px;
-  right: 50px;
-  z-index: 10;
+  top: var(--teacher-top, 80px);
+  right: var(--teacher-right, 50px);
+  z-index: 21; /* 텍스트 레이어 상위 */
 `;
 
 /* 학생용 모바일 앱 정보 텍스트 컨테이너 */
 const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
-  top: 970px;
-  left: 20px;
-  z-index: 10;
+  top: var(--student-top, 970px);
+  left: var(--student-left, 20px);
+  z-index: 21; /* 텍스트 레이어 상위 */
 `;
 
 
@@ -3261,11 +3597,16 @@ const ExperienceSection = styled.section`
   align-items: center;
   background: #fff;
   min-height: 800px;
-  padding: 80px 0;
+  padding: 40px 0; /* 기본 상/하 40px (>=1025px) */
   scroll-snap-align: start;
+  
+  @media (max-width: 900px) {
+    padding: 34px 0; /* 601–900px 합계 64px (웹앱 30 + 유튜브 34) */
+  }
+  
   @media (max-width: 600px) {
     min-height: 700px;
-    padding: 60px 0;
+    padding: 28px 0; /* 모바일에서도 더 축소 */
   }
 `;
 

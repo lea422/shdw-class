@@ -3,21 +3,42 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Section = styled.section`
-  padding: 80px 24px;
+  padding: 120px 40px;
   background: #fff;
+
+  @media (max-width: 1920px) {
+    padding: 100px 32px;
+  }
+
+  @media (max-width: 1440px) {
+    padding: 80px 24px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 60px 20px;
+  }
 `;
 
 const Container = styled.div`
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 40px;
   position: relative;
-  height: 600px;
-  min-width: 800px;
+  height: 800px;
+  min-width: 1200px;
 
-  @media (max-width: 1280px) {
+  @media (max-width: 1920px) {
     max-width: 100vw;
-    padding: 0 16px;
+    padding: 0 32px;
+    height: 700px;
+    min-width: 1000px;
+  }
+
+  @media (max-width: 1440px) {
+    max-width: 100vw;
+    padding: 0 24px;
+    height: 600px;
+    min-width: 800px;
   }
 
   @media (max-width: 1024px) {
@@ -32,16 +53,23 @@ const Container = styled.div`
 
 const LeftColumn = styled.div`
   position: absolute;
-  left: 24px;
-  top: 100px;
+  left: 40px;
+  top: 120px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 200px;
+  width: 280px;
 
-  @media (max-width: 1280px) {
-    left: 16px;
-    width: 180px;
+  @media (max-width: 1920px) {
+    left: 32px;
+    top: 100px;
+    width: 240px;
+  }
+
+  @media (max-width: 1440px) {
+    left: 24px;
+    top: 100px;
+    width: 200px;
   }
 
   @media (max-width: 1024px) {
@@ -55,16 +83,23 @@ const LeftColumn = styled.div`
 
 const RightColumn = styled.div`
   position: absolute;
-  right: 24px;
-  top: 100px;
+  right: 40px;
+  top: 120px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 200px;
+  width: 280px;
 
-  @media (max-width: 1280px) {
-    right: 16px;
-    width: 180px;
+  @media (max-width: 1920px) {
+    right: 32px;
+    top: 100px;
+    width: 240px;
+  }
+
+  @media (max-width: 1440px) {
+    right: 24px;
+    top: 100px;
+    width: 200px;
   }
 
   @media (max-width: 1024px) {
@@ -79,13 +114,23 @@ const RightColumn = styled.div`
 const CenterColumn = styled.div`
   position: absolute;
   left: 50%;
-  top: 50px;
+  top: 80px;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 150px;
+  width: 200px;
+
+  @media (max-width: 1920px) {
+    top: 60px;
+    width: 180px;
+  }
+
+  @media (max-width: 1440px) {
+    top: 50px;
+    width: 150px;
+  }
 
   @media (max-width: 1024px) {
     width: 130px;
@@ -99,8 +144,12 @@ const CenterColumn = styled.div`
 const ImageContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   width: 100%;
+
+  @media (max-width: 1440px) {
+    margin-bottom: 16px;
+  }
 `;
 
 const TextContainer = styled.div`
@@ -112,12 +161,16 @@ const TextContainer = styled.div`
 
 const Image = styled.img`
   width: 100%;
-  max-width: 200px;
+  max-width: 280px;
   height: auto;
   filter: drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12));
 
-  @media (max-width: 1280px) {
-    max-width: 180px;
+  @media (max-width: 1920px) {
+    max-width: 240px;
+  }
+
+  @media (max-width: 1440px) {
+    max-width: 200px;
   }
 
   @media (max-width: 1024px) {
@@ -130,10 +183,14 @@ const Image = styled.img`
 `;
 
 const CenterImage = styled(Image)`
-  max-width: 150px;
+  max-width: 200px;
 
-  @media (max-width: 1280px) {
-    max-width: 130px;
+  @media (max-width: 1920px) {
+    max-width: 180px;
+  }
+
+  @media (max-width: 1440px) {
+    max-width: 150px;
   }
 
   @media (max-width: 1024px) {
@@ -147,35 +204,87 @@ const CenterImage = styled(Image)`
 
 const Title = styled.div`
   color: #835eeb;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
-  margin: 16px 0 8px;
+  margin: 20px 0 12px;
+
+  @media (max-width: 1920px) {
+    font-size: 22px;
+    margin: 18px 0 10px;
+  }
+
+  @media (max-width: 1440px) {
+    font-size: 20px;
+    margin: 16px 0 8px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 18px;
+    margin: 14px 0 8px;
+  }
 `;
 
 const ChipList = styled.div<{ align?: 'right' | 'left' }>`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
   align-items: ${({ align }) => (align === 'right' ? 'flex-end' : 'flex-start')};
+
+  @media (max-width: 1440px) {
+    gap: 8px;
+  }
 `;
 
 const Chip = styled.div`
-  padding: 8px 14px;
+  padding: 10px 18px;
   border-radius: 999px;
   background: #f3effd;
   color: #33373b;
-  font-size: 13px;
-  line-height: 19.5px;
+  font-size: 14px;
+  line-height: 20px;
   white-space: nowrap;
+
+  @media (max-width: 1920px) {
+    padding: 9px 16px;
+    font-size: 13px;
+    line-height: 19px;
+  }
+
+  @media (max-width: 1440px) {
+    padding: 8px 14px;
+    font-size: 13px;
+    line-height: 19.5px;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 7px 12px;
+    font-size: 12px;
+    line-height: 18px;
+  }
 `;
 
 const SyncText = styled.div`
   color: #835eeb;
-  font-size: 28px;
+  font-size: 36px;
   font-weight: 800;
   line-height: 1.3;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-align: center;
+
+  @media (max-width: 1920px) {
+    font-size: 32px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 1440px) {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  @media (max-width: 1024px) {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
 `;
 
 export default function WebAppSectionScaled() {
