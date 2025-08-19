@@ -173,7 +173,8 @@ const IntegratedSection = styled.div`
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  
+  // 모바일 핵심기능 박스들을 위한 ref 배열 (스크롤 인터랙션)
+  const mobileFeatureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
   @media (max-width: 1366px) and (min-width: 601px) {
     display: flex; /* 태블릿에서만 표시 */
     padding: 80px 20px;
@@ -1402,12 +1403,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     document.documentElement.style.setProperty('--student-left', studentRight);
   };
   
-  // 기본 위치로 리셋하는 함수
+  // 기본 위치로 리셋하는 함수 (모바일/컨트롤 패널용)
   const resetInfoPositions = () => {
     console.log('기본 위치로 리셋');
     
-    const defaultTeacherPosition = { top: '90px', left: '230px' };
-    const defaultStudentPosition = { bottom: '80px', right: '210px' };
+    const defaultTeacherPosition = { top: '100px', left: '350px' };
+    const defaultStudentPosition = { bottom: '150px', right: '350px' };
     
     setTeacherInfoPosition(defaultTeacherPosition);
     setStudentInfoPosition(defaultStudentPosition);
@@ -1416,11 +1417,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     localStorage.setItem('teacherInfoPosition', JSON.stringify(defaultTeacherPosition));
     localStorage.setItem('studentInfoPosition', JSON.stringify(defaultStudentPosition));
     
-    // 데스크톱 레이아웃 CSS 변수도 리셋
-    document.documentElement.style.setProperty('--teacher-top', '80px');
-    document.documentElement.style.setProperty('--teacher-right', '50px');
-    document.documentElement.style.setProperty('--student-top', '970px');
-    document.documentElement.style.setProperty('--student-left', '20px');
+    // 데스크톱 레이아웃 CSS 변수도 갱신
+    document.documentElement.style.setProperty('--teacher-top', '100px');
+    document.documentElement.style.setProperty('--teacher-right', '350px');
+    document.documentElement.style.setProperty('--student-top', '750px');
+    document.documentElement.style.setProperty('--student-left', '350px');
   };
 
   // 위치 상태 변경 감지
@@ -1432,20 +1433,19 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     console.log('학생 정보 위치 변경:', studentInfoPosition);
   }, [studentInfoPosition]);
 
-  // 초기화 시 CSS 변수 설정
+  // 데스크톱용 텍스트 기본 위치(CSS 변수) 설정
   useEffect(() => {
-    // localStorage에서 불러온 값으로 CSS 변수 설정
-    document.documentElement.style.setProperty('--teacher-top', teacherInfoPosition.top);
-    document.documentElement.style.setProperty('--teacher-right', teacherInfoPosition.left);
-    document.documentElement.style.setProperty('--student-top', studentInfoPosition.bottom);
-    document.documentElement.style.setProperty('--student-left', studentInfoPosition.right);
-  }, [teacherInfoPosition, studentInfoPosition]);
+    if (isWebAppMobile) return; // 모바일에서는 CSS 변수 미사용
+    document.documentElement.style.setProperty('--teacher-top', '100px');
+    document.documentElement.style.setProperty('--teacher-right', '350px');
+    document.documentElement.style.setProperty('--student-top', '750px');
+    document.documentElement.style.setProperty('--student-left', '350px');
+  }, [isWebAppMobile]);
   
   const webAppSectionRef = useRef<HTMLDivElement>(null);
   const mockupCanvasWrapperRef = useRef<HTMLDivElement>(null);
 
-  // 모바일 핵심기능 박스들을 위한 ref 배열
-  const mobileFeatureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
+  
 
 
   // 테스티모니얼 데이터
@@ -1692,7 +1692,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     });
 
     // 모바일 핵심기능 박스들은 별도 observer 사용
-    mobileFeatureBoxRefs.current.forEach(ref => {
+    featureBoxRefs.current.forEach(ref => {
       if (ref) {
         mobileObserver.observe(ref);
       }
@@ -1707,7 +1707,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           observer.unobserve(ref);
         }
       });
-      mobileFeatureBoxRefs.current.forEach(ref => {
+      featureBoxRefs.current.forEach(ref => {
         if (ref) {
           mobileObserver.unobserve(ref);
         }
@@ -1904,7 +1904,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[0] = el;
-            mobileFeatureBoxRefs.current[0] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
@@ -1939,7 +1938,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[1] = el;
-            mobileFeatureBoxRefs.current[1] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
@@ -1974,7 +1972,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[2] = el;
-            mobileFeatureBoxRefs.current[2] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(2)}>
@@ -2006,7 +2003,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[3] = el;
-            mobileFeatureBoxRefs.current[3] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(3)}>
@@ -2038,7 +2034,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[4] = el;
-            mobileFeatureBoxRefs.current[4] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(4)}>
@@ -2070,7 +2065,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         <AnimatedFeatureBox 
           ref={el => {
             featureBoxRefs.current[5] = el;
-            mobileFeatureBoxRefs.current[5] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(5)}>
