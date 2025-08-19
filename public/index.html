@@ -9,10 +9,11 @@
       content="MathKing Class Landing Page"
     />
     <title>MathKing Class</title>
-    <!-- Favicon: use public/Common/logo.svg -->
+    <!-- Favicon: prefer SVG with PNG fallbacks -->
     <link rel="icon" type="image/svg+xml" href="/Common/logo.svg" />
-    <link rel="shortcut icon" href="/Common/logo.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="/Common/logo.svg" />
+    <link rel="icon" type="image/png" href="/Common/logo.png" />
+    <link rel="shortcut icon" href="/Common/logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/Common/logo.png" />
         <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <!-- Godo B Font -->
     <style>
@@ -33,8 +34,28 @@
     </style>
     <!-- Swiper.js CDN -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- Meta Pixel Code -->
+    <script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '240431288404218');
+fbq('track', 'PageView');
+    </script>
+    <!-- End Meta Pixel Code -->
   </head>
   <body>
+    <!-- Meta Pixel (noscript) -->
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=240431288404218&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel (noscript) -->
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!-- Swiper.js Script -->
