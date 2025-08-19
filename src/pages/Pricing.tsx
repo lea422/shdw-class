@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Dialog from '../components/Dialog';
+import ConsultationForm from '../components/ConsultationForm';
 import styled from 'styled-components';
 
 // 띠배너 스타일
@@ -2676,6 +2678,7 @@ interface PricingProps {}
 
 const Pricing: React.FC<PricingProps> = () => {
   const [isCardVisible, setIsCardVisible] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   
@@ -2819,10 +2822,11 @@ const Pricing: React.FC<PricingProps> = () => {
     }
   };
 
+  const hideBanners = isDialogOpen || isCalculatorModalOpen; 
   return (
     <PricingPageContainer>
       {/* 데스크탑 띠배너 */}
-      <TopBanner isVisible={isBannerVisible}>
+      <TopBanner isVisible={isBannerVisible && !hideBanners}>
         <BannerLeftLogo>
           <BannerLogoText fontFamily="Godo M">수학대왕</BannerLogoText>
           <BannerLogoText>CLASS</BannerLogoText>
@@ -2838,7 +2842,7 @@ const Pricing: React.FC<PricingProps> = () => {
       </TopBanner>
       
       {/* 모바일 띠배너 */}
-      <MobileTopBanner isVisible={isBannerVisible}>
+      <MobileTopBanner isVisible={isBannerVisible && !hideBanners}>
         <MobileBannerCenter>
           <MobileBannerTextArea>
             <MobileBannerLogo>
@@ -3133,7 +3137,7 @@ const Pricing: React.FC<PricingProps> = () => {
             <TrialStepDescription>
               <TrialStepDescriptionLine>체험 신청 완료 후<br/>즉시 선생님과 학생용 계정 정보가 문자로 발송됩니다.<br/>별도의 복잡한 가입 절차 없이 바로 체험을 시작할 수 있어요.</TrialStepDescriptionLine>
             </TrialStepDescription>
-            <TrialStepButton>
+            <TrialStepButton onClick={() => setIsDialogOpen(true)}>
               <TrialStepButtonText>무료 체험 시작하기</TrialStepButtonText>
             </TrialStepButton>
           </TrialStepContent>
@@ -3305,6 +3309,15 @@ const Pricing: React.FC<PricingProps> = () => {
            </SVGContainer>
          </SVGComparisonContainer>
        </ComparisonSection>
+      {/* 무료 체험 신청 모달 */}
+      <Dialog 
+        isOpen={isDialogOpen} 
+        onClose={() => setIsDialogOpen(false)}
+        title="무료 체험 신청"
+        description="아래 정보를 입력해 주시면 담당자가 빠르게 연락드립니다."
+      >
+        <ConsultationForm onClose={() => setIsDialogOpen(false)} />
+      </Dialog>
     </PricingPageContainer>
   );
 };

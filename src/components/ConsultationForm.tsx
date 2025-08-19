@@ -267,24 +267,7 @@ const RadioInput = styled.input`
   cursor: pointer;
 `;
 
-const TestButton = styled.button`
-  background: #FEF3C7;
-  color: #92400E;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
-  border: 1px solid #F59E0B;
-  cursor: pointer;
-  margin-top: 8px;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background: #FDE68A;
-    border-color: #D97706;
-  }
-`;
+// 테스트 미리보기 버튼 비활성화
 
 interface ConsultationFormProps {
   onClose: () => void;
@@ -374,18 +357,7 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
 
   const hasAnyError = Object.values(errors).some(error => error);
 
-  // 테스트용 함수 - 모달 미리보기
-  const handleTestModal = () => {
-    // 테스트용 데이터로 폼 데이터를 채우고 모달 표시
-    setFormData({
-      name: '홍길동',
-      phone: '01012345678',
-      email: 'test@example.com',
-      academy: '테스트학원',
-      organization_type: 'academy'
-    });
-    setShowSuccessMessage(true);
-  };
+  // 테스트 미리보기 제거
 
   return (
     <>
@@ -491,9 +463,6 @@ const ConsultationForm: React.FC<ConsultationFormProps> = ({ onClose }) => {
       <PrivacyNotice>
         제출하시면 개인정보 수집 및 이용에 동의하게 됩니다.
       </PrivacyNotice>
-      <TestButton type="button" onClick={handleTestModal}>
-        🔍 성공 모달 미리보기 (테스트용)
-      </TestButton>
     </Form>
     </>
   );
