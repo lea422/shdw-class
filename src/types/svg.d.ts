@@ -4,3 +4,10 @@ declare module "*.svg" {
   const src: string;
   export default src;
 } 
+
+// Global typing for Meta Pixel
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from './components/Header';
@@ -33,6 +33,24 @@ function AppInner() {
 
   // Pricing 페이지일 때 헤더 배경을 화이트로 설정
   const isPricingPage = location.pathname === '/pricing';
+  
+  // SPA 라우트 변경 시 Meta Pixel PageView 전송
+  useEffect(() => {
+    // 첫 로드에서는 public/index.html의 픽셀 스니펫에서 이미 PageView가 전송되므로 중복 방지
+    const hasTrackedInitialRef = (window as unknown as { __hasTrackedInitialPageView?: boolean });
+    try {
+      if (!hasTrackedInitialRef.__hasTrackedInitialPageView) {
+        hasTrackedInitialRef.__hasTrackedInitialPageView = true;
+        return;
+      }
+      const fbqFunction = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+      if (typeof fbqFunction === 'function') {
+        fbqFunction('track', 'PageView');
+      }
+    } catch {
+      // no-op
+    }
+  }, [location.pathname]);
 
   return (
     <AppContainer>
