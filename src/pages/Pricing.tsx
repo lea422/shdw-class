@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from 'react';
 import Dialog from '../components/Dialog';
 import ConsultationForm from '../components/ConsultationForm';
@@ -210,16 +211,7 @@ const BannerButtonText = styled.div`
   word-wrap: break-word;
 `;
 
-const BannerRightLogo = styled.div`
-  justify-content: flex-start;
-  align-items: center;
-  gap: 5px;
-  display: flex;
-  
-  @media (max-width: 1200px) {
-    display: none; /* 중간 크기 화면에서는 숨김 */
-  }
-`;
+// 제거: 미사용 BannerRightLogo
 
 // 계산기 모달 스타일
 const CalculatorModalOverlay = styled.div<{ isOpen: boolean }>`
@@ -2835,7 +2827,7 @@ const Pricing: React.FC<PricingProps> = () => {
         </BannerLeftLogo>
         <BannerCenter>
           <BannerMessage>혹시 학교 선생님이신가요?</BannerMessage>
-          <BannerButton onClick={() => {/* 링크 추후 추가 */}}>
+          <BannerButton onClick={() => { window.open('http://pf.kakao.com/_YEuxbn', '_blank', 'noopener,noreferrer'); }}>
             <BannerButtonText>학교 도입 문의하기</BannerButtonText>
           </BannerButton>
         </BannerCenter>
@@ -2853,7 +2845,7 @@ const Pricing: React.FC<PricingProps> = () => {
             </MobileBannerLogo>
             <MobileBannerMessage>혹시 학교 선생님이신가요?</MobileBannerMessage>
           </MobileBannerTextArea>
-          <MobileBannerButton onClick={() => {/* 링크 추후 추가 */}}>
+          <MobileBannerButton onClick={() => { window.open('http://pf.kakao.com/_YEuxbn', '_blank', 'noopener,noreferrer'); }}>
             <MobileBannerButtonText>학교 도입 문의하기</MobileBannerButtonText>
           </MobileBannerButton>
         </MobileBannerCenter>
@@ -3013,7 +3005,8 @@ const Pricing: React.FC<PricingProps> = () => {
               <CardFeatureItem top={0}>
                 <FeatureCheckIcon />
                 <FeatureContent>
-                  <FeatureTitle>6명</FeatureTitle>
+                  <FeatureTitle>6명 이상</FeatureTitle>
+                  <FeatureDescription color="#835EEB">학원에 추천</FeatureDescription>
                 </FeatureContent>
               </CardFeatureItem>
               <CardFeatureItem top={41}>

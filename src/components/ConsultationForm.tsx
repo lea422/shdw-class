@@ -180,37 +180,7 @@ const FieldError = styled.span`
   }
 `;
 
-const SuccessMessage = styled.div`
-  background: linear-gradient(135deg, #10B981, #059669);
-  color: white;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
-  margin-bottom: 16px;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: slideDown 0.3s ease-out;
-
-  @keyframes slideDown {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  &::before {
-    content: '✅';
-    font-size: 16px;
-  }
-`;
+// 제거: 사용되지 않는 SuccessMessage 컴포넌트
 
 const LoadingSpinner = styled.div`
   display: inline-block;

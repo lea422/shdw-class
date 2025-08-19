@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { useCallback, useState } from 'react';
+import styled from 'styled-components';
 import ConsultationForm from './ConsultationForm';
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
@@ -200,11 +200,11 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     }, 100);
   };
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setIsOpen(false);
     onDrawerStateChange?.(false);
     document.body.style.overflow = 'auto';
-  };
+  }, [onDrawerStateChange]);
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -229,7 +229,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = 'auto';
     };
-  }, [isOpen]);
+  }, [isOpen, handleClose]);
 
   return (
     <>

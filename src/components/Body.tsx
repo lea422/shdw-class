@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
@@ -83,6 +84,7 @@ const arrowBreathe = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes textSlideIn
 const textSlideIn = keyframes`
   0% {
     opacity: 0;
@@ -94,6 +96,7 @@ const textSlideIn = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes textSlideOut
 const textSlideOut = keyframes`
   0% {
     opacity: 1;
@@ -105,6 +108,7 @@ const textSlideOut = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes textFadeIn
 const textFadeIn = keyframes`
   0% {
     opacity: 0;
@@ -116,6 +120,7 @@ const textFadeIn = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes titleSlideIn
 const titleSlideIn = keyframes`
   0% {
     opacity: 0;
@@ -127,6 +132,7 @@ const titleSlideIn = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes quoteSlideIn
 const quoteSlideIn = keyframes`
   0% {
     opacity: 0;
@@ -138,6 +144,7 @@ const quoteSlideIn = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes nameSlideIn
 const nameSlideIn = keyframes`
   0% {
     opacity: 0;
@@ -242,6 +249,7 @@ const Title = styled.div`
   }
 `;
 
+// 제거: 미사용 TitleHighlight
 const TitleHighlight = styled.span`
   color: #835EEB;
   font-size: 40px;
@@ -312,6 +320,7 @@ const SectionTitle = styled.div`
   }
 `;
 
+// 제거: 미사용 SectionTitleText
 const SectionTitleText = styled.div`
   width: 100%;
   max-width: 1280px;
@@ -333,6 +342,7 @@ const SectionTitleText = styled.div`
   }
 `;
 
+// 제거: 미사용 FeatureGrid
 const FeatureGrid = styled.div`
   width: 100%;
   max-width: 1280px;
@@ -481,6 +491,7 @@ const AnimatedHeaderSection = styled(HeaderSection)`
   }
 `;
 
+// 제거: 미사용 AnimatedSectionTitle
 const AnimatedSectionTitle = styled(SectionTitle)`
   opacity: 0;
   &.visible {
@@ -522,6 +533,7 @@ const AnimatedFeatureCard = styled(FeatureCard)`
 
 
 
+// 제거: 미사용 PlatformCard
 const PlatformCard = styled.div`
   width: 250px;
   height: 400px;
@@ -545,6 +557,7 @@ const PlatformCard = styled.div`
   }
 `;
 
+// 제거: 미사용 IconCircle
 const IconCircle = styled.div`
   width: 60px;
   height: 60px;
@@ -561,6 +574,7 @@ const IconCircle = styled.div`
   }
 `;
 
+// 제거: 미사용 PlatformTitle
 const PlatformTitle = styled.div`
   text-align: center;
   justify-content: center;
@@ -578,6 +592,7 @@ const PlatformTitle = styled.div`
   }
 `;
 
+// 제거: 미사용 PlatformFeatures
 const PlatformFeatures = styled.div`
   width: 230px;
   justify-content: center;
@@ -596,6 +611,7 @@ const PlatformFeatures = styled.div`
   }
 `;
 
+// 제거: 미사용 SyncSection
 const SyncSection = styled.div`
   overflow: hidden;
   border-radius: 15px;
@@ -608,6 +624,7 @@ const SyncSection = styled.div`
   box-sizing: border-box;
 `;
 
+// 제거: 미사용 SyncIcon
 const SyncIcon = styled.div`
   /* Auto layout */
   display: flex;
@@ -624,6 +641,7 @@ const SyncIcon = styled.div`
   animation: ${blink} 2s ease-in-out infinite;
 `;
 
+// 제거: 미사용 ArrowIcon
 const ArrowIcon = styled.div`
   position: absolute;
   width: 24px;
@@ -687,6 +705,7 @@ const ArrowIcon = styled.div`
   }
 `;
 
+// 제거: 미사용 CheckBox
 const CheckBox = styled.div`
   width: 20px;
   height: 20px;
@@ -711,6 +730,7 @@ const CheckBox = styled.div`
   }
 `;
 
+// 제거: 미사용 FeatureItem
 const FeatureItem = styled.div`
   display: flex;
   align-items: center;
@@ -731,6 +751,7 @@ const FeatureItem = styled.div`
   }
 `;
 
+// 제거: 미사용 SyncTitle
 const SyncTitle = styled.div`
   text-align: center;
   justify-content: center;
@@ -748,6 +769,7 @@ const SyncTitle = styled.div`
   }
 `;
 
+// 제거: 미사용 SyncSubtitle
 const SyncSubtitle = styled.div`
   text-align: center;
   justify-content: center;
@@ -935,6 +957,7 @@ const slideLeft = keyframes`
   }
 `;
 
+// 제거: 미사용 keyframes slideLeftMobile
 const slideLeftMobile = keyframes`
   0% {
     transform: translateX(0);
@@ -987,6 +1010,7 @@ const FeatureBoxSlide = styled.div`
   }
 `;
 
+// 제거: 미사용 FeatureBoxContent
 const FeatureBoxContent = styled.div`
   align-self: stretch;
   padding: 32.86px;
@@ -1009,6 +1033,7 @@ const FeatureBoxContent = styled.div`
   }
 `;
 
+// 제거: 미사용 FeatureImage
 const FeatureImage = styled.div<{ image: string }>`
   width: 100%;
   max-width: 400px;
@@ -1050,6 +1075,7 @@ const FeatureImage = styled.div<{ image: string }>`
   }
 `;
 
+// 제거: 미사용 StatsSection
 const StatsSection = styled.div`
   align-self: stretch;
   padding: 20px 0 40px;
@@ -1063,6 +1089,7 @@ const StatsSection = styled.div`
   }
 `;
 
+// 제거: 미사용 StatBox
 const StatBox = styled.div`
   padding: 8px 16px;
   background: rgba(255, 255, 255, 0.10);
@@ -1087,6 +1114,7 @@ const StatBox = styled.div`
   }
 `;
 
+// 제거: 미사용 StatText
 const StatText = styled.div`
   color: white;
   font-size: 48px;
@@ -1100,6 +1128,7 @@ const StatText = styled.div`
   }
 `;
 
+// 제거: 미사용 TabContainer
 const TabContainer = styled.div`
   align-self: stretch;
   padding: 60px 0;
@@ -1116,6 +1145,7 @@ const TabContainer = styled.div`
   }
 `;
 
+// 제거: 미사용 TabTitle
 const TabTitle = styled.h2`
   color: #33373B;
   font-size: 48px;
@@ -1130,6 +1160,7 @@ const TabTitle = styled.h2`
   }
 `;
 
+// 제거: 미사용 MoreButton
 const MoreButton = styled.button`
   margin-top: 20px;
   padding: 16px 32px;
@@ -1149,6 +1180,7 @@ const MoreButton = styled.button`
   }
 `;
 
+// 제거: 미사용 Tabs
 const Tabs = styled.div`
   display: flex;
   gap: 16px;
@@ -1160,6 +1192,7 @@ const Tabs = styled.div`
   }
 `;
 
+// 제거: 미사용 TabButton
 const TabButton = styled.button<{ $active: boolean }>`
   padding: 12px 32px;
   border-radius: 24px;
@@ -1177,6 +1210,7 @@ const TabButton = styled.button<{ $active: boolean }>`
   }
 `;
 
+// 제거: 미사용 SlideContainer
 const SlideContainer = styled.div`
   width: 700px;
   max-width: 90vw;
@@ -1196,6 +1230,7 @@ const SlideContainer = styled.div`
   }
 `;
 
+// 제거: 미사용 SlideTitle
 const SlideTitle = styled.div`
   background: #835EEB;
   color: white;
@@ -1213,6 +1248,7 @@ const SlideTitle = styled.div`
   }
 `;
 
+// 제거: 미사용 SlideDesc
 const SlideDesc = styled.div`
   color: #6B5B8C;
   font-size: 20px;
@@ -1225,6 +1261,7 @@ const SlideDesc = styled.div`
   }
 `;
 
+// 제거: 미사용 SlideBox
 const SlideBox = styled.div`
   width: 100%;
   height: 320px;
@@ -1248,12 +1285,14 @@ const ArrowButton = styled.button`
   box-sizing: border-box;
 `;
 
+// 제거: 미사용 ArrowLeft
 const ArrowLeft = styled(ArrowButton)`
   left: -48px;
   @media (max-width: 600px) {
     left: -24px;
   }
 `;
+// 제거: 미사용 ArrowRight
 const ArrowRight = styled(ArrowButton)`
   right: -48px;
   @media (max-width: 600px) {
@@ -1520,6 +1559,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   }, []);
 
   // 모바일 슬라이드 핸들러
+  // 제거: 미사용 데모 슬라이드 제어 함수
   const handlePrevDemoSlide = () => {
     setCurrentDemoSlide((prev) => (prev === 0 ? 6 : prev - 1));
   };

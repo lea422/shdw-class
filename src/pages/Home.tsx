@@ -454,125 +454,19 @@ const ScrollDownButton = styled.button`
 
 
 
-const FeatureSection = styled.div`
-  width: 100%;
-  height: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-  @media (max-width: 600px) {
-    flex-direction: column;
-    height: auto;
-    gap: 20px;
-    padding: 24px 0;
-  }
-`;
+/* removed unused FeatureSection */
 
-const FeatureCard = styled.div`
-  width: 300px;
-  height: 200px;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  background: white;
-  border: 1px solid #F3F4F6;
-  border-radius: 30px;
-  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
-  h3 {
-    color: #33373B;
-    font-size: 24px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 700;
-    text-align: center;
-    margin: 0;
-    transition: color 0.3s ease;
-    @media (max-width: 600px) {
-      font-size: 16px;
-    }
-  }
-  p {
-    color: #33373B;
-    font-size: 16px;
-    font-family: 'Pretendard', sans-serif;
-    font-weight: 400;
-    text-align: center;
-    margin: 0;
-    transition: color 0.3s ease;
-    @media (max-width: 600px) {
-      font-size: 12px;
-    }
-  }
-  @media (max-width: 600px) {
-    width: 90vw;
-    min-width: 0;
-    height: 120px;
-    padding: 0 8px;
-    border-radius: 16px;
-    gap: 6px;
-  }
-`;
+/* removed unused FeatureCard */
 
-const SyncIcon = styled.div`
-  width: 24px;
-  height: 24px;
-  margin-right: 8px;
-  @media (max-width: 600px) {
-    width: 18px;
-    height: 18px;
-    margin-right: 4px;
-  }
-`;
+/* removed unused SyncIcon */
 
-const UpdateSection = styled.section`
-  width: 100%;
-  background: #F3EFFD;
-  padding: 80px 0 0 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (max-width: 600px) {
-    padding: 32px 0 0 0;
-  }
-`;
+/* removed unused UpdateSection */
 
-const UpdateTitle = styled.h2`
-  font-size: 40px;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 40px;
-  text-align: center;
-  @media (max-width: 600px) {
-    font-size: 20px;
-    margin-bottom: 18px;
-  }
-`;
+/* removed unused UpdateTitle */
 
-const UpdateList = styled.ul`
-  width: 100%;
-  max-width: 800px;
-  background: #F3EFFD;
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  @media (max-width: 600px) {
-    max-width: 98vw;
-  }
-`;
+/* removed unused UpdateList */
 
-const UpdateItem = styled.li`
-  border-bottom: 1px solid #E5E7EB;
-  padding: 32px 0;
-  font-size: 20px;
-  color: #33373B;
-  @media (max-width: 600px) {
-    font-size: 13px;
-    padding: 16px 0;
-  }
-`;
+/* removed unused UpdateItem */
 
 const FaqSection = styled.section`
   width: 100%;
@@ -959,256 +853,41 @@ const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   }
 `;
 
-const UpdateBarContainer = styled.div`
-  padding: 30px 50px;
-  overflow: hidden;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 20px;
-  display: flex;
-  background: #F3EFFD;
-  position: relative;
-`;
+/* removed unused UpdateBarContainer */
 
-const UpdateBadge = styled.div`
-  padding: 5px 30px;
-  background: #835EEB;
-  border-radius: 9999px;
-  outline: 1.33px solid #835EEB;
-  outline-offset: -1.33px;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  display: flex;
-  position: absolute;
-  left: 50px;
-  z-index: 2;
-`;
+/* removed unused UpdateBadge */
 
-const UpdateBadgeText = styled.div`
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 24px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 36px;
-  word-wrap: break-word;
-`;
+/* removed unused UpdateBadgeText */
 
-const UpdateContent = styled.div<{fade: boolean}>`
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: #575C64;
-  font-size: 32px;
-  font-family: Pretendard;
-  font-weight: 400;
-  line-height: 48px;
-  word-wrap: break-word;
-  min-width: 400px;
-  max-width: 600px;
-  margin-left: 260px;
-  opacity: ${props => props.fade ? 0 : 1};
-  transition: opacity 0.6s;
-`;
+/* removed unused UpdateContent */
 
-const UpdateDate = styled.div`
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: #C6B5F6;
-  font-size: 24px;
-  font-family: Pretendard;
-  font-weight: 400;
-  line-height: 36px;
-  word-wrap: break-word;
-  min-width: 120px;
-`;
+/* removed unused UpdateDate */
 
-const SlideTitle = styled.h2`
-  text-align: center;
-  font-size: 40px;
-  font-weight: 700;
-  color: #33373B;
-  margin-bottom: 60px;
-  font-family: 'Pretendard', sans-serif;
-`;
+/* removed unused SlideTitle */
 
-const SlideContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 400px;
-  overflow: hidden;
-`;
+/* removed unused SlideContainer */
 
-const SlideTrack = styled.div<{ translateX: number }>`
-  display: flex;
-  gap: 30px;
-  transform: translateX(${props => props.translateX}px);
-  transition: transform 0.5s ease-out;
-  position: absolute;
-  left: 0;
-  top: 0;
-`;
+/* removed unused SlideTrack */
 
-const SlideCard = styled.div`
-  min-width: 300px;
-  height: 400px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(131, 94, 235, 0.15);
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
+/* removed unused SlideCard */
 
-  &:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(131, 94, 235, 0.25);
-  }
+/* removed unused CardImage */
 
-  &:active {
-    transform: translateY(-5px) scale(0.98);
-  }
-`;
+/* removed unused CardContent */
 
-const CardImage = styled.div<{ image: string }>`
-  width: 100%;
-  height: 200px;
-  background-image: url(${props => props.image});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: relative;
+/* removed unused CardTitle */
 
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
-  }
-`;
+/* removed unused CardDescription */
 
-const CardContent = styled.div`
-  padding: 24px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
+/* removed unused CardBadge */
 
-const CardTitle = styled.h3`
-  font-size: 20px;
-  font-weight: 700;
-  color: #33373B;
-  margin: 0 0 12px 0;
-  font-family: 'Pretendard', sans-serif;
-`;
+/* removed unused BarNextButton */
 
-const CardDescription = styled.p`
-  font-size: 14px;
-  color: #6B7280;
-  line-height: 1.5;
-  margin: 0;
-  font-family: 'Pretendard', sans-serif;
-  flex: 1;
-`;
+/* removed unused WebAppButton */
 
-const CardBadge = styled.span`
-  display: inline-block;
-  padding: 4px 12px;
-  background: linear-gradient(135deg, #835EEB, #6B4BC4);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  border-radius: 12px;
-  align-self: flex-start;
-  font-family: 'Pretendard', sans-serif;
-`;
+/* removed unused updates data */
 
-const BarNextButton = styled.button`
-  margin-left: 16px;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
-  padding: 4px 12px;
-  border-radius: 50%;
-  transition: background 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background: rgba(255,255,255,0.12);
-  }
-`;
-
-const WebAppButton = styled.a`
-  text-decoration: none;
-  color: white;
-  font-size: 18px;
-  font-family: 'Pretendard', sans-serif;
-  font-weight: 600;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 24px;
-  background: #007bff;
-  &:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
-  }
-  @media (max-width: 600px) {
-    font-size: 16px;
-    padding: 12px 20px;
-    border-radius: 8px;
-  }
-`;
-
-const updates = [
-  { id: 1, text: '수학대왕 클래스 신규 기능 출시!', date: '2024-06-01' },
-  { id: 2, text: '장학금 시스템 업그레이드 안내', date: '2024-05-20' },
-  { id: 3, text: '선생님 대시보드 UI 개선', date: '2024-05-10' },
-];
-
-const UpdateBar: React.FC = () => {
-  const [current, setCurrent] = useState(0);
-  const [fade, setFade] = useState(false);
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setFade(true);
-      setTimeout(() => {
-        setCurrent((prev) => (prev + 1) % updates.length);
-        setFade(false);
-      }, 600);
-    }, 3500);
-    return () => clearInterval(timer);
-  }, []);
-  return (
-    <UpdateBarContainer>
-      <UpdateBadge>
-        <UpdateBadgeText>수학대왕 CLASS 업데이트</UpdateBadgeText>
-      </UpdateBadge>
-      <UpdateContent fade={fade}>
-        {updates[current].text}
-      </UpdateContent>
-      <UpdateDate>{updates[current].date}</UpdateDate>
-    </UpdateBarContainer>
-  );
-};
+// 제거: 미사용 UpdateBar 컴포넌트 전체 삭제
 
 // FAQ 아코디언 컴포넌트 분리
 const FaqAccordion: React.FC<{ faqs: { question: string; answer: string }[] }> = ({ faqs }) => {
@@ -1248,10 +927,9 @@ interface HomeProps {
 const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slideTranslateX, setSlideTranslateX] = useState(0);
+  // 제거: 사용하지 않는 슬라이드 트랙 이동 상태
   const [isPaused, setIsPaused] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
   const [chip1Visible, setChip1Visible] = useState(false);
   const [chip2Visible, setChip2Visible] = useState(false);
   const [hoveredStep, setHoveredStep] = useState<number | null>(null);
@@ -1305,85 +983,9 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     }
   ];
 
-  // 8장의 이미지 카드 데이터
-  const slideCards = [
-    {
-      id: 1,
-      image: '/Hero-2.png',
-      title: 'AI 수학 학습',
-      description: '인공지능이 개인별 맞춤 학습을 제공하여 수학 실력을 향상시킵니다.',
-      badge: 'AI 기술'
-    },
-    {
-      id: 2,
-      image: '/Hero-3.png',
-      title: '실시간 채점',
-      description: '필기 인식 기술로 즉시 정답을 확인하고 피드백을 받을 수 있습니다.',
-      badge: '실시간'
-    },
-    {
-      id: 3,
-      image: '/Hero-4.png',
-      title: '맞춤형 문제',
-      description: '학생의 실력에 맞는 난이도의 문제를 자동으로 추천합니다.',
-      badge: '맞춤형'
-    },
-    {
-      id: 4,
-      image: '/Hero-5.png',
-      title: '학습 분석',
-      description: '상세한 학습 데이터 분석으로 효율적인 학습 방향을 제시합니다.',
-      badge: '분석'
-    },
-    {
-      id: 5,
-      image: '/Hero-6.png',
-      title: '장학금 시스템',
-      description: '노력에 따른 장학금 지급으로 학습 동기를 높입니다.',
-      badge: '혜택'
-    },
-    {
-      id: 6,
-      image: '/Hero-2.png',
-      title: '교사 관리 도구',
-      description: '교사가 학생들의 학습 현황을 한눈에 파악할 수 있습니다.',
-      badge: '관리'
-    },
-    {
-      id: 7,
-      image: '/Hero-3.png',
-      title: '모바일 학습',
-      description: '언제 어디서나 스마트폰으로 편리하게 학습할 수 있습니다.',
-      badge: '모바일'
-    },
-    {
-      id: 8,
-      image: '/Hero-4.png',
-      title: '웹-앱 연동',
-      description: '웹과 앱이 실시간으로 연동되어 완벽한 학습 환경을 제공합니다.',
-      badge: '연동'
-    }
-  ];
+  // 제거: 사용하지 않는 슬라이드 카드 데이터
 
-  // 무무료 슬라이드 애니메이션
-  useEffect(() => {
-    const slideWidth = 330; // 카드 너비 + 간격
-    
-    const animate = () => {
-      setSlideTranslateX(prev => {
-        const newTranslateX = prev - 1; // 1px씩 이동
-        if (Math.abs(newTranslateX) >= slideWidth) {
-          // 첫 번째 카드가 완전히 사라지면 마지막으로 이동
-          return newTranslateX + slideWidth;
-        }
-        return newTranslateX;
-      });
-    };
-
-    const interval = setInterval(animate, 30); // 30ms마다 1px씩 이동
-
-    return () => clearInterval(interval);
-  }, [slideCards.length]);
+  // 제거: 사용하지 않는 슬라이드 트랙 애니메이션
 
   // 히어로 슬라이드 애니메이션
   useEffect(() => {
@@ -1425,7 +1027,6 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
   const scrollToBody = () => {
     if (bodyRef.current) {
       const rect = bodyRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const targetScrollTop = scrollTop + rect.top;
       
@@ -1436,9 +1037,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
     }
   };
 
-  const handleIndicatorClick = (index: number) => {
-    setCurrentSlide(index);
-  };
+  // 제거: 미사용 핸들러
 
   const handlePauseToggle = () => {
     setIsPaused(!isPaused);

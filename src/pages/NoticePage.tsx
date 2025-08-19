@@ -1,100 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Routes, Route, NavLink } from "react-router-dom";
+import { useLocation, Routes, Route, NavLink } from "react-router-dom";
 import styled from 'styled-components';
 
-// 업데이트 슬라이드 컨테이너
-const UpdateSlideContainer = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 60px auto;
-  position: relative;
-  background: #F3EFFD;
-  border-radius: 16px;
-  padding: 30px;
-  overflow: hidden;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    max-width: 100%;
-    padding: 12px;
-    margin: 0 auto 24px auto;
-    border-radius: 10px;
-  }
-`;
-
-const UpdateSlideContent = styled.div<{ fade: boolean }>`
-  text-align: center;
-  opacity: ${props => props.fade ? 0 : 1};
-  transform: translateY(${props => props.fade ? '20px' : '0'});
-  transition: all 0.6s ease;
-`;
-
-const UpdateSlideTitle = styled.h3`
-  font-size: 24px;
-  font-weight: 700;
-  color: #33373B;
-  margin-bottom: 12px;
-  
-  @media (max-width: 768px) {
-    font-size: 20px;
-    margin-bottom: 12px;
-  }
-`;
-
-const UpdateSlideText = styled.p`
-  font-size: 18px;
-  color: #575C64;
-  line-height: 1.6;
-  margin-bottom: 8px;
-  
-  @media (max-width: 768px) {
-    font-size: 14px;
-    margin-bottom: 8px;
-  }
-`;
-
-const UpdateSlideDate = styled.div`
-  font-size: 16px;
-  color: #C6B5F6;
-  font-weight: 500;
-  
-  @media (max-width: 768px) {
-    font-size: 12px;
-  }
-`;
-
-const UpdateSlideArrow = styled.button`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: #835EEB;
-  cursor: pointer;
-  z-index: 2;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(131, 94, 235, 0.1);
-    color: #6B4BC4;
-  }
-  
-  @media (max-width: 768px) {
-    font-size: 18px;
-    padding: 4px;
-  }
-`;
-
-const UpdateSlideArrowLeft = styled(UpdateSlideArrow)`
-  left: 16px;
-`;
-
-const UpdateSlideArrowRight = styled(UpdateSlideArrow)`
-  right: 16px;
-`;
+// 제거: 미사용 업데이트 슬라이드 관련 스타일들 정리
 
 // FAQ 섹션 스타일
 const FaqSection = styled.section`
@@ -115,20 +23,7 @@ const FaqSection = styled.section`
   }
 `;
 
-const FaqTitle = styled.h2`
-  font-size: 32px;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 32px;
-  text-align: center;
-  
-
-  
-  @media (max-width: 768px) {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-`;
+// 제거: 미사용 FaqTitle
 
 const FaqList = styled.ul`
   width: 100%;
@@ -308,21 +203,7 @@ function useIsMobile() {
   return isMobile;
 }
 
-const SectionGuide = styled.div`
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 12px auto;
-  font-size: 16px;
-  color: #835EEB;
-  font-weight: 600;
-  text-align: left;
-  letter-spacing: -0.5px;
-  @media (max-width: 768px) {
-    font-size: 13px;
-    max-width: 95%;
-    margin-bottom: 8px;
-  }
-`;
+// 제거: 미사용 SectionGuide
 
 const SectionTitle = styled.h1`
   width: 100%;
@@ -344,18 +225,13 @@ const SectionTitle = styled.h1`
 // FAQ 섹션 함수
 function FaqPage() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
-  // 모바일 여부를 useIsMobile 훅으로 통일
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
-  const itemsPerPage = isMobile ? 8 : allFaqs.length;
-  const totalPages = Math.ceil(allFaqs.length / itemsPerPage);
-  const pagedFaqs = allFaqs.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
+  const pagedFaqs = allFaqs;
   return (
     <FaqSection>
       {/* <SectionTitle>자주 묻는 질문을{`\n`}한눈에 확인하세요!</SectionTitle> */}
       <FaqList>
         {pagedFaqs.map((faq, idx) => {
-          const globalIdx = (currentPage-1)*itemsPerPage + idx;
+          const globalIdx = idx;
           return (
             <FaqItem key={faq.question}>
               <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)}>
@@ -367,13 +243,7 @@ function FaqPage() {
           );
         })}
       </FaqList>
-      {totalPages > 1 && (
-        <Pagination>
-          <button aria-label="이전 페이지" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage-1)}>&lt;</button>
-          <span>{currentPage} / {totalPages}</span>
-          <button aria-label="다음 페이지" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage+1)}>&gt;</button>
-        </Pagination>
-      )}
+      {/* FAQ는 현재 전체 목록 노출 */}
     </FaqSection>
   );
 }
@@ -382,40 +252,10 @@ function FaqPage() {
 const UpdateSlide: React.FC = () => {
   const isMobile = useIsMobile();
   const [openIdx, setOpenIdx] = useState<number | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = isMobile ? 6 : allUpdates.length;
-  const totalPages = Math.ceil(allUpdates.length / itemsPerPage);
-  const pagedUpdates = allUpdates.slice((currentPage-1)*itemsPerPage, currentPage*itemsPerPage);
-  const [fade, setFade] = useState(false);
-  const [slideIdx, setSlideIdx] = useState(0);
+  const pagedUpdates = allUpdates.slice(0, itemsPerPage);
 
-  // 슬라이드 자동 전환 (데스크톱/태블릿만)
-  useEffect(() => {
-    if (isMobile) return;
-    const interval = setInterval(() => {
-      setFade(true);
-      setTimeout(() => {
-        setSlideIdx((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
-        setFade(false);
-      }, 300);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [isMobile]);
-
-  const handlePrev = () => {
-    setFade(true);
-    setTimeout(() => {
-      setSlideIdx((prev) => (prev === 0 ? allUpdates.length - 1 : prev - 1));
-      setFade(false);
-    }, 300);
-  };
-  const handleNext = () => {
-    setFade(true);
-    setTimeout(() => {
-      setSlideIdx((prev) => (prev === allUpdates.length - 1 ? 0 : prev + 1));
-      setFade(false);
-    }, 300);
-  };
+  // 자동 슬라이드 제거
 
   if (isMobile) {
     return (
@@ -423,7 +263,7 @@ const UpdateSlide: React.FC = () => {
         {/* <SectionTitle>수학대왕의 업데이트 된 기능을{`\n`}확인하세요!</SectionTitle> */}
         <FaqList as="ul">
           {pagedUpdates.map((notice, idx) => {
-            const globalIdx = (currentPage-1)*itemsPerPage + idx;
+            const globalIdx = idx;
             return (
               <FaqItem as="li" key={notice.id}>
                 <FaqQuestion open={openIdx === globalIdx} onClick={() => setOpenIdx(openIdx === globalIdx ? null : globalIdx)} style={{ textAlign: 'left' }}>
@@ -442,13 +282,7 @@ const UpdateSlide: React.FC = () => {
             );
           })}
         </FaqList>
-        {totalPages > 1 && (
-          <Pagination>
-            <button aria-label="이전 페이지" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage-1)}>&lt;</button>
-            <span>{currentPage} / {totalPages}</span>
-            <button aria-label="다음 페이지" disabled={currentPage === totalPages} onClick={() => setCurrentPage(currentPage+1)}>&gt;</button>
-          </Pagination>
-        )}
+        {/* 페이지네이션 제거 */}
       </FaqSection>
     );
   }
@@ -572,170 +406,13 @@ const TabButton = styled(NavLink)`
   }
 `;
 
-const CtaContainer = styled.div`
-  text-align: center;
-  margin-bottom: 40px;
-`;
+// 제거: 미사용 CTA 스타일
 
-const CtaButton = styled.a`
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #835EEB;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
+// 제거: 미사용 업데이트/아이콘 스타일
 
-  &:hover {
-    background: #6B4BC4;
-    transform: translateY(-2px);
-  }
-  
-  @media (max-width: 768px) {
-    padding: 8px 16px;
-    font-size: 13px;
-    border-radius: 10px;
-  }
-`;
-
-const UpdateQuestion = styled.button<{ open: boolean }>`
-  width: 100%;
-  background: none;
-  border: none;
-  outline: none;
-  padding: 32px 0 32px 0;
-  font-size: 22px;
-  font-weight: 600;
-  color: #222;
-  text-align: left;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-  
-  @media (max-width: 768px) {
-    padding: 16px 0 16px 0;
-    font-size: 15px;
-  }
-
-  &:hover {
-    color: #835EEB;
-    background: rgba(131, 94, 235, 0.02);
-    padding-left: 16px;
-  }
-
-  &:active {
-    transform: scale(0.98);
-    transition: transform 0.1s ease;
-  }
-`;
-
-const UpdateAnswer = styled.div`
-  font-size: 18px;
-  color: #555;
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-  padding-right: 32px;
-  padding-left: 16px;
-  animation: slideDown 0.3s ease-out;
-  border-left: 4px solid #835EEB;
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @media (max-width: 768px) {
-    font-size: 13px;
-    margin: 0 0 16px 0;
-    padding-right: 12px;
-    padding-left: 6px;
-  }
-`;
-
-const UpdateIcon = styled.span`
-  font-size: 32px;
-  color: #835EEB;
-  margin-left: 16px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-
-  &:hover {
-    background: rgba(131, 94, 235, 0.1);
-    transform: scale(1.1);
-  }
-  
-  @media (max-width: 768px) {
-    font-size: 24px;
-    margin-left: 8px;
-    width: 24px;
-    height: 24px;
-  }
-`;
-
-
-
-const TwinkleIcon = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-  vertical-align: middle;
-  display: inline-block;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 16px;
-  margin: 20px 0 0 0;
-  font-size: 15px;
-  @media (max-width: 768px) {
-    font-size: 13px;
-    gap: 10px;
-    margin: 14px 0 0 0;
-  }
-  button {
-    background: transparent;
-    color: #835EEB;
-    border: none;
-    border-radius: 50%;
-    padding: 6px 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: color 0.2s, background 0.15s;
-    font-size: 1.2em;
-    outline: none;
-    box-shadow: none;
-    &:disabled {
-      color: #bbb;
-      background: transparent;
-      cursor: default;
-    }
-    &:not(:disabled):hover {
-      background: transparent;
-      color: #6B4BC4;
-    }
-    &:focus, &:active {
-      background: #E5DBFA;
-      color: #835EEB;
-      outline: none;
-      box-shadow: none;
-    }
-  }
-`;
+// 제거: 미사용 페이지네이션 스타일
 
 export default function NoticePage() {
-  const navigate = useNavigate();
   const location = useLocation();
 
   // 활성화된 탭 인덱스 계산
