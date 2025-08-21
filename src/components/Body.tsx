@@ -1472,13 +1472,115 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     console.log('학생 정보 위치 변경:', studentInfoPosition);
   }, [studentInfoPosition]);
 
-  // 데스크톱용 텍스트 기본 위치(CSS 변수) 설정
+  // 반응형 CSS 변수 설정
   useEffect(() => {
     if (isWebAppMobile) return; // 모바일에서는 CSS 변수 미사용
-    document.documentElement.style.setProperty('--teacher-top', '100px');
-    document.documentElement.style.setProperty('--teacher-right', '350px');
-    document.documentElement.style.setProperty('--student-top', '750px');
-    document.documentElement.style.setProperty('--student-left', '350px');
+    
+    const updateCSSVariables = () => {
+      const vw = window.innerWidth;
+      
+      // 화면 크기에 따른 반응형 값 계산
+      if (vw >= 1920) {
+        // 큰 화면 (1920px+) - 기본 위치
+        document.documentElement.style.setProperty('--center-mockup-top', '350px');
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', '220px');
+        document.documentElement.style.setProperty('--sync-text-size', '42px');
+        document.documentElement.style.setProperty('--center-mockup-width', '400px');
+        document.documentElement.style.setProperty('--center-mockup-height', '650px');
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', '550px');
+        document.documentElement.style.setProperty('--mockup-height-3', '550px');
+        document.documentElement.style.setProperty('--mockup-height-4', '650px');
+      } else if (vw >= 1600) {
+        // 중간 화면 (1600-1919px) - 살짝 가운데로
+        const scale = Math.max(vw / 1920, 0.8); // 최소 80% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(350 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((350 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      } else if (vw >= 1280) {
+        // 작은 화면 (1280-1599px) - 더 가운데로
+        const scale = Math.max(vw / 1920, 0.7); // 최소 70% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(320 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((320 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      } else if (vw >= 1000) {
+        // 작은 화면 (1000-1279px) - 더 가운데로
+        const scale = Math.max(vw / 1920, 0.65); // 최소 65% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(280 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((280 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      } else if (vw >= 800) {
+        // 작은 화면 (800-999px) - 더 가운데로
+        const scale = Math.max(vw / 1920, 0.6); // 최소 60% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(250 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((250 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      } else if (vw >= 600) {
+        // 작은 화면 (600-799px) - 더 가운데로
+        const scale = Math.max(vw / 1920, 0.55); // 최소 55% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(220 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((220 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      } else {
+        // 매우 작은 화면 (600px 미만) - 완전히 가운데로
+        const scale = Math.max(vw / 1920, 0.5); // 최소 50% 크기 유지
+        document.documentElement.style.setProperty('--center-mockup-top', `${Math.round(180 * scale)}px`);
+        // 동기화 텍스트는 가운데 목업 위에 일정한 간격 유지 (130px)
+        document.documentElement.style.setProperty('--sync-text-top', `${Math.round((180 - 130) * scale)}px`);
+        document.documentElement.style.setProperty('--sync-text-size', `${Math.round(42 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-width', `${Math.round(400 * scale)}px`);
+        document.documentElement.style.setProperty('--center-mockup-height', `${Math.round(650 * scale)}px`);
+        // 목업 이미지 높이 설정
+        document.documentElement.style.setProperty('--mockup-height-1', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-3', `${Math.round(550 * scale)}px`);
+        document.documentElement.style.setProperty('--mockup-height-4', `${Math.round(650 * scale)}px`);
+      }
+    };
+
+    // 초기 설정
+    updateCSSVariables();
+    
+    // 화면 크기 변경 시 업데이트
+    const handleResize = () => updateCSSVariables();
+    window.addEventListener('resize', handleResize);
+    
+    return () => window.removeEventListener('resize', handleResize);
   }, [isWebAppMobile]);
   
   const webAppSectionRef = useRef<HTMLDivElement>(null);
@@ -3045,14 +3147,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <WebAppContent style={{position: 'relative', minHeight: '1400px', overflow: 'hidden'}}>
+              <WebAppContent>
                 
                 {/* 웹버전 목업들 (820px 초과에서만 표시) - 3개 그룹, 1920 캔버스로 스케일 */}
                 <div ref={mockupCanvasWrapperRef} style={{ width: '100%', maxWidth: '100%', margin: '0 auto', display: 'flex', justifyContent: 'center', overflowX: 'hidden' }}>
                   <MockupCanvas>
                     <DesktopMockupGroup>
                       <MockupStage>
-                        {/* 중앙 텍스트 및 가운데 폰(3번) 기준 배치 */}
+                        {/* WebApp 통합 목업 */}
                         <AnimatedSyncText isVisible={syncTextVisible}>
                           실시간<br/>동기화
                         </AnimatedSyncText>
@@ -3369,6 +3471,26 @@ const WebAppContent = styled.div`
   display: block;
   min-height: 900px;
   overflow: hidden;
+  
+  @media (max-width: 1920px) {
+    min-height: calc(900px * (min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1600px) {
+    min-height: calc(900px * (min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1200px) {
+    min-height: calc(900px * (min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1000px) {
+    min-height: calc(900px * (min(100vw, 1000) / 1920));
+  }
+  
+  @media (max-width: 800px) {
+    min-height: 600px;
+  }
 `;
 
 /* 데스크탑 목업 그룹 컨테이너 */
@@ -3382,12 +3504,70 @@ const DesktopMockupGroup = styled.div`
 `;
 
 /* 1920 기준으로 전체 목업을 스케일하는 캔버스 래퍼 */
+/* 1920 기준으로 전체 목업을 스케일하는 캔버스 래퍼 */
 const MockupCanvas = styled.div`
   width: 1920px; /* 고정 캔버스 너비 */
   position: relative;
   transform-origin: top center;
   /* 외부 컨테이너에서 --mockup-scale을 주입 */
   transform: scale(var(--mockup-scale, 1));
+  
+  @media (max-width: 1920px) {
+    transform: scale(calc(min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1600px) {
+    transform: scale(calc(min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1400px) {
+    transform: scale(calc(min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1200px) {
+    transform: scale(calc(min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1000px) {
+    transform: scale(calc(min(100vw, 1000) / 1920));
+  }
+  
+  @media (max-width: 800px) {
+    transform: scale(calc(min(100vw, 800) / 1920));
+  }
+  
+  @media (max-width: 600px) {
+    transform: scale(calc(min(100vw, 600) / 1920));
+  }
+  
+  @media (max-width: 500px) {
+    transform: scale(calc(min(100vw, 500) / 1920));
+  }
+  
+  @media (max-width: 400px) {
+    transform: scale(calc(min(100vw, 400) / 1920));
+  }
+  
+  /* 작은 화면에서 캔버스 너비 조정으로 목업들이 화면 밖으로 나가지 않도록 */
+  @media (max-width: 800px) {
+    width: 1600px;
+    transform: scale(calc(min(100vw, 800) / 1600));
+  }
+  
+  @media (max-width: 600px) {
+    width: 1400px;
+    transform: scale(calc(min(100vw, 600) / 1400));
+  }
+  
+  @media (max-width: 500px) {
+    width: 1200px;
+    transform: scale(calc(min(100vw, 500) / 1200));
+  }
+  
+  @media (max-width: 400px) {
+    width: 1000px;
+    transform: scale(calc(min(100vw, 400) / 1000));
+  }
 `;
 
 /* 캔버스 전체를 덮는 오버레이 레이어 (텍스트/칩 배치용) */
@@ -3399,6 +3579,22 @@ const CanvasOverlay = styled.div`
   height: 1200px; /* MockupStage와 동일 높이 */
   pointer-events: none; /* 기본적으로 클릭 통과 */
   z-index: 50; /* 목업 이미지 위 */
+  
+  @media (max-width: 800px) {
+    width: 1600px;
+  }
+  
+  @media (max-width: 600px) {
+    width: 1400px;
+  }
+  
+  @media (max-width: 500px) {
+    width: 1200px;
+  }
+  
+  @media (max-width: 400px) {
+    width: 1000px;
+  }
 `;
 
 /* 절대 배치용 스테이지: 중앙(3번 목업)을 기준으로 고정 좌표 배치 */
@@ -3406,6 +3602,22 @@ const MockupStage = styled.div`
   position: relative;
   width: 1920px;
   height: 1200px; /* 스테이지 높이 (필요시 조정) */
+  
+  @media (max-width: 800px) {
+    width: 1600px;
+  }
+  
+  @media (max-width: 600px) {
+    width: 1400px;
+  }
+  
+  @media (max-width: 500px) {
+    width: 1200px;
+  }
+  
+  @media (max-width: 400px) {
+    width: 1000px;
+  }
 `;
 
 /* 1280px 고정 3열 목업 그룹 래퍼 */
@@ -3417,7 +3629,7 @@ const MockupGroupsRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 24px;
-  min-height: 900px;
+  min-height: 1000px;
 
   @media (max-width: 1920px) {
     max-width: 100vw;
@@ -3432,7 +3644,7 @@ const MockupGroupsRow = styled.div`
 
 const MockupGroupCol = styled.div<{ align?: 'left' | 'center' | 'right' }>`
   position: relative;
-  min-height: 900px;
+  min-height: 1000px;
   display: flex;
   flex-direction: column;
   align-items: ${({ align }) => (align === 'right' ? 'flex-end' : align === 'center' ? 'center' : 'flex-start')};
@@ -3461,59 +3673,147 @@ const AnimatedMockupElement = styled(MockupElement)<{ $isVisible: boolean; delay
   }
 `;
 
-/* 선생님용 웹사이트 목업 요소 */
-const TeacherMockupElement = styled(AnimatedMockupElement)`
-  position: absolute;
-  top: 145px;
-  left: 0px;
-  z-index: 12;
-`;
-
-/* 학생용 모바일 앱 목업 요소 */
-const StudentMockupElement = styled(AnimatedMockupElement)`
-  position: absolute;
-  top: 750px;
-  left: 410px;
-  z-index: 12;
-`;
-
-/* 가운데 모바일 앱 목업 요소 */
+/* 가운데 WebApp 통합 목업 요소 */
 const CenterMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
   top: 350px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0);
   z-index: 11;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @media (max-width: 1000px) {
+    top: 320px;
+  }
+  
+  @media (max-width: 800px) {
+    top: 300px;
+  }
+  
+  @media (max-width: 600px) {
+    top: 280px;
+  }
+`;
+
+/* 선생님용 웹사이트 목업 요소 */
+const TeacherMockupElement = styled(AnimatedMockupElement)`
+  position: absolute;
+  top: 145px;
+  left: 40px;
+  z-index: 12;
+  
+  @media (max-width: 1000px) {
+    left: 200px;
+  }
+  
+  @media (max-width: 800px) {
+    left: 350px;
+  }
+  
+  @media (max-width: 600px) {
+    left: 500px;
+  }
+  
+  @media (max-width: 500px) {
+    left: 600px;
+  }
+  
+  @media (max-width: 400px) {
+    left: 700px;
+  }
 `;
 
 /* 데스크톱 모니터 목업 요소 */
 const DesktopMockupElement = styled(AnimatedMockupElement)`
   position: absolute;
   top: 430px;
-  right: -240px;
+  right: -200px;
   z-index: 11;
+  
+  @media (max-width: 1000px) {
+    right: -50px;
+  }
+  
+  @media (max-width: 800px) {
+    right: 100px;
+  }
+  
+  @media (max-width: 600px) {
+    right: 250px;
+  }
+  
+  @media (max-width: 500px) {
+    right: 400px;
+  }
+  
+  @media (max-width: 400px) {
+    right: 550px;
+  }
 `;
 
 const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 220px;
-  left: calc(50% - 15px);
+  left: calc(50% - 2px);
   justify-content: center;
+  align-items: center;
   display: flex;
   flex-direction: column;
   color: #835EEB;
   font-size: 42px;
   font-family: 'Godo B';
   font-weight: 400;
-  line-height: 54px;
+  line-height: 50px;
+  letter-spacing: -0.5px;
   word-wrap: break-word;
   z-index: 20;
   text-align: center;
+  white-space: nowrap;
   opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translateX(-50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
+  transform: translate(-50%, 0) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
+  
+  @media (max-width: 1600px) {
+    font-size: 38px;
+    line-height: 46px;
+    top: calc(220px * (min(100vw, 1280) / 1920));
+  }
+  
+  @media (max-width: 1400px) {
+    font-size: 34px;
+    line-height: 42px;
+    top: calc(220px * (min(100vw, 1280) / 1280));
+  }
+  
+  @media (max-width: 1200px) {
+    font-size: 30px;
+    line-height: 38px;
+    top: calc(220px * (min(100vw, 1280) / 1280));
+  }
+  
+  @media (max-width: 1000px) {
+    font-size: 26px;
+    line-height: 34px;
+    top: calc(220px * (min(100vw, 1000) / 1000));
+  }
+  
+  @media (max-width: 800px) {
+    font-size: 22px;
+    line-height: 30px;
+    top: calc(220px * (min(100vw, 800) / 800));
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 18px;
+    line-height: 24px;
+    top: calc(220px * (min(100vw, 600) / 600));
+  }
 `;
+
+
 
 const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   left: 50%; 
@@ -3612,6 +3912,26 @@ const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   top: var(--teacher-top, 80px);
   right: var(--teacher-right, 50px);
   z-index: 21; /* 텍스트 레이어 상위 */
+  
+  @media (max-width: 1280px) {
+    right: calc(var(--teacher-right, 50px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 1024px) {
+    right: calc(var(--teacher-right, 50px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 768px) {
+    right: calc(var(--teacher-right, 50px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 600px) {
+    right: calc(var(--teacher-right, 50px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 375px) {
+    right: calc(var(--teacher-right, 50px) + (1280px - 100vw) / 2);
+  }
 `;
 
 /* 학생용 모바일 앱 정보 텍스트 컨테이너 */
@@ -3620,6 +3940,26 @@ const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   top: var(--student-top, 970px);
   left: var(--student-left, 20px);
   z-index: 21; /* 텍스트 레이어 상위 */
+  
+  @media (max-width: 1280px) {
+    left: calc(var(--student-left, 20px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 1024px) {
+    left: calc(var(--student-left, 20px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 768px) {
+    left: calc(var(--student-left, 20px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 600px) {
+    left: calc(var(--student-left, 20px) + (1280px - 100vw) / 2);
+  }
+  
+  @media (max-width: 375px) {
+    left: calc(var(--student-left, 20px) + (1280px - 100vw) / 2);
+  }
 `;
 
 
@@ -4325,6 +4665,30 @@ const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  @media (max-width: 1600px) {
+    font-size: 32px;
+  }
+  
+  @media (max-width: 1400px) {
+    font-size: 28px;
+  }
+  
+  @media (max-width: 1200px) {
+    font-size: 24px;
+  }
+  
+  @media (max-width: 1000px) {
+    font-size: 20px;
+  }
+  
+  @media (max-width: 800px) {
+    font-size: 18px;
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 `;
 const WebAppInfoChips = styled.div`
   display: flex;
@@ -4344,6 +4708,37 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transition-delay: ${props => props.delay || 0}ms;
+  
+  @media (max-width: 1600px) {
+    font-size: 20px;
+    padding: 8px 20px;
+  }
+  
+  @media (max-width: 1400px) {
+    font-size: 18px;
+    padding: 7px 18px;
+  }
+  
+  @media (max-width: 1200px) {
+    font-size: 16px;
+    padding: 6px 16px;
+  }
+  
+  @media (max-width: 1000px) {
+    font-size: 14px;
+    padding: 5px 14px;
+  }
+  
+  @media (max-width: 800px) {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+  
+  @media (max-width: 600px) {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 16px;
+  }
 `;
 
 export default Body;
