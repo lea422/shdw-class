@@ -211,6 +211,51 @@ const NavItem = styled(Link)<{ $color: string }>`
   }
 `;
 
+const ExternalNavItem = styled.a<{ $color: string }>`
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: ${props => props.$color};
+  font-size: 13px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 500;
+  text-transform: capitalize;
+  line-height: 23.20px;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1001;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #835EEB;
+    transition: width 0.2s ease;
+  }
+
+  &:hover {
+    color: #835EEB;
+    &:after {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+  @media (max-width: 600px) {
+    font-size: 11px;
+  }
+`;
+
 const LoginButton = styled.a`
   padding: 8px 16px;
   border-radius: 30px;
@@ -401,6 +446,27 @@ const MobileNavItem = styled(Link)`
   }
 `;
 
+const MobileExternalNavItem = styled.a`
+  color: #835EEB;
+  font-size: 18px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  margin-bottom: 6px;
+  @media (max-width: 480px) {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  @media (max-width: 375px) {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  @media (max-width: 320px) {
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+`;
+
 const MobileDrawerButton = styled.a`
   margin-top: 20px;
   padding: 10px 0;
@@ -523,6 +589,14 @@ const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
             <NavItem to="/" $color={navColor} onClick={() => handleNavClick('/')}>홈</NavItem>
             <NavItem to="/pricing" $color={navColor} onClick={() => handleNavClick('/pricing')}>요금안내</NavItem>
             <NavItem to="/notice" $color={navColor} onClick={() => handleNavClick('/notice')}>공지사항</NavItem>
+            <ExternalNavItem 
+              href="https://mkt.shopping.naver.com/link/6836a548815d2663a463be9f" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              $color={navColor}
+            >
+              문제집 구매
+            </ExternalNavItem>
           </NavContainer>
           <ButtonGroup>
             <DownloadButton 
@@ -555,6 +629,13 @@ const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
           <MobileNavItem to="/" onClick={() => handleNavClick('/')}>홈</MobileNavItem>
           <MobileNavItem to="/pricing" onClick={() => handleNavClick('/pricing')}>요금안내</MobileNavItem>
           <MobileNavItem to="/notice" onClick={() => handleNavClick('/notice')}>공지사항</MobileNavItem>
+          <MobileExternalNavItem 
+            href="https://mkt.shopping.naver.com/link/6836a548815d2663a463be9f" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            문제집 구매
+          </MobileExternalNavItem>
         </MobileNav>
         <MobileDrawerButton href={DOWNLOAD_URL} target="_blank" rel="noopener noreferrer">앱 다운로드</MobileDrawerButton>
         <MobileDrawerButton href={LOGIN_URL} target="_blank" rel="noopener noreferrer">로그인</MobileDrawerButton>
