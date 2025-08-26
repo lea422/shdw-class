@@ -2920,194 +2920,193 @@ const Pricing: React.FC<PricingProps> = () => {
           </PricingSubtitle>
         </PricingHeader>
         
-        <PricingCardsContainer>
-          {/* 무료 체험 카드 */}
-          <NewPricingCard 
-            cardType="free"
-            isVisible={isCardVisible} 
-            style={{ transitionDelay: '0ms' }}
-          >
-            <CardHeaderNew>
-              <CardTitleRow>
-                <CardTitleText cardType="free">수학대왕</CardTitleText>
-                <CardTitleText cardType="free" style={{ color: '#835EEB' }}>FREE</CardTitleText>
-              </CardTitleRow>
-              <CardSubtitleNew cardType="free">
-                최대 ~명까지 <span style={{ fontWeight: 700 }}>무료로</span> 사용해보세요
-              </CardSubtitleNew>
-              <CardPriceRow>
-                <CardPriceText cardType="free">최대 5명</CardPriceText>
-              </CardPriceRow>
-            </CardHeaderNew>
-            
-            <CardFeaturesList>
-              <CardFeatureItem top={0}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>최대 5명까지</FeatureTitle>
-                  <FeatureDescription color="#835EEB">무료 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={41}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>매달 장학금</FeatureTitle>
-                  <FeatureDescription color="#835EEB">30,000원</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={82}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>무제한 문제 풀기</FeatureTitle>
-                  <FeatureDescription color="#835EEB">8만 개의 콘텐츠 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={123}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>AI 필기 채점</FeatureTitle>
-                  <FeatureDescription color="#835EEB">필기 분석 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={164}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>유사문제</FeatureTitle>
-                  <FeatureDescription color="#835EEB">검색 기능 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-            </CardFeaturesList>
-            
-            <CardButton onClick={() => handleCardClick('free')}>
-              <ButtonText>지금 바로 시작하기</ButtonText>
-            </CardButton>
-          </NewPricingCard>
-          
-          {/* Light 플랜 카드 */}
-          <NewPricingCard 
-            cardType="basic"
-            isVisible={isCardVisible} 
-            style={{ transitionDelay: '200ms' }}
-          >
-            <CardHeaderNew>
-              <CardTitleRow>
-                <CardTitleText cardType="basic">수학대왕</CardTitleText>
-                <CardIcon src="/Assets/icon/light.svg" alt="Light" iconType="light" />
-              </CardTitleRow>
-              <CardSubtitleNew cardType="basic">기본 기능</CardSubtitleNew>
-              <CardPriceRow>
-                <CardPriceText cardType="basic">월 ~6,900</CardPriceText>
-                <CardPriceUnit cardType="basic">/인당</CardPriceUnit>
-              </CardPriceRow>
-            </CardHeaderNew>
-            
-            <CardFeaturesList>
-              <CardFeatureItem top={0}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>6명 이상</FeatureTitle>
-                  <FeatureDescription color="#835EEB">학원에 추천</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={41}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>매달 장학금</FeatureTitle>
-                  <FeatureDescription color="#835EEB">30,000원</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={82}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>무제한 문제 풀기</FeatureTitle>
-                  <FeatureDescription color="#835EEB">8만 개의 콘텐츠 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={123}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>AI 필기 채점</FeatureTitle>
-                  <FeatureDescription color="#835EEB">필기 분석 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-              <CardFeatureItem top={164}>
-                <FeatureCheckIcon />
-                <FeatureContent>
-                  <FeatureTitle>유사문제</FeatureTitle>
-                  <FeatureDescription color="#835EEB">검색 기능 제공</FeatureDescription>
-                </FeatureContent>
-              </CardFeatureItem>
-            </CardFeaturesList>
-            
-            <CardButton onClick={() => handleCardClick('basic')}>
-              <ButtonText>예상 요금 확인하기</ButtonText>
-            </CardButton>
-          </NewPricingCard>
-          
-          {/* Plus 플랜 카드 */}
-          <NewPricingCard 
-            cardType="plus"
-            isVisible={isCardVisible} 
-            style={{ transitionDelay: '400ms' }}
-          >
-            <CardHeaderNew>
-              <CardTitleRow>
-                <CardTitleText cardType="plus">수학대왕</CardTitleText>
-                <CardIcon src="/Assets/icon/Plus.svg" alt="Plus" iconType="plus" />
-              </CardTitleRow>
-              <CardSubtitleNew cardType="plus">플러스 기능</CardSubtitleNew>
-              <CardPriceRow>
-                <CardPriceText cardType="plus">월 ~12,900</CardPriceText>
-                <CardPriceUnit cardType="plus">/인당</CardPriceUnit>
-              </CardPriceRow>
-            </CardHeaderNew>
-            
-            <CardFeaturesList style={{ height: 'auto', gap: '22px', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minHeight: '24px' }}>
-                <FeatureCheckIcon cardType="plus" />
-                <FeatureContent>
-                  <FeatureSpecialRow>
-                    <FeatureTitle cardType="plus">모든</FeatureTitle>
-                    <CardIcon src="/Assets/icon/light.svg" alt="Light" iconType="light" size="small" />
-                    <FeatureTitle cardType="plus">기능</FeatureTitle>
-                  </FeatureSpecialRow>
-                </FeatureContent>
+        <div style={{ width: "1180px", justifyContent: "center", alignItems: "center", gap: "30px", display: "inline-flex" }}>
+          {/* 무료 플랜 카드 */}
+          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "#F3F4F6", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
+              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "5px", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>FREE</div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FeatureCheckIcon cardType="plus" />
-                <FeatureContent>
-                  <FeatureTitle cardType="plus" isPrimary>AI 학습 관리</FeatureTitle>
-                  <FeatureDescription color="#7A828D">자동 숙제 및 오답 노트</FeatureDescription>
-                </FeatureContent>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무료 플랜</div>
+              <div style={{ width: "111px", height: "40px", justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>최대 5명</div>
+            </div>
+            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+              <div style={{ width: "300px", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>최대 5명까지</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>무료 제공</div>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FeatureCheckIcon cardType="plus" />
-                <FeatureContent>
-                  <FeatureTitle cardType="plus" isPrimary>AI 리포트</FeatureTitle>
-                  <FeatureDescription color="#7A828D">주간 학습 분석 리포트</FeatureDescription>
-                </FeatureContent>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FeatureCheckIcon cardType="plus" />
-                <FeatureContent>
-                  <FeatureTitle cardType="plus" isPrimary>AI 실시간 채팅</FeatureTitle>
-                  <FeatureDescription color="#7A828D">무제한 AI 질문답변</FeatureDescription>
-                </FeatureContent>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
+                </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <FeatureCheckIcon cardType="plus" />
-                <FeatureContent>
-                  <FeatureTitle cardType="plus" isPrimary>학부모 관리 서비스</FeatureTitle>
-                  <FeatureDescription color="#7A828D">클래스 계정 제공</FeatureDescription>
-                </FeatureContent>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                </div>
               </div>
-            </CardFeaturesList>
-            
-            <CardButton cardType="plus" onClick={() => handleCardClick('plus')}>
-              <ButtonText>예상 요금 확인하기</ButtonText>
-            </CardButton>
-          </NewPricingCard>
-        </PricingCardsContainer>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+            </div>
+          </div>
+
+          {/* 기본 AI 플랜 카드 */}
+          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "white", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", outline: "2px #8F67E8 solid", outlineOffset: "-2px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
+              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "2px", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
+                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "40px", height: "40px" }} />
+              </div>
+              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 플랜</div>
+              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>월 99,000원</div>
+              </div>
+            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+              </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "2px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>6명부터</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>가능</div>
+              </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+            </div>
+          </div>
+
+          {/* 기본 AI 무제한 플랜 카드 */}
+          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "white", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", outline: "2px #8E6CF0 solid", outlineOffset: "-2px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
+              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "2px", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
+                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "40px", height: "40px" }} />
+              </div>
+              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 무제한 플랜</div>
+              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8E6CF0", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>월 199,000원</div>
+            </div>
+            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "2px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>6명부터</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>가능</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
+                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                </div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                </div>
+              </div>
+            </div>
+            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+            </div>
+          </div>
+        </div>
         <ScrollArrow onClick={scrollToTrialSection} aria-label="다음 섹션으로 스크롤">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -3315,4 +3314,6 @@ const Pricing: React.FC<PricingProps> = () => {
   );
 };
 
-export default Pricing; 
+export default Pricing;
+
+

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useRef, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useEffect, useRef, useState } from "react";
+import styled, { keyframes, css } from "styled-components";
 
 const fadeInUp = keyframes`
   from {
@@ -251,7 +251,7 @@ const Title = styled.div`
 
 // 제거: 미사용 TitleHighlight
 const TitleHighlight = styled.span`
-  color: #835EEB;
+  color: #835eeb;
   font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
@@ -325,7 +325,7 @@ const SectionTitleText = styled.div`
   width: 100%;
   max-width: 1280px;
   text-align: center;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 40px;
   font-family: Pretendard;
   font-weight: 700;
@@ -371,18 +371,23 @@ const ImagePlaceholder = styled.div`
   position: relative;
   background: white;
   border-radius: 20px;
-  border: 2px #835EEB solid;
+  border: 2px #835eeb solid;
   transition: all 0.3s ease;
   overflow: hidden;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(120deg, transparent 0%, rgba(131, 94, 235, 0.03) 50%, transparent 100%);
+    background: linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(131, 94, 235, 0.03) 50%,
+      transparent 100%
+    );
     transform: translateX(-100%);
     transition: transform 0.6s ease;
   }
@@ -400,7 +405,7 @@ const FeatureTitle = styled.div`
   font-size: 32px;
   font-family: Pretendard;
   font-weight: 600;
-  line-height: 38.40px;
+  line-height: 38.4px;
   word-wrap: break-word;
   transition: all 0.3s ease;
   @media (max-width: 600px) {
@@ -442,12 +447,12 @@ const FeatureCard = styled.div`
     transform: translateY(-8px);
 
     ${ImagePlaceholder} {
-      border-color: #9C7EEF;
+      border-color: #9c7eef;
       box-shadow: 0 10px 20px rgba(131, 94, 235, 0.15);
     }
 
     ${FeatureTitle} {
-      color: #835EEB;
+      color: #835eeb;
     }
   }
 
@@ -471,12 +476,12 @@ const FeatureContent = styled.div`
 
 const FeatureDescription = styled.div`
   text-align: center;
-  opacity: 0.60;
-  color: #4B4B4B;
+  opacity: 0.6;
+  color: #4b4b4b;
   font-size: 24px;
   font-family: Pretendard;
   font-weight: 300;
-  line-height: 34.80px;
+  line-height: 34.8px;
   word-wrap: break-word;
   @media (max-width: 600px) {
     font-size: 15px;
@@ -531,8 +536,6 @@ const AnimatedFeatureCard = styled(FeatureCard)`
   }
 `;
 
-
-
 // 제거: 미사용 PlatformCard
 const PlatformCard = styled.div`
   width: 250px;
@@ -540,7 +543,7 @@ const PlatformCard = styled.div`
   padding: 20px 10px;
   overflow: hidden;
   border-radius: 15px;
-  outline: 2px #835EEB solid;
+  outline: 2px #835eeb solid;
   outline-offset: -2px;
   display: inline-flex;
   flex-direction: column;
@@ -561,7 +564,7 @@ const PlatformCard = styled.div`
 const IconCircle = styled.div`
   width: 60px;
   height: 60px;
-  background: #835EEB;
+  background: #835eeb;
   overflow: hidden;
   border-radius: 100px;
   display: flex;
@@ -580,7 +583,7 @@ const PlatformTitle = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 20px;
   font-family: Pretendard;
   font-weight: 700;
@@ -598,7 +601,7 @@ const PlatformFeatures = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #33373B;
+  color: #33373b;
   font-size: 20px;
   font-family: Pretendard;
   font-weight: 400;
@@ -636,7 +639,7 @@ const SyncIcon = styled.div`
   width: 50px;
   height: 50px;
 
-  background: #835EEB;
+  background: #835eeb;
   border-radius: 100px;
   animation: ${blink} 2s ease-in-out infinite;
 `;
@@ -655,7 +658,7 @@ const ArrowIcon = styled.div`
     transform: translateX(-50%);
     
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       width: 8px;
@@ -666,7 +669,7 @@ const ArrowIcon = styled.div`
     }
     
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       width: 8px;
@@ -682,7 +685,7 @@ const ArrowIcon = styled.div`
     transform: translateX(-50%);
     
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       right: 0;
       width: 8px;
@@ -693,7 +696,7 @@ const ArrowIcon = styled.div`
     }
     
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       right: 0;
       width: 8px;
@@ -709,7 +712,7 @@ const ArrowIcon = styled.div`
 const CheckBox = styled.div`
   width: 20px;
   height: 20px;
-  background: #835EEB;
+  background: #835eeb;
   border-radius: 4px;
   margin-right: 12px;
   display: inline-flex;
@@ -718,7 +721,7 @@ const CheckBox = styled.div`
   position: relative;
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 10px;
     height: 6px;
@@ -734,7 +737,7 @@ const CheckBox = styled.div`
 const FeatureItem = styled.div`
   display: flex;
   align-items: center;
-  color: #33373B;
+  color: #33373b;
   font-size: 20px;
   font-family: Pretendard;
   font-weight: 400;
@@ -757,7 +760,7 @@ const SyncTitle = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 20px;
   font-family: Pretendard;
   font-weight: 700;
@@ -775,11 +778,11 @@ const SyncSubtitle = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #33373B;
+  color: #33373b;
   font-size: 14px;
   font-family: Pretendard;
   font-weight: 400;
-  line-height: 18.20px;
+  line-height: 18.2px;
   word-wrap: break-word;
   @media (max-width: 600px) {
     font-size: 12px;
@@ -789,7 +792,7 @@ const SyncSubtitle = styled.div`
 
 const DemoSection = styled.div`
   align-self: stretch;
-  background: #9C7EEF;
+  background: #9c7eef;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -874,7 +877,7 @@ const DemoButton = styled.a`
   
   /* 리플 효과를 위한 가상 요소 */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -883,11 +886,13 @@ const DemoButton = styled.a`
     border-radius: 50%;
     background: rgba(131, 94, 235, 0.1);
     transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+    transition:
+      width 0.6s,
+      height 0.6s;
   }
   
   span {
-    color: #835EEB;
+    color: #835eeb;
     font-size: 20px;
     font-family: Pretendard;
     font-weight: 700;
@@ -903,7 +908,9 @@ const DemoButton = styled.a`
 
   &:hover {
     transform: translateY(-3px) scale(1.02);
-    box-shadow: 0px 8px 25px rgba(131, 94, 235, 0.3), 0px 0px 20px rgba(131, 94, 235, 0.1);
+    box-shadow:
+      0px 8px 25px rgba(131, 94, 235, 0.3),
+      0px 0px 20px rgba(131, 94, 235, 0.1);
     background: linear-gradient(135deg, #f8f7ff 0%, #efeeff 100%);
     
     span {
@@ -928,8 +935,6 @@ const DemoButton = styled.a`
     outline-offset: 2px;
   }
 `;
-
-
 
 const DemoContent = styled.div`
   align-self: stretch;
@@ -1023,9 +1028,9 @@ const FeatureBoxContent = styled.div`
   h3 {
     align-self: stretch;
     text-align: center;
-    color: #33373B;
+    color: #33373b;
     font-size: 29.58px;
-    font-family: 'Pretendard', sans-serif;
+    font-family: "Pretendard", sans-serif;
     font-weight: 700;
     line-height: 44.36px;
     word-wrap: break-word;
@@ -1038,7 +1043,7 @@ const FeatureImage = styled.div<{ image: string }>`
   width: 100%;
   max-width: 400px;
   aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
-  background-image: url(${props => props.image});
+  background-image: url(${(props) => props.image});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1046,13 +1051,17 @@ const FeatureImage = styled.div<{ image: string }>`
   position: relative;
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08));
+    background: linear-gradient(
+      135deg,
+      rgba(131, 94, 235, 0.08),
+      rgba(107, 75, 196, 0.08)
+    );
     border-radius: 24px;
   }
   
@@ -1092,7 +1101,7 @@ const StatsSection = styled.div`
 // 제거: 미사용 StatBox
 const StatBox = styled.div`
   padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   display: flex;
@@ -1147,11 +1156,11 @@ const TabContainer = styled.div`
 
 // 제거: 미사용 TabTitle
 const TabTitle = styled.h2`
-  color: #33373B;
+  color: #33373b;
   font-size: 48px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 62.40px;
+  line-height: 62.4px;
   text-align: center;
   margin: 0;
   @media (max-width: 600px) {
@@ -1164,7 +1173,7 @@ const TabTitle = styled.h2`
 const MoreButton = styled.button`
   margin-top: 20px;
   padding: 16px 32px;
-  background: #835EEB;
+  background: #835eeb;
   color: white;
   font-size: 18px;
   font-family: Pretendard;
@@ -1175,7 +1184,7 @@ const MoreButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background: #6B4CD3;
+    background: #6b4cd3;
     transform: translateY(-2px);
   }
 `;
@@ -1197,12 +1206,14 @@ const TabButton = styled.button<{ $active: boolean }>`
   padding: 12px 32px;
   border-radius: 24px;
   border: none;
-  background: ${({ $active }) => ($active ? '#835EEB' : '#E5D8FB')};
-  color: ${({ $active }) => ($active ? 'white' : '#835EEB')};
+  background: ${({ $active }) => ($active ? "#835EEB" : "#E5D8FB")};
+  color: ${({ $active }) => ($active ? "white" : "#835EEB")};
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
   box-sizing: border-box;
   @media (max-width: 600px) {
     padding: 8px 16px;
@@ -1232,7 +1243,7 @@ const SlideContainer = styled.div`
 
 // 제거: 미사용 SlideTitle
 const SlideTitle = styled.div`
-  background: #835EEB;
+  background: #835eeb;
   color: white;
   font-size: 22px;
   font-weight: 700;
@@ -1250,7 +1261,7 @@ const SlideTitle = styled.div`
 
 // 제거: 미사용 SlideDesc
 const SlideDesc = styled.div`
-  color: #6B5B8C;
+  color: #6b5b8c;
   font-size: 20px;
   text-align: center;
   margin-bottom: 24px;
@@ -1267,7 +1278,7 @@ const SlideBox = styled.div`
   height: 320px;
   background: white;
   border-radius: 18px;
-  border: 2px solid #BFA8F6;
+  border: 2px solid #bfa8f6;
   box-sizing: border-box;
 `;
 
@@ -1278,10 +1289,12 @@ const ArrowButton = styled.button`
   background: none;
   border: none;
   font-size: 32px;
-  color: #835EEB;
+  color: #835eeb;
   cursor: pointer;
   z-index: 2;
-  &:hover { color: #6B4BC4; }
+  &:hover {
+    color: #6b4bc4;
+  }
   box-sizing: border-box;
 `;
 
@@ -1308,20 +1321,28 @@ interface FeatureProps {
   category?: string;
 }
 
-const Feature: React.FC<FeatureProps> = ({ title, description, index, imageSrc, category }) => {
+const Feature: React.FC<FeatureProps> = ({
+  title,
+  description,
+  index,
+  imageSrc,
+  category,
+}) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          cardRef.current?.classList.add(index % 2 === 0 ? 'visible-left' : 'visible-right');
+          cardRef.current?.classList.add(
+            index % 2 === 0 ? "visible-left" : "visible-right",
+          );
         }
       },
       {
         threshold: 0.2,
-        rootMargin: '0px'
-      }
+        rootMargin: "0px",
+      },
     );
 
     if (cardRef.current) {
@@ -1339,9 +1360,7 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index, imageSrc, 
     <AnimatedFeatureCard ref={cardRef}>
       {category && (
         <FeatureCategory>
-          <FeatureCategoryText>
-            {category}
-          </FeatureCategoryText>
+          <FeatureCategoryText>{category}</FeatureCategoryText>
         </FeatureCategory>
       )}
       <ImagePlaceholder>
@@ -1350,10 +1369,10 @@ const Feature: React.FC<FeatureProps> = ({ title, description, index, imageSrc, 
             src={imageSrc}
             alt={title}
             style={{ 
-              width: '100%', 
-              height: '100%', 
-              objectFit: 'cover', 
-              borderRadius: '18px' 
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: "18px",
             }}
           />
         )}
@@ -1382,51 +1401,80 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
   const [textVisible, setTextVisible] = useState(true);
-  const [textAnimationState, setTextAnimationState] = useState<'visible' | 'fade-out' | 'fade-in'>('visible');
+  const [textAnimationState, setTextAnimationState] = useState<
+    "visible" | "fade-out" | "fade-in"
+  >("visible");
   const [zoomedBoxes, setZoomedBoxes] = useState<Set<number>>(new Set());
   const [visibleTexts, setVisibleTexts] = useState<Set<number>>(new Set());
   const featureBoxRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentDemoSlide, setCurrentDemoSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isDemoMobile, setIsDemoMobile] = useState(false); // 데모 섹션 전용 모바일 상태
-  const [isWebAppMobile, setIsWebAppMobile] = useState(false); // 웹앱 연동 섹션 전용 모바일 상태
   
   // 웹앱 연동 칩 애니메이션 상태
-  const [teacherChipsVisible, setTeacherChipsVisible] = useState([false, false, false, false]);
-  const [studentChipsVisible, setStudentChipsVisible] = useState([false, false, false, false]);
+  const [teacherChipsVisible, setTeacherChipsVisible] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+  const [studentChipsVisible, setStudentChipsVisible] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
   
   // 웹앱 연동 목업 애니메이션 상태 (태블릿, 왼쪽아이폰, 가운데아이폰, 모니터)
-  const [mockupsVisible, setMockupsVisible] = useState([false, false, false, false]);
+  const [mockupsVisible, setMockupsVisible] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
   // 실시간 동기화 텍스트 애니메이션 상태
   const [syncTextVisible, setSyncTextVisible] = useState(false);
   // 화살표 애니메이션 상태
   const [arrowVisible, setArrowVisible] = useState(false);
   
-  // CSS 변수 초기화 상태
-  const [cssVarsInitialized, setCssVarsInitialized] = useState(false);
-  
   // 칩과 텍스트 위치 조정을 위한 상태
-  const [teacherInfoPosition, setTeacherInfoPosition] = useState<{top: string, left: string}>(() => {
+  const [teacherInfoPosition, setTeacherInfoPosition] = useState<{
+    top: string;
+    left: string;
+  }>(() => {
     // localStorage에서 저장된 값 불러오기
-    const saved = localStorage.getItem('teacherInfoPosition');
-    return saved ? JSON.parse(saved) : { top: '90px', left: '230px' };
+    const saved = localStorage.getItem("teacherInfoPosition");
+    return saved ? JSON.parse(saved) : { top: "90px", left: "230px" };
   });
   
-  const [studentInfoPosition, setStudentInfoPosition] = useState<{bottom: string, right: string}>(() => {
+  const [studentInfoPosition, setStudentInfoPosition] = useState<{
+    bottom: string;
+    right: string;
+  }>(() => {
     // localStorage에서 저장된 값 불러오기
-    const saved = localStorage.getItem('studentInfoPosition');
-    return saved ? JSON.parse(saved) : { bottom: '80px', right: '210px' };
+    const saved = localStorage.getItem("studentInfoPosition");
+    return saved ? JSON.parse(saved) : { bottom: "80px", right: "210px" };
   });
 
   // 위치 고정 모드 (화면 크기 변경 시에도 위치 유지)
   const [lockPositions, setLockPositions] = useState<boolean>(() => {
-    const saved = localStorage.getItem('lockPositions');
+    const saved = localStorage.getItem("lockPositions");
     return saved ? JSON.parse(saved) : false;
   });
   
   // 칩과 텍스트 위치 조정 함수
-  const adjustInfoPositions = (teacherTop: string, teacherLeft: string, studentBottom: string, studentRight: string) => {
-    console.log('위치 조정 함수 호출:', { teacherTop, teacherLeft, studentBottom, studentRight });
+  const adjustInfoPositions = (
+    teacherTop: string,
+    teacherLeft: string,
+    studentBottom: string,
+    studentRight: string,
+  ) => {
+    console.log("위치 조정 함수 호출:", {
+      teacherTop,
+      teacherLeft,
+      studentBottom,
+      studentRight,
+    });
     
     const newTeacherPosition = { top: teacherTop, left: teacherLeft };
     const newStudentPosition = { bottom: studentBottom, right: studentRight };
@@ -1435,93 +1483,90 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     setStudentInfoPosition(newStudentPosition);
     
     // localStorage에 저장
-    localStorage.setItem('teacherInfoPosition', JSON.stringify(newTeacherPosition));
-    localStorage.setItem('studentInfoPosition', JSON.stringify(newStudentPosition));
+    localStorage.setItem(
+      "teacherInfoPosition",
+      JSON.stringify(newTeacherPosition),
+    );
+    localStorage.setItem(
+      "studentInfoPosition",
+      JSON.stringify(newStudentPosition),
+    );
     
           // 데스크톱 레이아웃 CSS 변수도 설정
-      if (cssVarsInitialized) {
-        document.documentElement.style.setProperty('--teacher-top', teacherTop);
-        document.documentElement.style.setProperty('--teacher-right', teacherLeft);
-        document.documentElement.style.setProperty('--student-top', studentBottom);
-        document.documentElement.style.setProperty('--student-left', studentRight);
-      }
+    document.documentElement.style.setProperty("--teacher-top", teacherTop);
+    document.documentElement.style.setProperty("--teacher-right", teacherLeft);
+    document.documentElement.style.setProperty("--student-top", studentBottom);
+    document.documentElement.style.setProperty("--student-left", studentRight);
   };
   
   // 기본 위치로 리셋하는 함수 (모바일/컨트롤 패널용)
   const resetInfoPositions = () => {
-    console.log('기본 위치로 리셋');
+    console.log("기본 위치로 리셋");
     
-    const defaultTeacherPosition = { top: '100px', left: '350px' };
-    const defaultStudentPosition = { bottom: '150px', right: '350px' };
+    const defaultTeacherPosition = { top: "100px", left: "350px" };
+    const defaultStudentPosition = { bottom: "150px", right: "350px" };
     
     setTeacherInfoPosition(defaultTeacherPosition);
     setStudentInfoPosition(defaultStudentPosition);
     
     // localStorage에 기본값 저장
-    localStorage.setItem('teacherInfoPosition', JSON.stringify(defaultTeacherPosition));
-    localStorage.setItem('studentInfoPosition', JSON.stringify(defaultStudentPosition));
+    localStorage.setItem(
+      "teacherInfoPosition",
+      JSON.stringify(defaultTeacherPosition),
+    );
+    localStorage.setItem(
+      "studentInfoPosition",
+      JSON.stringify(defaultStudentPosition),
+    );
     
           // 데스크톱 레이아웃 CSS 변수도 갱신
-      if (cssVarsInitialized) {
-        document.documentElement.style.setProperty('--teacher-top', '100px');
-        document.documentElement.style.setProperty('--teacher-right', '350px');
-        document.documentElement.style.setProperty('--student-top', '750px');
-        document.documentElement.style.setProperty('--student-left', '350px');
-      }
+    document.documentElement.style.setProperty("--teacher-top", "100px");
+    document.documentElement.style.setProperty("--teacher-right", "350px");
+    document.documentElement.style.setProperty("--student-top", "750px");
+    document.documentElement.style.setProperty("--student-left", "350px");
   };
 
   // 위치 상태 변경 감지
   useEffect(() => {
-    console.log('선생님 정보 위치 변경:', teacherInfoPosition);
+    console.log("선생님 정보 위치 변경:", teacherInfoPosition);
   }, [teacherInfoPosition]);
 
   useEffect(() => {
-    console.log('학생 정보 위치 변경:', studentInfoPosition);
+    console.log("학생 정보 위치 변경:", studentInfoPosition);
   }, [studentInfoPosition]);
-
-    // CSS 변수 초기화 완료 표시
-  useEffect(() => {
-    if (isWebAppMobile) return; // 모바일에서는 CSS 변수 미사용
-    
-    // 초기화 완료 표시
-    setCssVarsInitialized(true);
-    console.log('CSS 변수 초기화 완료');
-  }, [isWebAppMobile]);
   
   const webAppSectionRef = useRef<HTMLDivElement>(null);
-  const mockupCanvasWrapperRef = useRef<HTMLDivElement>(null);
-
-  
-
 
   // 테스티모니얼 데이터
   const testimonials = [
     {
       title: { highlight: "체계적인 관리로", normal: "성과 극대화" },
-      quote: "학생들의 학습 현황을 한눈에 파악하고<br/>효과적으로 지도할 수 있어요",
+      quote:
+        "학생들의 학습 현황을 한눈에 파악하고<br/>효과적으로 지도할 수 있어요",
       name: "중계동 초중고 수학학원<br/>최수연 원장 선생님",
       videoUrl: "https://www.youtube.com/watch?v=_g9OwAA8V5g",
-      thumbnailUrl: "https://img.youtube.com/vi/_g9OwAA8V5g/maxresdefault.jpg"
+      thumbnailUrl: "https://img.youtube.com/vi/_g9OwAA8V5g/maxresdefault.jpg",
     },
     {
       title: { highlight: "현장의 목소리로", normal: "증명된 효과" },
       quote: "AI 추천 문제를 통해<br/>취약한 단원을 완벽 보완할 수 있어요.",
       name: "을지대 의예과<br/>24학번 김영우 학생",
       videoUrl: "https://www.youtube.com/watch?v=MBQZ4PCuNEQ",
-      thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg"
+      thumbnailUrl: "https://img.youtube.com/vi/MBQZ4PCuNEQ/maxresdefault.jpg",
     },
     {
       title: { highlight: "AI 기술로", normal: "완성된 학습" },
-      quote: "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
+      quote:
+        "개인별 맞춤 학습과 실시간 피드백으로<br/>학습 효과가 눈에 띄게 향상되었어요",
       name: "학부모 후기<br/>초등 5학년 학부모",
       videoUrl: "https://www.youtube.com/watch?v=SaM59JVLZms",
-      thumbnailUrl: "https://img.youtube.com/vi/SaM59JVLZms/maxresdefault.jpg"
-    }
+      thumbnailUrl: "https://img.youtube.com/vi/SaM59JVLZms/maxresdefault.jpg",
+    },
   ];
 
   useEffect(() => {
     // Load demo count from localStorage
-    const savedCount = localStorage.getItem('demoClickCount');
+    const savedCount = localStorage.getItem("demoClickCount");
     if (savedCount) {
       setDemoCount(parseInt(savedCount, 10));
     }
@@ -1532,69 +1577,42 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 1366); // 태블릿도 모바일 레이아웃 사용
       setIsDemoMobile(window.innerWidth <= 600); // 데모 섹션은 600px 이하만 모바일
-      setIsWebAppMobile(window.innerWidth <= 600); // 웹앱 연동 섹션은 600px 이하에서 모바일
       
       // 위치 고정 모드가 활성화된 경우, 화면 크기 변경 시에도 위치 유지
       if (lockPositions) {
-        console.log('화면 크기 변경됨, 위치 고정 모드로 위치 유지:', {
+        console.log("화면 크기 변경됨, 위치 고정 모드로 위치 유지:", {
           width: window.innerWidth,
           teacherPosition: teacherInfoPosition,
-          studentPosition: studentInfoPosition
+          studentPosition: studentInfoPosition,
         });
         
         // 데스크톱 레이아웃 CSS 변수 업데이트
-        document.documentElement.style.setProperty('--teacher-top', teacherInfoPosition.top);
-        document.documentElement.style.setProperty('--teacher-right', teacherInfoPosition.left);
-        document.documentElement.style.setProperty('--student-top', studentInfoPosition.bottom);
-        document.documentElement.style.setProperty('--student-left', studentInfoPosition.right);
+        document.documentElement.style.setProperty(
+          "--teacher-top",
+          teacherInfoPosition.top,
+        );
+        document.documentElement.style.setProperty(
+          "--teacher-right",
+          teacherInfoPosition.left,
+        );
+        document.documentElement.style.setProperty(
+          "--student-top",
+          studentInfoPosition.bottom,
+        );
+        document.documentElement.style.setProperty(
+          "--student-left",
+          studentInfoPosition.right,
+        );
       }
     };
     
     checkMobile();
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
     };
   }, [lockPositions, teacherInfoPosition, studentInfoPosition]);
-
-  // 이미지 캔버스 스케일링 및 CSS 변수 동기화
-  useEffect(() => {
-    const wrapper = mockupCanvasWrapperRef.current;
-    if (!wrapper) return;
-    
-    const updateCanvasScale = () => {
-      const vw = window.innerWidth;
-      let scale = 1;
-      
-      // 768px 기준으로 스케일링: 768px 이상에서는 고정, 이하에서는 축소
-      if (vw >= 768) {
-        scale = 1; // 768px 이상에서는 크기 고정
-      } else {
-        // 768px 이하에서는 화면 크기에 비례하여 축소
-        scale = Math.max(vw / 768, 0.6); // 최소 0.6배까지 축소
-      }
-      
-      // CSS 변수 설정
-      wrapper.style.setProperty('--mockup-scale', scale.toString());
-      
-      console.log('캔버스 스케일 업데이트:', { vw, scale, mode: vw >= 768 ? '고정' : '축소' });
-    };
-    
-    // 초기 설정
-    updateCanvasScale();
-    
-    // 리사이즈 이벤트 리스너
-    const handleResize = () => {
-      updateCanvasScale();
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // 모바일 슬라이드 핸들러
   // 제거: 미사용 데모 슬라이드 제어 함수
@@ -1637,15 +1655,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   useEffect(() => {
     // 이미지 슬라이드와 동기화된 텍스트 페이드 효과
     // 이미지 슬라이드가 시작되면 텍스트 페이드 아웃
-    setTextAnimationState('fade-out');
+    setTextAnimationState("fade-out");
     
     // 이미지 슬라이드 전환이 완료된 후 텍스트 페이드 인
     const fadeInTimer = setTimeout(() => {
-      setTextAnimationState('fade-in');
+      setTextAnimationState("fade-in");
     }, 400); // 이미지 슬라이드 전환 중간에 텍스트 페이드 인 시작
     
     const visibleTimer = setTimeout(() => {
-      setTextAnimationState('visible');
+      setTextAnimationState("visible");
     }, 900); // 이미지 슬라이드 완료 후 텍스트 완전히 보이기
     
     return () => {
@@ -1666,8 +1684,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-
-
   // 웹앱 연동 섹션 칩 및 목업 애니메이션
   useEffect(() => {
     // 초기 상태 리셋
@@ -1682,10 +1698,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // 목업 이미지 페이드인 애니메이션 (데스크톱에서만 - 먼저 시작)
-            setTimeout(() => setMockupsVisible([true, false, false, false]), 0);     // 태블릿/랩톱
-            setTimeout(() => setMockupsVisible([true, true, false, false]), 150);    // 왼쪽 모바일
-            setTimeout(() => setMockupsVisible([true, true, true, false]), 300);     // 가운데 모바일
-            setTimeout(() => setMockupsVisible([true, true, true, true]), 450);      // 데스크톱 모니터
+            setTimeout(() => setMockupsVisible([true, false, false, false]), 0); // 태블릿/랩톱
+            setTimeout(
+              () => setMockupsVisible([true, true, false, false]),
+              150,
+            ); // 왼쪽 모바일
+            setTimeout(() => setMockupsVisible([true, true, true, false]), 300); // 가운데 모바일
+            setTimeout(() => setMockupsVisible([true, true, true, true]), 450); // 데스크톱 모니터
 
             // 실시간 동기화 텍스트 애니메이션 (가운데 모바일과 동시에 나타남)
             setTimeout(() => setSyncTextVisible(true), 300);
@@ -1694,23 +1713,47 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             setTimeout(() => setArrowVisible(true), 400);
 
             // 선생님용 칩 순차 애니메이션 (목업 이미지 후 - 700ms 후 시작)
-            setTimeout(() => setTeacherChipsVisible([true, false, false, false]), 700);
-            setTimeout(() => setTeacherChipsVisible([true, true, false, false]), 850);
-            setTimeout(() => setTeacherChipsVisible([true, true, true, false]), 1000);
-            setTimeout(() => setTeacherChipsVisible([true, true, true, true]), 1150);
+            setTimeout(
+              () => setTeacherChipsVisible([true, false, false, false]),
+              700,
+            );
+            setTimeout(
+              () => setTeacherChipsVisible([true, true, false, false]),
+              850,
+            );
+            setTimeout(
+              () => setTeacherChipsVisible([true, true, true, false]),
+              1000,
+            );
+            setTimeout(
+              () => setTeacherChipsVisible([true, true, true, true]),
+              1150,
+            );
             
             // 학생용 칩 순차 애니메이션 (선생님용 칩과 동시에 시작하도록 수정)
-            setTimeout(() => setStudentChipsVisible([true, false, false, false]), 700);
-            setTimeout(() => setStudentChipsVisible([true, true, false, false]), 850);
-            setTimeout(() => setStudentChipsVisible([true, true, true, false]), 1000);
-            setTimeout(() => setStudentChipsVisible([true, true, true, true]), 1150);
+            setTimeout(
+              () => setStudentChipsVisible([true, false, false, false]),
+              700,
+            );
+            setTimeout(
+              () => setStudentChipsVisible([true, true, false, false]),
+              850,
+            );
+            setTimeout(
+              () => setStudentChipsVisible([true, true, true, false]),
+              1000,
+            );
+            setTimeout(
+              () => setStudentChipsVisible([true, true, true, true]),
+              1150,
+            );
             
             // 한 번 실행 후 observer 해제
             observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     if (webAppSectionRef.current) {
@@ -1727,20 +1770,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const handleDemoClick = () => {
     const newCount = demoCount + 1;
     setDemoCount(newCount);
-    localStorage.setItem('demoClickCount', newCount.toString());
+    localStorage.setItem("demoClickCount", newCount.toString());
   };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+          entry.target.classList.add("visible");
         }
       },
       {
         threshold: 0.2,
-        rootMargin: '0px'
-      }
+        rootMargin: "0px",
+      },
     );
 
     // 모바일 핵심기능 박스들을 위한 별도 observer (더 민감한 설정)
@@ -1749,28 +1792,28 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.boundingClientRect.top > 0) {
             // 요소가 화면 위에서 아래로 내려올 때만 애니메이션 트리거
-            entry.target.classList.add('visible');
+            entry.target.classList.add("visible");
           }
         });
       },
       {
         threshold: 0.1,
-        rootMargin: '-10% 0px -10% 0px' // 상하 10% 마진으로 더 정확한 타이밍
-      }
+        rootMargin: "-10% 0px -10% 0px", // 상하 10% 마진으로 더 정확한 타이밍
+      },
     );
 
     if (headerRef.current) {
       observer.observe(headerRef.current);
     }
 
-    titleRefs.current.forEach(ref => {
+    titleRefs.current.forEach((ref) => {
       if (ref) {
         observer.observe(ref);
       }
     });
 
     // 모바일 핵심기능 박스들은 별도 observer 사용
-    featureBoxRefs.current.forEach(ref => {
+    featureBoxRefs.current.forEach((ref) => {
       if (ref) {
         mobileObserver.observe(ref);
       }
@@ -1780,12 +1823,12 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       if (headerRef.current) {
         observer.unobserve(headerRef.current);
       }
-      titleRefs.current.forEach(ref => {
+      titleRefs.current.forEach((ref) => {
         if (ref) {
           observer.unobserve(ref);
         }
       });
-      featureBoxRefs.current.forEach(ref => {
+      featureBoxRefs.current.forEach((ref) => {
         if (ref) {
           mobileObserver.unobserve(ref);
         }
@@ -1822,44 +1865,42 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       setVisibleTexts(newVisibleTexts);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll(); // 초기 상태 설정
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-
-
   const features = [
     {
-      title: '맞춤형 학습지 제작',
+      title: "맞춤형 학습지 제작",
       sub: [
-        { label: 'AI 기반 실시간 맞춤 문제 추천', gif: '' },
-        { label: '오답클리닉 자동 & 무한 배부', gif: '' }
+        { label: "AI 기반 실시간 맞춤 문제 추천", gif: "" },
+        { label: "오답클리닉 자동 & 무한 배부", gif: "" },
       ],
-      desc: '학생이 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
-      defaultGif: ''
+      desc: "학생이 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.",
+      defaultGif: "",
     },
     {
-      title: 'AI 채점 시스템',
+      title: "AI 채점 시스템",
       sub: [
-        { label: '서술형 자동 채점', gif: '' },
-        { label: '전국 단위 실력 분석', gif: '' }
+        { label: "서술형 자동 채점", gif: "" },
+        { label: "전국 단위 실력 분석", gif: "" },
       ],
-      desc: 'AI가 학생의 답안을 실시간으로 분석하고<br/>정확한 피드백을 제공합니다.',
-      defaultGif: ''
+      desc: "AI가 학생의 답안을 실시간으로 분석하고<br/>정확한 피드백을 제공합니다.",
+      defaultGif: "",
     },
     {
-      title: '실시간 피드백',
+      title: "실시간 피드백",
       sub: [
-        { label: 'AI 힌트 및 오답 피드백', gif: '' },
-        { label: '실시간<br/>질문 게시판', gif: '' }
+        { label: "AI 힌트 및 오답 피드백", gif: "" },
+        { label: "실시간<br/>질문 게시판", gif: "" },
       ],
-      desc: '풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.',
-      defaultGif: ''
-    }
+      desc: "풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.",
+      defaultGif: "",
+    },
   ];
 
   const handleTabClick = (idx: number) => {
@@ -1867,13 +1908,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     setActiveSlide(0);
   };
   const handlePrev = () => {
-    setActiveSlide((prev) => (prev === 0 ? features[activeTab].sub.length - 1 : prev - 1));
+    setActiveSlide((prev) =>
+      prev === 0 ? features[activeTab].sub.length - 1 : prev - 1,
+    );
   };
   const handleNext = () => {
-    setActiveSlide((prev) => (prev === features[activeTab].sub.length - 1 ? 0 : prev + 1));
+    setActiveSlide((prev) =>
+      prev === features[activeTab].sub.length - 1 ? 0 : prev + 1,
+    );
   };
 
-  const [hovered, setHovered] = useState<{featureIdx: number, subIdx: number | null}>({featureIdx: 0, subIdx: null});
+  const [hovered, setHovered] = useState<{
+    featureIdx: number;
+    subIdx: number | null;
+  }>({ featureIdx: 0, subIdx: null });
 
   // 이미지 클릭 시 스냅 스크롤 핸들러
   const handleImageClick = (index: number) => {
@@ -1882,12 +1930,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       const rect = element.getBoundingClientRect();
       const windowHeight = window.innerHeight;
       const elementHeight = rect.height;
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const targetScrollTop = scrollTop + rect.top - (windowHeight / 2) + (elementHeight / 2);
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const targetScrollTop =
+        scrollTop + rect.top - windowHeight / 2 + elementHeight / 2;
       
       window.scrollTo({
         top: targetScrollTop,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -1896,29 +1946,33 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     <BodyContainer ref={ref}>
       <AnimatedHeaderSection ref={headerRef}>
         <Title>
-          <TitleText>수학대왕에서만 만날 수 있는<br />특별한 기능을 소개합니다</TitleText>
+          <TitleText>
+            수학대왕에서만 만날 수 있는
+            <br />
+            특별한 기능을 소개합니다
+          </TitleText>
         </Title>
-        <Subtitle>
-          AI 기술로 완성된 체계적인 수학 학습 관리 시스템
-        </Subtitle>
+        <Subtitle>AI 기술로 완성된 체계적인 수학 학습 관리 시스템</Subtitle>
       </AnimatedHeaderSection>
 
       {/* 태블릿용 통합 섹션 */}
       <IntegratedSection>
         <TabletHeader>
           <Title>
-            <TitleText>수학대왕에서만 만날 수 있는<br />특별한 기능을 소개합니다</TitleText>
+            <TitleText>
+              수학대왕에서만 만날 수 있는
+              <br />
+              특별한 기능을 소개합니다
+            </TitleText>
           </Title>
-          <Subtitle>
-            AI 기술로 완성된 체계적인 수학 학습 관리 시스템
-          </Subtitle>
+          <Subtitle>AI 기술로 완성된 체계적인 수학 학습 관리 시스템</Subtitle>
         </TabletHeader>
         <TabletCardGrid>
           <Feature
             title="1:1 개별 맞춤 학습지"
             description={[
               "AI가 만들어주는",
-              "학생별로 서로 다른 실력에 맞게, 최적의 문제로 학습지를 자동 생성해 드려요!"
+              "학생별로 서로 다른 실력에 맞게, 최적의 문제로 학습지를 자동 생성해 드려요!",
             ]}
             index={0}
             imageSrc="/Body/images/Body-image-1.png"
@@ -1928,7 +1982,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             title="학습 성과 분석"
             description={[
               "개인별 학습 데이터 분석",
-              "자동 오답클리닉으로 모든 취약점을 완벽하게 보완합니다"
+              "자동 오답클리닉으로 모든 취약점을 완벽하게 보완합니다",
             ]}
             index={1}
             imageSrc="/Body/images/Body-image-2.png"
@@ -1938,7 +1992,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             title="서술형 자동 채점"
             description={[
               "필기 인식 기술로",
-              "서술형 답안을 정확하게 자동 채점합니다"
+              "서술형 답안을 정확하게 자동 채점합니다",
             ]}
             index={2}
             imageSrc="/Body/images/Body-image-3.png"
@@ -1948,7 +2002,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             title="전국 단위 실력 분석"
             description={[
               "AI 채점 시스템으로",
-              "전국 학생들과 비교한 객관적인 실력 분석 리포트를 제공합니다"
+              "전국 학생들과 비교한 객관적인 실력 분석 리포트를 제공합니다",
             ]}
             index={3}
             imageSrc="/Body/images/Body-image-4.png"
@@ -1958,7 +2012,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             title="AI 힌트 및 오답 피드백"
             description={[
               "실시간 피드백으로",
-              "풀이가 막힐 때 단계별 힌트와 상세한 오답 분석을 제공합니다"
+              "풀이가 막힐 때 단계별 힌트와 상세한 오답 분석을 제공합니다",
             ]}
             index={4}
             imageSrc="/Body/images/Body-image-5.png"
@@ -1968,7 +2022,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             title="실시간 질문 게시판"
             description={[
               "실시간 피드백으로",
-              "모르는 문제를 게시판에 질문하고 빠르게 답변을 받아 볼 수 있습니다"
+              "모르는 문제를 게시판에 질문하고 빠르게 답변을 받아 볼 수 있습니다",
             ]}
             index={5}
             imageSrc="/Body/images/Body-image-6.png"
@@ -1980,49 +2034,54 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       <FeatureSectionWrapper>
         {/* 1번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[0] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(0)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                학습지 자동 제작
-              </FeatureCategoryText>
+              <FeatureCategoryText>학습지 자동 제작</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              AI가 만들어주는<br/>
+              AI가 만들어주는
+              <br />
               <HighlightedText isVisible={visibleTexts.has(0)}>
                 1:1 개별 맞춤 학습지
               </HighlightedText>
             </FeatureMainTitle>
             <FeatureDesc>
-              학생별로 서로 다른 실력에 맞게,<br/>최적의 문제로 학습지를 자동 생성해 드려요!
+              학생별로 서로 다른 실력에 맞게,
+              <br />
+              최적의 문제로 학습지를 자동 생성해 드려요!
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(0)}
             onClick={() => handleImageClick(0)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-1.png"
               alt="핵심기능1"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
         {/* 2번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[1] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(1)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                오답 완벽 정복
-              </FeatureCategoryText>
+              <FeatureCategoryText>오답 완벽 정복</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
               <HighlightedText isVisible={visibleTexts.has(1)}>
@@ -2031,142 +2090,181 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               무한 제공
             </FeatureMainTitle>
             <FeatureDesc>
-              더 이상 틀리지 않을 때까지,<br/>오답 유사 문제를 자동으로 출제해 드려요!
+              더 이상 틀리지 않을 때까지,
+              <br />
+              오답 유사 문제를 자동으로 출제해 드려요!
             </FeatureDesc>
             </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(1)}
             onClick={() => handleImageClick(1)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-2.png"
               alt="핵심기능2"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
         {/* 3번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[2] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(2)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                AI 채점 시스템
-              </FeatureCategoryText>
+              <FeatureCategoryText>AI 채점 시스템</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              서술형<br/>자동 채점
+              서술형
+              <br />
+              자동 채점
             </FeatureMainTitle>
             <FeatureDesc>
-              필기 인식 기술로 서술형 답안을<br/>정확하게 자동 채점합니다.
+              필기 인식 기술로 서술형 답안을
+              <br />
+              정확하게 자동 채점합니다.
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(2)}
             onClick={() => handleImageClick(2)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-3.png"
               alt="핵심기능3"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
         {/* 4번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[3] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(3)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                AI 채점 시스템
-              </FeatureCategoryText>
+              <FeatureCategoryText>AI 채점 시스템</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              전국 단위<br/>실력 분석
+              전국 단위
+              <br />
+              실력 분석
             </FeatureMainTitle>
             <FeatureDesc>
-              전국 학생들과 비교한<br/>객관적인 실력 분석 리포트를 제공합니다.
+              전국 학생들과 비교한
+              <br />
+              객관적인 실력 분석 리포트를 제공합니다.
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(3)}
             onClick={() => handleImageClick(3)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-4.png"
               alt="핵심기능4"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
         {/* 5번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[4] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(4)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                실시간 피드백
-              </FeatureCategoryText>
+              <FeatureCategoryText>실시간 피드백</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              AI 힌트 및<br/>오답 피드백
+              AI 힌트 및<br />
+              오답 피드백
             </FeatureMainTitle>
             <FeatureDesc>
-              풀이가 막힐 때 단계별 힌트와<br/>상세한 오답 분석을 제공합니다.
+              풀이가 막힐 때 단계별 힌트와
+              <br />
+              상세한 오답 분석을 제공합니다.
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(4)}
             onClick={() => handleImageClick(4)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-5.png"
               alt="핵심기능5"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
         {/* 6번 FeatureBox */}
         <AnimatedFeatureBox 
-          ref={el => {
+          ref={(el) => {
             featureBoxRefs.current[5] = el;
           }}
         >
           <FeatureTextBlock isVisible={visibleTexts.has(5)}>
             <FeatureCategory>
-              <FeatureCategoryText>
-                실시간 피드백
-              </FeatureCategoryText>
+              <FeatureCategoryText>실시간 피드백</FeatureCategoryText>
             </FeatureCategory>
             <FeatureMainTitle>
-              실시간<br/>질문 게시판
+              실시간
+              <br />
+              질문 게시판
             </FeatureMainTitle>
             <FeatureDesc>
-              모르는 문제를 게시판에 질문하고<br/>빠르게 답변을 받아 볼 수 있습니다.
+              모르는 문제를 게시판에 질문하고
+              <br />
+              빠르게 답변을 받아 볼 수 있습니다.
             </FeatureDesc>
           </FeatureTextBlock>
           <GifBox 
             isZoomed={zoomedBoxes.has(5)}
             onClick={() => handleImageClick(5)}
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
           >
             <img 
               src="/Body/images/Body-image-6.png"
               alt="핵심기능6"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 0, background: 'transparent' }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: 0,
+                background: "transparent",
+              }}
             />
           </GifBox>
         </AnimatedFeatureBox>
@@ -2175,10 +2273,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       <DemoSection>
         <DemoHeader>
           <DemoTitle>
-            수학대왕 APP 기능을<br/>직접 체험해보세요!
+            수학대왕 APP 기능을
+            <br />
+            직접 체험해보세요!
           </DemoTitle>
           <DemoSubtitle>
-            교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>
+            교사는 웹에서 관리하고, 학생은 앱으로 학습하는
+            <br />
             완벽한 교육 생태계를 경험하세요
           </DemoSubtitle>
           <DemoButton 
@@ -2209,23 +2310,25 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   "/Body/slides/feature-slide-4.png",
                   "/Body/slides/feature-slide-5.png",
                   "/Body/slides/feature-slide-6.png",
-                  "/Body/slides/feature-slide-7.png"
+                  "/Body/slides/feature-slide-7.png",
                 ].map((image, index) => (
                   <MobileDemoSlide 
                     key={index}
                     noTransition={noTransition}
-                    style={{ transform: `translateX(-${currentDemoSlide * 100}%)` }}
+                    style={{
+                      transform: `translateX(-${currentDemoSlide * 100}%)`,
+                    }}
                   >
                     <div 
                       style={{
-                        width: '320px',
-                        height: '320px',
+                        width: "320px",
+                        height: "320px",
                         backgroundImage: `url(${image})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundRepeat: 'no-repeat',
-                        borderRadius: '20px',
-                        position: 'relative'
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        borderRadius: "20px",
+                        position: "relative",
                       }}
                     />
                   </MobileDemoSlide>
@@ -2235,298 +2338,368 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           ) : (
             <FeatureBoxFlow>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-1.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-1.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-2.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-2.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-3.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-3.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-4.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-4.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-5.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-5.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-6.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-6.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-7.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-7.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               {/* 무한 반복을 위한 복제된 이미지들 */}
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-1.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-1.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-2.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-2.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-3.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-3.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-4.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-4.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-5.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-5.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-6.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-6.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
               <FeatureBoxSlide>
-                <div style={{
-                  width: '400px',
-                  height: '400px',
-                  backgroundImage: 'url(/Body/slides/feature-slide-7.png)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  borderRadius: '24px',
-                  position: 'relative'
-                }}>
-                  <div style={{
-                    position: 'absolute',
+                <div
+                  style={{
+                    width: "400px",
+                    height: "400px",
+                    backgroundImage: "url(/Body/slides/feature-slide-7.png)",
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    borderRadius: "24px",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    style={{
+                      position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    background: 'linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))',
-                    borderRadius: '24px'
-                  }} />
+                      background:
+                        "linear-gradient(135deg, rgba(131, 94, 235, 0.08), rgba(107, 75, 196, 0.08))",
+                      borderRadius: "24px",
+                    }}
+                  />
                 </div>
               </FeatureBoxSlide>
             </FeatureBoxFlow>
@@ -2537,172 +2710,275 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection ref={webAppSectionRef}>
         {/* 위치 조정 컨트롤 패널 (개발용) */}
-        {process.env.NODE_ENV === 'development' && (
-          <div style={{
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            background: 'rgba(0,0,0,0.8)',
-            color: 'white',
-            padding: '15px',
-            borderRadius: '8px',
+        {process.env.NODE_ENV === "development" && (
+          <div
+            style={{
+              position: "fixed",
+              top: "20px",
+              right: "20px",
+              background: "rgba(0,0,0,0.8)",
+              color: "white",
+              padding: "15px",
+              borderRadius: "8px",
             zIndex: 9999,
-            fontSize: '12px'
-          }}>
-            <div style={{marginBottom: '10px', fontWeight: 'bold'}}>위치 조정</div>
-            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8}}>
-              현재: T({teacherInfoPosition.top}, {teacherInfoPosition.left}) S({studentInfoPosition.bottom}, {studentInfoPosition.right})
+              fontSize: "12px",
+            }}
+          >
+            <div style={{ marginBottom: "10px", fontWeight: "bold" }}>
+              위치 조정
             </div>
-            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8, color: '#4CAF50'}}>
+            <div
+              style={{ marginBottom: "5px", fontSize: "10px", opacity: 0.8 }}
+            >
+              현재: T({teacherInfoPosition.top}, {teacherInfoPosition.left}) S(
+              {studentInfoPosition.bottom}, {studentInfoPosition.right})
+            </div>
+            <div
+              style={{
+                marginBottom: "5px",
+                fontSize: "10px",
+                opacity: 0.8,
+                color: "#4CAF50",
+              }}
+            >
               💾 자동 저장됨 (localStorage)
             </div>
-            <div style={{marginBottom: '5px', fontSize: '10px', opacity: 0.8, color: '#2196F3'}}>
-              📱 화면: {typeof window !== 'undefined' ? window.innerWidth : 'N/A'}px | 레이아웃: {isWebAppMobile ? '모바일' : '데스크톱'}
+            <div
+              style={{
+                marginBottom: "5px",
+                fontSize: "10px",
+                opacity: 0.8,
+                color: "#2196F3",
+              }}
+            >
+              📱 화면:{" "}
+              {typeof window !== "undefined" ? window.innerWidth : "N/A"}px |
+              레이아웃: 데스크톱
             </div>
-            <div style={{marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px'}}>
-              <label style={{fontSize: '11px'}}>
+            <div
+              style={{
+                marginBottom: "10px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <label style={{ fontSize: "11px" }}>
                 <input 
                   type="checkbox" 
                   checked={lockPositions}
                   onChange={(e) => {
                     const newLockState = e.target.checked;
                     setLockPositions(newLockState);
-                    localStorage.setItem('lockPositions', JSON.stringify(newLockState));
-                    console.log('위치 고정 모드:', newLockState ? '활성화' : '비활성화');
+                    localStorage.setItem(
+                      "lockPositions",
+                      JSON.stringify(newLockState),
+                    );
+                    console.log(
+                      "위치 고정 모드:",
+                      newLockState ? "활성화" : "비활성화",
+                    );
                   }}
-                  style={{marginRight: '5px'}}
+                  style={{ marginRight: "5px" }}
                 />
                 위치 고정 모드
               </label>
-              <span style={{fontSize: '10px', opacity: 0.7}}>
-                {lockPositions ? '🔒 고정됨' : '🔓 자유'}
+              <span style={{ fontSize: "10px", opacity: 0.7 }}>
+                {lockPositions ? "🔒 고정됨" : "🔓 자유"}
               </span>
             </div>
-            <div style={{marginBottom: '5px'}}>
+            <div style={{ marginBottom: "5px" }}>
               <label>선생님 정보:</label>
               <input 
                 type="text" 
                 placeholder="top" 
                 value={teacherInfoPosition.top}
                 onChange={(e) => {
-                  console.log('선생님 top 변경:', e.target.value);
-                  const newPosition = {...teacherInfoPosition, top: e.target.value};
+                  console.log("선생님 top 변경:", e.target.value);
+                  const newPosition = {
+                    ...teacherInfoPosition,
+                    top: e.target.value,
+                  };
                   setTeacherInfoPosition(newPosition);
                   // localStorage에 저장
-                  localStorage.setItem('teacherInfoPosition', JSON.stringify(newPosition));
+                  localStorage.setItem(
+                    "teacherInfoPosition",
+                    JSON.stringify(newPosition),
+                  );
                   // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty('--teacher-top', e.target.value);
+                  document.documentElement.style.setProperty(
+                    "--teacher-top",
+                    e.target.value,
+                  );
                 }}
-                style={{width: '60px', marginLeft: '5px', marginRight: '5px'}}
+                style={{ width: "60px", marginLeft: "5px", marginRight: "5px" }}
               />
               <input 
                 type="text" 
                 placeholder="left" 
                 value={teacherInfoPosition.left}
                 onChange={(e) => {
-                  console.log('선생님 left 변경:', e.target.value);
-                  const newPosition = {...teacherInfoPosition, left: e.target.value};
+                  console.log("선생님 left 변경:", e.target.value);
+                  const newPosition = {
+                    ...teacherInfoPosition,
+                    left: e.target.value,
+                  };
                   setTeacherInfoPosition(newPosition);
                   // localStorage에 저장
-                  localStorage.setItem('teacherInfoPosition', JSON.stringify(newPosition));
+                  localStorage.setItem(
+                    "teacherInfoPosition",
+                    JSON.stringify(newPosition),
+                  );
                   // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty('--teacher-right', e.target.value);
+                  document.documentElement.style.setProperty(
+                    "--teacher-right",
+                    e.target.value,
+                  );
                 }}
-                style={{width: '60px', marginLeft: '5px'}}
+                style={{ width: "60px", marginLeft: "5px" }}
               />
             </div>
-            <div style={{marginBottom: '10px'}}>
+            <div style={{ marginBottom: "10px" }}>
               <label>학생 정보:</label>
               <input 
                 type="text" 
                 placeholder="bottom" 
                 value={studentInfoPosition.bottom}
                 onChange={(e) => {
-                  console.log('학생 bottom 변경:', e.target.value);
-                  const newPosition = {...studentInfoPosition, bottom: e.target.value};
+                  console.log("학생 bottom 변경:", e.target.value);
+                  const newPosition = {
+                    ...studentInfoPosition,
+                    bottom: e.target.value,
+                  };
                   setStudentInfoPosition(newPosition);
                   // localStorage에 저장
-                  localStorage.setItem('studentInfoPosition', JSON.stringify(newPosition));
+                  localStorage.setItem(
+                    "studentInfoPosition",
+                    JSON.stringify(newPosition),
+                  );
                   // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty('--student-top', e.target.value);
+                  document.documentElement.style.setProperty(
+                    "--student-top",
+                    e.target.value,
+                  );
                 }}
-                style={{width: '60px', marginLeft: '5px', marginRight: '5px'}}
+                style={{ width: "60px", marginLeft: "5px", marginRight: "5px" }}
               />
               <input 
                 type="text" 
                 placeholder="right" 
                 value={studentInfoPosition.right}
                 onChange={(e) => {
-                  const newPosition = {...studentInfoPosition, right: e.target.value};
+                  const newPosition = {
+                    ...studentInfoPosition,
+                    right: e.target.value,
+                  };
                   setStudentInfoPosition(newPosition);
                   // localStorage에 저장
-                  localStorage.setItem('studentInfoPosition', JSON.stringify(newPosition));
+                  localStorage.setItem(
+                    "studentInfoPosition",
+                    JSON.stringify(newPosition),
+                  );
                   // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty('--student-left', e.target.value);
+                  document.documentElement.style.setProperty(
+                    "--student-left",
+                    e.target.value,
+                  );
                 }}
-                style={{width: '60px', marginLeft: '5px'}}
+                style={{ width: "60px", marginLeft: "5px" }}
               />
             </div>
-            <div style={{marginBottom: '10px', fontSize: '10px', opacity: 0.8}}>
-              데스크톱: T({document.documentElement.style.getPropertyValue('--teacher-top') || '80px'}, {document.documentElement.style.getPropertyValue('--teacher-right') || '50px'}) S({document.documentElement.style.getPropertyValue('--student-top') || '970px'}, {document.documentElement.style.getPropertyValue('--student-left') || '20px'})
+            <div
+              style={{ marginBottom: "10px", fontSize: "10px", opacity: 0.8 }}
+            >
+              데스크톱: T(
+              {document.documentElement.style.getPropertyValue(
+                "--teacher-top",
+              ) || "80px"}
+              ,{" "}
+              {document.documentElement.style.getPropertyValue(
+                "--teacher-right",
+              ) || "50px"}
+              ) S(
+              {document.documentElement.style.getPropertyValue(
+                "--student-top",
+              ) || "970px"}
+              ,{" "}
+              {document.documentElement.style.getPropertyValue(
+                "--student-left",
+              ) || "20px"}
+              )
             </div>
             <button 
               onClick={resetInfoPositions}
               style={{
-                background: '#835eeb',
-                color: 'white',
-                border: 'none',
-                padding: '5px 10px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '11px',
-                marginRight: '5px'
+                background: "#835eeb",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "11px",
+                marginRight: "5px",
               }}
             >
               기본 위치로
             </button>
             <button 
-              onClick={() => adjustInfoPositions('120px', '250px', '100px', '180px')}
+              onClick={() =>
+                adjustInfoPositions("120px", "250px", "100px", "180px")
+              }
               style={{
-                background: '#ff6b6b',
-                color: 'white',
-                border: 'none',
-                padding: '5px 10px',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '11px'
+                background: "#ff6b6b",
+                color: "white",
+                border: "none",
+                padding: "5px 10px",
+                borderRadius: "4px",
+                cursor: "pointer",
+                fontSize: "11px",
               }}
             >
               테스트 위치
             </button>
           </div>
         )}
-        <div style={{position:'relative',width:'100%',maxWidth:'100%',margin:'0',padding:0,minHeight:'900px',zIndex:2}}>
-          {isWebAppMobile ? (
-            <>
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            maxWidth: "100%",
+            margin: "0",
+            padding: 0,
+            minHeight: "900px",
+            zIndex: 2,
+          }}
+        >
               <WebAppHeader
                 style={{
-                  position: 'relative',
+              position: "relative",
                   top: 0,
                   left: 0,
-                  width: '100%',
+              width: "100%",
                   zIndex: 3,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '0',
-                  padding: '24px 0 0 0',
-                  background: 'white',
-                }}
-              >
-                <WebAppTitle style={{ fontSize: 30, textAlign: 'center', marginBottom: 8 }}>
-                  웹-앱 연동으로 완성되는<br />교육 시스템
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              pointerEvents: "none",
+              marginBottom: "50px",
+            }}
+          >
+            <WebAppTitle style={{ pointerEvents: "auto" }}>
+              웹-앱 연동으로 완성되는
+              <br />
+              교육 시스템
                 </WebAppTitle>
-                <WebAppSubtitle style={{ fontSize: 15, textAlign: 'center', marginBottom: 12 }}>
-                  교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br />완벽한 교육 생태계를 경험하세요
+            <WebAppSubtitle style={{ pointerEvents: "auto" }}>
+              교사는 웹에서 관리하고, 학생은 앱으로 학습하는
+              <br />
+              완벽한 교육 생태계를 경험하세요
                 </WebAppSubtitle>
-                <WebAppButtons>
+            <WebAppButtons style={{ pointerEvents: "auto" }}>
                   <WebAppButton 
                     href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
                     target="_blank"
@@ -2725,459 +3001,125 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-              <div style={{width: '100%', height: '987px', position: 'relative', overflow: 'hidden', margin: '0 auto', paddingBottom: '200px'}}>
-
-                
-                {/* 실시간 동기화 텍스트 - 목업 이미지들 사이 중앙 */}
-                <AnimatedMobileSyncText isVisible={syncTextVisible}>
-                  실시간<br/>동기화
-                </AnimatedMobileSyncText>
-                
-                {/* 실시간 동기화 텍스트에서 뻗어 나오는 화살표 */}
-                <AnimatedArrow isVisible={arrowVisible} />
-                
-                {/* 목업 이미지 3번 - 선생님용 웹사이트 (모바일 위치 보정: 아래 +30px, 오른쪽 오프셋 유지) */}
-                <img 
-                  src="/WebApp/integration/3.svg" 
-                  alt="선생님용 웹사이트 목업"
+          <WebAppContent>
+            {/* 단일 스케일 캔버스 (1920×1200) */}
+            <div
                   style={{
-                    position: 'absolute',
-                    bottom: '30px',
-                    left: 'calc(50% + 120px)',
-                    transform: 'translateX(-50%)',
-                    width: 'auto',
-                    height: '375px',
-                    zIndex: 1,
-                    opacity: 0.8
-                  }}
-                />
-                
-                {/* 목업 이미지 4번 - 학생용 모바일 앱 (모바일 위치 고정: 화면 중앙 기준 오프셋, 왼쪽으로 100px 반영) */}
-                <img 
-                  src="/WebApp/integration/4.svg" 
-                  alt="학생용 모바일 앱 목업"
-                  style={{
-                    position: 'absolute',
-                    top: '70px',
-                    left: 'calc(50% - 160px)',
-                    transform: 'translateX(-50%)',
-                    width: 'auto',
-                    height: '300px',
-                    zIndex: 1,
-                    opacity: 0.8
-                  }}
-                />
-                
-                {/* 선생님용 웹사이트 정보 - 모바일: 오른쪽 20px 고정 */}
-                <div style={{
-                  paddingLeft: '10px', 
-                  paddingRight: '10px', 
-                  position: 'absolute', 
-                  top: teacherInfoPosition.top,
-                  right: '20px',
-                  overflow: 'hidden', 
-                  flexDirection: 'column', 
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  gap: '10px', 
-                  display: 'inline-flex',
-                  zIndex: 2
-                }}>
-                  <div style={{
-                    justifyContent: 'center', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    color: '#835EEB', 
-                    fontSize: '16px', 
-                    fontFamily: 'Pretendard', 
-                    fontWeight: '700', 
-                    lineHeight: '20.80px', 
-                    wordWrap: 'break-word'
-                  }}>
-                    선생님용 웹사이트
-                  </div>
-                  <div style={{
-                    flexDirection: 'column', 
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    gap: '10px', 
-                    display: 'flex'
-                  }}>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        맞춤형 문제 출제
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        클래스 및 학생관리
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        AI 채점 결과 확인
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        실력 분석 리포트
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* 학생용 모바일 앱 정보 - 모바일: 왼쪽 20px 고정 */}
-                <div style={{
-                  paddingLeft: '10px', 
-                  paddingRight: '10px', 
-                  paddingTop: '20px', 
-                  paddingBottom: '20px', 
-                  position: 'absolute', 
-                  bottom: studentInfoPosition.bottom,
-                  left: '20px',
-                  overflow: 'hidden', 
-                  flexDirection: 'column', 
-                  justifyContent: 'center', 
-                  alignItems: 'center', 
-                  gap: '10px', 
-                  display: 'inline-flex',
-                  zIndex: 2
-                }}>
-                  <div style={{
-                    justifyContent: 'center', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    color: '#835EEB', 
-                    fontSize: '16px', 
-                    fontFamily: 'Pretendard', 
-                    fontWeight: '700', 
-                    lineHeight: '20.80px', 
-                    wordWrap: 'break-word'
-                  }}>
-                    학생용 모바일 앱
-                  </div>
-                  <div style={{
-                    flexDirection: 'column', 
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    gap: '10px', 
-                    display: 'flex'
-                  }}>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        AI 힌트 시스템
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        실시간 채점 피드백
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        장학금 알림 수신
-                      </div>
-                    </div>
-                    <div style={{
-                      width: '130px', 
-                      paddingLeft: '15px', 
-                      paddingRight: '15px', 
-                      background: '#F3EFFD', 
-                      overflow: 'hidden', 
-                      borderRadius: '50px', 
-                      flexDirection: 'column', 
-                      justifyContent: 'center', 
-                      alignItems: 'center', 
-                      display: 'flex'
-                    }}>
-                      <div style={{
-                        justifyContent: 'center', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        color: '#33373B', 
-                        fontSize: '13px', 
-                        fontFamily: 'Pretendard', 
-                        fontWeight: '400', 
-                        lineHeight: '19.50px', 
-                        wordWrap: 'break-word'
-                      }}>
-                        맞춤형 학습지 수신
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <WebAppHeader style={{position:'relative',top:0,left:0,width:'100%',zIndex:3,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',pointerEvents:'none',marginBottom:'50px'}}>
-                <WebAppTitle style={{pointerEvents:'auto'}}>웹-앱 연동으로 완성되는<br/>교육 시스템</WebAppTitle>
-                <WebAppSubtitle style={{pointerEvents:'auto'}}>교사는 웹에서 관리하고, 학생은 앱으로 학습하는<br/>완벽한 교육 생태계를 경험하세요</WebAppSubtitle>
-                <WebAppButtons style={{pointerEvents:'auto'}}>
-                  <WebAppButton 
-                    href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WebAppIcon>
-                      <img src="/Common/Google_Play_logo.svg" alt="Google Play" />
-                    </WebAppIcon>
-                    <WebAppButtonText>Google Play</WebAppButtonText>
-                  </WebAppButton>
-                  <WebAppButton 
-                    href="https://apps.apple.com/app/%EC%88%98%ED%95%99%EB%8C%80%EC%99%95-ai%EB%94%94%EC%A7%80%ED%84%B8%EB%AC%B8%EC%A0%9C%EC%A7%91/id1501165233"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <WebAppIcon>
-                      <img src="/Common/App_Store_logo.svg" alt="App Store" />
-                    </WebAppIcon>
-                    <WebAppButtonText>App Store</WebAppButtonText>
-                  </WebAppButton>
-                </WebAppButtons>
-              </WebAppHeader>
-              <WebAppContent>
-                
-                {/* 웹버전 목업들 (820px 초과에서만 표시) - 3개 그룹, 1920 캔버스로 스케일 */}
-                <div ref={mockupCanvasWrapperRef} style={{ width: '100%', maxWidth: '100%', margin: '0 auto', display: 'flex', justifyContent: 'center', overflow: 'hidden' }}>
+                width: "100%",
+                maxWidth: "100%",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
                   <MockupCanvas>
-                    <DesktopMockupGroup>
                       <MockupStage>
-                        {/* WebApp 통합 목업 */}
+                  {/* 실시간 동기화 텍스트 */}
                         <AnimatedSyncText isVisible={syncTextVisible}>
-                          실시간<br/>동기화
+                    실시간
+                    <br />
+                    동기화
                         </AnimatedSyncText>
                         
-                        {/* 데스크탑용 원형화살표 백그라운드 */}
+                  {/* 원형화살표 백그라운드 */}
                         <AnimatedArrow isVisible={arrowVisible} />
                         
+                  {/* 가운데 WebApp 통합 목업 */}
                         <CenterMockupElement $isVisible={mockupsVisible[2]}>
                           <img 
                             src="/WebApp/integration/3.svg" 
                             alt="모바일 앱 인터페이스"
                             style={{ 
-                              width: 'auto', 
-                              height: '550px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              filter: 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))'
+                        width: "auto",
+                        height: "550px",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        filter:
+                          "drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = 'scale(1.03)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))';
+                        e.currentTarget.style.transform = "scale(1.03)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = 'scale(1)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))';
+                        e.currentTarget.style.transform = "scale(1)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))";
                             }}
                           />
                         </CenterMockupElement>
 
-                        {/* 1번 목업 - 좌측 */}
+                  {/* 선생님용 웹사이트 목업 */}
                         <TeacherMockupElement
                           $isVisible={mockupsVisible[0]}
-                          onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                    onClick={() =>
+                      window.open("https://class.iammathking.com", "_blank")
+                    }
                         >
                           <img 
                             src="/WebApp/integration/1.svg" 
                             alt="선생님용 웹사이트"
                             style={{ 
-                              width: 'auto', 
-                              height: '550px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                        width: "auto",
+                        height: "550px",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        filter:
+                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = 'scale(1.03)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                        e.currentTarget.style.transform = "scale(1.03)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = 'scale(1)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                        e.currentTarget.style.transform = "scale(1)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))";
                             }}
                           />
                         </TeacherMockupElement>
 
-                        {/* 4번 목업 - 우측 */}
+                  {/* 데스크톱 모니터 목업 */}
                         <DesktopMockupElement
                           $isVisible={mockupsVisible[3]}
-                          onClick={() => window.open('https://class.iammathking.com', '_blank')}
+                    onClick={() =>
+                      window.open("https://class.iammathking.com", "_blank")
+                    }
                         >
                           <img 
                             src="/WebApp/integration/4.svg" 
                             alt="데스크톱 관리 시스템"
                             style={{ 
-                              width: 'auto', 
-                              height: '650px',
-                              cursor: 'pointer',
-                              transition: 'all 0.3s ease',
-                              filter: 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))'
+                        width: "auto",
+                        height: "650px",
+                        cursor: "pointer",
+                        transition: "all 0.3s ease",
+                        filter:
+                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))",
                             }}
                             onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = 'scale(1.02)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))';
+                        e.currentTarget.style.transform = "scale(1.02)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = 'scale(1)';
-                              e.currentTarget.style.filter = 'drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))';
+                        e.currentTarget.style.transform = "scale(1)";
+                        e.currentTarget.style.filter =
+                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))";
                             }}
                           />
                         </DesktopMockupElement>
                       </MockupStage>
-                    </DesktopMockupGroup>
+
                     {/* 웹앱 정보 텍스트 (캔버스 내부에서 함께 스케일) */}
-                    {cssVarsInitialized && (
                       <CanvasOverlay>
-                        <TeacherInfoContainer style={{ pointerEvents: 'auto' }}>
-                        <WebAppInfoBlock style={{alignItems:'flex-end',textAlign:'right'}}>
+                  <TeacherInfoContainer style={{ pointerEvents: "auto" }}>
+                    <WebAppInfoBlock
+                      style={{ alignItems: "flex-end", textAlign: "right" }}
+                    >
                           <WebAppInfoTitle 
                             isVisible={teacherChipsVisible[0]} 
                             delay={0}
@@ -3185,16 +3127,36 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                           >
                             선생님용 웹사이트
                           </WebAppInfoTitle>
-                          <WebAppInfoChips style={{alignItems:'flex-end'}}>
-                            <WebAppInfoChip isVisible={teacherChipsVisible[0]} delay={0}>클래스 및 학생관리</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={teacherChipsVisible[1]} delay={150}>맞춤형 문제 출제</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={teacherChipsVisible[2]} delay={300}>AI 채점 결과 확인</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={teacherChipsVisible[3]} delay={450}>실력 분석 리포트</WebAppInfoChip>
+                      <WebAppInfoChips style={{ alignItems: "flex-end" }}>
+                        <WebAppInfoChip
+                          isVisible={teacherChipsVisible[0]}
+                          delay={0}
+                        >
+                          클래스 및 학생관리
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={teacherChipsVisible[1]}
+                          delay={150}
+                        >
+                          맞춤형 문제 출제
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={teacherChipsVisible[2]}
+                          delay={300}
+                        >
+                          AI 채점 결과 확인
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={teacherChipsVisible[3]}
+                          delay={450}
+                        >
+                          실력 분석 리포트
+                        </WebAppInfoChip>
                           </WebAppInfoChips>
                         </WebAppInfoBlock>
                       </TeacherInfoContainer>
                       
-                      <StudentInfoContainer style={{ pointerEvents: 'auto' }}>
+                  <StudentInfoContainer style={{ pointerEvents: "auto" }}>
                         <WebAppInfoBlock>
                           <WebAppInfoTitle 
                             isVisible={studentChipsVisible[0]} 
@@ -3204,20 +3166,37 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                             학생용 모바일 앱
                           </WebAppInfoTitle>
                           <WebAppInfoChips>
-                            <WebAppInfoChip isVisible={studentChipsVisible[0]} delay={0}>맞춤형 학습지 수신</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={studentChipsVisible[1]} delay={150}>AI 힌트 시스템</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={studentChipsVisible[2]} delay={300}>실시간 채점 피드백</WebAppInfoChip>
-                            <WebAppInfoChip isVisible={studentChipsVisible[3]} delay={450}>장학금 알림 수신</WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={studentChipsVisible[0]}
+                          delay={0}
+                        >
+                          맞춤형 학습지 수신
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={studentChipsVisible[1]}
+                          delay={150}
+                        >
+                          AI 힌트 시스템
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={studentChipsVisible[2]}
+                          delay={300}
+                        >
+                          실시간 채점 피드백
+                        </WebAppInfoChip>
+                        <WebAppInfoChip
+                          isVisible={studentChipsVisible[3]}
+                          delay={450}
+                        >
+                          장학금 알림 수신
+                        </WebAppInfoChip>
                           </WebAppInfoChips>
                         </WebAppInfoBlock>
                       </StudentInfoContainer>
                       </CanvasOverlay>
-                    )}
                   </MockupCanvas>
                 </div>
               </WebAppContent>
-            </>
-          )}
         </div>
       </WebAppSection>
 
@@ -3228,20 +3207,39 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             <AnimatedTextContent className={textAnimationState}>
               <div>
                 <ExperienceTitle>
-                  {testimonials[currentTestimonial % testimonials.length].title.highlight}<br/>{testimonials[currentTestimonial % testimonials.length].title.normal}
+                  {
+                    testimonials[currentTestimonial % testimonials.length].title
+                      .highlight
+                  }
+                  <br />
+                  {
+                    testimonials[currentTestimonial % testimonials.length].title
+                      .normal
+                  }
                 </ExperienceTitle>
               </div>
               <div>
                 <ExperienceQuote>
-                  <span dangerouslySetInnerHTML={{ __html: testimonials[currentTestimonial % testimonials.length].quote }} />
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        testimonials[currentTestimonial % testimonials.length]
+                          .quote,
+                    }}
+                  />
                 </ExperienceQuote>
               </div>
               <NameSection>
                 <VerticalLine />
                 <div>
                   <ExperienceName>
-                    {testimonials[currentTestimonial % testimonials.length].name.split('<br/>').map((line, idx) => (
-                      <span key={idx} dangerouslySetInnerHTML={{ __html: line }} />
+                    {testimonials[currentTestimonial % testimonials.length].name
+                      .split("<br/>")
+                      .map((line, idx) => (
+                        <span
+                          key={idx}
+                          dangerouslySetInnerHTML={{ __html: line }}
+                        />
                     ))}
                   </ExperienceName>
                 </div>
@@ -3253,7 +3251,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <VideoTrack
                 style={{
                   transform: `translateX(-${currentTestimonial * 100}%)`,
-                  transition: isTransitioning ? 'transform 1s ease-in-out' : 'none'
+                  transition: isTransitioning
+                    ? "transform 1s ease-in-out"
+                    : "none",
                 }}
               >
                 {/* 슬라이드들 */}
@@ -3276,7 +3276,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 ))}
               </VideoTrack>
             </VideoSlider>
-
           </ExperienceImageBlock>
         </ExperienceInner>
       </ExperienceSection>
@@ -3284,11 +3283,10 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-
 const WebAppSection = styled.section`
   width: 100%;
   background: white;
-  padding: 150px 0 30px 0; /* 기본 하단 30px로 조정 (>=1025px 합계 70px) */
+  padding: 150px 0 30px 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -3298,23 +3296,13 @@ const WebAppSection = styled.section`
   scroll-snap-align: start;
   position: relative;
   
-  /* 데스크탑(>=1920px)에서 조금 더 타이트하게 */
-  @media (min-width: 1920px) {
-    padding: 150px 0 30px 0; /* 유지 */
-  }
-  
-  /* 태블릿~노트북 구간 */
   @media (max-width: 1024px) {
-    padding: 140px 0 30px 0; /* 901–1024px에서도 합계 70px */
+    padding: 140px 0 30px 0;
   }
-  
-  /* 모바일 */
   @media (max-width: 600px) {
     padding: 120px 0 30px 0;
   }
 `;
-
-
 
 const WebAppHeader = styled.div`
   align-self: stretch;
@@ -3333,77 +3321,49 @@ const WebAppTitle = styled.div`
   font-size: 48px;
   font-family: Pretendard;
   font-weight: 700;
-  line-height: 67.20px;
-  word-wrap: break-word;
+  line-height: 67.2px;
 `;
 
 const WebAppSubtitle = styled.div`
   width: 100%;
   max-width: 600px;
   text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
   color: #858585;
   font-size: 28px;
   font-family: Pretendard;
   font-weight: 400;
-  line-height: 36.40px;
-  word-wrap: break-word;
+  line-height: 36.4px;
 `;
 
 const WebAppButtons = styled.div`
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 12px;
-  display: flex;
 `;
 
 const WebAppButton = styled.a`
   padding: 8px 16px;
   background: #33373B;
-  overflow: hidden;
   border-radius: 40px;
+  width: 140px;
+  display: flex;
+  gap: 4px;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  display: flex;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 140px;
   text-decoration: none;
-  
-  &:hover {
-    background: #835EEB;
-    transform: translateY(-2px);
-  }
+  cursor: pointer;
+  transition: all .3s ease;
+  &:hover { background: #835EEB; transform: translateY(-2px); }
 `;
 
 const WebAppIcon = styled.div`
-  width: 16px;
-  height: 16px;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+  width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;
+  img{ width:100%; height:100%; object-fit:contain; }
 `;
 
 const WebAppButtonText = styled.div`
-  text-align: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  color: white;
-  font-size: 14px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 21px;
-  word-wrap: break-word;
+  color: #fff; font-size: 14px; font-weight: 700; line-height: 21px;
 `;
 
 const WebAppContent = styled.div`
@@ -3411,67 +3371,38 @@ const WebAppContent = styled.div`
   width: 100%;
   padding: 0;
   display: block;
-  min-height: 900px;
   overflow: hidden;
   
-  @media (max-width: 1920px) {
-    min-height: calc(900px * (min(100vw, 1280) / 1920));
-  }
-  
-  @media (max-width: 1600px) {
-    min-height: calc(900px * (min(100vw, 1280) / 1920));
-  }
-  
-  @media (max-width: 1200px) {
-    min-height: calc(900px * (min(100vw, 1280) / 1920));
-  }
-  
-  @media (max-width: 1000px) {
-    min-height: calc(900px * (min(100vw, 1000) / 1920));
-  }
-  
-  @media (max-width: 800px) {
-    min-height: 600px;
-  }
+  --scale: clamp(0.5, 100vw / 1920, 1);   /* 핵심! */
+
+  /* 기준 높이(1200) × scale 만큼 섹션 높이 확보 */
+  min-height: calc(1200px * var(--scale));
 `;
 
-/* 데스크탑 목업 그룹 컨테이너 */
-const DesktopMockupGroup = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-/* 1920 기준으로 전체 목업을 스케일하는 캔버스 래퍼 */
+/* 1920 기준의 단일 캔버스. 내부는 모두 px 좌표 */
 const MockupCanvas = styled.div`
-  width: 1920px; /* 고정 캔버스 너비 */
+  width: 1920px;
+  height: 1200px;
   position: relative;
   transform-origin: top center;
+  transform: scale(var(--scale));
   overflow: visible;
-  /* 외부 컨테이너에서 --mockup-scale을 주입 */
-  transform: scale(var(--mockup-scale, 1));
 `;
 
-/* 캔버스 전체를 덮는 오버레이 레이어 (텍스트/칩 배치용) */
+/* 스테이지(목업 배치) + 오버레이(텍스트/칩) */
+const MockupStage = styled.div`
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1200px;
+  overflow: visible;
+`;
 const CanvasOverlay = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 1920px;
-  height: 1200px; /* MockupStage와 동일 높이 */
-  pointer-events: none; /* 기본적으로 클릭 통과 */
-  z-index: 50; /* 목업 이미지 위 */
-  overflow: visible;
-`;
-
-/* 절대 배치용 스테이지: 중앙(3번 목업)을 기준으로 고정 좌표 배치 */
-const MockupStage = styled.div`
-  position: relative;
-  width: 1920px;
-  height: 1200px; /* 스테이지 높이 (필요시 조정) */
+  height: 1200px;
+  pointer-events: none;
   overflow: visible;
 `;
 
@@ -3482,109 +3413,26 @@ const MockupStage = styled.div`
 const AnimatedMockupElement = styled.div<{ $isVisible: boolean; delay?: number }>`
   position: absolute;
   cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: ${props => props.$isVisible ? 1 : 0};
-  transform: translateY(${props => props.$isVisible ? '0' : '30px'});
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: ${props => props.delay || 0}ms;
-  
-  &:hover {
-    z-index: 15;
-  }
-  
-  /* 600px 이하에서 웹버전 목업 숨기기 */
-  @media (max-width: 600px) {
-    display: none;
-  }
+  opacity: ${p => (p.$isVisible ? 1 : 0)};
+  transform: translateY(${p => (p.$isVisible ? '0' : '30px')});
+  transition: all .8s cubic-bezier(0.4,0,0.2,1);
+  transition-delay: ${p => p.delay || 0}ms;
+  &:hover { z-index: 15; }
+  @media (max-width: 600px) { display: none; } /* 데스크톱 섹션이므로 모바일에서는 숨김 */
 `;
 
-/* 가운데 WebApp 통합 목업 요소 */
+/* px 고정 좌표들 — 같은 프레임에서 함께 스케일됨 */
 const CenterMockupElement = styled(AnimatedMockupElement)`
-  position: absolute;
-  top: 350px;
-  left: 50%;
-  transform: translate(-50%, 0);
+  top: 350px; left: 50%; transform: translate(-50%, 0);
   z-index: 11;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform-origin: center center; /* 중앙을 기준으로 축소 */
-  
-  /* 768px 이상에서는 위치 고정 */
-  @media (min-width: 768px) {
-    top: 350px;
-  }
-  
-  /* 768px 이하에서는 화면 크기에 따라 동적 위치 조정 */
-  @media (max-width: 767px) {
-    top: calc(350px - (768px - 100vw) * 0.05); /* 동적 위치 조정 */
-  }
-  
-  @media (max-width: 600px) {
-    top: calc(350px - (600px - 100vw) * 0.07); /* 동적 위치 조정 */
-  }
 `;
 
-/* 선생님용 웹사이트 목업 요소 */
 const TeacherMockupElement = styled(AnimatedMockupElement)`
-  position: absolute;
-  top: 145px;
-  left: 40px;
-  z-index: 12;
-  transform-origin: left center; /* 왼쪽을 기준으로 축소 */
-  
-  /* 768px 이상에서는 위치 고정 */
-  @media (min-width: 768px) {
-    left: 40px;
-  }
-  
-  /* 768px 이하에서는 화면 크기에 따라 동적 간격 조정 */
-  @media (max-width: 767px) {
-    left: calc(40px + (768px - 100vw) * 0.3); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 600px) {
-    left: calc(40px + (600px - 100vw) * 0.4); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 500px) {
-    left: calc(40px + (500px - 100vw) * 0.5); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 400px) {
-    left: calc(40px + (400px - 100vw) * 0.6); /* 동적 간격 조정 */
-  }
+  top: 145px; left: 40px; z-index: 12; transform-origin: left center;
 `;
 
-/* 데스크톱 모니터 목업 요소 */
 const DesktopMockupElement = styled(AnimatedMockupElement)`
-  position: absolute;
-  top: 430px;
-  right: -200px;
-  z-index: 11;
-  transform-origin: right center; /* 오른쪽을 기준으로 축소 */
-  
-  /* 768px 이상에서는 위치 고정 */
-  @media (min-width: 768px) {
-    right: -200px;
-  }
-  
-  /* 768px 이하에서는 화면 크기에 따라 동적 간격 조정 */
-  @media (max-width: 767px) {
-    right: calc(-200px + (768px - 100vw) * 0.3); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 600px) {
-    right: calc(-200px + (600px - 100vw) * 0.4); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 500px) {
-    right: calc(-200px + (500px - 100vw) * 0.5); /* 동적 간격 조정 */
-  }
-  
-  @media (max-width: 400px) {
-    right: calc(-200px + (400px - 100vw) * 0.6); /* 동적 간격 조정 */
-  }
+  top: 430px; right: -200px; z-index: 11; transform-origin: right center;
 `;
 
 const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
@@ -3595,9 +3443,9 @@ const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   align-items: center;
   display: flex;
   flex-direction: column;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 42px;
-  font-family: 'Godo B';
+  font-family: "Godo B";
   font-weight: 400;
   line-height: 50px;
   letter-spacing: -0.5px;
@@ -3605,8 +3453,9 @@ const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   z-index: 20;
   text-align: center;
   white-space: nowrap;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translate(-50%, 0) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: translate(-50%, 0)
+    ${(props) => (props.isVisible ? "scale(1)" : "scale(0.8)")};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   
@@ -3643,8 +3492,6 @@ const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   }
 `;
 
-
-
 const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   left: 50%; 
   top: 50%; 
@@ -3652,15 +3499,16 @@ const AnimatedMobileSyncText = styled.div<{ isVisible: boolean }>`
   justify-content: center; 
   display: flex; 
   flex-direction: column; 
-  color: #835EEB; 
+  color: #835eeb;
   font-size: 32px; 
-  font-family: 'Godo B'; 
+  font-family: "Godo B";
   font-weight: 400; 
-  line-height: 41.60px; 
+  line-height: 41.6px;
   word-wrap: break-word;
   z-index: 1;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: translate(-50%, -50%) ${props => props.isVisible ? 'scale(1)' : 'scale(0.8)'};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: translate(-50%, -50%)
+    ${(props) => (props.isVisible ? "scale(1)" : "scale(0.8)")};
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 `;
 
@@ -3672,21 +3520,17 @@ const AnimatedArrow = styled.div<{ isVisible: boolean }>`
   width: 300px;
   height: 500px;
   z-index: -1;
-  opacity: ${props => props.isVisible ? 1 : 0};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   
   /* 기본 스타일 */
-  background: url('/WebApp/integration/circle.svg') no-repeat center;
+  background: url("/WebApp/integration/circle.svg") no-repeat center;
   background-size: contain;
   
   /* 애니메이션 조합 */
-  animation: ${arrowBreathe} 3s ease-in-out infinite,
-             ${arrowGlow} 2s ease-in-out infinite;
-  
-  /* 호버 효과 */
-  &:hover {
-    animation: ${arrowPulse} 1s ease-in-out infinite;
-  }
+  animation:
+    ${arrowBreathe} 3s ease-in-out infinite,
+    ${arrowGlow} 2s ease-in-out infinite;
   
   /* 데스크탑에서 더 크게 표시 및 30도 회전 */
   @media (min-width: 820px) {
@@ -3750,9 +3594,6 @@ const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   }
   
   @media (max-width: 900px) {
-    position: relative;
-    top: auto;
-    right: auto;
     max-width: 100%;
     margin: 20px 0;
     text-align: center;
@@ -3789,16 +3630,11 @@ const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   }
   
   @media (max-width: 900px) {
-    position: relative;
-    top: auto;
-    left: auto;
     max-width: 100%;
     margin: 20px 0;
     text-align: center;
   }
 `;
-
-
 
 const ExperienceSection = styled.section`
   width: 100%;
@@ -3867,7 +3703,7 @@ const ExperienceTextBlock = styled.div`
 `;
 
 const ExperienceTitle = styled.div`
-  color: #33373B;
+  color: #33373b;
   font-size: 48px;
   font-family: Pretendard;
   font-weight: 700;
@@ -3888,7 +3724,7 @@ const ExperienceTitle = styled.div`
 `;
 
 const ExperienceQuote = styled.div`
-  color: #33373B;
+  color: #33373b;
   font-size: 22px;
   font-family: Pretendard;
   font-weight: 400;
@@ -3909,7 +3745,7 @@ const ExperienceQuote = styled.div`
 `;
 
 const ExperienceName = styled.div`
-  color: #835EEB;
+  color: #835eeb;
   font-size: 20px;
   font-family: Pretendard;
   line-height: 26px;
@@ -3917,8 +3753,12 @@ const ExperienceName = styled.div`
   font-weight: 700;
   text-align: left;
   width: 100%;
-  span { display: block; }
-  span:last-child { font-weight: 400; }
+  span {
+    display: block;
+  }
+  span:last-child {
+    font-weight: 400;
+  }
   @media (max-width: 900px) {
     text-align: left;
   }
@@ -3934,8 +3774,8 @@ const ExperienceImageBlock = styled.div`
   height: 520px;
   position: relative;
   overflow: hidden;
-  outline: 6px #835EED solid;
-  background: #F8F6FF;
+  outline: 6px #835eed solid;
+  background: #f8f6ff;
   border-radius: 6px;
   @media (max-width: 900px) {
     width: 100%;
@@ -3971,7 +3811,7 @@ const ThumbnailImage = styled.img`
   background: #f0f0f0;
   
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -4028,7 +3868,7 @@ const VerticalLine = styled.div`
   width: 3px;
   min-width: 3px;
   height: 52px;
-  background: #835EEB;
+  background: #835eeb;
   margin-right: 16px;
   border-radius: 2px;
   @media (max-width: 1366px) and (min-width: 601px) {
@@ -4045,8 +3885,6 @@ const VerticalLine = styled.div`
     margin-top: 18px;
   }
 `;
-
-
 
 const AnimatedTextContent = styled.div`
   opacity: 1;
@@ -4071,8 +3909,6 @@ const AnimatedTextContent = styled.div`
   }
 `;
 
-
-
 const VideoSlider = styled.div`
   width: 100%;
   height: 100%;
@@ -4096,8 +3932,6 @@ const VideoSlide = styled.div`
   flex-shrink: 0;
   position: relative;
 `;
-
-
 
 const FeatureSectionWrapper = styled.div`
   width: 1280px;
@@ -4165,8 +3999,9 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
   gap: 30px;
   margin: 0;
   margin-left: 0px;
-  opacity: ${props => props.isVisible ? 1 : 0.3};
-  transform: translateX(${props => props.isVisible ? '0' : '-30px'}) scale(${props => props.isVisible ? '1.05' : '1'});
+  opacity: ${(props) => (props.isVisible ? 1 : 0.3)};
+  transform: translateX(${(props) => (props.isVisible ? "0" : "-30px")})
+    scale(${(props) => (props.isVisible ? "1.05" : "1")});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   filter: none;
   @media (max-width: 600px) {
@@ -4189,15 +4024,13 @@ const FeatureTextBlock = styled.div<{ isVisible?: boolean }>`
   }
 `;
 
-
-
 const FeatureMainTitle = styled.div`
   justify-content: flex-start;
   display: flex;
   flex-direction: column;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 40px;
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   font-weight: 700;
   line-height: 52px;
   word-wrap: break-word;
@@ -4213,7 +4046,7 @@ const FeatureMainTitle = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #835EEB;
+    color: #835eeb;
     font-size: 18px;
     font-family: Pretendard;
     font-weight: 700;
@@ -4231,24 +4064,40 @@ const FeatureMainTitle = styled.div`
 const HighlightedText = styled.span<{ isVisible: boolean }>`
   display: inline-block;
   width: fit-content;
-  background: linear-gradient(180deg, transparent 0%, transparent 50%, #F3EFFD 50%, #F3EFFD 100%);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 50%,
+    #f3effd 50%,
+    #f3effd 100%
+  );
   background-size: 0% 50%;
   background-repeat: no-repeat;
   background-position: left bottom;
   box-sizing: border-box;
-  ${props => props.isVisible && css`
+  ${(props) =>
+    props.isVisible &&
+    css`
     animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
   `}
   @media (max-width: 600px) {
     display: inline-block;
     width: fit-content;
-    background: linear-gradient(180deg, transparent 0%, transparent 50%, #F3EFFD 50%, #F3EFFD 100%);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 50%,
+      #f3effd 50%,
+      #f3effd 100%
+    );
     background-size: 0% 50%;
     background-repeat: no-repeat;
     background-position: left bottom;
     box-sizing: border-box;
     text-align: center;
-    ${props => props.isVisible && css`
+    ${(props) =>
+      props.isVisible &&
+      css`
       animation: ${highlightAnimation} 1.5s ease-out 0.3s forwards;
     `}
   }
@@ -4259,7 +4108,7 @@ const FeatureCategory = styled.div`
   padding-right: 20px;
   padding-top: 5px;
   padding-bottom: 5px;
-  background: #F3EFFD;
+  background: #f3effd;
   overflow: hidden;
   border-radius: 50px;
   justify-content: center;
@@ -4275,7 +4124,7 @@ const FeatureCategory = styled.div`
     padding-right: 12px;
     padding-top: 3px;
     padding-bottom: 3px;
-    background: #F3EFFD;
+    background: #f3effd;
     border-radius: 50px;
     justify-content: center;
     align-items: center;
@@ -4289,7 +4138,7 @@ const FeatureCategoryText = styled.div`
   justify-content: center;
   display: flex;
   flex-direction: column;
-  color: #835EEB;
+  color: #835eeb;
   font-size: 20px;
   font-family: Pretendard;
   font-weight: 500;
@@ -4300,7 +4149,7 @@ const FeatureCategoryText = styled.div`
     justify-content: center;
     display: flex;
     flex-direction: column;
-    color: #835EEB;
+    color: #835eeb;
     font-size: 10px;
     font-family: Pretendard;
     font-weight: 500;
@@ -4311,26 +4160,26 @@ const FeatureCategoryText = styled.div`
 
 const FeatureDesc = styled.div`
   opacity: 0.6;
-  color: #4B4B4B;
+  color: #4b4b4b;
   font-size: 24px;
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   font-weight: 500;
   line-height: 34.8px;
   text-align: left;
   width: 100%;
   max-width: 450px;
   @media (max-width: 600px) {
-    opacity: 0.60;
+    opacity: 0.6;
     text-align: center !important;
     justify-content: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #4B4B4B;
+    color: #4b4b4b;
     font-size: 12px;
     font-family: Pretendard;
     font-weight: 500;
-    line-height: 17.40px;
+    line-height: 17.4px;
     word-wrap: break-word;
     max-width: 100%;
   }
@@ -4340,30 +4189,31 @@ const GifBox = styled.div<{ isZoomed?: boolean }>`
   width: 100%;
   max-width: 730px;
   aspect-ratio: 16 / 9; /* 16:9 비율 유지 */
-  background: #F8F6FF !important;
+  background: #f8f6ff !important;
   border-radius: 10px;
   overflow: hidden;
   outline: none;
-  border: 2px solid #835EEB;
+  border: 2px solid #835eeb;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  transform: scale(${props => props.isZoomed ? '1.15' : '1'});
+  transform: scale(${(props) => (props.isZoomed ? "1.15" : "1")});
   transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
   margin: 0;
   filter: none;
   /* 배경색이 어떤 경우에도 변하지 않도록 강제 */
-  &::before, &::after {
+  &::before,
+  &::after {
     background: transparent !important;
   }
   @media (max-width: 600px) {
     width: 100%;
     max-width: 300px;
     position: relative;
-    background: #835EEB;
-    border: 1px #835EEB solid;
+    background: #835eeb;
+    border: 1px #835eeb solid;
     transform: none;
     margin: 0 auto;
   }
@@ -4372,8 +4222,6 @@ const GifBox = styled.div<{ isZoomed?: boolean }>`
     border-radius: 8px;
   }
 `;
-
-
 
 // 모바일 및 태블릿 데모 슬라이드 컴포넌트들
 const MobileDemoSlider = styled.div`
@@ -4407,7 +4255,8 @@ const MobileDemoSlide = styled.div<{ noTransition?: boolean }>`
   width: 100%;
   display: flex;
   justify-content: center;
-  transition: ${props => props.noTransition ? 'none' : 'transform 1.2s ease-in-out'};
+  transition: ${(props) =>
+    props.noTransition ? "none" : "transform 1.2s ease-in-out"};
   flex-shrink: 0;
   
   @media (max-width: 1366px) and (min-width: 601px) {
@@ -4499,15 +4348,16 @@ const WebAppInfoBlock = styled.div`
   }
 `;
 const WebAppInfoTitle = styled.div<{ isVisible?: boolean; delay?: number }>`
-  color: #835EEB;
+  color: #835eeb;
   font-size: 36px;
   font-weight: 700;
   margin-bottom: 8px;
   white-space: normal;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: ${props => props.delay || 0}ms;
+  transition-delay: ${(props) => props.delay || 0}ms;
   
   @media (max-width: 1600px) {
     font-size: 32px;
@@ -4545,8 +4395,8 @@ const WebAppInfoChips = styled.div`
   }
 `;
 const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
-  background: #F3EFFD;
-  color: #835EEB;
+  background: #f3effd;
+  color: #835eeb;
   font-size: 22px;
   font-weight: 600;
   padding: 10px 24px;
@@ -4557,10 +4407,11 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
   white-space: normal;
   word-wrap: break-word;
   text-align: center;
-  opacity: ${props => props.isVisible ? 1 : 0};
-  transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(20px)'};
+  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  transform: ${(props) =>
+    props.isVisible ? "translateY(0)" : "translateY(20px)"};
   transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  transition-delay: ${props => props.delay || 0}ms;
+  transition-delay: ${(props) => props.delay || 0}ms;
   
   @media (max-width: 1600px) {
     font-size: 20px;
