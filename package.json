@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@supabase/supabase-js": "^2.51.0",
     "@types/node": "^20.0.0",
     "@types/react": "^18.2.0",

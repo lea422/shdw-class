@@ -476,21 +476,21 @@ const PricingSection = styled.div`
   align-items: center;
   gap: 60px;
   margin: 0 auto;
-  margin-top: 60px; /* 헤더 아래 여백 - 총 100px (40px + 60px) */
+  margin-top: -10px; /* 헤더 아래 여백 - 총 30px (40px - 10px) - 위로 70px 이동 */
   position: relative;
   @media (max-width: 1024px) {
     width: 100%;
     min-height: 100vh;
     padding: 40px 20px 120px 20px; /* 상단 패딩 조정 */
     gap: 60px;
-    margin-top: 60px;
+    margin-top: -10px; /* 위로 70px 이동 */
   }
   @media (max-width: 768px) {
     width: 100%;
     min-height: 100vh;
     padding: 6px 25px 100px 25px; /* 상단 패딩 조정 */
     gap: 30px;
-    margin-top: 24px; /* 총 30px (6px + 24px) */
+    margin-top: -16px; /* 위로 70px 이동 (24px - 70px = -46px, 하지만 적절한 값으로 조정) */
     box-sizing: border-box;
   }
 `;
@@ -2920,190 +2920,181 @@ const Pricing: React.FC<PricingProps> = () => {
           </PricingSubtitle>
         </PricingHeader>
         
-        <div style={{ width: "1180px", justifyContent: "center", alignItems: "center", gap: "30px", display: "inline-flex" }}>
-          {/* 무료 플랜 카드 */}
-          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "#F3F4F6", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
-            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
-              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "5px", display: "inline-flex" }}>
-                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
-                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>FREE</div>
+        <div style={{ justifyContent: "center", alignItems: "center", gap: "30px", display: "inline-flex" }}>
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #D1D5DB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "27.33px", wordWrap: "break-word" }}>FREE</div>
+                                <a href="https://class.iammathking.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
+                    <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+              </div>
+                </a>
               </div>
               <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무료 플랜</div>
-              <div style={{ width: "111px", height: "40px", justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>최대 5명</div>
-            </div>
-            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
-              <div style={{ width: "300px", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-                </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>최대 5명까지</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>무료 제공</div>
+              <div style={{ opacity: "0.90", justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "40px", wordWrap: "break-word" }}>무료 제공</div>
+              </div>
+            <div style={{ width: "300px", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+                            <div style={{ width: "300px", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>인원 제한</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>없음</div>
+              </div>
+              </div>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>학습지 제작 </div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "21px", wordWrap: "break-word" }}>무제한</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-                </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
-                </div>
-              </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-                </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
-                </div>
-              </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-                </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-2.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "21px", wordWrap: "break-word" }}>필기 분석 제공</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-                </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-2.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "21px", wordWrap: "break-word" }}>검색 기능 제공</div>
                 </div>
               </div>
-            </div>
-            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
-              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>추가 기능</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "21px", wordWrap: "break-word" }}>기본 제공</div>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* 기본 AI 플랜 카드 */}
-          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "white", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", outline: "2px #8F67E8 solid", outlineOffset: "-2px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
-            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
-              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "2px", display: "inline-flex" }}>
-                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
-                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "40px", height: "40px" }} />
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #835EEB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
+                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "44px", height: "44px" }} />
+                <div style={{ flex: 1 }}></div>
+                <a href="https://s.tosspayments.com/BmOuRkqIaKY" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
+                    <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+                  </div>
+                </a>
               </div>
-              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 플랜</div>
-              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>월 99,000원</div>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 플랜</div>
+              <div style={{ opacity: "0.90", justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "40px", wordWrap: "break-word" }}>월 99,000원</div>
+            </div>
+            <div style={{ width: "300px", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+              <div style={{ width: "300px", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+                <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>인원 제한</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>30명</div>
+                </div>
               </div>
-            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
-              </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "2px", display: "flex" }}>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>6명부터</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>가능</div>
-              </div>
-              </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
-                <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>30,000원</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>검색 기능 제공</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>검색 기능 제공</div>
                 </div>
               </div>
-            </div>
-            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
-              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
             </div>
           </div>
-
-          {/* 기본 AI 무제한 플랜 카드 */}
-          <div style={{ width: "360px", alignSelf: "stretch", padding: "30px", background: "white", boxShadow: "0px 10px 10px rgba(0, 0, 0, 0.10)", overflow: "hidden", borderRadius: "20px", outline: "2px #8E6CF0 solid", outlineOffset: "-2px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
-            <div style={{ width: "300px", paddingLeft: "16px", paddingRight: "16px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "8px", display: "flex" }}>
-              <div style={{ width: "268px", height: "27px", justifyContent: "center", alignItems: "center", gap: "2px", display: "inline-flex" }}>
-                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "41px", wordWrap: "break-word" }}>수학대왕</div>
-                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "40px", height: "40px" }} />
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "#F3EFFD", overflow: "hidden", borderRadius: "20px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+            <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
+              <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
+                <img src="/Assets/icon/light.svg" alt="light" style={{ width: "44px", height: "44px" }} />
+                <div style={{ flex: 1 }}></div>
+                <a href="https://s.tosspayments.com/BmOuQ2TwwtX" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
+                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#835EEB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.3)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#6B4BC7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.4)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#835EEB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.3)"; }}>
+                    <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#F3EFFD", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
+                  </div>
+                </a>
               </div>
-              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 무제한 플랜</div>
-              <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8E6CF0", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "48px", wordWrap: "break-word" }}>월 199,000원</div>
+              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>기본 AI 플랜</div>
+              <div style={{ opacity: "0.90", justifyContent: "center", display: "flex", flexDirection: "column", color: "#33373B", fontSize: "32px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "40px", wordWrap: "break-word" }}>월 199,000원</div>
             </div>
-            <div style={{ alignSelf: "stretch", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+            <div style={{ width: "300px", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", gap: "10px", display: "flex" }}>
+              <div style={{ width: "300px", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "2px", display: "flex" }}>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>6명부터</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>가능</div>
+                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>인원 제한</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>무제한</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>매달 장학금</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>30,000원</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>30,000원</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
-                <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
+                <div style={{ justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>무제한 문제 풀기</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>8만 개의 콘텐츠 제공</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>AI 필기 채점</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>필기 분석 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>검색 기능 제공</div>
                 </div>
               </div>
-              <div style={{ alignSelf: "stretch", height: "41px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "30px", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
                 <div style={{ width: "24px", height: "24px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ width: "14.45px", height: "9.98px", left: "4.82px", top: "7.22px", position: "absolute", background: "#835EEB" }}></div>
+                  <img src="/Assets/icon/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
                 </div>
                 <div style={{ width: "160px", justifyContent: "flex-start", alignItems: "center", gap: "5px", display: "flex" }}>
                   <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "21px", wordWrap: "break-word" }}>유사문제</div>
-                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#8F67E8", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 600, lineHeight: "19.50px", wordWrap: "break-word" }}>검색 기능 제공</div>
+                  <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "21px", wordWrap: "break-word" }}>검색 기능 제공</div>
                 </div>
               </div>
-            </div>
-            <div style={{ alignSelf: "stretch", height: "50px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "linear-gradient(135deg, #8F67E8 0%, #6357CC 100%)", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "2.12px", display: "inline-flex" }}>
-              <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "white", fontSize: "17px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "25.50px", wordWrap: "break-word" }}>지금 시작하기</div>
             </div>
           </div>
         </div>
@@ -3111,8 +3102,7 @@ const Pricing: React.FC<PricingProps> = () => {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
-        </ScrollArrow>
-      </PricingSection>
+        </ScrollArrow>      </PricingSection>
 
 
 

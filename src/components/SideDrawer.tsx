@@ -4,7 +4,7 @@ import ConsultationForm from './ConsultationForm';
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
-  bottom: 30px;
+  bottom: 110px;
   right: 30px;
   z-index: 9999;
   opacity: ${props => props.$isVisible ? 1 : 0};
@@ -13,111 +13,67 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
 `;
 
-const FloatingButton = styled.button`
-  width: 108px;
-  height: 108px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #835EEB 0%, #6B4BC4 100%);
-  border: none;
-  color: white;
-  font-size: 17px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+const ChatIcon = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3px;
-  line-height: 1.2;
-  text-align: center;
-  overflow: hidden;
-  box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3), 0 4px 15px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+`;
+
+const FloatingButton = styled.button`
+  background: none;
+  border: none;
+  color: #33373B;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Pretendard', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0;
   position: relative;
-
-  /* 리플 효과를 위한 가상 요소 */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-  }
-
-  /* 펄스 효과 */
-  &::after {
-    content: '';
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border: 2px solid rgba(131, 94, 235, 0.3);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-    opacity: 0.7;
-  }
-
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-    50% {
-      transform: scale(1.1);
-      opacity: 0.3;
-    }
-    100% {
-      transform: scale(1);
-      opacity: 0.7;
-    }
-  }
+  width: 120px;
+  height: 48px;
+  justify-content: space-between;
 
   &:hover {
-    transform: translateY(-8px) scale(1.12);
-    box-shadow: 0 15px 35px rgba(131, 94, 235, 0.4), 0 8px 25px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(135deg, #9C7EEF 0%, #7756D6 100%);
-    
-    &::before {
-      width: 120px;
-      height: 120px;
-    }
-    
-    &::after {
-      animation-play-state: paused;
-      opacity: 0;
-    }
+    color: #835EEB;
+    transform: translateY(-1px);
   }
 
   &:active {
-    transform: translateY(-4px) scale(1.05);
-    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 10px 20px rgba(131, 94, 235, 0.5);
+    transform: translateY(0);
+    transition: all 0.1s ease;
+  }
   }
 
   &:focus {
     outline: none;
-    box-shadow: 0 8px 25px rgba(131, 94, 235, 0.3), 0 0 0 3px rgba(131, 94, 235, 0.2);
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: none;
   }
 
   @media (max-width: 768px) {
-    width: 88px;
-    height: 88px;
+    width: 120px;
+    height: 48px;
     font-size: 15.4px;
     gap: 2px;
     
     &:hover {
-      transform: translateY(-6px) scale(1.15);
+      transform: translateY(-1px);
     }
   }
 `;
 
-const DrawerOverlay = styled.div<{ $isOpen: boolean }>`
+const ModalOverlay = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -127,58 +83,79 @@ const DrawerOverlay = styled.div<{ $isOpen: boolean }>`
   z-index: 1001;
   opacity: ${props => props.$isOpen ? 1 : 0};
   visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   backdrop-filter: ${props => props.$isOpen ? 'blur(4px)' : 'blur(0px)'};
 `;
 
-const DrawerContainer = styled.div<{ $isOpen: boolean }>`
+const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  top: 0;
-  right: 0;
+  bottom: 170px;
+  right: 30px;
   width: 400px;
-  height: 100%;
+  max-height: 700px;
   background: white;
   z-index: 1002;
-  transform: translateX(${props => props.$isOpen ? '0' : '100%'});
-  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.15);
+  opacity: ${props => props.$isOpen ? 1 : 0};
+  transform: ${props => props.$isOpen ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(20px)'};
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+
+  /* 말풍선 꼬리 */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    right: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid white;
+  }
 
   @media (max-width: 768px) {
-    width: 100%;
+    width: 360px;
+    right: 20px;
+    bottom: 150px;
+    max-height: 80vh;
   }
 `;
 
 
 
 const CloseButton = styled.button`
-  background: none;
-  border: none;
-  font-size: 28px;
+  background: white;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  font-size: 16px;
   color: #6B7280;
   cursor: pointer;
   padding: 8px;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 32px;
+  height: 32px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &:hover {
     color: #835EEB;
+    border-color: #D1D5DB;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   &:focus {
     outline: none;
+    box-shadow: none;
   }
 `;
 
-const DrawerContent = styled.div`
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
-  background: white;
-`;
+
 
 
 
@@ -233,28 +210,39 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
 
   return (
     <>
-      <FloatingButtonContainer $isVisible={!isModalOpen}>
-        <FloatingButton onClick={handleOpen} aria-label="무료체험 신청 열기">
-          무료체험<br />신청
+      <FloatingButtonContainer $isVisible={true}>
+        <FloatingButton onClick={isOpen ? handleClose : handleOpen} aria-label={isOpen ? "무료체험 신청 닫기" : "무료체험 신청 열기"}>
+          <span>무료체험신청</span>
+          <ChatIcon>
+            {isOpen ? (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="#835EEB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : (
+              <img src="/Assets/icon/free.svg" alt="free" style={{ width: "48px", height: "48px" }} />
+            )}
+          </ChatIcon>
         </FloatingButton>
       </FloatingButtonContainer>
-      <DrawerOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
-      <DrawerContainer $isOpen={isOpen}>
-        <DrawerContent>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-            <h2 style={{ margin: 0, color: '#33373B', fontSize: '20px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
+      <ModalOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
+      <ModalContainer $isOpen={isOpen}>
+        <div style={{ padding: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <h2 style={{ margin: 0, color: '#33373B', fontSize: '18px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
               무료 체험 신청
             </h2>
             <CloseButton data-close-button onClick={handleClose} aria-label="닫기">
-              ×
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </CloseButton>
           </div>
-          <p style={{ color: '#6B7280', fontSize: '14px', lineHeight: '1.6', marginBottom: '24px', fontFamily: 'Pretendard, sans-serif' }}>
+          <p style={{ color: '#6B7280', fontSize: '13px', lineHeight: '1.5', marginBottom: '20px', fontFamily: 'Pretendard, sans-serif' }}>
             궁금한 점이 있으신가요?<br />아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
           </p>
           <ConsultationForm onClose={handleClose} />
-        </DrawerContent>
-      </DrawerContainer>
+        </div>
+      </ModalContainer>
     </>
   );
 };

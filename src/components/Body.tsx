@@ -1345,13 +1345,14 @@ const Feature: React.FC<FeatureProps> = ({
       },
     );
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
+    const currentCardRef = cardRef.current;
+    if (currentCardRef) {
+      observer.observe(currentCardRef);
     }
 
     return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
+      if (currentCardRef) {
+        observer.unobserve(currentCardRef);
       }
     };
   }, [index]);
@@ -1756,13 +1757,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       { threshold: 0.2 },
     );
 
-    if (webAppSectionRef.current) {
-      observer.observe(webAppSectionRef.current);
+    const currentRef = webAppSectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (webAppSectionRef.current) {
-        observer.unobserve(webAppSectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -1802,33 +1804,37 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       },
     );
 
-    if (headerRef.current) {
-      observer.observe(headerRef.current);
+    const currentHeaderRef = headerRef.current;
+    const currentTitleRefs = titleRefs.current;
+    const currentFeatureBoxRefs = featureBoxRefs.current;
+
+    if (currentHeaderRef) {
+      observer.observe(currentHeaderRef);
     }
 
-    titleRefs.current.forEach((ref) => {
+    currentTitleRefs.forEach((ref) => {
       if (ref) {
         observer.observe(ref);
       }
     });
 
     // 모바일 핵심기능 박스들은 별도 observer 사용
-    featureBoxRefs.current.forEach((ref) => {
+    currentFeatureBoxRefs.forEach((ref) => {
       if (ref) {
         mobileObserver.observe(ref);
       }
     });
 
     return () => {
-      if (headerRef.current) {
-        observer.unobserve(headerRef.current);
+      if (currentHeaderRef) {
+        observer.unobserve(currentHeaderRef);
       }
-      titleRefs.current.forEach((ref) => {
+      currentTitleRefs.forEach((ref) => {
         if (ref) {
           observer.unobserve(ref);
         }
       });
-      featureBoxRefs.current.forEach((ref) => {
+      currentFeatureBoxRefs.forEach((ref) => {
         if (ref) {
           mobileObserver.unobserve(ref);
         }
@@ -2710,240 +2716,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       {/* 웹-앱 연동 섹션 */}
       <WebAppSection ref={webAppSectionRef}>
         {/* 위치 조정 컨트롤 패널 (개발용) */}
-        {process.env.NODE_ENV === "development" && (
-          <div
-            style={{
-              position: "fixed",
-              top: "20px",
-              right: "20px",
-              background: "rgba(0,0,0,0.8)",
-              color: "white",
-              padding: "15px",
-              borderRadius: "8px",
-            zIndex: 9999,
-              fontSize: "12px",
-            }}
-          >
-            <div style={{ marginBottom: "10px", fontWeight: "bold" }}>
-              위치 조정
-            </div>
-            <div
-              style={{ marginBottom: "5px", fontSize: "10px", opacity: 0.8 }}
-            >
-              현재: T({teacherInfoPosition.top}, {teacherInfoPosition.left}) S(
-              {studentInfoPosition.bottom}, {studentInfoPosition.right})
-            </div>
-            <div
-              style={{
-                marginBottom: "5px",
-                fontSize: "10px",
-                opacity: 0.8,
-                color: "#4CAF50",
-              }}
-            >
-              💾 자동 저장됨 (localStorage)
-            </div>
-            <div
-              style={{
-                marginBottom: "5px",
-                fontSize: "10px",
-                opacity: 0.8,
-                color: "#2196F3",
-              }}
-            >
-              📱 화면:{" "}
-              {typeof window !== "undefined" ? window.innerWidth : "N/A"}px |
-              레이아웃: 데스크톱
-            </div>
-            <div
-              style={{
-                marginBottom: "10px",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <label style={{ fontSize: "11px" }}>
-                <input 
-                  type="checkbox" 
-                  checked={lockPositions}
-                  onChange={(e) => {
-                    const newLockState = e.target.checked;
-                    setLockPositions(newLockState);
-                    localStorage.setItem(
-                      "lockPositions",
-                      JSON.stringify(newLockState),
-                    );
-                    console.log(
-                      "위치 고정 모드:",
-                      newLockState ? "활성화" : "비활성화",
-                    );
-                  }}
-                  style={{ marginRight: "5px" }}
-                />
-                위치 고정 모드
-              </label>
-              <span style={{ fontSize: "10px", opacity: 0.7 }}>
-                {lockPositions ? "🔒 고정됨" : "🔓 자유"}
-              </span>
-            </div>
-            <div style={{ marginBottom: "5px" }}>
-              <label>선생님 정보:</label>
-              <input 
-                type="text" 
-                placeholder="top" 
-                value={teacherInfoPosition.top}
-                onChange={(e) => {
-                  console.log("선생님 top 변경:", e.target.value);
-                  const newPosition = {
-                    ...teacherInfoPosition,
-                    top: e.target.value,
-                  };
-                  setTeacherInfoPosition(newPosition);
-                  // localStorage에 저장
-                  localStorage.setItem(
-                    "teacherInfoPosition",
-                    JSON.stringify(newPosition),
-                  );
-                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty(
-                    "--teacher-top",
-                    e.target.value,
-                  );
-                }}
-                style={{ width: "60px", marginLeft: "5px", marginRight: "5px" }}
-              />
-              <input 
-                type="text" 
-                placeholder="left" 
-                value={teacherInfoPosition.left}
-                onChange={(e) => {
-                  console.log("선생님 left 변경:", e.target.value);
-                  const newPosition = {
-                    ...teacherInfoPosition,
-                    left: e.target.value,
-                  };
-                  setTeacherInfoPosition(newPosition);
-                  // localStorage에 저장
-                  localStorage.setItem(
-                    "teacherInfoPosition",
-                    JSON.stringify(newPosition),
-                  );
-                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty(
-                    "--teacher-right",
-                    e.target.value,
-                  );
-                }}
-                style={{ width: "60px", marginLeft: "5px" }}
-              />
-            </div>
-            <div style={{ marginBottom: "10px" }}>
-              <label>학생 정보:</label>
-              <input 
-                type="text" 
-                placeholder="bottom" 
-                value={studentInfoPosition.bottom}
-                onChange={(e) => {
-                  console.log("학생 bottom 변경:", e.target.value);
-                  const newPosition = {
-                    ...studentInfoPosition,
-                    bottom: e.target.value,
-                  };
-                  setStudentInfoPosition(newPosition);
-                  // localStorage에 저장
-                  localStorage.setItem(
-                    "studentInfoPosition",
-                    JSON.stringify(newPosition),
-                  );
-                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty(
-                    "--student-top",
-                    e.target.value,
-                  );
-                }}
-                style={{ width: "60px", marginLeft: "5px", marginRight: "5px" }}
-              />
-              <input 
-                type="text" 
-                placeholder="right" 
-                value={studentInfoPosition.right}
-                onChange={(e) => {
-                  const newPosition = {
-                    ...studentInfoPosition,
-                    right: e.target.value,
-                  };
-                  setStudentInfoPosition(newPosition);
-                  // localStorage에 저장
-                  localStorage.setItem(
-                    "studentInfoPosition",
-                    JSON.stringify(newPosition),
-                  );
-                  // 데스크톱 레이아웃 CSS 변수도 즉시 업데이트
-                  document.documentElement.style.setProperty(
-                    "--student-left",
-                    e.target.value,
-                  );
-                }}
-                style={{ width: "60px", marginLeft: "5px" }}
-              />
-            </div>
-            <div
-              style={{ marginBottom: "10px", fontSize: "10px", opacity: 0.8 }}
-            >
-              데스크톱: T(
-              {document.documentElement.style.getPropertyValue(
-                "--teacher-top",
-              ) || "80px"}
-              ,{" "}
-              {document.documentElement.style.getPropertyValue(
-                "--teacher-right",
-              ) || "50px"}
-              ) S(
-              {document.documentElement.style.getPropertyValue(
-                "--student-top",
-              ) || "970px"}
-              ,{" "}
-              {document.documentElement.style.getPropertyValue(
-                "--student-left",
-              ) || "20px"}
-              )
-            </div>
-            <button 
-              onClick={resetInfoPositions}
-              style={{
-                background: "#835eeb",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "11px",
-                marginRight: "5px",
-              }}
-            >
-              기본 위치로
-            </button>
-            <button 
-              onClick={() =>
-                adjustInfoPositions("120px", "250px", "100px", "180px")
-              }
-              style={{
-                background: "#ff6b6b",
-                color: "white",
-                border: "none",
-                padding: "5px 10px",
-                borderRadius: "4px",
-                cursor: "pointer",
-                fontSize: "11px",
-              }}
-            >
-              테스트 위치
-            </button>
-          </div>
-        )}
+
         <div
-          style={{
+              style={{
             position: "relative",
             width: "100%",
             maxWidth: "100%",
@@ -2965,7 +2740,6 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               alignItems: "center",
               justifyContent: "center",
               pointerEvents: "none",
-              marginBottom: "50px",
             }}
           >
             <WebAppTitle style={{ pointerEvents: "auto" }}>
@@ -3370,13 +3144,24 @@ const WebAppContent = styled.div`
   position: relative;
   width: 100%;
   padding: 0;
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   
-  --scale: clamp(0.5, 100vw / 1920, 1);   /* 핵심! */
-
   /* 기준 높이(1200) × scale 만큼 섹션 높이 확보 */
-  min-height: calc(1200px * var(--scale));
+  min-height: 1200px;
+  
+  /* 작은 화면에서 여백 추가 */
+  @media (max-width: 1200px) {
+    padding: 0 20px;
+    min-height: 1000px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 15px;
+    min-height: 800px;
+  }
 `;
 
 /* 1920 기준의 단일 캔버스. 내부는 모두 px 좌표 */
@@ -3384,9 +3169,40 @@ const MockupCanvas = styled.div`
   width: 1920px;
   height: 1200px;
   position: relative;
-  transform-origin: top center;
-  transform: scale(var(--scale));
+  transform-origin: center center;
   overflow: visible;
+  margin-left: -100px; /* 왼쪽으로 100px 이동 */
+  
+  /* 부드러운 축소를 위한 transition */
+  transition: transform 0.3s ease-out;
+  
+  /* 기본 스케일 (1920px 기준) */
+  transform: scale(1);
+  
+  /* 1600px 이하에서 축소 시작 */
+  @media (max-width: 1600px) {
+    transform: scale(0.9);
+  }
+  
+  /* 1200px 이하에서 더 축소 */
+  @media (max-width: 1200px) {
+    transform: scale(0.75);
+  }
+  
+  /* 900px 이하에서 대폭 축소 */
+  @media (max-width: 900px) {
+    transform: scale(0.6);
+  }
+  
+  /* 768px 이하에서 최대 축소 */
+  @media (max-width: 768px) {
+    transform: scale(0.5);
+  }
+  
+  /* 600px 이하에서 모바일 최적화 */
+  @media (max-width: 600px) {
+    transform: scale(0.4);
+  }
 `;
 
 /* 스테이지(목업 배치) + 오버레이(텍스트/칩) */
@@ -3568,28 +3384,28 @@ const WebAppInfoTextContainer = styled.div`
 const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
   top: 80px;
-  right: 50px;
+  right: 350px;
   z-index: 21; /* 텍스트 레이어 상위 */
   max-width: 280px;
   overflow: visible;
   
   @media (max-width: 1600px) {
-    right: max(calc(50px + (1600px - 100vw) / 2), 20px);
+    right: 300px;
     max-width: 260px;
   }
   
   @media (max-width: 1400px) {
-    right: max(calc(50px + (1400px - 100vw) / 2), 30px);
+    right: 250px;
     max-width: 240px;
   }
   
   @media (max-width: 1280px) {
-    right: max(calc(50px + (1280px - 100vw) / 2), 40px);
+    right: 200px;
     max-width: 220px;
   }
   
   @media (max-width: 1024px) {
-    right: max(calc(50px + (1024px - 100vw) / 2), 50px);
+    right: 150px;
     max-width: 200px;
   }
   
@@ -3603,29 +3419,29 @@ const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
 /* 학생용 모바일 앱 정보 텍스트 컨테이너 */
 const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
-  top: 970px;
-  left: 20px;
+    top: 770px;
+    left: 370px;
   z-index: 21; /* 텍스트 레이어 상위 */
   max-width: 280px;
   overflow: visible;
   
   @media (max-width: 1600px) {
-    left: max(calc(20px + (1600px - 100vw) / 2), 20px);
+      left: 320px;
     max-width: 260px;
   }
   
   @media (max-width: 1400px) {
-    left: max(calc(20px + (1400px - 100vw) / 2), 30px);
+      left: 270px;
     max-width: 240px;
   }
   
   @media (max-width: 1280px) {
-    left: max(calc(20px + (1280px - 100vw) / 2), 40px);
+      left: 220px;
     max-width: 220px;
   }
   
   @media (max-width: 1024px) {
-    left: max(calc(20px + (1024px - 100vw) / 2), 50px);
+      left: 170px;
     max-width: 200px;
   }
   
