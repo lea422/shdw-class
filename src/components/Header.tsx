@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FiMenu, FiX } from 'react-icons/fi';
 
-const HeaderContainer = styled.header<{ $hasWhiteBackground?: boolean }>`
+const HeaderContainer = styled.header<{ $hasWhiteBackground?: boolean; $isScrolled?: boolean }>`
   width: 100%;
   height: 60px;
   position: fixed;
@@ -11,16 +11,21 @@ const HeaderContainer = styled.header<{ $hasWhiteBackground?: boolean }>`
   left: 0;
   right: 0;
   z-index: 1000;
-  background: ${props => props.$hasWhiteBackground ? '#ffffff !important' : 'transparent'};
+  background: ${props => {
+    if (props.$hasWhiteBackground) return '#ffffff !important';
+    if (props.$isScrolled) return '#ffffff !important';
+    return 'rgba(255, 255, 255, 0.1)';
+  }};
   box-sizing: border-box;
-  backdrop-filter: ${props => props.$hasWhiteBackground ? 'none !important' : 'blur(8px)'};
-  box-shadow: ${props => props.$hasWhiteBackground ? '0 2px 8px rgba(0, 0, 0, 0.08) !important' : 'none'};
-  
-  ${props => props.$hasWhiteBackground && css`
-    background: #ffffff !important;
-    backdrop-filter: none !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  `}
+  backdrop-filter: ${props => {
+    if (props.$hasWhiteBackground || props.$isScrolled) return 'none !important';
+    return 'blur(8px)';
+  }};
+  box-shadow: ${props => {
+    if (props.$hasWhiteBackground || props.$isScrolled) return '0 2px 8px rgba(0, 0, 0, 0.08) !important';
+    return 'none';
+  }};
+  transition: all 0.3s ease;
   
   @media (max-width: 768px) {
     height: 48px;
@@ -518,7 +523,8 @@ const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 800);
+      // 히어로 섹션 높이를 지나면 화이트 배경으로 변경 (약 600px)
+      setIsScrolled(window.scrollY > 600);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -572,6 +578,7 @@ const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
   return (
     <HeaderContainer 
       $hasWhiteBackground={hasWhiteBackground}
+      $isScrolled={isScrolled}
       style={hasWhiteBackground ? {
         background: '#ffffff !important',
         backdropFilter: 'none !important',

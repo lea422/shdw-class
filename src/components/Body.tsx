@@ -77,10 +77,10 @@ const arrowGlow = keyframes`
 
 const arrowBreathe = keyframes`
   0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.05);
+    transform: translate(-50%, -50%) rotate(var(--rotation)) scale(1.05);
   }
 `;
 
@@ -2713,46 +2713,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         </DemoContent>
       </DemoSection>
 
-      {/* 웹-앱 연동 섹션 */}
-      <WebAppSection ref={webAppSectionRef}>
-        {/* 위치 조정 컨트롤 패널 (개발용) */}
-
-        <div
-              style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "100%",
-            margin: "0",
-            padding: 0,
-            minHeight: "900px",
-            zIndex: 2,
-          }}
-        >
-              <WebAppHeader
-                style={{
-              position: "relative",
-                  top: 0,
-                  left: 0,
-              width: "100%",
-                  zIndex: 3,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              pointerEvents: "none",
-            }}
-          >
-            <WebAppTitle style={{ pointerEvents: "auto" }}>
-              웹-앱 연동으로 완성되는
-              <br />
-              교육 시스템
+      {/* 웹앱연동 섹션 */}
+      <WebAppSection>
+        <WebAppHeader>
+          <WebAppTitle>
+            웹-앱 연동으로 완성되는
+            <br />
+            교육 시스템
                 </WebAppTitle>
-            <WebAppSubtitle style={{ pointerEvents: "auto" }}>
-              교사는 웹에서 관리하고, 학생은 앱으로 학습하는
-              <br />
-              완벽한 교육 생태계를 경험하세요
+          <WebAppSubtitle>
+            교사는 웹에서 관리하고, 학생은 앱으로 학습하는
+            <br />
+            완벽한 교육 생태계를 경험하세요
                 </WebAppSubtitle>
-            <WebAppButtons style={{ pointerEvents: "auto" }}>
+                <WebAppButtons>
                   <WebAppButton 
                     href="https://play.google.com/store/apps/details?id=com.iammathking&pcampaignid=web_share"
                     target="_blank"
@@ -2775,203 +2749,211 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   </WebAppButton>
                 </WebAppButtons>
               </WebAppHeader>
-          <WebAppContent>
-            {/* 단일 스케일 캔버스 (1920×1200) */}
-            <div
-                  style={{
-                width: "100%",
-                maxWidth: "100%",
-                margin: "0 auto",
-                display: "flex",
-                justifyContent: "center",
-                overflow: "hidden",
-              }}
-            >
-                  <MockupCanvas>
-                      <MockupStage>
-                  {/* 실시간 동기화 텍스트 */}
-                        <AnimatedSyncText isVisible={syncTextVisible}>
-                    실시간
-                    <br />
-                    동기화
-                        </AnimatedSyncText>
-                        
-                  {/* 원형화살표 백그라운드 */}
-                        <AnimatedArrow isVisible={arrowVisible} />
-                        
-                  {/* 가운데 WebApp 통합 목업 */}
-                        <CenterMockupElement $isVisible={mockupsVisible[2]}>
-                          <img 
-                            src="/WebApp/integration/3.svg" 
-                            alt="모바일 앱 인터페이스"
-                            style={{ 
-                        width: "auto",
-                        height: "550px",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        filter:
-                          "drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))",
-                            }}
-                            onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "scale(1.03)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 12px 24px rgba(131, 94, 235, 0.25))";
-                            }}
-                            onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 8px 16px rgba(131, 94, 235, 0.12))";
-                            }}
-                          />
-                        </CenterMockupElement>
-
-                  {/* 선생님용 웹사이트 목업 */}
-                        <TeacherMockupElement
-                          $isVisible={mockupsVisible[0]}
-                    onClick={() =>
-                      window.open("https://class.iammathking.com", "_blank")
-                    }
-                        >
-                          <img 
-                            src="/WebApp/integration/1.svg" 
-                            alt="선생님용 웹사이트"
-                            style={{ 
-                        width: "auto",
-                        height: "550px",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        filter:
-                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))",
-                            }}
-                            onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "scale(1.03)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))";
-                            }}
-                            onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))";
-                            }}
-                          />
-                        </TeacherMockupElement>
-
-                  {/* 데스크톱 모니터 목업 */}
-                        <DesktopMockupElement
-                          $isVisible={mockupsVisible[3]}
-                    onClick={() =>
-                      window.open("https://class.iammathking.com", "_blank")
-                    }
-                        >
-                          <img 
-                            src="/WebApp/integration/4.svg" 
-                            alt="데스크톱 관리 시스템"
-                            style={{ 
-                        width: "auto",
-                        height: "650px",
-                        cursor: "pointer",
-                        transition: "all 0.3s ease",
-                        filter:
-                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))",
-                            }}
-                            onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "scale(1.02)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 15px 30px rgba(131, 94, 235, 0.3))";
-                            }}
-                            onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                        e.currentTarget.style.filter =
-                          "drop-shadow(0 10px 20px rgba(131, 94, 235, 0.15))";
-                            }}
-                          />
-                        </DesktopMockupElement>
-                      </MockupStage>
-
-                    {/* 웹앱 정보 텍스트 (캔버스 내부에서 함께 스케일) */}
-                      <CanvasOverlay>
-                  <TeacherInfoContainer style={{ pointerEvents: "auto" }}>
-                    <WebAppInfoBlock
-                      style={{ alignItems: "flex-end", textAlign: "right" }}
-                    >
-                          <WebAppInfoTitle 
-                            isVisible={teacherChipsVisible[0]} 
-                            delay={0}
-                            style={{ fontSize: 28 }}
-                          >
-                            선생님용 웹사이트
-                          </WebAppInfoTitle>
-                      <WebAppInfoChips style={{ alignItems: "flex-end" }}>
-                        <WebAppInfoChip
-                          isVisible={teacherChipsVisible[0]}
-                          delay={0}
-                        >
-                          클래스 및 학생관리
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={teacherChipsVisible[1]}
-                          delay={150}
-                        >
-                          맞춤형 문제 출제
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={teacherChipsVisible[2]}
-                          delay={300}
-                        >
-                          AI 채점 결과 확인
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={teacherChipsVisible[3]}
-                          delay={450}
-                        >
-                          실력 분석 리포트
-                        </WebAppInfoChip>
-                          </WebAppInfoChips>
-                        </WebAppInfoBlock>
-                      </TeacherInfoContainer>
-                      
-                  <StudentInfoContainer style={{ pointerEvents: "auto" }}>
-                        <WebAppInfoBlock>
-                          <WebAppInfoTitle 
-                            isVisible={studentChipsVisible[0]} 
-                            delay={0}
-                            style={{ fontSize: 28 }}
-                          >
-                            학생용 모바일 앱
-                          </WebAppInfoTitle>
-                          <WebAppInfoChips>
-                        <WebAppInfoChip
-                          isVisible={studentChipsVisible[0]}
-                          delay={0}
-                        >
-                          맞춤형 학습지 수신
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={studentChipsVisible[1]}
-                          delay={150}
-                        >
-                          AI 힌트 시스템
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={studentChipsVisible[2]}
-                          delay={300}
-                        >
-                          실시간 채점 피드백
-                        </WebAppInfoChip>
-                        <WebAppInfoChip
-                          isVisible={studentChipsVisible[3]}
-                          delay={450}
-                        >
-                          장학금 알림 수신
-                        </WebAppInfoChip>
-                          </WebAppInfoChips>
-                        </WebAppInfoBlock>
-                      </StudentInfoContainer>
-                      </CanvasOverlay>
-                  </MockupCanvas>
+        
+                      <WebAppContent>
+          {/* 2440px 이미지 중앙 배치 */}
+                <div style={{
+            display: "flex", 
+            justifyContent: "center", 
+            alignItems: "center",
+            width: "100%"
+          }}>
+                          {/* 데스크탑 버전: 2440px 이미지 */}
+              <img 
+                src="/Body/mockups/2440px.svg" 
+                alt="웹앱 연동 시스템"
+                style={{ 
+                  width: "2440px", // 원본 크기 유지
+                  height: "auto",
+                  transition: "width 0.3s ease", // 부드러운 크기 변화
+                }}
+                className="responsive-svg-image desktop-webapp"
+              />
+              
+              {/* 모바일용 3번 이미지 */}
+              <img 
+                src="/WebApp/integration/3.svg" 
+                alt="학생용 모바일 앱"
+                style={{ 
+                  width: "120px",
+                  height: "auto",
+                  position: "absolute",
+                  left: "20%",
+                  top: "calc(50% + 200px)",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  display: "none"
+                }}
+                className="mobile-webapp-3"
+              />
+              
+              {/* 모바일용 4번 이미지 */}
+              <img 
+                src="/WebApp/integration/4.svg" 
+                alt="웹앱 연동 시스템 상세"
+                style={{ 
+                  width: "200px",
+                  height: "auto",
+                  position: "absolute",
+                  right: "20%",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  zIndex: 10,
+                  display: "none"
+                }}
+                className="mobile-webapp-4"
+              />
+              
+              {/* 화살표 이미지 */}
+              <img 
+                src="/WebApp/integration/arrow.svg" 
+                alt="실시간 동기화"
+                style={{ 
+                  width: "100px",
+                  height: "auto",
+                  position: "absolute",
+                  left: "50%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                  zIndex: 5,
+                  display: "none"
+                }}
+                className="webapp-arrow"
+              />
+              
+              {/* 실시간 동기화 텍스트 */}
+              <div 
+                style={{ 
+                  position: "absolute",
+                  left: "50%",
+                  top: "60%",
+                  transform: "translateX(-50%)",
+                  color: "#835EEB",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                  zIndex: 5,
+                  display: "none"
+                }}
+                className="sync-text"
+              >
+                실시간 동기화
+              </div>
+              
+              {/* 학생용 정보 컨테이너 */}
+              <div 
+                style={{ 
+                  position: "absolute",
+                  left: "15%",
+                  top: "20%",
+                  zIndex: 15,
+                  display: "none"
+                }}
+                className="student-info"
+              >
+                <div style={{ 
+                  color: "#835EEB", 
+                  fontSize: "18px", 
+                  fontWeight: "bold",
+                  marginBottom: "12px"
+                }}>
+                  학생용 모바일 앱
+                </div>
+                <div style={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  gap: "8px"
+                }}>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    맞춤형 학습지 수신
+                  </div>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    AI 힌트 시스템
+                  </div>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    실시간 채점 피드백
+                  </div>
+                </div>
+              </div>
+              
+              {/* 선생님용 정보 컨테이너 */}
+              <div 
+                style={{ 
+                  position: "absolute",
+                  right: "15%",
+                  top: "20%",
+                  zIndex: 15,
+                  display: "none"
+                }}
+                className="mobile-webapp-4"
+              >
+                <div style={{ 
+                  color: "#835EEB", 
+                  fontSize: "18px", 
+                  fontWeight: "bold",
+                  marginBottom: "12px"
+                }}>
+                  선생님용 웹사이트
+                </div>
+                <div style={{ 
+                  display: "flex", 
+                  flexDirection: "column", 
+                  gap: "8px"
+                }}>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    클래스 및 학생 관리
+                  </div>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    맞춤형 문제 출제
+                  </div>
+                  <div style={{ 
+                    backgroundColor: "#835EEB", 
+                    color: "white", 
+                    padding: "6px 12px", 
+                    borderRadius: "20px",
+                    fontSize: "12px",
+                    textAlign: "center"
+                  }}>
+                    AI 채점 결과 확인
+                  </div>
+                </div>
+              </div>
                 </div>
               </WebAppContent>
-        </div>
       </WebAppSection>
 
       {/* 현장의 목소리 섹션 */}
@@ -3057,170 +3039,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   );
 });
 
-const WebAppSection = styled.section`
-  width: 100%;
-  background: white;
-  padding: 150px 0 30px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 128px;
-  overflow: hidden;
-  scroll-snap-align: start;
-  position: relative;
-  
-  @media (max-width: 1024px) {
-    padding: 140px 0 30px 0;
-  }
-  @media (max-width: 600px) {
-    padding: 120px 0 30px 0;
-  }
-`;
+/* 웹앱연동 섹션 관련 styled components 제거됨 */
 
-const WebAppHeader = styled.div`
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 40px;
-`;
-
-const WebAppTitle = styled.div`
-  width: 100%;
-  max-width: 800px;
-  text-align: center;
-  color: #33373B;
-  font-size: 48px;
-  font-family: Pretendard;
-  font-weight: 700;
-  line-height: 67.2px;
-`;
-
-const WebAppSubtitle = styled.div`
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-  color: #858585;
-  font-size: 28px;
-  font-family: Pretendard;
-  font-weight: 400;
-  line-height: 36.4px;
-`;
-
-const WebAppButtons = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-`;
-
-const WebAppButton = styled.a`
-  padding: 8px 16px;
-  background: #33373B;
-  border-radius: 40px;
-  width: 140px;
-  display: flex;
-  gap: 4px;
-  justify-content: center;
-  align-items: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all .3s ease;
-  &:hover { background: #835EEB; transform: translateY(-2px); }
-`;
-
-const WebAppIcon = styled.div`
-  width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;
-  img{ width:100%; height:100%; object-fit:contain; }
-`;
-
-const WebAppButtonText = styled.div`
-  color: #fff; font-size: 14px; font-weight: 700; line-height: 21px;
-`;
-
-const WebAppContent = styled.div`
-  position: relative;
-  width: 100%;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  
-  /* 기준 높이(1200) × scale 만큼 섹션 높이 확보 */
-  min-height: 1200px;
-  
-  /* 작은 화면에서 여백 추가 */
-  @media (max-width: 1200px) {
-    padding: 0 20px;
-    min-height: 1000px;
-  }
-  
-  @media (max-width: 768px) {
-    padding: 0 15px;
-    min-height: 800px;
-  }
-`;
-
-/* 1920 기준의 단일 캔버스. 내부는 모두 px 좌표 */
-const MockupCanvas = styled.div`
-  width: 1920px;
-  height: 1200px;
-  position: relative;
-  transform-origin: center center;
-  overflow: visible;
-  margin-left: -100px; /* 왼쪽으로 100px 이동 */
-  
-  /* 부드러운 축소를 위한 transition */
-  transition: transform 0.3s ease-out;
-  
-  /* 기본 스케일 (1920px 기준) */
-  transform: scale(1);
-  
-  /* 1600px 이하에서 축소 시작 */
-  @media (max-width: 1600px) {
-    transform: scale(0.9);
-  }
-  
-  /* 1200px 이하에서 더 축소 */
-  @media (max-width: 1200px) {
-    transform: scale(0.75);
-  }
-  
-  /* 900px 이하에서 대폭 축소 */
-  @media (max-width: 900px) {
-    transform: scale(0.6);
-  }
-  
-  /* 768px 이하에서 최대 축소 */
-  @media (max-width: 768px) {
-    transform: scale(0.5);
-  }
-  
-  /* 600px 이하에서 모바일 최적화 */
-  @media (max-width: 600px) {
-    transform: scale(0.4);
-  }
-`;
-
-/* 스테이지(목업 배치) + 오버레이(텍스트/칩) */
-const MockupStage = styled.div`
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1200px;
-  overflow: visible;
-`;
-const CanvasOverlay = styled.div`
-  position: absolute;
-  inset: 0;
-  width: 1920px;
-  height: 1200px;
-  pointer-events: none;
-  overflow: visible;
-`;
+/* 캔버스 구조 제거됨 - 더 간단한 레이아웃으로 변경 */
 
 /* 제거: 사용하지 않는 MockupGroupsRow, MockupGroupCol */
 
@@ -3239,22 +3060,24 @@ const AnimatedMockupElement = styled.div<{ $isVisible: boolean; delay?: number }
 
 /* px 고정 좌표들 — 같은 프레임에서 함께 스케일됨 */
 const CenterMockupElement = styled(AnimatedMockupElement)`
-  top: 350px; left: 50%; transform: translate(-50%, 0);
+  top: 350px;
+  left: 50%;
+  transform: translate(-50%, 0);
   z-index: 11;
 `;
 
 const TeacherMockupElement = styled(AnimatedMockupElement)`
-  top: 145px; left: 40px; z-index: 12; transform-origin: left center;
+  top: 145px; left: -160px; z-index: 12; transform-origin: left center;
 `;
 
 const DesktopMockupElement = styled(AnimatedMockupElement)`
-  top: 430px; right: -200px; z-index: 11; transform-origin: right center;
+  top: 430px; right: -400px; z-index: 11; transform-origin: right center;
 `;
 
 const AnimatedSyncText = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 220px;
-  left: calc(50% - 2px);
+  left: 50%;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -3332,10 +3155,11 @@ const AnimatedArrow = styled.div<{ isVisible: boolean }>`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 500px;
-  z-index: -1;
+  --rotation: 0deg; /* CSS 변수로 회전 각도 제어 */
+  transform: translate(-50%, -50%) rotate(var(--rotation));
+  width: 300px; /* 기본 크기 감소: 400px → 300px (-100px) */
+  height: 500px; /* 기본 크기 감소: 600px → 500px (-100px) */
+  z-index: 5; /* 기본 z-index를 5로 변경하여 더 나은 레이어링 */
   opacity: ${(props) => (props.isVisible ? 1 : 0)};
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   
@@ -3348,24 +3172,24 @@ const AnimatedArrow = styled.div<{ isVisible: boolean }>`
     ${arrowBreathe} 3s ease-in-out infinite,
     ${arrowGlow} 2s ease-in-out infinite;
   
-  /* 데스크탑에서 더 크게 표시 및 30도 회전 */
+  /* 데스크탑에서 더 크게 표시 및 145도 회전 */
   @media (min-width: 820px) {
-    width: 400px;
-    height: 600px;
+    width: 400px; /* 크기 감소: 500px → 400px (-100px) */
+    height: 600px; /* 크기 감소: 700px → 600px (-100px) */
     z-index: 5; /* 데스크탑에서는 목업 이미지 뒤에 배치 */
-    transform: translate(-50%, -50%) rotate(30deg); /* 30도 회전 */
+    --rotation: 145deg; /* 125도 → 145도 회전 */
   }
   
   @media (min-width: 1200px) {
-    width: 500px;
-    height: 700px;
-    transform: translate(-50%, -50%) rotate(30deg); /* 30도 회전 */
+    width: 500px; /* 크기 감소: 600px → 500px (-100px) */
+    height: 700px; /* 크기 감소: 800px → 700px (-100px) */
+    --rotation: 145deg; /* 125도 → 145도 회전 */
   }
   
   @media (min-width: 1600px) {
-    width: 600px;
-    height: 800px;
-    transform: translate(-50%, -50%) rotate(30deg); /* 30도 회전 */
+    width: 600px; /* 크기 감소: 700px → 600px (-100px) */
+    height: 800px; /* 크기 감소: 900px → 800px (-100px) */
+    --rotation: 145deg; /* 125도 → 145도 회전 */
   }
 `;
 
@@ -3384,28 +3208,28 @@ const WebAppInfoTextContainer = styled.div`
 const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
   top: 80px;
-  right: 350px;
+  right: 250px; /* 오른쪽으로 100px 이동: 350px → 250px */
   z-index: 21; /* 텍스트 레이어 상위 */
   max-width: 280px;
   overflow: visible;
   
   @media (max-width: 1600px) {
-    right: 300px;
+    right: 200px; /* 300px → 200px */
     max-width: 260px;
   }
   
   @media (max-width: 1400px) {
-    right: 250px;
+    right: 150px; /* 250px → 150px */
     max-width: 240px;
   }
   
   @media (max-width: 1280px) {
-    right: 200px;
+    right: 100px; /* 200px → 100px */
     max-width: 220px;
   }
   
   @media (max-width: 1024px) {
-    right: 150px;
+    right: 50px; /* 150px → 50px */
     max-width: 200px;
   }
   
@@ -3420,28 +3244,28 @@ const TeacherInfoContainer = styled(WebAppInfoTextContainer)`
 const StudentInfoContainer = styled(WebAppInfoTextContainer)`
   position: absolute;
     top: 770px;
-    left: 370px;
+    left: 470px; /* 왼쪽으로 100px 이동: 370px → 470px */
   z-index: 21; /* 텍스트 레이어 상위 */
   max-width: 280px;
   overflow: visible;
   
   @media (max-width: 1600px) {
-      left: 320px;
+      left: 420px; /* 320px → 420px */
     max-width: 260px;
   }
   
   @media (max-width: 1400px) {
-      left: 270px;
+      left: 370px; /* 270px → 370px */
     max-width: 240px;
   }
   
   @media (max-width: 1280px) {
-      left: 220px;
+      left: 320px; /* 220px → 320px */
     max-width: 220px;
   }
   
   @media (max-width: 1024px) {
-      left: 170px;
+      left: 270px; /* 170px → 270px */
     max-width: 200px;
   }
   
@@ -4262,3 +4086,498 @@ const WebAppInfoChip = styled.div<{ isVisible?: boolean; delay?: number }>`
 `;
 
 export default Body;
+
+/* 새로운 웹앱연동 섹션을 위한 styled components */
+
+const WebAppSection = styled.section`
+  width: 100%;
+  background: white;
+  padding: 150px 0 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 80px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  position: relative;
+  
+  @media (max-width: 1024px) {
+    padding: 140px 0 30px 0;
+    gap: 60px;
+  }
+  @media (max-width: 600px) {
+    padding: 120px 0 30px 0;
+    gap: 40px;
+  }
+`;
+
+const WebAppHeader = styled.div`
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 40px;
+`;
+
+const WebAppTitle = styled.div`
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  color: #33373B;
+  font-size: 48px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 67.2px;
+  
+  @media (max-width: 768px) {
+    font-size: 36px;
+    line-height: 50px;
+  }
+  @media (max-width: 480px) {
+    font-size: 28px;
+    line-height: 40px;
+  }
+`;
+
+const WebAppSubtitle = styled.div`
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  color: #858585;
+  font-size: 28px;
+  font-family: Pretendard;
+  font-weight: 400;
+  line-height: 36.4px;
+  
+  @media (max-width: 768px) {
+    font-size: 22px;
+    line-height: 30px;
+  }
+  @media (max-width: 480px) {
+    font-size: 18px;
+    line-height: 26px;
+  }
+`;
+
+const WebAppButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+`;
+
+const WebAppButton = styled.a`
+  padding: 8px 16px;
+  background: #33373B;
+  border-radius: 40px;
+  width: 140px;
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .3s ease;
+  
+  &:hover { 
+    background: #835EEB; 
+    transform: translateY(-2px); 
+  }
+  
+  @media (max-width: 480px) {
+    width: 200px;
+    padding: 12px 20px;
+  }
+`;
+
+const WebAppIcon = styled.div`
+  width: 16px; 
+  height: 16px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  
+  img{ 
+    width:100%; 
+    height:100%; 
+    object-fit:contain; 
+  }
+`;
+
+const WebAppButtonText = styled.div`
+  color: #fff; 
+  font-size: 14px; 
+  font-weight: 700; 
+  line-height: 21px;
+`;
+
+const WebAppContent = styled.div`
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  
+  /* 2440px 이미지 반응형 처리 */
+  .responsive-svg-image {
+    width: 2440px !important; /* 원본 크기 유지 */
+    height: auto !important;
+    transition: all 0.3s ease !important;
+  }
+  
+  /* 1280px에서 1200px까지: 1280px 이미지 사용 (크롭 상태 유지) */
+  @media (max-width: 1280px) {
+    .responsive-svg-image {
+      content: url("/Body/mockups/1280px.svg") !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+  
+  /* 768px에서 1200px까지: 768px 이미지 사용 (크롭 상태 유지) */
+  @media (max-width: 1200px) {
+    .responsive-svg-image {
+      content: url("/Body/mockups/768px.svg") !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  }
+  
+  /* 768px 미만: 모바일 버전 - 3,4번 이미지와 텍스트+칩 표시 */
+  @media (max-width: 767px) {
+    /* 모바일 섹션 높이 설정 */
+    min-height: 600px !important;
+    
+    .responsive-svg-image {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    /* 모바일에서 학생용/선생님용 텍스트와 칩 표시 */
+    .mobile-webapp-3,
+    .mobile-webapp-4,
+    .webapp-arrow,
+    .sync-text,
+    .student-info,
+    .teacher-info {
+      display: block !important;
+    }
+    
+    /* 데스크탑 이미지 숨김 */
+    .desktop-webapp {
+      display: none !important;
+    }
+    
+    /* 모바일용 이미지 크기 조정 */
+    .mobile-webapp-3 {
+      width: 180px !important;
+      left: 15% !important;
+    }
+    
+    .mobile-webapp-4 {
+      width: 250px !important;
+      right: 15% !important;
+    }
+    
+    .webapp-arrow {
+      width: 120px !important;
+    }
+    
+    .sync-text {
+      font-size: 20px !important;
+      top: 65% !important;
+    }
+    
+    /* 학생용/선생님용 정보 컨테이너 조정 */
+    .student-info,
+    .teacher-info {
+      font-size: 16px !important;
+    }
+    
+    .student-info > div > div,
+    .teacher-info > div > div {
+      font-size: 11px !important;
+      padding: 5px 10px !important;
+    }
+  }
+  
+  /* 425px 이하: 더 작은 화면 최적화 */
+  @media (max-width: 425px) {
+    /* 모바일 섹션 높이 설정 */
+    min-height: 600px !important;
+    
+    .mobile-webapp-3 {
+      width: 150px !important;
+      left: 10% !important;
+    }
+    
+    .mobile-webapp-4 {
+      width: 200px !important;
+      right: 10% !important;
+    }
+    
+    .webapp-arrow {
+      width: 100px !important;
+    }
+    
+    .sync-text {
+      font-size: 18px !important;
+      top: 70% !important;
+    }
+    
+    /* 학생용/선생님용 정보 컨테이너 더 작게 조정 */
+    .student-info,
+    .teacher-info {
+      font-size: 14px !important;
+    }
+    
+    .student-info > div > div,
+    .teacher-info > div > div {
+      font-size: 10px !important;
+      padding: 4px 8px !important;
+    }
+  }
+  
+  /* 320px 이하: 초소형 모바일 - 3번 이미지 사용 */
+  @media (max-width: 320px) {
+    /* 모바일 섹션 높이 설정 */
+    min-height: 600px !important;
+    
+    .responsive-svg-image {
+      content: url("/WebApp/integration/3.svg") !important; /* 학생용 모바일 앱 */
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    
+    .mobile-webapp-3 {
+      width: 120px !important;
+      left: 5% !important;
+    }
+    
+    .mobile-webapp-4 {
+      width: 160px !important;
+      right: 5% !important;
+    }
+    
+    .webapp-arrow {
+      width: 80px !important;
+    }
+    
+    .sync-text {
+      font-size: 16px !important;
+      top: 75% !important;
+    }
+    
+    /* 학생용/선생님용 정보 컨테이너 초소형 최적화 */
+    .student-info,
+    .teacher-info {
+      font-size: 12px !important;
+    }
+    
+    .student-info > div > div,
+    .teacher-info > div > div {
+      font-size: 9px !important;
+      padding: 3px 6px !important;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    .responsive-svg-image {
+      max-width: 100% !important;
+    }
+  }
+  @media (max-width: 480px) {
+    padding: 0 12px;
+    .responsive-svg-image {
+      max-width: 100% !important;
+    }
+  }
+`;
+
+const WebAppMockupContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 800px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    height: 600px;
+  }
+  @media (max-width: 480px) {
+    height: 500px;
+  }
+`;
+
+const WebAppSyncText = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #835eeb;
+  font-size: 42px;
+  font-family: "Godo B";
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: -0.5px;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 20;
+  
+  @media (max-width: 768px) {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  @media (max-width: 480px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+`;
+
+const WebAppArrow = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(145deg);
+  width: 300px;
+  height: 500px;
+  background: url("/WebApp/integration/circle.svg") no-repeat center;
+  background-size: contain;
+  z-index: 5;
+  opacity: 0.8;
+  
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 350px;
+  }
+  @media (max-width: 480px) {
+    width: 150px;
+    height: 250px;
+  }
+`;
+
+const WebAppCenterMockup = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11;
+  cursor: pointer;
+  
+  &:hover {
+    z-index: 15;
+  }
+`;
+
+const WebAppTeacherMockup = styled.div`
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  z-index: 12;
+  cursor: pointer;
+  
+  &:hover {
+    z-index: 15;
+  }
+  
+  @media (max-width: 768px) {
+    top: 15%;
+    left: 5%;
+  }
+  @media (max-width: 480px) {
+    top: 10%;
+    left: 2%;
+  }
+`;
+
+const WebAppDesktopMockup = styled.div`
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  z-index: 11;
+  cursor: pointer;
+  
+  &:hover {
+    z-index: 15;
+  }
+  
+  @media (max-width: 768px) {
+    bottom: 5%;
+    right: 5%;
+  }
+  @media (max-width: 480px) {
+    bottom: 2%;
+    right: 2%;
+  }
+`;
+
+const WebAppTeacherInfo = styled.div`
+  position: absolute;
+  top: 80px;
+  right: 250px;
+  z-index: 21;
+  max-width: 280px;
+  
+  @media (max-width: 768px) {
+    top: 60px;
+    right: 20px;
+    max-width: 200px;
+  }
+  @media (max-width: 480px) {
+    top: 40px;
+    right: 10px;
+    max-width: 180px;
+  }
+`;
+
+const WebAppStudentInfo = styled.div`
+  position: absolute;
+  bottom: 80px;
+  left: 250px;
+  z-index: 21;
+  max-width: 280px;
+  
+  @media (max-width: 768px) {
+    bottom: 60px;
+    left: 20px;
+    max-width: 200px;
+  }
+  @media (max-width: 480px) {
+    bottom: 40px;
+    left: 10px;
+    max-width: 180px;
+  }
+`;
+
+const WebAppCanvas = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(131, 94, 235, 0.05), rgba(107, 75, 196, 0.05));
+  
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  
+  @media (max-width: 768px) {
+    border-radius: 12px;
+  }
+  @media (max-width: 480px) {
+    border-radius: 8px;
+  }
+`;

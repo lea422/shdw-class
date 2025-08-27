@@ -129,6 +129,9 @@ function App() {
             "pluginKey": "d436ea9d-ae03-4aca-868d-35d43f45e4ca",
           });
         }
+
+
+
       } catch (error) {
         console.error("Channel.io 초기화 실패:", error);
       }
