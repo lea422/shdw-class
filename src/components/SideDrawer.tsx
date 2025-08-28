@@ -22,8 +22,19 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
 
   @media (max-width: 768px) {
-    bottom: 5rem;
-    right: 1.5rem;
+    bottom: calc(4rem + 45px);
+    right: calc(1.25rem + 16px);
+  }
+  
+  @media (max-width: 480px) {
+    bottom: calc(3.5rem + 47px + 3px);
+    right: calc(1rem + 17px + 6px);
+  }
+  
+  @media (max-width: 375px) {
+    bottom: calc(3rem + 60px);
+    right: calc(0.75rem + 32px);
+    transform: scale(1.1);
   }
 `;
 
@@ -47,10 +58,89 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    width: 4rem;
-    height: 4rem;
-    top: -1.5rem;
-    left: -2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    top: -1.25rem;
+    left: -1.75rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 3.25rem;
+    height: 3.25rem;
+    top: -1rem;
+    left: -1.5rem;
+  }
+  
+  @media (max-width: 375px) {
+    width: 3rem;
+    height: 3rem;
+    top: -0.875rem;
+    left: -1.25rem;
+  }
+  
+  img {
+    width: 60px;
+    height: 60px;
+    transition: all 0.3s ease;
+    
+    @media (max-width: 768px) {
+      width: 56px;
+      height: 56px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 52px;
+      height: 52px;
+    }
+    
+    @media (max-width: 375px) {
+      width: 48px;
+      height: 48px;
+    }
+  }
+  
+  svg {
+    width: 28px;
+    height: 28px;
+    transition: all 0.3s ease;
+    
+    @media (max-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
+    
+    @media (max-width: 480px) {
+      width: 22px;
+      height: 22px;
+    }
+    
+    @media (max-width: 375px) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`;
+
+const FloatingButtonText = styled.span`
+  white-space: nowrap;
+  position: relative;
+  top: -25px;
+  left: -30px;
+  transition: all 0.3s ease;
+  
+  @media (max-width: 768px) {
+    top: -20px;
+    left: -25px;
+  }
+  
+  @media (max-width: 480px) {
+    top: -18px;
+    left: -22px;
+  }
+  
+  @media (max-width: 375px) {
+    top: -16px;
+    left: -20px;
   }
 `;
 
@@ -93,14 +183,28 @@ const FloatingButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 8rem;
-    height: 3.5rem;
-    font-size: 0.9625rem;
+    width: 7.5rem;
+    height: 3.25rem;
+    font-size: 0.875rem;
     gap: 0.125rem;
     
     &:hover {
       // 호버 효과 제거
     }
+  }
+  
+  @media (max-width: 480px) {
+    width: 7rem;
+    height: 3rem;
+    font-size: 0.8125rem;
+    gap: 0.125rem;
+  }
+  
+  @media (max-width: 375px) {
+    width: 6.5rem;
+    height: 2.75rem;
+    font-size: 0.75rem;
+    gap: 0.125rem;
   }
 `;
 
@@ -267,14 +371,17 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     <>
       <FloatingButtonContainer $isVisible={true} style={{ zIndex: isOpen ? 1003 : 1000 }}>
         <FloatingButton onClick={isOpen ? handleClose : handleOpen} aria-label={isOpen ? "무료체험 신청 닫기" : "무료체험 신청 열기"}>
-          <span style={{ whiteSpace: 'nowrap', position: 'relative', top: '-25px', left: '-30px' }}>무료체험신청</span>
+          <FloatingButtonText>무료체험신청</FloatingButtonText>
           <ChatIcon $isClose={isOpen}>
             {isOpen ? (
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M18 6L6 18M6 6L18 18" stroke="#835EEB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             ) : (
-              <img src="/Assets/icon/무료체험.svg" alt="무료체험" style={{ width: "60px", height: "60px" }} />
+              <img 
+                src="/Assets/icon/무료체험.svg" 
+                alt="무료체험" 
+              />
             )}
           </ChatIcon>
         </FloatingButton>

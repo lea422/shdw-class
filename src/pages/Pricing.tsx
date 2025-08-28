@@ -325,14 +325,14 @@ const BannerButton = styled.button`
 // 새로운 AI 기술 비교 섹션 스타일
 const NewComparisonSection = styled.section`
   width: 100%;
-  padding: 130px 0;
+  padding: 130px 0 200px 0;
   background: #F3F4F6;
   overflow: hidden;
 `;
 
 const NewComparisonContainer = styled.div`
   width: 1280px;
-  height: 1116px;
+  height: 1400px;
   position: relative;
   background: #F3F4F6;
   overflow: hidden;
@@ -363,7 +363,7 @@ const NewComparisonHeader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 12.80px;
+  gap: 50px;
   display: inline-flex;
   transform: translateX(-50%);
 
@@ -389,50 +389,78 @@ const NewComparisonHeader = styled.div`
 `;
 
 const NewComparisonTitle = styled.h2`
-  text-align: center;
   color: #33373B;
-  font-size: 28.16px;
-  font-family: Pretendard;
+  font-size: 48px;
+  font-family: 'Pretendard', sans-serif;
   font-weight: 700;
-  line-height: 36.61px;
+  line-height: 62.4px;
   word-wrap: break-word;
   margin: 0;
-
-  @media (max-width: 768px) {
-    font-size: 24px;
-    line-height: 32px;
+  text-align: center;
+  
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
   }
   
-  @media (max-width: 425px) {
-    font-size: 22px;
-    line-height: 28px;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    line-height: 46px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
+  }
+  @media (max-width: 768px) {
+    font-size: 28px;
+    line-height: 36px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 
 const NewComparisonSubtitle = styled.p`
-  text-align: center;
   color: #8D94A0;
-  font-size: 16px;
-  font-family: Pretendard;
-  font-weight: 500;
-  line-height: 24px;
+  font-size: 24px;
+  font-family: 'Pretendard', sans-serif;
+  font-weight: 400;
+  line-height: 36px;
   word-wrap: break-word;
   margin: 0;
-
-  @media (max-width: 768px) {
-    font-size: 14px;
-    line-height: 20px;
+  text-align: center;
+  
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
   }
   
-  @media (max-width: 425px) {
-    font-size: 13px;
-    line-height: 18px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+    line-height: 30px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
+  }
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 
 const NewComparisonTable = styled.div`
   left: 50%;
-  top: 300px;
+  top: 400px;
   position: absolute;
   background: #F3F4F6;
   flex-direction: column;
@@ -2329,46 +2357,69 @@ const TrialStepDescriptionLine = styled.div`
 `;
 
 const TrialSectionTitle = styled.div`
-  width: 100%;
-  text-align: center;
   color: #1E2231;
   font-size: 48px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 700;
   line-height: 62.4px;
   word-wrap: break-word;
-  margin-bottom: 20px;
   
-  @media (max-width: 768px) {
-    font-size: 32px;
-    line-height: 42px;
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
   }
-  @media (max-width: 480px) {
+  
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    line-height: 46px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
+  }
+  @media (max-width: 768px) {
     font-size: 28px;
     line-height: 36px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 
 const TrialSectionSubtitle = styled.div`
-  width: 100%;
-  text-align: center;
   color: #7A828D;
-  font-size: 18px;
+  font-size: 24px;
   font-family: 'Pretendard', sans-serif;
   font-weight: 400;
-  line-height: 27px;
+  line-height: 36px;
   word-wrap: break-word;
   margin-bottom: 30px;
   
+  /* 데스크탑에서는 줄바꿈 없이 한 줄로 표시 */
+  br {
+    display: none;
+  }
+  
+  @media (max-width: 1024px) {
+    font-size: 20px;
+    line-height: 30px;
+    
+    /* 태블릿에서는 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
+  }
   @media (max-width: 768px) {
     font-size: 16px;
     line-height: 24px;
-    margin-bottom: 20px;
-  }
-  @media (max-width: 480px) {
-    font-size: 14px;
-    line-height: 21px;
-    margin-bottom: 15px;
+    
+    /* 모바일에서도 줄바꿈 표시 */
+    br {
+      display: inline;
+    }
   }
 `;
 

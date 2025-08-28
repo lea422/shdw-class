@@ -1463,6 +1463,9 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return saved ? JSON.parse(saved) : false;
   });
   
+  // 웹앱 연동 이미지 상태 관리
+  const [webappImageSrc, setWebappImageSrc] = useState("/Body/mockups/2440px.svg");
+  
   // 칩과 텍스트 위치 조정 함수
   const adjustInfoPositions = (
     teacherTop: string,
@@ -1684,6 +1687,31 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     }, 4000); // 4초마다 다음 슬라이드로
     return () => clearInterval(interval);
   }, [testimonials.length]);
+
+  // 웹앱 연동 이미지 반응형 처리
+  useEffect(() => {
+    const updateWebappImage = () => {
+      const width = window.innerWidth;
+      if (width > 1280) {
+        setWebappImageSrc("/Body/mockups/2440px.svg");
+      } else if (width > 1200) {
+        setWebappImageSrc("/Body/mockups/1280px.svg");
+      } else if (width > 768) {
+        setWebappImageSrc("/Body/mockups/768px.svg");
+      } else if (width > 425) {
+        setWebappImageSrc("/Body/mockups/425px.svg");
+      } else {
+        setWebappImageSrc("/Body/mockups/2440px.svg"); // 기본값
+      }
+    };
+
+    updateWebappImage();
+    window.addEventListener("resize", updateWebappImage);
+    
+    return () => {
+      window.removeEventListener("resize", updateWebappImage);
+    };
+  }, []);
 
   // 웹앱 연동 섹션 칩 및 목업 애니메이션
   useEffect(() => {
@@ -2758,14 +2786,14 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
             alignItems: "center",
             width: "100%"
           }}>
-                          {/* 데스크탑 버전: 2440px 이미지 */}
+                          {/* 데스크탑 버전: 반응형 이미지 */}
               <img 
-                src="/Body/mockups/2440px.svg" 
+                src={webappImageSrc}
                 alt="웹앱 연동 시스템"
                 style={{ 
-                  width: "2440px", // 원본 크기 유지
+                  width: "2440px",
                   height: "auto",
-                  transition: "width 0.3s ease", // 부드러운 크기 변화
+                  transition: "all 0.3s ease", // 부드러운 크기 변화
                 }}
                 className="responsive-svg-image desktop-webapp"
               />
@@ -2922,6 +2950,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   }}>
                     실시간 채점 피드백
                   </div>
+                  <div style={{ 
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "left",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
+                  }}>
+                    학습 진도 추적
+                  </div>
                 </div>
               </div>
               
@@ -2993,6 +3035,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                     whiteSpace: "nowrap"
                   }}>
                     AI 채점 결과 확인
+                  </div>
+                  <div style={{ 
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "right",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
+                  }}>
+                    성과 분석 리포트
                   </div>
                 </div>
               </div>
@@ -4211,7 +4267,7 @@ const WebAppButtons = styled.div`
   align-items: center;
   gap: 12px;
   
-  @media (max-width: 480px) {
+  @media (max-width: 425px) {
     flex-direction: column;
     gap: 16px;
   }
@@ -4235,9 +4291,9 @@ const WebAppButton = styled.a`
     transform: translateY(-2px); 
   }
   
-  @media (max-width: 480px) {
-    width: 200px;
-    padding: 12px 20px;
+  @media (max-width: 425px) {
+    width: 140px;
+    padding: 8px 16px;
   }
 `;
 
@@ -4266,30 +4322,35 @@ const WebAppContent = styled.div`
   position: relative;
   width: 100%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   
-  /* 2440px 이미지 반응형 처리 */
+  /* 2440px 이미지 반응형 처리 - 1280px 이상에서 기본 사용 */
   .responsive-svg-image {
-    width: 2440px !important; /* 원본 크기 유지 */
+    width: 2440px !important; /* 정사이즈 유지 */
+    max-width: none !important;
     height: auto !important;
     transition: all 0.3s ease !important;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
   }
   
   /* 1280px에서 1200px까지: 1280px 이미지 사용 (크롭 상태 유지) */
   @media (max-width: 1280px) {
     .responsive-svg-image {
-      content: url("/Body/mockups/1280px.svg") !important;
-      width: 100% !important;
-      max-width: 100% !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
     }
   }
   
   /* 768px에서 1200px까지: 768px 이미지 사용 (크롭 상태 유지) */
   @media (max-width: 1200px) {
     .responsive-svg-image {
-      content: url("/Body/mockups/768px.svg") !important;
-      width: 100% !important;
-      max-width: 100% !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
     }
   }
   
@@ -4298,10 +4359,12 @@ const WebAppContent = styled.div`
     /* 425px.svg 이미지 표시 */
     .tablet-425px-image {
       display: block !important;
-      width: 100% !important;
-      max-width: 600px !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
       height: auto !important;
       z-index: 10 !important;
+      margin-left: calc(-50vw + 50%);
+      margin-right: calc(-50vw + 50%);
     }
     
     /* 목업 이미지들 완전 숨김 - 더 강력한 규칙 적용 */
@@ -4366,58 +4429,122 @@ const WebAppContent = styled.div`
       width: 180px !important; /* 1.2배 크기 증가 (150px * 1.2 = 180px) */
       left: calc(10% - 30px) !important; /* 왼쪽으로 30px 이동 */
       top: calc(50% - 280px) !important; /* 위로 300px 더 올림 (기존 calc(50% - 230px)에서 50px 위로) */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .mobile-webapp-3:hover {
+      transform: scale(1.1) translateY(-5px) !important;
+      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
     }
     
     .mobile-webapp-4 {
       width: 600px !important; /* 3배 크기 증가 (200px * 3 = 600px) */
       right: calc(10% - 360px) !important; /* 오른쪽으로 360px 이동 */
-      top: calc(50% + 200px) !important; /* 아래쪽에 배치 */
+      top: calc(50% + 180px) !important; /* 아래쪽에 배치 (위로 20px 이동) */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .mobile-webapp-4:hover {
+      transform: scale(1.05) translateY(5px) !important;
+      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
     }
     
     .webapp-arrow {
       width: 300px !important; /* 3배 크기 증가 (100px * 3 = 300px) */
+      top: calc(50% - 25px) !important; /* 위로 25px 이동 */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .webapp-arrow:hover {
+      transform: scale(1.15) !important;
+      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.4)) !important;
     }
     
     .sync-text {
       width: auto !important;
       height: auto !important;
       max-width: 200px !important;
-      top: calc(50% - 50px) !important; /* 정중앙에서 50px 위로 (20px + 30px) */
+      top: calc(50% - 60px) !important; /* 정중앙에서 60px 위로 (위로 10px 추가 이동) */
       left: 50% !important;
       transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
       z-index: 5 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .sync-text:hover {
+      transform: translate(-50%, -50%) scale(1.1) !important;
+      color: #6b46c1 !important;
+      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.3)) !important;
     }
     
     /* 학생용/선생님용 정보 컨테이너 조정 - 데스크탑과 동일한 디자인 */
     .student-info,
     .teacher-info {
-      font-size: 20px !important;
+      font-size: 30px !important; /* 사이즈 더 축소 */
       font-weight: 700 !important;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      margin-bottom: 8px !important;
     }
     
     .student-info > div > div,
     .teacher-info > div > div {
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      padding: 10px 18px !important;
+      font-size: 16px !important; /* 사이즈 더 축소 */
+      font-weight: 600 !important;
+      padding: 6px 16px !important; /* 패딩 더 축소 */
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
       background-color: #f3effd !important;
-      color: #33373b !important;
-      border-radius: 999px !important;
+      color: #835eeb !important; /* 데스크탑 버전과 동일한 색상 */
+      border-radius: 14px !important; /* 모서리 더 축소 */
       box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      width: max-content !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      text-align: center !important;
+    }
+    
+    .student-info:hover,
+    .teacher-info:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      filter: drop-shadow(0 8px 25px rgba(131, 94, 235, 0.2)) !important;
+    }
+    
+    .student-info > div > div:hover,
+    .teacher-info > div > div:hover {
+      background-color: #e8e0fc !important;
+      box-shadow: 0 4px 12px rgba(131, 94, 235, 0.2) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+    
+    .student-info:active,
+    .teacher-info:active {
+      transform: translateY(-1px) scale(1.01) !important;
+      transition: all 0.1s ease !important;
+    }
+    
+    .student-info > div > div:active,
+    .teacher-info > div > div:active {
+      transform: translateY(0px) scale(1.02) !important;
+      transition: all 0.1s ease !important;
     }
   }
   
 
   
-  /* 320px 이하: 초소형 모바일 - 3번 이미지 사용 */
+  /* 320px 이하: 425px 레이아웃과 동일하게 적용 */
   @media (max-width: 320px) {
     /* 모바일 섹션 높이 설정 */
     min-height: 900px !important;
     
     .responsive-svg-image {
-      content: url("/WebApp/integration/3.svg") !important; /* 학생용 모바일 앱 */
       width: 100% !important;
       max-width: 100% !important;
     }
@@ -4427,61 +4554,152 @@ const WebAppContent = styled.div`
       display: none !important;
     }
     
+    /* 모바일에서 학생용/선생님용 텍스트와 칩 표시 */
+    .mobile-webapp-3,
+    .mobile-webapp-4,
+    .webapp-arrow,
+    .sync-text,
+    .student-info,
+    .teacher-info {
+      display: block !important;
+    }
+    
+    /* 데스크탑 이미지 숨김 */
+    .desktop-webapp {
+      display: none !important;
+    }
+    
+    /* 모바일용 이미지 크기 조정 - 425px와 동일 */
     .mobile-webapp-3 {
-      width: 120px !important;
-      left: 5% !important;
-      top: calc(50% - 80px) !important; /* 위쪽에 배치 (320px 이하에서는 조금 작게) */
+      width: 180px !important; /* 425px와 동일 */
+      left: calc(10% - 60px) !important; /* 왼쪽으로 30px 추가 이동 */
+      top: calc(50% - 280px) !important; /* 425px와 동일 */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .mobile-webapp-3:hover {
+      transform: scale(1.1) translateY(-5px) !important;
+      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
     }
     
     .mobile-webapp-4 {
-      width: 160px !important;
-      right: 5% !important;
-      top: calc(50% + 80px) !important; /* 아래쪽에 배치 (320px 이하에서는 조금 작게) */
+      width: 600px !important; /* 425px와 동일 */
+      right: calc(10% - 390px) !important; /* 오른쪽으로 60px 이동 */
+      top: calc(50% + 180px) !important; /* 425px와 동일 */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .mobile-webapp-4:hover {
+      transform: scale(1.05) translateY(5px) !important;
+      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
     }
     
     .webapp-arrow {
-      width: 240px !important; /* 3배 크기 증가 (80px * 3 = 240px) */
+      width: 300px !important; /* 425px와 동일 */
+      top: calc(50% - 25px) !important; /* 425px와 동일 */
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+    }
+    
+    .webapp-arrow:hover {
+      transform: scale(1.15) !important;
+      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.4)) !important;
     }
     
     .sync-text {
       width: auto !important;
       height: auto !important;
-      max-width: 180px !important; /* 320px 이하에서는 조금 작게 */
-      top: calc(50% - 50px) !important; /* 정중앙에서 50px 위로 (20px + 30px) */
+      max-width: 200px !important; /* 425px와 동일 */
+      top: calc(50% - 60px) !important; /* 425px와 동일 */
       left: 50% !important;
       transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
       z-index: 5 !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
     }
     
-    /* 학생용/선생님용 정보 컨테이너 초소형 최적화 - 데스크탑과 동일한 디자인 유지 */
-    .student-info,
-    .teacher-info {
-      font-size: 20px !important;
+    .sync-text:hover {
+      transform: translate(-50%, -50%) scale(1.1) !important;
+      color: #6b46c1 !important;
+      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.3)) !important;
+    }
+    
+    /* 학생용/선생님용 정보 컨테이너 - 425px와 동일한 디자인 */
+    .student-info {
+      font-size: 30px !important; /* 425px와 동일 */
       font-weight: 700 !important;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      margin-bottom: 8px !important;
+      right: calc(15% - 30px) !important; /* 오른쪽으로 20px 이동 */
+    }
+    
+    .teacher-info {
+      font-size: 30px !important; /* 425px와 동일 */
+      font-weight: 700 !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      cursor: pointer !important;
+      transition: all 0.3s ease !important;
+      margin-bottom: 8px !important;
+      left: calc(15% - 70px) !important; /* 왼쪽으로 20px 이동 */
     }
     
     .student-info > div > div,
     .teacher-info > div > div {
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      padding: 10px 18px !important;
+      font-size: 16px !important; /* 425px와 동일 */
+      font-weight: 600 !important;
+      padding: 6px 16px !important; /* 425px와 동일 */
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
       background-color: #f3effd !important;
-      color: #33373b !important;
-      border-radius: 999px !important;
+      color: #835eeb !important; /* 데스크탑 버전과 동일한 색상 */
+      border-radius: 14px !important; /* 425px와 동일 */
       box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      width: max-content !important;
+      max-width: 100% !important;
+      white-space: normal !important;
+      word-wrap: break-word !important;
+      text-align: center !important;
+    }
+    
+    .student-info:hover,
+    .teacher-info:hover {
+      transform: translateY(-3px) scale(1.02) !important;
+      filter: drop-shadow(0 8px 25px rgba(131, 94, 235, 0.2)) !important;
+    }
+    
+    .student-info > div > div:hover,
+    .teacher-info > div > div:hover {
+      background-color: #e8e0fc !important;
+      box-shadow: 0 4px 12px rgba(131, 94, 235, 0.2) !important;
+      transform: translateY(-2px) scale(1.05) !important;
+    }
+    
+    .student-info:active,
+    .teacher-info:active {
+      transform: translateY(-1px) scale(1.01) !important;
+      transition: all 0.1s ease !important;
+    }
+    
+    .student-info > div > div:active,
+    .teacher-info > div > div:active {
+      transform: translateY(0px) scale(1.02) !important;
+      transition: all 0.1s ease !important;
     }
   }
   
   @media (max-width: 768px) {
-    padding: 0 16px;
+    padding: 0;
     .responsive-svg-image {
       max-width: 100% !important;
     }
   }
   @media (max-width: 480px) {
-    padding: 0 12px;
+    padding: 0;
     .responsive-svg-image {
       max-width: 100% !important;
     }
