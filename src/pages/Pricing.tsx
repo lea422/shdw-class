@@ -28,6 +28,18 @@ const TopBanner = styled.div<{ isVisible: boolean }>`
     padding-right: 20px;
   }
   
+  @media (max-width: 1024px) {
+    padding-left: 15px;
+    padding-right: 15px;
+    gap: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+  }
+  
   @media (max-width: 768px) {
     display: none; /* 데스크탑 띠배너는 모바일에서 숨김 */
   }
@@ -50,6 +62,14 @@ const MobileTopBanner = styled.div<{ isVisible: boolean }>`
   transform: ${props => props.isVisible ? 'translateY(0)' : 'translateY(-100%)'};
   transition: transform 0.3s ease-in-out;
   
+  @media (max-width: 480px) {
+    padding: 3px 8px; /* 매우 작은 화면에서는 패딩을 더 줄임 */
+  }
+  
+  @media (max-width: 320px) {
+    padding: 2px 5px; /* 320px 이하에서는 패딩을 최소화 */
+  }
+  
   @media (min-width: 769px) {
     display: none; /* 데스크탑에서는 숨김 */
   }
@@ -62,6 +82,11 @@ const MobileBannerLogo = styled.div`
   gap: 3.33px;
   display: inline-flex;
   margin-bottom: 0px;
+  
+  @media (max-width: 320px) {
+    width: auto; /* 320px 이하에서는 너비 자동 조정 */
+    gap: 2px; /* 간격 줄임 */
+  }
 `;
 
 const MobileBannerLogoText = styled.div<{ fontFamily?: string }>`
@@ -73,7 +98,28 @@ const MobileBannerLogoText = styled.div<{ fontFamily?: string }>`
   font-family: ${props => props.fontFamily || 'Pretendard'};
   font-weight: ${props => props.fontFamily === 'Godo M' || props.fontFamily === 'Playwrite CA' ? '400' : '600'};
   line-height: 16px;
+
   word-wrap: break-word;
+  
+  @media (max-width: 320px) {
+    font-size: 9px; /* 320px 이하에서는 폰트 크기 줄임 */
+    line-height: 14px;
+  }
+`;
+
+const PricingCardsContainer = styled.div`
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  display: inline-flex;
+  flex-direction: row;
+  position: relative;
+  z-index: 998;
+
+  @media (max-width: 1280px) {
+    flex-direction: column;
+    gap: 20px;
+  }
 `;
 
 const MobileBannerCenter = styled.div`
@@ -81,6 +127,15 @@ const MobileBannerCenter = styled.div`
   align-items: center;
   width: 100%;
   display: flex;
+  
+  @media (max-width: 480px) {
+    gap: 8px; /* 매우 작은 화면에서는 간격을 줄임 */
+  }
+  
+  @media (max-width: 320px) {
+    justify-content: flex-start; /* 320px 이하에서는 왼쪽 정렬로 변경 */
+    gap: 30px; /* 텍스트와 버튼 간격 30px 유지 */
+  }
 `;
 
 const MobileBannerTextArea = styled.div`
@@ -88,6 +143,15 @@ const MobileBannerTextArea = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
+  
+  @media (max-width: 480px) {
+    gap: 2px; /* 매우 작은 화면에서는 간격을 더 줄임 */
+  }
+  
+  @media (max-width: 320px) {
+    gap: 1px; /* 320px 이하에서는 간격을 최소화 */
+    flex-shrink: 1; /* 텍스트 영역이 줄어들 수 있도록 설정 */
+  }
 `;
 
 const MobileBannerMessage = styled.div`
@@ -99,7 +163,7 @@ const MobileBannerMessage = styled.div`
   font-family: Pretendard;
   font-weight: 600;
   line-height: 22.50px;
-  word-wrap: break-word;
+  white-space: nowrap;
 `;
 
 const MobileBannerButton = styled.button`
@@ -119,6 +183,13 @@ const MobileBannerButton = styled.button`
   &:hover {
     background: #333;
   }
+  
+  @media (max-width: 480px) {
+    height: 24px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 12px;
+  }
 `;
 
 const MobileBannerButtonText = styled.div`
@@ -130,7 +201,7 @@ const MobileBannerButtonText = styled.div`
   font-family: Pretendard;
   font-weight: 600;
   line-height: 16px;
-  word-wrap: break-word;
+  white-space: nowrap;
 `;
 
 const BannerLeftLogo = styled.div`
@@ -139,8 +210,12 @@ const BannerLeftLogo = styled.div`
   gap: 5px;
   display: flex;
   
-  @media (max-width: 1200px) {
-    display: none; /* 중간 크기 화면에서는 숨김 */
+  @media (max-width: 1024px) {
+    gap: 3px; /* 1024px 이하에서는 간격을 줄임 */
+  }
+  
+  @media (max-width: 768px) {
+    display: none; /* 모바일에서만 숨김 */
   }
 `;
 
@@ -153,7 +228,12 @@ const BannerLogoText = styled.div<{ fontFamily?: string }>`
   font-family: ${props => props.fontFamily || 'Pretendard'};
   font-weight: ${props => props.fontFamily === 'Godo M' ? '400' : '600'};
   line-height: 24px;
-  word-wrap: break-word;
+  white-space: nowrap;
+  
+  @media (max-width: 1024px) {
+    font-size: 14px; /* 1024px 이하에서는 폰트 크기를 줄임 */
+    line-height: 20px;
+  }
 `;
 
 const BannerCenter = styled.div`
@@ -166,6 +246,16 @@ const BannerCenter = styled.div`
   @media (max-width: 1200px) {
     justify-content: center; /* 중간 크기 화면에서는 중앙 정렬 */
   }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    gap: 10px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 5px; /* 매우 작은 화면에서는 간격을 더 좁힘 */
+  }
 `;
 
 const BannerMessage = styled.div`
@@ -177,7 +267,12 @@ const BannerMessage = styled.div`
   font-family: Pretendard;
   font-weight: 600;
   line-height: 30px;
-  word-wrap: break-word;
+  white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
 `;
 
 const BannerButton = styled.button`
@@ -197,6 +292,20 @@ const BannerButton = styled.button`
   &:hover {
     background: #333;
   }
+  
+  @media (max-width: 768px) {
+    height: 28px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 26px;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 6px;
+  }
 `;
 
 const BannerButtonText = styled.div`
@@ -208,7 +317,12 @@ const BannerButtonText = styled.div`
   font-family: Pretendard;
   font-weight: 600;
   line-height: 18px;
-  word-wrap: break-word;
+  white-space: nowrap;
+  
+  @media (max-width: 768px) {
+    font-size: 11px;
+    line-height: 16px;
+  }
 `;
 
 // 제거: 미사용 BannerRightLogo
@@ -636,33 +750,7 @@ const PricingSubtitle = styled.div<{ isVisible: boolean }>`
   }
 `;
 
-const PricingCardsContainer = styled.div`
-  width: 100%;
-  max-width: 1280px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 30px;
-  
-  /* 1920px 이상에서 위로 30px 이동 */
-  @media (min-width: 1920px) {
-    transform: translateY(-30px);
-  }
-  @media (max-width: 1200px) {
-    width: 100%;
-    flex-direction: column;
-    gap: 30px;
-    padding: 0 20px;
-    align-items: center;
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-    flex-direction: column;
-    padding: 0 20px;
-    gap: 20px;
-    align-items: center;
-  }
-`;
+
 
 const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisible?: boolean }>`
   width: 360px;
@@ -2920,14 +3008,14 @@ const Pricing: React.FC<PricingProps> = () => {
           </PricingSubtitle>
         </PricingHeader>
         
-        <div style={{ justifyContent: "center", alignItems: "center", gap: "30px", display: "inline-flex" }}>
-          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #D1D5DB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+        <PricingCardsContainer>
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #D1D5DB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex", position: "relative", zIndex: 998 }}>
             <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
               <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
                 <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
-                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "27.33px", wordWrap: "break-word", marginLeft: "2px" }}>FREE</div>
-                <a href="https://class.iammathking.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
+                <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 500, lineHeight: "27.33px", wordWrap: "break-word", marginLeft: "-28px" }}>FREE</div>
+                <a href="https://class.iammathking.com/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", position: "relative", zIndex: 1000 }}>
+                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)", position: "relative", zIndex: 1001 }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
                     <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
               </div>
                 </a>
@@ -2973,14 +3061,14 @@ const Pricing: React.FC<PricingProps> = () => {
               </div>
             </div>
           </div>
-          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #835EEB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "white", overflow: "hidden", borderRadius: "20px", outline: "1px #835EEB solid", outlineOffset: "-1px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex", position: "relative", zIndex: 998 }}>
             <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
               <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
                 <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
                 <img src="/Assets/icon/light.svg" alt="light" style={{ width: "44px", height: "44px" }} />
                 <div style={{ flex: 1 }}></div>
-                <a href="https://s.tosspayments.com/BmOuRkqIaKY" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
+                <a href="https://s.tosspayments.com/BmOuRkqIaKY" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", position: "relative", zIndex: 1000 }}>
+                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#E8E1FB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.2)", position: "relative", zIndex: 1000 }} onMouseEnter={(e) => { e.currentTarget.style.background = "#D4C7F7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.3)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#E8E1FB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.2)"; }}>
                     <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
                   </div>
                 </a>
@@ -3034,14 +3122,14 @@ const Pricing: React.FC<PricingProps> = () => {
               </div>
             </div>
           </div>
-          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "#F3EFFD", overflow: "hidden", borderRadius: "20px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex" }}>
+          <div style={{ width: "360px", paddingLeft: "30px", paddingRight: "30px", paddingTop: "20px", paddingBottom: "20px", background: "#F3EFFD", overflow: "hidden", borderRadius: "20px", flexDirection: "column", justifyContent: "flex-start", alignItems: "center", gap: "10px", display: "inline-flex", position: "relative", zIndex: 998 }}>
             <div style={{ width: "300px", paddingTop: "10px", paddingBottom: "10px", overflow: "hidden", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "8px", display: "flex" }}>
-              <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex" }}>
+              <div style={{ alignSelf: "stretch", height: "27px", justifyContent: "space-between", alignItems: "center", display: "inline-flex", position: "relative" }}>
                 <div style={{ justifyContent: "center", display: "flex", flexDirection: "column", color: "#835EEB", fontSize: "27.33px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "27.33px", wordWrap: "break-word" }}>수학대왕</div>
                 <img src="/Assets/icon/light.svg" alt="light" style={{ width: "44px", height: "44px" }} />
-                <div style={{ flex: 1 }}></div>
-                <a href="https://s.tosspayments.com/BmOuQ2TwwtX" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none" }}>
-                  <div style={{ width: "100px", height: "30px", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#835EEB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.3)" }} onMouseEnter={(e) => { e.currentTarget.style.background = "#6B4BC7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.4)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#835EEB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.3)"; }}>
+                <div style={{ flex: 1, pointerEvents: "none" }}></div>
+                <a href="https://s.tosspayments.com/BmOuQ2TwwtX" target="_blank" rel="noopener noreferrer" style={{ textDecoration: "none", position: "relative", zIndex: 1004, display: "block", width: "100px", height: "30px" }}>
+                  <div style={{ width: "100%", height: "100%", paddingLeft: "8.49px", paddingRight: "8.49px", paddingTop: "6.37px", paddingBottom: "6.37px", background: "#835EEB", overflow: "hidden", borderRadius: "10px", justifyContent: "center", alignItems: "center", gap: "9px", display: "flex", cursor: "pointer", transition: "all 0.3s ease", boxShadow: "0 2px 8px rgba(131, 94, 235, 0.3)", position: "relative", zIndex: 1004 }} onMouseEnter={(e) => { e.currentTarget.style.background = "#6B4BC7"; e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 4px 16px rgba(131, 94, 235, 0.4)"; }} onMouseLeave={(e) => { e.currentTarget.style.background = "#835EEB"; e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(131, 94, 235, 0.3)"; }}>
                     <div style={{ textAlign: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#F3EFFD", fontSize: "13px", fontFamily: "Pretendard", fontWeight: 700, lineHeight: "19.50px", wordWrap: "break-word" }}>지금 시작하기</div>
                   </div>
                 </a>
@@ -3097,7 +3185,7 @@ const Pricing: React.FC<PricingProps> = () => {
               </div>
             </div>
           </div>
-        </div>
+        </PricingCardsContainer>
         <ScrollArrow onClick={scrollToTrialSection} aria-label="다음 섹션으로 스크롤">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M7 10L12 15L17 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

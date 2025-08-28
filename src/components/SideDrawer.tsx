@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import ConsultationForm from './ConsultationForm';
 
@@ -15,23 +15,31 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
   bottom: 100px;
   right: 40px;
-  z-index: 9999;
+  z-index: 1000;
   opacity: ${props => props.$isVisible ? 1 : 0};
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
 `;
 
-const ChatIcon = styled.div`
+const ChatIcon = styled.div<{ $isClose?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 55px;
-  height: 55px;
-  background: white;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 60px;
+  height: 60px;
+  background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+      border-radius: ${props => props.$isClose ? '45%' : '50%'};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  top: -25px;
+  left: -30px;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const FloatingButton = styled.button`
@@ -54,7 +62,6 @@ const FloatingButton = styled.button`
 
   &:hover {
     color: #835EEB;
-    transform: translateY(-1px);
   }
 
   &:active {
@@ -80,7 +87,7 @@ const FloatingButton = styled.button`
     gap: 2px;
     
     &:hover {
-      transform: translateY(-1px);
+      // 호버 효과 제거
     }
   }
 `;
@@ -101,9 +108,9 @@ const ModalOverlay = styled.div<{ $isOpen: boolean }>`
 
 const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  bottom: 170px;
-  right: 30px;
-  width: 400px;
+  bottom: 190px;
+  right: 50px;
+  width: 395px;
   max-height: 700px;
   background: white;
   z-index: 1002;
@@ -151,7 +158,7 @@ interface SideDrawerProps {
 }
 
 const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerStateChange }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(isModalOpen);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -178,6 +185,11 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     onDrawerStateChange?.(false);
     document.body.style.overflow = 'auto';
   }, [onDrawerStateChange]);
+
+  // isModalOpen prop 변경 시 isOpen 상태 동기화
+  useEffect(() => {
+    setIsOpen(isModalOpen);
+  }, [isModalOpen]);
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -241,34 +253,39 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
 
   return (
     <>
-      <FloatingButtonContainer $isVisible={true}>
+      <FloatingButtonContainer $isVisible={true} style={{ zIndex: isOpen ? 1003 : 1000 }}>
         <FloatingButton onClick={isOpen ? handleClose : handleOpen} aria-label={isOpen ? "무료체험 신청 닫기" : "무료체험 신청 열기"}>
-          <span style={{ whiteSpace: 'nowrap' }}>무료체험신청</span>
-          <ChatIcon>
+          <span style={{ whiteSpace: 'nowrap', position: 'relative', top: '-25px', left: '-30px' }}>무료체험신청</span>
+          <ChatIcon $isClose={isOpen}>
             {isOpen ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18M6 6L18 18" stroke="#835EEB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 6L6 18M6 6L18 18" stroke="#835EEB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             ) : (
-              <img src="/Assets/icon/free.svg" alt="free" style={{ width: "55px", height: "55px" }} />
+              <img src="/Assets/icon/무료체험.svg" alt="무료체험" style={{ width: "60px", height: "60px" }} />
             )}
           </ChatIcon>
         </FloatingButton>
       </FloatingButtonContainer>
-      <ModalOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
-      <ModalContainer $isOpen={isOpen}>
-        <div style={{ padding: '24px' }}>
-          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '20px' }}>
-            <h2 style={{ margin: 0, color: '#33373B', fontSize: '18px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
-              무료 체험 신청
-            </h2>
-          </div>
-          <p style={{ color: '#6B7280', fontSize: '13px', lineHeight: '1.5', marginBottom: '20px', fontFamily: 'Pretendard, sans-serif' }}>
-            궁금한 점이 있으신가요? 아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
-          </p>
-          <ConsultationForm onClose={handleClose} />
-        </div>
-      </ModalContainer>
+      {isOpen && (
+        <>
+          <ModalOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
+          <ModalContainer $isOpen={isOpen}>
+            <div style={{ padding: '16px 20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '12px' }}>
+                <h2 style={{ margin: 0, color: '#33373B', fontSize: '18px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
+                  무료 체험 신청
+                </h2>
+              </div>
+              <p style={{ color: '#6B7280', fontSize: '13px', lineHeight: '1.4', marginBottom: '12px', fontFamily: 'Pretendard, sans-serif' }}>
+                궁금한 점이 있으신가요?<br />
+                아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
+              </p>
+              <ConsultationForm onClose={handleClose} />
+            </div>
+          </ModalContainer>
+        </>
+      )}
     </>
   );
 };

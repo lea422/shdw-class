@@ -2821,30 +2821,44 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 className="webapp-arrow"
               />
               
-              {/* 실시간 동기화 텍스트 */}
-              <div 
+              {/* 425px.svg 이미지 (426px~767px 구간용) */}
+              <img 
+                src="/Body/mockups/425px.svg"
+                alt="웹앱 연동 시스템 태블릿"
+                style={{ 
+                  width: "100%",
+                  maxWidth: "600px",
+                  height: "auto",
+                  zIndex: 20,
+                  display: "none"
+                }}
+                className="tablet-425px-image"
+              />
+              
+              {/* 실시간 동기화 SVG 이미지 */}
+              <img 
+                src="/WebApp/integration/실시간 동기화.svg"
+                alt="실시간 동기화"
                 style={{ 
                   position: "absolute",
                   left: "50%",
                   top: "60%",
                   transform: "translateX(-50%)",
-                  color: "#835EEB",
-                  fontSize: "24px",
-                  fontWeight: "bold",
+                  width: "auto",
+                  height: "auto",
+                  maxWidth: "200px",
                   zIndex: 5,
                   display: "none"
                 }}
                 className="sync-text"
-              >
-                실시간 동기화
-              </div>
+              />
               
               {/* 학생용 정보 컨테이너 */}
               <div 
                 style={{ 
                   position: "absolute",
-                  left: "15%",
-                  top: "20%",
+                  left: "calc(15% - 50px)",
+                  top: "calc(20% + 400px)",
                   zIndex: 15,
                   display: "none"
                 }}
@@ -2852,44 +2866,59 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               >
                 <div style={{ 
                   color: "#835EEB", 
-                  fontSize: "18px", 
-                  fontWeight: "bold",
-                  marginBottom: "12px"
+                  fontSize: "20px", 
+                  fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                  fontWeight: "700",
+                  marginBottom: "12px",
+                  textAlign: "left"
                 }}>
                   학생용 모바일 앱
                 </div>
                 <div style={{ 
                   display: "flex", 
                   flexDirection: "column", 
-                  gap: "8px"
+                  gap: "8px",
+                  alignItems: "flex-start"
                 }}>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "left",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     맞춤형 학습지 수신
                   </div>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "left",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     AI 힌트 시스템
                   </div>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "left",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     실시간 채점 피드백
                   </div>
@@ -2900,53 +2929,68 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <div 
                 style={{ 
                   position: "absolute",
-                  right: "15%",
-                  top: "20%",
+                  right: "calc(15% - 50px)",
+                  top: "calc(20% - 100px)",
                   zIndex: 15,
                   display: "none"
                 }}
-                className="mobile-webapp-4"
+                className="teacher-info"
               >
                 <div style={{ 
                   color: "#835EEB", 
-                  fontSize: "18px", 
-                  fontWeight: "bold",
-                  marginBottom: "12px"
+                  fontSize: "20px", 
+                  fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                  fontWeight: "700",
+                  marginBottom: "12px",
+                  textAlign: "right"
                 }}>
                   선생님용 웹사이트
                 </div>
                 <div style={{ 
                   display: "flex", 
                   flexDirection: "column", 
-                  gap: "8px"
+                  gap: "8px",
+                  alignItems: "flex-end"
                 }}>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "right",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     클래스 및 학생 관리
                   </div>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "right",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     맞춤형 문제 출제
                   </div>
                   <div style={{ 
-                    backgroundColor: "#835EEB", 
-                    color: "white", 
-                    padding: "6px 12px", 
-                    borderRadius: "20px",
-                    fontSize: "12px",
-                    textAlign: "center"
+                    backgroundColor: "#f3effd", 
+                    color: "#33373b", 
+                    padding: "10px 18px", 
+                    borderRadius: "999px",
+                    fontSize: "14px",
+                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                    fontWeight: "500",
+                    textAlign: "right",
+                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
+                    whiteSpace: "nowrap"
                   }}>
                     AI 채점 결과 확인
                   </div>
@@ -4249,14 +4293,57 @@ const WebAppContent = styled.div`
     }
   }
   
-  /* 768px 미만: 모바일 버전 - 3,4번 이미지와 텍스트+칩 표시 */
-  @media (max-width: 767px) {
+  /* 426px~767px: 425px.svg 이미지 사용 */
+  @media (min-width: 426px) and (max-width: 767px) {
+    /* 425px.svg 이미지 표시 */
+    .tablet-425px-image {
+      display: block !important;
+      width: 100% !important;
+      max-width: 600px !important;
+      height: auto !important;
+      z-index: 10 !important;
+    }
+    
+    /* 목업 이미지들 완전 숨김 - 더 강력한 규칙 적용 */
+    .mobile-webapp-3,
+    .mobile-webapp-4,
+    .webapp-arrow,
+    .sync-text,
+    .student-info,
+    .teacher-info {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      position: absolute !important;
+      left: -9999px !important;
+      top: -9999px !important;
+      z-index: -1 !important;
+    }
+    
+    /* 데스크탑 이미지 숨김 */
+    .desktop-webapp {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+    }
+  }
+  
+  /* 425px 이하: 모바일 버전 - 3,4번 이미지와 텍스트+칩 표시 */
+  @media (max-width: 425px) {
     /* 모바일 섹션 높이 설정 */
-    min-height: 600px !important;
+    min-height: 900px !important;
     
     .responsive-svg-image {
       width: 100% !important;
       max-width: 100% !important;
+    }
+    
+    /* 425px.svg 이미지 숨김 */
+    .tablet-425px-image {
+      display: none !important;
     }
     
     /* 모바일에서 학생용/선생님용 텍스트와 칩 표시 */
@@ -4276,78 +4363,58 @@ const WebAppContent = styled.div`
     
     /* 모바일용 이미지 크기 조정 */
     .mobile-webapp-3 {
-      width: 180px !important;
-      left: 15% !important;
+      width: 180px !important; /* 1.2배 크기 증가 (150px * 1.2 = 180px) */
+      left: calc(10% - 30px) !important; /* 왼쪽으로 30px 이동 */
+      top: calc(50% - 280px) !important; /* 위로 300px 더 올림 (기존 calc(50% - 230px)에서 50px 위로) */
     }
     
     .mobile-webapp-4 {
-      width: 250px !important;
-      right: 15% !important;
+      width: 600px !important; /* 3배 크기 증가 (200px * 3 = 600px) */
+      right: calc(10% - 360px) !important; /* 오른쪽으로 360px 이동 */
+      top: calc(50% + 200px) !important; /* 아래쪽에 배치 */
     }
     
     .webapp-arrow {
-      width: 120px !important;
+      width: 300px !important; /* 3배 크기 증가 (100px * 3 = 300px) */
     }
     
     .sync-text {
-      font-size: 20px !important;
-      top: 65% !important;
+      width: auto !important;
+      height: auto !important;
+      max-width: 200px !important;
+      top: calc(50% - 50px) !important; /* 정중앙에서 50px 위로 (20px + 30px) */
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
+      z-index: 5 !important;
     }
     
-    /* 학생용/선생님용 정보 컨테이너 조정 */
+    /* 학생용/선생님용 정보 컨테이너 조정 - 데스크탑과 동일한 디자인 */
     .student-info,
     .teacher-info {
-      font-size: 16px !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     
     .student-info > div > div,
     .teacher-info > div > div {
-      font-size: 11px !important;
-      padding: 5px 10px !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      padding: 10px 18px !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      background-color: #f3effd !important;
+      color: #33373b !important;
+      border-radius: 999px !important;
+      box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
     }
   }
   
-  /* 425px 이하: 더 작은 화면 최적화 */
-  @media (max-width: 425px) {
-    /* 모바일 섹션 높이 설정 */
-    min-height: 600px !important;
-    
-    .mobile-webapp-3 {
-      width: 150px !important;
-      left: 10% !important;
-    }
-    
-    .mobile-webapp-4 {
-      width: 200px !important;
-      right: 10% !important;
-    }
-    
-    .webapp-arrow {
-      width: 100px !important;
-    }
-    
-    .sync-text {
-      font-size: 18px !important;
-      top: 70% !important;
-    }
-    
-    /* 학생용/선생님용 정보 컨테이너 더 작게 조정 */
-    .student-info,
-    .teacher-info {
-      font-size: 14px !important;
-    }
-    
-    .student-info > div > div,
-    .teacher-info > div > div {
-      font-size: 10px !important;
-      padding: 4px 8px !important;
-    }
-  }
+
   
   /* 320px 이하: 초소형 모바일 - 3번 이미지 사용 */
   @media (max-width: 320px) {
     /* 모바일 섹션 높이 설정 */
-    min-height: 600px !important;
+    min-height: 900px !important;
     
     .responsive-svg-image {
       content: url("/WebApp/integration/3.svg") !important; /* 학생용 모바일 앱 */
@@ -4355,35 +4422,55 @@ const WebAppContent = styled.div`
       max-width: 100% !important;
     }
     
+    /* 425px.svg 이미지 숨김 */
+    .tablet-425px-image {
+      display: none !important;
+    }
+    
     .mobile-webapp-3 {
       width: 120px !important;
       left: 5% !important;
+      top: calc(50% - 80px) !important; /* 위쪽에 배치 (320px 이하에서는 조금 작게) */
     }
     
     .mobile-webapp-4 {
       width: 160px !important;
       right: 5% !important;
+      top: calc(50% + 80px) !important; /* 아래쪽에 배치 (320px 이하에서는 조금 작게) */
     }
     
     .webapp-arrow {
-      width: 80px !important;
+      width: 240px !important; /* 3배 크기 증가 (80px * 3 = 240px) */
     }
     
     .sync-text {
-      font-size: 16px !important;
-      top: 75% !important;
+      width: auto !important;
+      height: auto !important;
+      max-width: 180px !important; /* 320px 이하에서는 조금 작게 */
+      top: calc(50% - 50px) !important; /* 정중앙에서 50px 위로 (20px + 30px) */
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
+      z-index: 5 !important;
     }
     
-    /* 학생용/선생님용 정보 컨테이너 초소형 최적화 */
+    /* 학생용/선생님용 정보 컨테이너 초소형 최적화 - 데스크탑과 동일한 디자인 유지 */
     .student-info,
     .teacher-info {
-      font-size: 12px !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     
     .student-info > div > div,
     .teacher-info > div > div {
-      font-size: 9px !important;
-      padding: 3px 6px !important;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      padding: 10px 18px !important;
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
+      background-color: #f3effd !important;
+      color: #33373b !important;
+      border-radius: 999px !important;
+      box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
     }
   }
   

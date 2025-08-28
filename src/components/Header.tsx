@@ -12,17 +12,17 @@ const HeaderContainer = styled.header<{ $hasWhiteBackground?: boolean; $isScroll
   right: 0;
   z-index: 1000;
   background: ${props => {
-    if (props.$hasWhiteBackground) return '#ffffff !important';
-    if (props.$isScrolled) return '#ffffff !important';
+    if (props.$hasWhiteBackground) return '#ffffff';
+    if (props.$isScrolled) return '#ffffff';
     return 'rgba(255, 255, 255, 0.1)';
   }};
   box-sizing: border-box;
   backdrop-filter: ${props => {
-    if (props.$hasWhiteBackground || props.$isScrolled) return 'none !important';
+    if (props.$hasWhiteBackground || props.$isScrolled) return 'none';
     return 'blur(8px)';
   }};
   box-shadow: ${props => {
-    if (props.$hasWhiteBackground || props.$isScrolled) return '0 2px 8px rgba(0, 0, 0, 0.08) !important';
+    if (props.$hasWhiteBackground || props.$isScrolled) return '0 2px 8px rgba(0, 0, 0, 0.08)';
     return 'none';
   }};
   transition: all 0.3s ease;
@@ -577,12 +577,18 @@ const Header: React.FC<HeaderProps> = ({ hasWhiteBackground = false }) => {
 
   return (
     <HeaderContainer 
-      $hasWhiteBackground={hasWhiteBackground}
+      $hasWhiteBackground={hasWhiteBackground || location.pathname === '/pricing'}
       $isScrolled={isScrolled}
-      style={hasWhiteBackground ? {
-        background: '#ffffff !important',
-        backdropFilter: 'none !important',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08) !important'
+      style={location.pathname === '/pricing' ? {
+        background: '#ffffff',
+        backdropFilter: 'none',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+        opacity: 1,
+        visibility: 'visible'
+      } : hasWhiteBackground ? {
+        background: '#ffffff',
+        backdropFilter: 'none',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
       } : {}}
     >
       <HeaderInner>
