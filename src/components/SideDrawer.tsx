@@ -13,13 +13,18 @@ declare global {
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
-  bottom: 100px;
-  right: 40px;
+  bottom: 6.25rem;
+  right: 2.5rem;
   z-index: 1000;
   opacity: ${props => props.$isVisible ? 1 : 0};
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
+
+  @media (max-width: 768px) {
+    bottom: 5rem;
+    right: 1.5rem;
+  }
 `;
 
 const ChatIcon = styled.div<{ $isClose?: boolean }>`
@@ -27,18 +32,25 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 60px;
-  height: 60px;
+  width: 3.75rem;
+  height: 3.75rem;
   background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-      border-radius: ${props => props.$isClose ? '45%' : '50%'};
+  border-radius: ${props => props.$isClose ? '45%' : '50%'};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   position: relative;
-  top: -25px;
-  left: -30px;
+  top: -1.5625rem;
+  left: -1.875rem;
   transition: box-shadow 0.3s ease;
 
   &:hover {
     box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+  }
+
+  @media (max-width: 768px) {
+    width: 4rem;
+    height: 4rem;
+    top: -1.5rem;
+    left: -2rem;
   }
 `;
 
@@ -46,18 +58,18 @@ const FloatingButton = styled.button`
   background: none;
   border: none;
   color: #33373B;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   font-family: 'Pretendard', sans-serif;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.5rem;
   padding: 0;
   position: relative;
-  width: 120px;
-  height: 48px;
+  width: 7.5rem;
+  height: 3rem;
   justify-content: space-between;
 
   &:hover {
@@ -81,10 +93,10 @@ const FloatingButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 120px;
-    height: 48px;
-    font-size: 15.4px;
-    gap: 2px;
+    width: 8rem;
+    height: 3.5rem;
+    font-size: 0.9625rem;
+    gap: 0.125rem;
     
     &:hover {
       // 호버 효과 제거
@@ -108,16 +120,16 @@ const ModalOverlay = styled.div<{ $isOpen: boolean }>`
 
 const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  bottom: 190px;
-  right: 50px;
-  width: 395px;
-  max-height: 700px;
+  bottom: 11.875rem;
+  right: 3.125rem;
+  width: 24.6875rem;
+  max-height: 43.75rem;
   background: white;
   z-index: 1002;
   opacity: ${props => props.$isOpen ? 1 : 0};
-  transform: ${props => props.$isOpen ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(20px)'};
+  transform: ${props => props.$isOpen ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(1.25rem)'};
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  border-radius: 20px;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -127,19 +139,19 @@ const ModalContainer = styled.div<{ $isOpen: boolean }>`
   &::after {
     content: '';
     position: absolute;
-    bottom: -8px;
-    right: 20px;
+    bottom: -0.5rem;
+    right: 1.25rem;
     width: 0;
     height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 8px solid white;
+    border-left: 0.5rem solid transparent;
+    border-right: 0.5rem solid transparent;
+    border-top: 0.5rem solid white;
   }
 
   @media (max-width: 768px) {
-    width: 360px;
-    right: 20px;
-    bottom: 150px;
+    width: 22.5rem;
+    right: 1.25rem;
+    bottom: 9.375rem;
     max-height: 80vh;
   }
 `;

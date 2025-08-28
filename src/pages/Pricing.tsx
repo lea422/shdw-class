@@ -111,14 +111,36 @@ const PricingCardsContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 30px;
-  display: inline-flex;
+  display: flex;
   flex-direction: row;
   position: relative;
   z-index: 998;
+  width: 100%;
 
   @media (max-width: 1280px) {
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  @media (max-width: 425px) {
+    gap: 10px;
+    padding: 0 20px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 `;
 
@@ -297,14 +319,480 @@ const BannerButton = styled.button`
     height: 28px;
     padding-left: 16px;
     padding-right: 16px;
-    border-radius: 8px;
+  }
+`;
+
+// 새로운 AI 기술 비교 섹션 스타일
+const NewComparisonSection = styled.section`
+  width: 100%;
+  padding: 130px 0;
+  background: #F3F4F6;
+  overflow: hidden;
+`;
+
+const NewComparisonContainer = styled.div`
+  width: 1280px;
+  height: 1116px;
+  position: relative;
+  background: #F3F4F6;
+  overflow: hidden;
+  margin: 0 auto;
+
+  @media (max-width: 1280px) {
+    width: 100%;
+    height: auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
-  @media (max-width: 480px) {
-    height: 26px;
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
+  
+  @media (max-width: 425px) {
+    padding: 0 10px;
+  }
+`;
+
+const NewComparisonHeader = styled.div`
+  left: 50%;
+  top: 64px;
+  position: absolute;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 12.80px;
+  display: inline-flex;
+  transform: translateX(-50%);
+
+  @media (max-width: 1280px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    text-align: center;
+    margin-bottom: 90px;
+    transform: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  @media (max-width: 768px) {
+    margin-bottom: 70px;
+  }
+  
+  @media (max-width: 425px) {
+    margin-bottom: 60px;
+  }
+`;
+
+const NewComparisonTitle = styled.h2`
+  text-align: center;
+  color: #33373B;
+  font-size: 28.16px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 36.61px;
+  word-wrap: break-word;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 24px;
+    line-height: 32px;
+  }
+  
+  @media (max-width: 425px) {
+    font-size: 22px;
+    line-height: 28px;
+  }
+`;
+
+const NewComparisonSubtitle = styled.p`
+  text-align: center;
+  color: #8D94A0;
+  font-size: 16px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 24px;
+  word-wrap: break-word;
+  margin: 0;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  @media (max-width: 425px) {
+    font-size: 13px;
+    line-height: 18px;
+  }
+`;
+
+const NewComparisonTable = styled.div`
+  left: 50%;
+  top: 300px;
+  position: absolute;
+  background: #F3F4F6;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
+  transform: translateX(-50%);
+
+  @media (max-width: 1280px) {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    transform: none;
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 20px;
+  }
+  
+  @media (max-width: 425px) {
+    width: 95%;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding: 0 10px;
+  }
+`;
+
+const NewComparisonTableHeader = styled.div`
+  align-self: stretch;
+  height: 65px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 13px;
+  display: inline-flex;
+
+  @media (max-width: 1280px) {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    height: auto;
+    gap: 20px;
+  }
+`;
+
+const NewComparisonTableHeaderCell = styled.div`
+  width: 234px;
+  height: 65px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+
+  @media (max-width: 1280px) {
+    width: 200px;
+    height: 60px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 55px;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+    height: auto;
+  }
+`;
+
+const NewComparisonTableHeaderFirstCell = styled.div`
+  width: 260px;
+  height: 65px;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+
+  @media (max-width: 1280px) {
+    width: 220px;
+    height: 60px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 55px;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+    height: auto;
+  }
+`;
+
+const NewComparisonTableHeaderBadge = styled.div`
+  width: 113.75px;
+  height: 72.8px;
+  padding-left: 15.6px;
+  padding-right: 15.6px;
+  padding-top: 10.4px;
+  padding-bottom: 10.4px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  display: inline-flex;
+  
+  @media (max-width: 1280px) {
+    width: 100px;
+    height: 65px;
     padding-left: 12px;
     padding-right: 12px;
-    border-radius: 6px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 90px;
+    height: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+  
+  @media (max-width: 425px) {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+  }
+`;
+
+const NewComparisonTableHeaderBadgeIcon = styled.div`
+  width: 54px;
+  height: 16px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
+`;
+
+const NewComparisonTableHeaderBadgeIconLight = styled.div`
+  width: 39px;
+  height: 21px;
+  position: relative;
+  overflow: hidden;
+  background: #8D94A0;
+`;
+
+const NewComparisonTableHeaderBadgeText = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #575C64;
+  font-size: 15.6px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 23.4px;
+  word-wrap: break-word;
+  
+  @media (max-width: 1280px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+`;
+
+const NewComparisonTableRow = styled.div`
+  align-self: stretch;
+  height: 78px;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  border-bottom: 0.65px #D1D5DB solid;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 13px;
+  display: inline-flex;
+
+  @media (max-width: 1280px) {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  @media (max-width: 768px) {
+    gap: 8px;
+  }
+
+  @media (max-width: 425px) {
+    flex-direction: column;
+    height: auto;
+    gap: 15px;
+    padding: 20px 0;
+  }
+`;
+
+const NewComparisonTableFeature = styled.div`
+  width: 260px;
+  padding-left: 26px;
+  padding-right: 26px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 3px;
+  display: inline-flex;
+  flex-shrink: 0;
+
+  @media (max-width: 1280px) {
+    width: 220px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 200px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+  }
+`;
+
+const NewComparisonTableFeatureTitle = styled.div`
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(-81deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 18.2px;
+  font-family: Pretendard;
+  font-weight: 700;
+  line-height: 27.3px;
+  white-space: nowrap;
+  
+  @media (max-width: 1280px) {
+    font-size: 16px;
+    line-height: 22px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  @media (max-width: 425px) {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    white-space: normal;
+  }
+`;
+
+const NewComparisonTableFeatureDescription = styled.div`
+  align-self: stretch;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  color: #7A828D;
+  font-size: 15.6px;
+  font-family: Pretendard;
+  font-weight: 500;
+  line-height: 23.4px;
+  white-space: nowrap;
+  
+  @media (max-width: 1280px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  
+  @media (max-width: 425px) {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    white-space: normal;
+  }
+`;
+
+const NewComparisonTableCell = styled.div`
+  width: 234px;
+  padding-left: 26px;
+  padding-right: 26px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+  display: inline-flex;
+
+  @media (max-width: 1280px) {
+    width: 200px;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 180px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
+`;
+
+const NewComparisonTableCheckIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  background: #835EEB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::after {
+    content: '';
+    width: 14.45px;
+    height: 9.98px;
+    background: white;
+    clip-path: polygon(0 50%, 50% 100%, 100% 0, 100% 100%, 0 100%);
+  }
+`;
+
+const NewComparisonTableCrossIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  background: #D1D5DB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &::after {
+    content: '';
+    width: 15.40px;
+    height: 15.40px;
+    background: white;
+    clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
   }
 `;
 
@@ -592,13 +1080,17 @@ const PricingSection = styled.div`
   margin: 0 auto;
   margin-top: -10px; /* 헤더 아래 여백 - 총 30px (40px - 10px) - 위로 70px 이동 */
   position: relative;
+  
   @media (max-width: 1024px) {
     width: 100%;
     min-height: 100vh;
     padding: 40px 20px 120px 20px; /* 상단 패딩 조정 */
     gap: 60px;
     margin-top: -10px; /* 위로 70px 이동 */
+    align-items: center;
+    justify-content: center;
   }
+  
   @media (max-width: 768px) {
     width: 100%;
     min-height: 100vh;
@@ -606,6 +1098,15 @@ const PricingSection = styled.div`
     gap: 30px;
     margin-top: -16px; /* 위로 70px 이동 (24px - 70px = -46px, 하지만 적절한 값으로 조정) */
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media (max-width: 425px) {
+    padding: 6px 15px 80px 15px;
+    gap: 25px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -817,6 +1318,7 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
     width: 600px;
     align-items: center;
     gap: 30px;
+    margin: 0 auto;
     
     &:hover {
       transform: translate3d(0, -8px, 0) scale(1.03);
@@ -828,13 +1330,23 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
     width: 100%;
     max-width: 360px;
     margin: 0 auto;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
+    justify-content: center;
     
     &:hover {
       transform: translate3d(0, -6px, 0) scale(1.02);
       box-shadow: 0px 15px 30px rgba(131, 94, 235, 0.15);
     }
+  }
+  
+  @media (max-width: 425px) {
+    width: 95%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 25px;
+    align-items: center;
+    justify-content: center;
   }
 `;
 
@@ -3292,93 +3804,201 @@ const Pricing: React.FC<PricingProps> = () => {
         </TrialStepRow>
       </TrialSection>
 
-             {/* 세 번째 섹션 - 기능 비교 */}
-       <ComparisonSection data-comparison-section>
-         <ComparisonHeader>
-           <ComparisonTitle>
-             편리한 문제은행에<br/>수학대왕만의 AI 기술을 더합니다
-           </ComparisonTitle>
-           <ComparisonSubtitle>
-             기존 문제은행 기능에 수학대왕만의 기술을 더해,<br/>완벽한 1:1 맞춤형 학습 진행이 가능합니다.
-           </ComparisonSubtitle>
-         </ComparisonHeader>
+      {/* 새로운 섹션 - AI 기술 비교 */}
+      <NewComparisonSection>
+        <NewComparisonContainer>
+          <NewComparisonHeader>
+            <NewComparisonTitle>
+              편리한 문제은행에<br/>수학대왕만의 AI 기술을 더합니다
+            </NewComparisonTitle>
+            <NewComparisonSubtitle>
+              기존 문제은행 기능에 수학대왕만의 기술을 더해,<br/>완벽한 1:1 맞춤형 학습 진행이 가능합니다.
+            </NewComparisonSubtitle>
+          </NewComparisonHeader>
 
-         <ComparisonBadge>
-           기존 문제은행 기능
-         </ComparisonBadge>
+          <NewComparisonTable>
+            <NewComparisonTableHeader>
+              <NewComparisonTableHeaderFirstCell>
+                <div style={{ width: "100%", height: "100%" }}></div>
+              </NewComparisonTableHeaderFirstCell>
+              <NewComparisonTableHeaderCell>
+                <NewComparisonTableHeaderBadge>
+                  <img src="/Assets/icon/plus_black_fiiled_logo.svg" alt="plus" style={{ width: "70px", height: "21px" }} />
+                  <NewComparisonTableHeaderBadgeText>플러스</NewComparisonTableHeaderBadgeText>
+                </NewComparisonTableHeaderBadge>
+              </NewComparisonTableHeaderCell>
+              <NewComparisonTableHeaderCell>
+                <NewComparisonTableHeaderBadge>
+                  <img src="/Assets/icon/light_logo.svg" alt="light" style={{ width: "51px", height: "27px" }} />
+                  <NewComparisonTableHeaderBadgeText>라이트</NewComparisonTableHeaderBadgeText>
+                </NewComparisonTableHeaderBadge>
+              </NewComparisonTableHeaderCell>
+              <NewComparisonTableHeaderCell>
+                <NewComparisonTableHeaderBadgeText>타사</NewComparisonTableHeaderBadgeText>
+              </NewComparisonTableHeaderCell>
+            </NewComparisonTableHeader>
 
-         {/* SVG 비교표 컨테이너 */}
-         <SVGComparisonContainer>
-           {/* 모바일용 Swiper */}
-           <SwiperContainer>
-             <div className="swiper mySwiper">
-               <div className="swiper-wrapper">
-                 {mobileTableData.map((card, index) => (
-                   <div key={index} className="swiper-slide">
-                     <SwiperCard>
-                       <SwiperCardTitle>{card.title}</SwiperCardTitle>
-                       <SwiperCardList>
-                         {card.items.map((item, itemIndex) => (
-                           <SwiperCardItem key={itemIndex}>
-                             <SwiperCardLabel>{item.label}</SwiperCardLabel>
-                             <SwiperCardValue>{item.value}</SwiperCardValue>
-                           </SwiperCardItem>
-                         ))}
-                       </SwiperCardList>
-                     </SwiperCard>
-                   </div>
-                 ))}
-               </div>
-               <div className="swiper-pagination"></div>
-             </div>
-             {/* 모바일용 Class Algorithm 이미지 */}
-             <img 
-               src="/Pricing/class algorithm.svg" 
-               alt="Class Algorithm" 
-               style={{
-                 width: '100%',
-                 maxWidth: '325px',
-                 height: 'auto',
-                 marginTop: '40px',
-                 opacity: 0.8
-               }}
-             />
-           </SwiperContainer>
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 학습 관리</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>자동 숙제 및 클리닉 (오답 노트)</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
 
-           {/* 전체 SVG 영역 (데스크탑용) */}
-           <SVGContainer>
-             {/* 상단 데이터 SVG */}
-             <TopDataContainer>
-                       <TopDataFixedColumn>
-          <TopDataFixedRow></TopDataFixedRow>
-          <TopDataFixedRow>수학대왕</TopDataFixedRow>
-          <TopDataFixedRow>타사</TopDataFixedRow>
-        </TopDataFixedColumn>
-               <TopDataScrollContainer>
-                 <TopDataImage 
-                   src="/Pricing/상단 데이터.svg" 
-                   alt="기능 비교표 상단" 
-                 />
-               </TopDataScrollContainer>
-             </TopDataContainer>
-             
-             {/* 하단 데이터 영역 */}
-             <BottomDataContainer>
-               {/* Class Algorithm SVG - 상단 데이터 왼쪽 끝과 정렬 */}
-               <ClassAlgorithmImage 
-                 src="/Pricing/class algorithm.svg" 
-                 alt="Class Algorithm" 
-               />
-               
-               {/* 하단 데이터 SVG - 상단 데이터 오른쪽 끝에 맞춤 */}
-               <BottomDataImage 
-                                   src="/Pricing/하단 데이터.svg" 
-                 alt="기능 비교표 하단" 
-               />
-             </BottomDataContainer>
-           </SVGContainer>
-         </SVGComparisonContainer>
-       </ComparisonSection>
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 리포트</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>매주 학습 데이터 기반 리포트</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 실시간 채팅</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>언제 어디서나 AI에게 질문</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>학부모 관리 서비스</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>수학대왕 클래스 계정 제공</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>매달 장학금 30,000원</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>Plus+ 요금제 기준</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 힌트 & 피드백</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>ㅇㅇㅇ</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 심층 실력 분석</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>ㅇㅇㅇ</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle>AI 반응형 맞춤문제 추천</NewComparisonTableFeatureTitle>
+                <NewComparisonTableFeatureDescription>ㅇㅇㅇ</NewComparisonTableFeatureDescription>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/close.svg" alt="close" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle style={{ color: '#8D94A0', background: 'none', WebkitBackgroundClip: 'unset', WebkitTextFillColor: 'unset', backgroundClip: 'unset' }}>무제한 문제 풀기</NewComparisonTableFeatureTitle>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+
+            <NewComparisonTableRow>
+              <NewComparisonTableFeature>
+                <NewComparisonTableFeatureTitle style={{ color: '#8D94A0', background: 'none', WebkitBackgroundClip: 'unset', WebkitTextFillColor: 'unset', backgroundClip: 'unset' }}>유사 문제</NewComparisonTableFeatureTitle>
+              </NewComparisonTableFeature>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+              <NewComparisonTableCell>
+                <img src="/Pricing/check-1.svg" alt="check" style={{ width: "24px", height: "24px" }} />
+              </NewComparisonTableCell>
+            </NewComparisonTableRow>
+          </NewComparisonTable>
+        </NewComparisonContainer>
+      </NewComparisonSection>
+
       {/* 무료 체험 신청 모달 */}
       <Dialog 
         isOpen={isDialogOpen} 
