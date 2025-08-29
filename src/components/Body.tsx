@@ -1412,31 +1412,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isDemoMobile, setIsDemoMobile] = useState(false); // 데모 섹션 전용 모바일 상태
   
-  // 웹앱 연동 칩 애니메이션 상태
-  const [teacherChipsVisible, setTeacherChipsVisible] = useState([
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [studentChipsVisible, setStudentChipsVisible] = useState([
-    false,
-    false,
-    false,
-    false,
-  ]);
-  
-  // 웹앱 연동 목업 애니메이션 상태 (태블릿, 왼쪽아이폰, 가운데아이폰, 모니터)
-  const [mockupsVisible, setMockupsVisible] = useState([
-    false,
-    false,
-    false,
-    false,
-  ]);
-  // 실시간 동기화 텍스트 애니메이션 상태
-  const [syncTextVisible, setSyncTextVisible] = useState(false);
-  // 화살표 애니메이션 상태
-  const [arrowVisible, setArrowVisible] = useState(false);
+
   
   // 칩과 텍스트 위치 조정을 위한 상태
   const [teacherInfoPosition, setTeacherInfoPosition] = useState<{
@@ -1539,7 +1515,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     console.log("학생 정보 위치 변경:", studentInfoPosition);
   }, [studentInfoPosition]);
   
-  const webAppSectionRef = useRef<HTMLDivElement>(null);
+
 
   // 테스티모니얼 데이터
   const testimonials = [
@@ -1713,89 +1689,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     };
   }, []);
 
-  // 웹앱 연동 섹션 칩 및 목업 애니메이션
-  useEffect(() => {
-    // 초기 상태 리셋
-    setMockupsVisible([false, false, false, false]);
-    setSyncTextVisible(false);
-    setArrowVisible(false);
-    setTeacherChipsVisible([false, false, false, false]);
-    setStudentChipsVisible([false, false, false, false]);
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            // 목업 이미지 페이드인 애니메이션 (데스크톱에서만 - 먼저 시작)
-            setTimeout(() => setMockupsVisible([true, false, false, false]), 0); // 태블릿/랩톱
-            setTimeout(
-              () => setMockupsVisible([true, true, false, false]),
-              150,
-            ); // 왼쪽 모바일
-            setTimeout(() => setMockupsVisible([true, true, true, false]), 300); // 가운데 모바일
-            setTimeout(() => setMockupsVisible([true, true, true, true]), 450); // 데스크톱 모니터
 
-            // 실시간 동기화 텍스트 애니메이션 (가운데 모바일과 동시에 나타남)
-            setTimeout(() => setSyncTextVisible(true), 300);
-            
-            // 화살표 애니메이션 (텍스트보다 약간 늦게 나타남)
-            setTimeout(() => setArrowVisible(true), 400);
-
-            // 선생님용 칩 순차 애니메이션 (목업 이미지 후 - 700ms 후 시작)
-            setTimeout(
-              () => setTeacherChipsVisible([true, false, false, false]),
-              700,
-            );
-            setTimeout(
-              () => setTeacherChipsVisible([true, true, false, false]),
-              850,
-            );
-            setTimeout(
-              () => setTeacherChipsVisible([true, true, true, false]),
-              1000,
-            );
-            setTimeout(
-              () => setTeacherChipsVisible([true, true, true, true]),
-              1150,
-            );
-            
-            // 학생용 칩 순차 애니메이션 (선생님용 칩과 동시에 시작하도록 수정)
-            setTimeout(
-              () => setStudentChipsVisible([true, false, false, false]),
-              700,
-            );
-            setTimeout(
-              () => setStudentChipsVisible([true, true, false, false]),
-              850,
-            );
-            setTimeout(
-              () => setStudentChipsVisible([true, true, true, false]),
-              1000,
-            );
-            setTimeout(
-              () => setStudentChipsVisible([true, true, true, true]),
-              1150,
-            );
-            
-            // 한 번 실행 후 observer 해제
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.2 },
-    );
-
-    const currentRef = webAppSectionRef.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
 
   const handleDemoClick = () => {
     const newCount = demoCount + 1;
@@ -2801,13 +2695,13 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               {/* 모바일용 3번 이미지 */}
               <img 
                 src="/WebApp/integration/3.svg" 
-                alt="학생용 모바일 앱"
-                style={{ 
-                  width: "120px",
+                alt="웹앱 연동 시스템 모바일"
+                style={{
+                  width: "150px",
                   height: "auto",
                   position: "absolute",
-                  left: "20%",
-                  top: "calc(50% + 200px)",
+                  left: "10%",
+                  top: "50%",
                   transform: "translateY(-50%)",
                   zIndex: 10,
                   display: "none"
@@ -2819,7 +2713,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <img 
                 src="/WebApp/integration/4.svg" 
                 alt="웹앱 연동 시스템 상세"
-                style={{ 
+                style={{
                   width: "200px",
                   height: "auto",
                   position: "absolute",
@@ -2836,7 +2730,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <img 
                 src="/WebApp/integration/arrow.svg" 
                 alt="실시간 동기화"
-                style={{ 
+                style={{
                   width: "100px",
                   height: "auto",
                   position: "absolute",
@@ -2853,7 +2747,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
               <img 
                 src="/Body/mockups/425px.svg"
                 alt="웹앱 연동 시스템 태블릿"
-                style={{ 
+                style={{
                   width: "100%",
                   maxWidth: "600px",
                   height: "auto",
@@ -2863,116 +2757,35 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                 className="tablet-425px-image"
               />
               
-              {/* 실시간 동기화 SVG 이미지 */}
-              <img 
-                src="/WebApp/integration/실시간 동기화.svg"
-                alt="실시간 동기화"
-                style={{ 
+              {/* 동기화 텍스트 */}
+              <div 
+                style={{
                   position: "absolute",
+                  top: "50%",
                   left: "50%",
-                  top: "60%",
-                  transform: "translateX(-50%)",
-                  width: "auto",
-                  height: "auto",
+                  transform: "translate(-50%, -50%)",
+                  color: "#835eeb",
+                  fontSize: "32px",
+                  fontFamily: "Godo B",
+                  fontWeight: "400",
+                  lineHeight: "38px",
+                  textAlign: "center",
+                  whiteSpace: "nowrap",
                   maxWidth: "200px",
                   zIndex: 5,
                   display: "none"
                 }}
                 className="sync-text"
-              />
+              >
+                실시간 동기화
+              </div>
               
-              {/* 학생용 정보 컨테이너 */}
+              {/* 선생님용 정보 컨테이너 (학생용 칩 위치로 이동) */}
               <div 
                 style={{ 
                   position: "absolute",
                   left: "calc(15% - 50px)",
                   top: "calc(20% + 400px)",
-                  zIndex: 15,
-                  display: "none"
-                }}
-                className="student-info"
-              >
-                <div style={{ 
-                  color: "#835EEB", 
-                  fontSize: "20px", 
-                  fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                  fontWeight: "700",
-                  marginBottom: "12px",
-                  textAlign: "left"
-                }}>
-                  학생용 모바일 앱
-                </div>
-                <div style={{ 
-                  display: "flex", 
-                  flexDirection: "column", 
-                  gap: "8px",
-                  alignItems: "flex-start"
-                }}>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "left",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    맞춤형 학습지 수신
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "left",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    AI 힌트 시스템
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "left",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    실시간 채점 피드백
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "left",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    학습 진도 추적
-                  </div>
-                </div>
-              </div>
-              
-              {/* 선생님용 정보 컨테이너 */}
-              <div 
-                style={{ 
-                  position: "absolute",
-                  right: "calc(15% - 50px)",
-                  top: "calc(20% - 100px)",
                   zIndex: 15,
                   display: "none"
                 }}
@@ -2984,72 +2797,134 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
                   fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
                   fontWeight: "700",
                   marginBottom: "12px",
-                  textAlign: "right"
+                  textAlign: "center"
                 }}>
                   선생님용 웹사이트
                 </div>
                 <div style={{ 
-                  display: "flex", 
-                  flexDirection: "column", 
-                  gap: "8px",
-                  alignItems: "flex-end"
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
                 }}>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "right",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    클래스 및 학생 관리
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "right",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    맞춤형 문제 출제
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "right",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    AI 채점 결과 확인
-                  </div>
-                  <div style={{ 
-                    backgroundColor: "#f3effd", 
-                    color: "#33373b", 
-                    padding: "10px 18px", 
-                    borderRadius: "999px",
-                    fontSize: "14px",
-                    fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
-                    fontWeight: "500",
-                    textAlign: "right",
-                    boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)",
-                    whiteSpace: "nowrap"
-                  }}>
-                    성과 분석 리포트
-                  </div>
+                  클래스 및 학생 관리
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  맞춤형 문제 출제
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  AI 채점 결과 확인
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  실력 분석 리포트
+                </div>
+              </div>
+              
+              {/* 학생용 정보 컨테이너 (3번 목업 오른쪽으로 이동) */}
+              <div 
+                style={{ 
+                  position: "absolute",
+                  left: "calc(10% + 155px)",
+                  top: "calc(50% - 420px)",
+                  zIndex: 15,
+                  display: "none"
+                }}
+                className="student-info"
+              >
+                <div style={{ 
+                  color: "#835EEB", 
+                  fontSize: "20px", 
+                  fontFamily: "'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif",
+                  fontWeight: "700",
+                  marginBottom: "12px",
+                  textAlign: "center"
+                }}>
+                  학생용 모바일 앱
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  맞춤형 학습지 수신
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  AI 힌트 시스템
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  실시간 채점 피드백
+                </div>
+                <div style={{ 
+                  backgroundColor: "#f3effd",
+                  color: "#835eeb",
+                  padding: "8px 16px",
+                  borderRadius: "20px",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  textAlign: "center",
+                  marginTop: "8px",
+                  boxShadow: "0 2px 4px rgba(131, 94, 235, 0.1)"
+                }}>
+                  장학금 알림 수신
                 </div>
               </div>
                 </div>
@@ -4438,13 +4313,13 @@ const WebAppContent = styled.div`
       filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
     }
     
-    .mobile-webapp-4 {
-      width: 600px !important; /* 3배 크기 증가 (200px * 3 = 600px) */
-      right: calc(10% - 360px) !important; /* 오른쪽으로 360px 이동 */
-      top: calc(50% + 180px) !important; /* 아래쪽에 배치 (위로 20px 이동) */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
-    }
+         .mobile-webapp-4 {
+       width: 600px !important; /* 3배 크기 증가 (200px * 3 = 600px) */
+       right: calc(10% - 375px) !important; /* 오른쪽으로 15px 추가 이동 */
+       top: calc(50% + 180px) !important; /* 아래쪽에 배치 (위로 20px 이동) */
+       cursor: pointer !important;
+       transition: all 0.3s ease !important;
+     }
     
     .mobile-webapp-4:hover {
       transform: scale(1.05) translateY(5px) !important;
@@ -4634,7 +4509,8 @@ const WebAppContent = styled.div`
       cursor: pointer !important;
       transition: all 0.3s ease !important;
       margin-bottom: 8px !important;
-      right: calc(15% - 30px) !important; /* 오른쪽으로 20px 이동 */
+      left: calc(10% + 155px) !important; /* 오른쪽으로 175px 이동 */
+      top: calc(50% - 420px) !important; /* 아래로 80px 이동 */
     }
     
     .teacher-info {
@@ -4661,8 +4537,8 @@ const WebAppContent = styled.div`
       cursor: pointer !important;
       width: max-content !important;
       max-width: 100% !important;
-      white-space: normal !important;
-      word-wrap: break-word !important;
+      white-space: nowrap !important;
+      word-wrap: normal !important;
       text-align: center !important;
     }
     

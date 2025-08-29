@@ -353,6 +353,7 @@ const NewComparisonContainer = styled.div`
   
   @media (max-width: 425px) {
     padding: 0 10px;
+    display: none; /* 모바일에서는 기본 테이블 숨김 */
   }
 `;
 
@@ -487,13 +488,10 @@ const NewComparisonTable = styled.div`
   }
   
   @media (max-width: 425px) {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0 15px;
-    background: #F3F4F6;
-    border-radius: 12px;
-    overflow: hidden;
+    width: 95%;
+    margin: 0 auto;
+    overflow-x: auto;
+    padding: 0 10px;
   }
 `;
 
@@ -511,12 +509,9 @@ const NewComparisonTableHeader = styled.div`
   }
 
   @media (max-width: 425px) {
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
-    gap: 8px;
-    padding: 15px 0;
-    justify-content: space-between;
-    align-items: stretch;
+    gap: 20px;
   }
 `;
 
@@ -538,13 +533,8 @@ const NewComparisonTableHeaderCell = styled.div`
   }
 
   @media (max-width: 425px) {
-    width: 20%;
+    width: 100%;
     height: auto;
-    min-height: 50px;
-    padding: 8px 4px;
-    justify-content: flex-end;
-    align-items: center;
-    text-align: center;
   }
 `;
 
@@ -567,13 +557,8 @@ const NewComparisonTableHeaderFirstCell = styled.div`
   }
 
   @media (max-width: 425px) {
-    width: 40%;
+    width: 100%;
     height: auto;
-    min-height: 50px;
-    padding: 8px 4px;
-    justify-content: flex-end;
-    align-items: center;
-    text-align: center;
   }
 `;
 
@@ -585,7 +570,7 @@ const NewComparisonTableHeaderBadge = styled.div`
   padding-top: 10.4px;
   padding-bottom: 10.4px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   display: inline-flex;
   
@@ -610,11 +595,7 @@ const NewComparisonTableHeaderBadge = styled.div`
   @media (max-width: 425px) {
     width: 100%;
     height: auto;
-    min-height: 35px;
-    padding: 4px 2px;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 2px;
+    padding: 10px;
   }
 `;
 
@@ -624,11 +605,6 @@ const NewComparisonTableHeaderBadgeIcon = styled.div`
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%);
-  
-  @media (max-width: 425px) {
-    width: 24px;
-    height: 8px;
-  }
 `;
 
 const NewComparisonTableHeaderBadgeIconLight = styled.div`
@@ -637,11 +613,6 @@ const NewComparisonTableHeaderBadgeIconLight = styled.div`
   position: relative;
   overflow: hidden;
   background: #8D94A0;
-  
-  @media (max-width: 425px) {
-    width: 18px;
-    height: 10px;
-  }
 `;
 
 const NewComparisonTableHeaderBadgeText = styled.div`
@@ -654,7 +625,6 @@ const NewComparisonTableHeaderBadgeText = styled.div`
   font-weight: 500;
   line-height: 23.4px;
   word-wrap: break-word;
-  text-align: center;
   
   @media (max-width: 1280px) {
     font-size: 14px;
@@ -664,16 +634,6 @@ const NewComparisonTableHeaderBadgeText = styled.div`
   @media (max-width: 768px) {
     font-size: 12px;
     line-height: 18px;
-  }
-  
-  @media (max-width: 425px) {
-    font-size: 10px;
-    line-height: 14px;
-    text-align: center;
-    white-space: nowrap;
-    align-items: center;
-    justify-content: flex-end;
-    width: 100%;
   }
 `;
 
@@ -699,13 +659,10 @@ const NewComparisonTableRow = styled.div`
   }
 
   @media (max-width: 425px) {
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
-    gap: 8px;
-    padding: 15px 0;
-    border-bottom: 1px #D1D5DB solid;
-    justify-content: space-between;
-    align-items: center;
+    gap: 15px;
+    padding: 20px 0;
   }
 `;
 
@@ -733,11 +690,9 @@ const NewComparisonTableFeature = styled.div`
   }
 
   @media (max-width: 425px) {
-    width: 40%;
+    width: 100%;
     text-align: center;
     align-items: center;
-    justify-content: center;
-    padding: 0 8px;
   }
 `;
 
@@ -766,10 +721,10 @@ const NewComparisonTableFeatureTitle = styled.div`
   }
   
   @media (max-width: 425px) {
-    font-size: 12px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 24px;
     text-align: center;
-    white-space: nowrap;
+    white-space: normal;
   }
 `;
 
@@ -796,10 +751,10 @@ const NewComparisonTableFeatureDescription = styled.div`
   }
   
   @media (max-width: 425px) {
-    font-size: 10px;
-    line-height: 14px;
+    font-size: 14px;
+    line-height: 20px;
     text-align: center;
-    white-space: nowrap;
+    white-space: normal;
   }
 `;
 
@@ -826,11 +781,7 @@ const NewComparisonTableCell = styled.div`
   }
 
   @media (max-width: 425px) {
-    width: 20%;
-    padding: 0 4px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+    width: 100%;
   }
 `;
 
@@ -852,16 +803,6 @@ const NewComparisonTableCheckIcon = styled.div`
     background: white;
     clip-path: polygon(0 50%, 50% 100%, 100% 0, 100% 100%, 0 100%);
   }
-  
-  @media (max-width: 425px) {
-    width: 18px;
-    height: 18px;
-    
-    &::after {
-      width: 11px;
-      height: 7.5px;
-    }
-  }
 `;
 
 const NewComparisonTableCrossIcon = styled.div`
@@ -881,16 +822,6 @@ const NewComparisonTableCrossIcon = styled.div`
     height: 15.40px;
     background: white;
     clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-  }
-  
-  @media (max-width: 425px) {
-    width: 18px;
-    height: 18px;
-    
-    &::after {
-      width: 11.5px;
-      height: 11.5px;
-    }
   }
 `;
 
@@ -3927,6 +3858,271 @@ const Pricing: React.FC<PricingProps> = () => {
 
       {/* 새로운 섹션 - AI 기술 비교 */}
       <NewComparisonSection>
+        {/* 모바일 버전(425px 이하) 전용 테이블 */}
+        <div style={{
+          width: "375px", 
+          paddingTop: "50px", 
+          paddingBottom: "50px", 
+          background: "black", 
+          flexDirection: "column", 
+          justifyContent: "center", 
+          alignItems: "center", 
+          gap: "50px", 
+          display: "none",
+          margin: "0 auto"
+        }} className="mobile-comparison-table">
+            <div style={{flexDirection: "column", justifyContent: "center", alignItems: "center", gap: "12.80px", display: "flex"}}>
+              <div style={{textAlign: "center", color: "white", fontSize: "24px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "31.20px", wordWrap: "break-word"}}>편리한 문제은행에<br/>수학대왕만의 AI 기술을 더합니다</div>
+              <div style={{textAlign: "center", color: "#8D94A0", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>기존 문제은행 기능에 수학대왕만의 기술을 더해,<br/>완벽한 1:1 맞춤형 학습 진행이 가능합니다.</div>
+            </div>
+            <div style={{width: "335px", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", height: "49.25px", background: "rgba(217, 217, 217, 0)"}}></div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", height: "56px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "8px", paddingBottom: "8px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex"}}>
+                    <div style={{width: "54px", height: "16px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "53.97px", height: "15.80px", left: "0px", top: "0px", position: "absolute", background: "linear-gradient(135deg, #FF6DEB 0%, #8E6EF1 50%, #5F9EFF 100%)"}}></div>
+                    </div>
+                    <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#575C64", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>플러스</div>
+                  </div>
+                  <div style={{flex: "1 1 0", height: "56px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "8px", paddingBottom: "8px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex"}}>
+                    <div style={{width: "39px", height: "21px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "38.91px", height: "20.55px", left: "0px", top: "0px", position: "absolute", background: "#8D94A0"}}></div>
+                    </div>
+                    <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#575C64", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>라이트</div>
+                  </div>
+                  <div style={{flex: "1 1 0", height: "56px", paddingLeft: "12px", paddingRight: "12px", paddingTop: "8px", paddingBottom: "8px", flexDirection: "column", justifyContent: "space-between", alignItems: "center", display: "inline-flex"}}>
+                    <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>타사</div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 학습 관리</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>자동 숙제 및 클리닉 (오답 노트)</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 리포트</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>매주 학습 데이터 기반 리포트</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 실시간 채팅</div>
+                  <div style={{alignSelf: "center", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>언제 어디서나 AI에게 질문</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>학부모 관리 서비스</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>수학대왕 클래스 계정 제공</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>매달 장학금 30,000원</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>Plus+ 요금제 기준</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 힌트 & 피드백</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>ㅇㅇㅇ</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 심층 실력 분석</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>ㅇㅇㅇ</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", flexDirection: "column", justifyContent: "center", alignItems: "flex-start", gap: "2px", display: "inline-flex"}}>
+                  <div style={{justifyContent: "center", display: "flex", flexDirection: "column", color: "#FF6DEB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "700", lineHeight: "21px", wordWrap: "break-word"}}>AI 반응형 맞춤문제 추천</div>
+                  <div style={{alignSelf: "stretch", justifyContent: "center", display: "flex", flexDirection: "column", color: "#7A828D", fontSize: "12px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "18px", wordWrap: "break-word"}}>ㅇㅇㅇ</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.45px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", height: "24px", justifyContent: "center", alignItems: "center", gap: "10px", display: "flex"}}>
+                  <div style={{flex: "1 1 0", justifyContent: "center", display: "flex", flexDirection: "column", color: "#D1D5DB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "21px", wordWrap: "break-word"}}>무제한 문제 풀기</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style={{alignSelf: "stretch", justifyContent: "flex-start", alignItems: "center", display: "inline-flex"}}>
+                <div style={{width: "160px", height: "24px", justifyContent: "center", alignItems: "center", gap: "10px", display: "flex"}}>
+                  <div style={{flex: "1 0", justifyContent: "center", display: "flex", flexDirection: "column", color: "#D1D5DB", fontSize: "14px", fontFamily: "Pretendard", fontWeight: "500", lineHeight: "21px", wordWrap: "break-word"}}>유사 문제</div>
+                </div>
+                <div style={{flex: "1 1 0", justifyContent: "flex-start", alignItems: "flex-start", display: "flex"}}>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "14.45px", height: "9.98px", left: "4.82px", top: "7.23px", position: "absolute", background: "#835EEB"}}></div>
+                    </div>
+                  </div>
+                  <div style={{flex: "1 1 0", paddingLeft: "12px", paddingRight: "12px", paddingTop: "16px", paddingBottom: "16px", justifyContent: "center", alignItems: "center", display: "flex"}}>
+                    <div style={{width: "24px", height: "24px", position: "relative", overflow: "hidden"}}>
+                      <div style={{width: "15.40px", height: "15.40px", left: "4.30px", top: "4.30px", position: "absolute", background: "#43484E"}}></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <NewComparisonContainer>
           <NewComparisonHeader>
             <NewComparisonTitle>
@@ -4134,5 +4330,35 @@ const Pricing: React.FC<PricingProps> = () => {
 };
 
 export default Pricing;
+
+// 모바일 버전(425px 이하)에서만 모바일 테이블 표시
+const mobileStyles = `
+  @media (max-width: 425px) {
+    .mobile-comparison-table {
+      display: inline-flex !important;
+    }
+    
+    .NewComparisonTable {
+      display: none !important;
+    }
+  }
+  
+  @media (min-width: 426px) {
+    .mobile-comparison-table {
+      display: none !important;
+    }
+    
+    .NewComparisonTable {
+      display: table !important;
+    }
+  }
+`;
+
+// CSS 스타일을 head에 추가
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = mobileStyles;
+  document.head.appendChild(styleElement);
+}
 
 

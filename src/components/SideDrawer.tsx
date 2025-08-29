@@ -13,29 +13,13 @@ declare global {
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed;
-  bottom: 6.25rem;
-  right: 2.5rem;
+  bottom: 120px;
+  right: 55px;
   z-index: 1000;
   opacity: ${props => props.$isVisible ? 1 : 0};
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
-
-  @media (max-width: 768px) {
-    bottom: calc(4rem + 45px);
-    right: calc(1.25rem + 16px);
-  }
-  
-  @media (max-width: 480px) {
-    bottom: calc(3.5rem + 47px + 3px);
-    right: calc(1rem + 17px + 6px);
-  }
-  
-  @media (max-width: 375px) {
-    bottom: calc(3rem + 60px);
-    right: calc(0.75rem + 32px);
-    transform: scale(1.1);
-  }
 `;
 
 const ChatIcon = styled.div<{ $isClose?: boolean }>`
@@ -43,45 +27,53 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 3.75rem;
-  height: 3.75rem;
+  width: 4rem;
+  height: 4rem;
   background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
   border-radius: ${props => props.$isClose ? '45%' : '50%'};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   position: relative;
-  top: -1.5625rem;
-  left: -1.875rem;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
-    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.25);
+    transform: scale(1.05);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  }
+  
+  &:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease;
   }
 
   @media (max-width: 768px) {
     width: 3.5rem;
     height: 3.5rem;
-    top: -1.25rem;
-    left: -1.75rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
   @media (max-width: 480px) {
     width: 3.25rem;
     height: 3.25rem;
-    top: -1rem;
-    left: -1.5rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
   @media (max-width: 375px) {
     width: 3rem;
     height: 3rem;
-    top: -0.875rem;
-    left: -1.25rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
   img {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
     transition: all 0.3s ease;
+    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
     
     @media (max-width: 768px) {
       width: 56px;
@@ -100,8 +92,8 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   }
   
   svg {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     transition: all 0.3s ease;
     
     @media (max-width: 768px) {
@@ -124,24 +116,7 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
 const FloatingButtonText = styled.span`
   white-space: nowrap;
   position: relative;
-  top: -25px;
-  left: -30px;
   transition: all 0.3s ease;
-  
-  @media (max-width: 768px) {
-    top: -20px;
-    left: -25px;
-  }
-  
-  @media (max-width: 480px) {
-    top: -18px;
-    left: -22px;
-  }
-  
-  @media (max-width: 375px) {
-    top: -16px;
-    left: -20px;
-  }
 `;
 
 const FloatingButton = styled.button`
@@ -158,16 +133,18 @@ const FloatingButton = styled.button`
   gap: 0.5rem;
   padding: 0;
   position: relative;
-  width: 7.5rem;
-  height: 3rem;
-  justify-content: space-between;
+  width: 8rem;
+  height: 3.5rem;
+  justify-content: center;
 
   &:hover {
     color: #835EEB;
+    transform: translateY(-2px) scale(1.02);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.95);
     transition: all 0.1s ease;
   }
   }
@@ -380,6 +357,8 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
             ) : (
               <img 
                 src="/Assets/icon/무료체험.svg" 
+
+                
                 alt="무료체험" 
               />
             )}
