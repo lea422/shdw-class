@@ -756,14 +756,14 @@ const TrialSteps = styled.div`
 
 const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   width: 140px;
-  height: 168px;
+  height: 140px;
   padding: 20px;
   background: ${props => {
     if (props.isHovered) return 'rgba(255, 255, 255, 0.1)';
     return 'transparent';
   }};
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: 50%;
   outline: 2px ${props => {
     if (props.isHovered) return 'rgba(255, 255, 255, 0.8)';
     return 'white';
@@ -771,7 +771,7 @@ const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   outline-offset: -2px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -785,20 +785,19 @@ const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   }
   
   @media (max-width: 768px) {
-    width: 130px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     padding: 16px;
   }
   
   @media (max-width: 600px) {
-    width: 100%;
-    max-width: 320px;
-    height: 80px;
-    padding: 16px 20px;
-    flex-direction: row;
-    justify-content: flex-start;
+    width: 100px;
+    height: 100px;
+    padding: 16px;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     margin-bottom: 8px;
     flex-shrink: 0;
   }
@@ -809,6 +808,7 @@ const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   justify-content: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
   color: ${props => {
     if (props.isHovered) return 'white';
     return 'white';
@@ -823,7 +823,8 @@ const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   @media (max-width: 600px) {
     font-size: 16px;
     line-height: 20px;
-    min-width: 60px;
+    text-align: center;
+    width: 100%;
   }
 `;
 
@@ -831,6 +832,8 @@ const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   justify-content: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   color: ${props => {
     if (props.isHovered) return 'white';
     return 'white';
@@ -845,11 +848,9 @@ const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   @media (max-width: 600px) {
     font-size: 14px;
     line-height: 18px;
-    flex: 1;
-    flex-direction: row;
-    white-space: nowrap;
-    justify-content: flex-start;
-    text-align: left;
+    text-align: center;
+    width: 100%;
+    white-space: normal;
   }
 `;
 
@@ -1164,7 +1165,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               onMouseLeave={() => setHoveredStep(null)}
             >
               <StepNumber isHovered={hoveredStep === 1}>STEP 1</StepNumber>
-              <StepDescription isHovered={hoveredStep === 1} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 학교/학원 선택' }} />
+              <StepDescription isHovered={hoveredStep === 1} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 버튼 누르기' }} />
             </TrialStep>
             <TrialStep 
               isHovered={hoveredStep === 2}
@@ -1172,7 +1173,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               onMouseLeave={() => setHoveredStep(null)}
             >
               <StepNumber isHovered={hoveredStep === 2}>STEP 2</StepNumber>
-              <StepDescription isHovered={hoveredStep === 2} dangerouslySetInnerHTML={{ __html: '체험용 계정 이메일 수령' }} />
+              <StepDescription isHovered={hoveredStep === 2} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 학교/학원 선택' }} />
             </TrialStep>
             <TrialStep 
               isHovered={hoveredStep === 3}
@@ -1180,23 +1181,7 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
               onMouseLeave={() => setHoveredStep(null)}
             >
               <StepNumber isHovered={hoveredStep === 3}>STEP 3</StepNumber>
-              <StepDescription isHovered={hoveredStep === 3} dangerouslySetInnerHTML={{ __html: '5인 미만 무료 사용' }} />
-            </TrialStep>
-            <TrialStep 
-              isHovered={hoveredStep === 4}
-              onMouseEnter={() => setHoveredStep(4)}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <StepNumber isHovered={hoveredStep === 4}>STEP 4</StepNumber>
-              <StepDescription isHovered={hoveredStep === 4} dangerouslySetInnerHTML={{ __html: '사용 인원 증원 시 가입 (선택)' }} />
-            </TrialStep>
-            <TrialStep 
-              isHovered={hoveredStep === 5}
-              onMouseEnter={() => setHoveredStep(5)}
-              onMouseLeave={() => setHoveredStep(null)}
-            >
-              <StepNumber isHovered={hoveredStep === 5}>STEP 5</StepNumber>
-              <StepDescription isHovered={hoveredStep === 5} dangerouslySetInnerHTML={{ __html: '무료 체험 신청 버튼 누르기' }} />
+              <StepDescription isHovered={hoveredStep === 3} dangerouslySetInnerHTML={{ __html: '체험용 계정 이메일 수령' }} />
             </TrialStep>
           </TrialSteps>
         </TrialInner>

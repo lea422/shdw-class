@@ -4304,38 +4304,41 @@ const WebAppContent = styled.div`
       width: 180px !important; /* 1.2배 크기 증가 (150px * 1.2 = 180px) */
       left: calc(10% - 30px) !important; /* 왼쪽으로 30px 이동 */
       top: calc(50% - 280px) !important; /* 위로 300px 더 올림 (기존 calc(50% - 230px)에서 50px 위로) */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .mobile-webapp-3:hover {
-      transform: scale(1.1) translateY(-5px) !important;
-      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
          .mobile-webapp-4 {
        width: 600px !important; /* 3배 크기 증가 (200px * 3 = 600px) */
        right: calc(10% - 375px) !important; /* 오른쪽으로 15px 추가 이동 */
        top: calc(50% + 180px) !important; /* 아래쪽에 배치 (위로 20px 이동) */
-       cursor: pointer !important;
-       transition: all 0.3s ease !important;
+       cursor: default !important; /* 클릭 커서 제거 */
+       transition: none !important; /* 전환 효과 제거 */
+       pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
      }
     
     .mobile-webapp-4:hover {
-      transform: scale(1.05) translateY(5px) !important;
-      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .webapp-arrow {
       width: 300px !important; /* 3배 크기 증가 (100px * 3 = 300px) */
-      top: calc(50% - 25px) !important; /* 위로 25px 이동 */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      top: calc(50% - 55px) !important; /* 위로 55px 이동 (기존 25px + 30px) */
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .webapp-arrow:hover {
-      transform: scale(1.15) !important;
-      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.4)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .sync-text {
@@ -4346,8 +4349,9 @@ const WebAppContent = styled.div`
       left: 50% !important;
       transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
       z-index: 5 !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .sync-text:hover {
@@ -4362,8 +4366,9 @@ const WebAppContent = styled.div`
       font-size: 30px !important; /* 사이즈 더 축소 */
       font-weight: 700 !important;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
       margin-bottom: 8px !important;
     }
     
@@ -4377,8 +4382,9 @@ const WebAppContent = styled.div`
       color: #835eeb !important; /* 데스크탑 버전과 동일한 색상 */
       border-radius: 14px !important; /* 모서리 더 축소 */
       box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
-      transition: all 0.3s ease !important;
-      cursor: pointer !important;
+      transition: none !important; /* 전환 효과 제거 */
+      cursor: default !important; /* 클릭 커서 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
       width: max-content !important;
       max-width: 100% !important;
       white-space: normal !important;
@@ -4449,38 +4455,41 @@ const WebAppContent = styled.div`
       width: 180px !important; /* 425px와 동일 */
       left: calc(10% - 60px) !important; /* 왼쪽으로 30px 추가 이동 */
       top: calc(50% - 280px) !important; /* 425px와 동일 */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .mobile-webapp-3:hover {
-      transform: scale(1.1) translateY(-5px) !important;
-      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .mobile-webapp-4 {
       width: 600px !important; /* 425px와 동일 */
       right: calc(10% - 390px) !important; /* 오른쪽으로 60px 이동 */
       top: calc(50% + 180px) !important; /* 425px와 동일 */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .mobile-webapp-4:hover {
-      transform: scale(1.05) translateY(5px) !important;
-      filter: drop-shadow(0 10px 25px rgba(131, 94, 235, 0.3)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .webapp-arrow {
       width: 300px !important; /* 425px와 동일 */
-      top: calc(50% - 25px) !important; /* 425px와 동일 */
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      top: calc(50% - 55px) !important; /* 위로 55px 이동 (기존 25px + 30px) */
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .webapp-arrow:hover {
-      transform: scale(1.15) !important;
-      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.4)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .sync-text {
@@ -4491,14 +4500,15 @@ const WebAppContent = styled.div`
       left: 50% !important;
       transform: translate(-50%, -50%) !important; /* 정확한 중앙 정렬 */
       z-index: 5 !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
     }
     
     .sync-text:hover {
-      transform: translate(-50%, -50%) scale(1.1) !important;
-      color: #6b46c1 !important;
-      filter: drop-shadow(0 0 20px rgba(131, 94, 235, 0.3)) !important;
+      transform: translate(-50%, -50%) !important; /* 모바일에서 호버 효과 제거 */
+      color: white !important; /* 기본 색상 유지 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     /* 학생용/선생님용 정보 컨테이너 - 425px와 동일한 디자인 */
@@ -4506,8 +4516,9 @@ const WebAppContent = styled.div`
       font-size: 30px !important; /* 425px와 동일 */
       font-weight: 700 !important;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
       margin-bottom: 8px !important;
       left: calc(10% + 155px) !important; /* 오른쪽으로 175px 이동 */
       top: calc(50% - 420px) !important; /* 아래로 80px 이동 */
@@ -4517,8 +4528,9 @@ const WebAppContent = styled.div`
       font-size: 30px !important; /* 425px와 동일 */
       font-weight: 700 !important;
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif !important;
-      cursor: pointer !important;
-      transition: all 0.3s ease !important;
+      cursor: default !important; /* 클릭 커서 제거 */
+      transition: none !important; /* 전환 효과 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
       margin-bottom: 8px !important;
       left: calc(15% - 70px) !important; /* 왼쪽으로 20px 이동 */
     }
@@ -4533,8 +4545,9 @@ const WebAppContent = styled.div`
       color: #835eeb !important; /* 데스크탑 버전과 동일한 색상 */
       border-radius: 14px !important; /* 425px와 동일 */
       box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important;
-      transition: all 0.3s ease !important;
-      cursor: pointer !important;
+      transition: none !important; /* 전환 효과 제거 */
+      cursor: default !important; /* 클릭 커서 제거 */
+      pointer-events: none !important; /* 클릭 이벤트 완전 비활성화 */
       width: max-content !important;
       max-width: 100% !important;
       white-space: nowrap !important;
@@ -4544,27 +4557,27 @@ const WebAppContent = styled.div`
     
     .student-info:hover,
     .teacher-info:hover {
-      transform: translateY(-3px) scale(1.02) !important;
-      filter: drop-shadow(0 8px 25px rgba(131, 94, 235, 0.2)) !important;
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
+      filter: none !important; /* 모바일에서 그림자 효과 제거 */
     }
     
     .student-info > div > div:hover,
     .teacher-info > div > div:hover {
-      background-color: #e8e0fc !important;
-      box-shadow: 0 4px 12px rgba(131, 94, 235, 0.2) !important;
-      transform: translateY(-2px) scale(1.05) !important;
+      background-color: #f3effd !important; /* 기본 배경색 유지 */
+      box-shadow: 0 2px 4px rgba(131, 94, 235, 0.1) !important; /* 기본 그림자 유지 */
+      transform: none !important; /* 모바일에서 호버 효과 제거 */
     }
     
     .student-info:active,
     .teacher-info:active {
-      transform: translateY(-1px) scale(1.01) !important;
-      transition: all 0.1s ease !important;
+      transform: none !important; /* 모바일에서 액티브 효과 제거 */
+      transition: all 0.3s ease !important; /* 기본 전환 효과 유지 */
     }
     
     .student-info > div > div:active,
     .teacher-info > div > div:active {
-      transform: translateY(0px) scale(1.02) !important;
-      transition: all 0.1s ease !important;
+      transform: none !important; /* 모바일에서 액티브 효과 제거 */
+      transition: all 0.3s ease !important; /* 기본 전환 효과 유지 */
     }
   }
   

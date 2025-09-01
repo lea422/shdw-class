@@ -260,9 +260,20 @@ const SNSIcon = styled.div`
     height: 100%;
   }
   
+  /* 모바일에서 블로그 아이콘 색상 조정 */
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  
   @media (max-width: 768px) {
     width: 20px;
     height: 20px;
+    
+    /* 모바일에서 블로그 아이콘을 다른 SNS 아이콘과 동일한 색상으로 변경 */
+    img[src*="blog.svg"] {
+      filter: brightness(0) saturate(100%) invert(35%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(0.8) contrast(100%);
+    }
   }
 `;
 

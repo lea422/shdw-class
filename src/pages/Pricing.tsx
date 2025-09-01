@@ -1446,6 +1446,17 @@ const NewPricingCard = styled.div<{ cardType: 'free' | 'basic' | 'plus'; isVisib
     align-items: center;
     justify-content: center;
   }
+  
+  @media (max-width: 320px) {
+    width: 90%;
+    max-width: 280px;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
 `;
 
 const CardHeaderNew = styled.div`
@@ -1471,6 +1482,16 @@ const CardHeaderNew = styled.div`
     padding: 12px;
     flex-direction: column;
     align-items: center;
+  }
+  
+  @media (max-width: 320px) {
+    width: 100%;
+    max-width: 250px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.9);
+    transform-origin: center center;
   }
 `;
 
@@ -1694,6 +1715,15 @@ const CardFeaturesList = styled.div`
     min-height: 245px;
     position: relative;
   }
+  
+  @media (max-width: 320px) {
+    width: 100%;
+    max-width: 250px;
+    min-height: 220px;
+    position: relative;
+    transform: scale(0.9);
+    transform-origin: center center;
+  }
 `;
 
 const CardFeatureItem = styled.div<{ top: number }>`
@@ -1718,6 +1748,15 @@ const CardFeatureItem = styled.div<{ top: number }>`
     max-width: 280px;
     position: absolute;
     top: ${props => props.top}px;
+  }
+  
+  @media (max-width: 320px) {
+    width: 100%;
+    max-width: 250px;
+    position: absolute;
+    top: ${props => props.top * 0.9}px;
+    transform: scale(0.9);
+    transform-origin: left center;
   }
 `;
 

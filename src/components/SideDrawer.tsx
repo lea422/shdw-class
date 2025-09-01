@@ -12,29 +12,39 @@ declare global {
 }
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
-  position: fixed;
-  bottom: 120px;
-  right: 55px;
+  position: fixed !important;
+  bottom: 80px !important;
+  right: 55px !important;
   z-index: 1000;
   opacity: ${props => props.$isVisible ? 1 : 0};
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
   
-  /* 모바일에서 Channel.io 버튼과 크기와 얼라인 맞추기 */
+  /* 모바일에서 Channel.io 버튼과 적절한 간격으로 배치 */
   @media (max-width: 768px) {
-    bottom: 100px;
-    right: 40px;
+    bottom: 60px !important;
+    right: 20px !important;
   }
   
   @media (max-width: 480px) {
-    bottom: 90px;
-    right: 30px;
+    bottom: 50px !important;
+    right: 15px !important;
   }
   
   @media (max-width: 375px) {
-    bottom: 80px;
-    right: 25px;
+    bottom: 45px !important;
+    right: 12px !important;
+  }
+  
+  @media (max-width: 320px) {
+    bottom: 40px !important;
+    right: 10px !important;
+  }
+  
+  @media (max-width: 280px) {
+    bottom: 35px !important;
+    right: 8px !important;
   }
 `;
 
@@ -43,8 +53,8 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 4rem;
-  height: 4rem;
+  width: 3.75rem;
+  height: 3.75rem;
   background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
   border-radius: ${props => props.$isClose ? '45%' : '50%'};
   box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
@@ -61,73 +71,91 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     transition: all 0.1s ease;
   }
 
-  /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
+  /* 모바일에서 Channel.io 버튼과 정확히 동일한 크기로 조정 */
   @media (max-width: 768px) {
-    width: 3.25rem; /* Channel.io 기본 크기와 맞춤 */
-    height: 3.25rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
-  }
-  
-  @media (max-width: 480px) {
-    width: 3rem; /* Channel.io 모바일 크기와 맞춤 */
+    width: 3rem; /* Channel.io 기본 크기와 맞춤 */
     height: 3rem;
     background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
     border-radius: ${props => props.$isClose ? '45%' : '50%'};
     box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
-  @media (max-width: 375px) {
-    width: 2.75rem; /* Channel.io 작은 모바일 크기와 맞춤 */
+  @media (max-width: 480px) {
+    width: 2.75rem; /* Channel.io 모바일 크기와 맞춤 */
     height: 2.75rem;
     background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
     border-radius: ${props => props.$isClose ? '45%' : '50%'};
     box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
+  @media (max-width: 375px) {
+    width: 2.5rem; /* Channel.io 작은 모바일 크기와 맞춤 */
+    height: 2.5rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
+  }
+  
+  @media (max-width: 320px) {
+    width: 2.25rem; /* Channel.io 매우 작은 모바일 크기와 맞춤 */
+    height: 2.25rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
+  }
+  
   img {
-    width: 56px;
-    height: 56px;
+    width: 60px;
+    height: 60px;
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
     
     /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
     @media (max-width: 768px) {
-      width: 52px; /* Channel.io 기본 크기와 맞춤 */
-      height: 52px;
-    }
-    
-    @media (max-width: 480px) {
-      width: 48px; /* Channel.io 모바일 크기와 맞춤 */
+      width: 48px; /* Channel.io 기본 크기와 맞춤 */
       height: 48px;
     }
     
-    @media (max-width: 375px) {
-      width: 44px; /* Channel.io 작은 모바일 크기와 맞춤 */
+    @media (max-width: 480px) {
+      width: 44px; /* Channel.io 모바일 크기와 맞춤 */
       height: 44px;
+    }
+    
+    @media (max-width: 375px) {
+      width: 40px; /* Channel.io 작은 모바일 크기와 맞춤 */
+      height: 40px;
+    }
+    
+    @media (max-width: 320px) {
+      width: 36px; /* Channel.io 매우 작은 모바일 크기와 맞춤 */
+      height: 36px;
     }
   }
   
   svg {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     transition: all 0.3s ease;
     
     /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
     @media (max-width: 768px) {
-      width: 28px; /* Channel.io 기본 크기와 맞춤 */
-      height: 28px;
-    }
-    
-    @media (max-width: 480px) {
-      width: 26px; /* Channel.io 모바일 크기와 맞춤 */
+      width: 26px; /* Channel.io 기본 크기와 맞춤 */
       height: 26px;
     }
     
-    @media (max-width: 375px) {
-      width: 24px; /* Channel.io 작은 모바일 크기와 맞춤 */
+    @media (max-width: 480px) {
+      width: 24px; /* Channel.io 모바일 크기와 맞춤 */
       height: 24px;
+    }
+    
+    @media (max-width: 375px) {
+      width: 22px; /* Channel.io 작은 모바일 크기와 맞춤 */
+      height: 22px;
+    }
+    
+    @media (max-width: 320px) {
+      width: 20px; /* Channel.io 매우 작은 모바일 크기와 맞춤 */
+      height: 20px;
     }
   }
 `;
@@ -325,6 +353,54 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     }
   };
 
+  // 1번 플로팅 버튼 위치 고정을 위한 useEffect
+  useEffect(() => {
+    const fixButtonPosition = () => {
+      const buttonContainer = document.querySelector('[data-floating-button]') as HTMLElement;
+      if (buttonContainer) {
+        // 강제로 위치 고정
+        buttonContainer.style.position = 'fixed';
+        buttonContainer.style.zIndex = '1000';
+        
+        // 화면 크기에 따른 반응형 위치 설정
+        const width = window.innerWidth;
+        if (width <= 280) {
+          buttonContainer.style.bottom = '35px';
+          buttonContainer.style.right = '8px';
+        } else if (width <= 320) {
+          buttonContainer.style.bottom = '40px';
+          buttonContainer.style.right = '10px';
+        } else if (width <= 375) {
+          buttonContainer.style.bottom = '45px';
+          buttonContainer.style.right = '12px';
+        } else if (width <= 480) {
+          buttonContainer.style.bottom = '50px';
+          buttonContainer.style.right = '15px';
+        } else if (width <= 768) {
+          buttonContainer.style.bottom = '60px';
+          buttonContainer.style.right = '20px';
+        } else {
+          buttonContainer.style.bottom = '80px';
+          buttonContainer.style.right = '55px';
+        }
+      }
+    };
+
+    // 초기 위치 고정
+    fixButtonPosition();
+    
+    // 화면 크기 변경 시 위치 재고정
+    window.addEventListener('resize', fixButtonPosition);
+    
+    // 주기적으로 위치 확인 및 고정 (다른 스타일이 덮어쓸 경우 대비)
+    const interval = setInterval(fixButtonPosition, 1000);
+    
+    return () => {
+      window.removeEventListener('resize', fixButtonPosition);
+      clearInterval(interval);
+    };
+  }, []);
+
   // ESC 키로 닫기
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -381,7 +457,11 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
 
   return (
     <>
-      <FloatingButtonContainer $isVisible={true} style={{ zIndex: isOpen ? 1003 : 1000 }}>
+      <FloatingButtonContainer 
+        $isVisible={true} 
+        style={{ zIndex: isOpen ? 1003 : 1000 }}
+        data-floating-button
+      >
         <FloatingButton onClick={isOpen ? handleClose : handleOpen} aria-label={isOpen ? "무료체험 신청 닫기" : "무료체험 신청 열기"}>
           <FloatingButtonText>무료체험신청</FloatingButtonText>
           <ChatIcon $isClose={isOpen}>

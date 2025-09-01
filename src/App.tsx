@@ -109,6 +109,74 @@ function App() {
         // 스크립트 로드
         await ChannelService.loadScript();
         
+        // Channel.io 버튼 위치 고정을 위한 CSS 스타일 추가
+        const addChannelStyles = () => {
+          const style = document.createElement('style');
+          style.id = 'channel-io-fixed-position';
+          style.textContent = `
+            /* Channel.io 플러그인 버튼 위치 고정 */
+            #ch-plugin {
+              position: fixed !important;
+              bottom: 20px !important;
+              right: 20px !important;
+              z-index: 999 !important;
+            }
+            
+            /* Channel.io 버튼 내부 요소들도 위치 고정 */
+            #ch-plugin #ch-plugin-launcher {
+              position: fixed !important;
+              bottom: 20px !important;
+              right: 20px !important;
+              z-index: 999 !important;
+            }
+            
+            /* 데스크탑에서 Channel.io 버튼 크기 조정 - 1번 버튼과 동일한 크기 */
+            @media (min-width: 769px) {
+              #ch-plugin #ch-plugin-launcher {
+                width: 64px !important;
+                height: 64px !important;
+              }
+              
+              #ch-plugin #ch-plugin-launcher img {
+                width: 100% !important;
+                height: 100% !important;
+              }
+            }
+            
+            /* 모바일 반응형 위치 조정 */
+            @media (max-width: 768px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 15px !important;
+                right: 15px !important;
+              }
+            }
+            
+            @media (max-width: 480px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 10px !important;
+                right: 10px !important;
+              }
+            }
+            
+            @media (max-width: 375px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 8px !important;
+                right: 8px !important;
+              }
+            }
+            
+            /* Channel.io 모달도 위치 고정 */
+            #ch-plugin #ch-plugin-messenger {
+              position: fixed !important;
+              z-index: 1000 !important;
+            }
+          `;
+          document.head.appendChild(style);
+        };
+        
         // 사용자 정보가 있으면 멤버 유저로 부트, 없으면 익명 유저로 부트
         if (userInfo.memberId && userInfo.name) {
           // 멤버 유저 부트
@@ -129,8 +197,11 @@ function App() {
             "pluginKey": "d436ea9d-ae03-4aca-868d-35d43f45e4ca",
           });
         }
-
-
+        
+        // Channel.io 부트 완료 후 스타일 적용
+        setTimeout(() => {
+          addChannelStyles();
+        }, 1000);
 
       } catch (error) {
         console.error("Channel.io 초기화 실패:", error);
@@ -138,6 +209,91 @@ function App() {
     };
 
     initializeChannel();
+    
+    // 화면 크기 변경 시 Channel.io 위치 재조정
+    const handleResize = () => {
+      const existingStyle = document.getElementById('channel-io-fixed-position');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+      
+              setTimeout(() => {
+          const style = document.createElement('style');
+          style.id = 'channel-io-fixed-position';
+          style.textContent = `
+            /* Channel.io 플러그인 버튼 위치 고정 */
+            #ch-plugin {
+              position: fixed !important;
+              bottom: 20px !important;
+              right: 20px !important;
+              z-index: 999 !important;
+            }
+            
+            /* Channel.io 버튼 내부 요소들도 위치 고정 */
+            #ch-plugin #ch-plugin-launcher {
+              position: fixed !important;
+              bottom: 20px !important;
+              right: 20px !important;
+              z-index: 999 !important;
+            }
+            
+            /* 데스크탑에서 Channel.io 버튼 크기 조정 - 1번 버튼과 동일한 크기 */
+            @media (min-width: 769px) {
+              #ch-plugin #ch-plugin-launcher {
+                width: 64px !important;
+                height: 64px !important;
+              }
+              
+              #ch-plugin #ch-plugin-launcher img {
+                width: 100% !important;
+                height: 100% !important;
+              }
+            }
+            
+            /* 모바일 반응형 위치 조정 */
+            @media (max-width: 768px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 15px !important;
+                right: 10px !important;
+              }
+            }
+            
+            @media (max-width: 480px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 10px !important;
+                right: 10px !important;
+              }
+            }
+            
+            @media (max-width: 375px) {
+              #ch-plugin,
+              #ch-plugin #ch-plugin-launcher {
+                bottom: 8px !important;
+                right: 8px !important;
+              }
+            }
+            
+            /* Channel.io 모달도 위치 고정 */
+            #ch-plugin #ch-plugin-messenger {
+              position: fixed !important;
+              z-index: 1000 !important;
+            }
+          `;
+          document.head.appendChild(style);
+        }, 100);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      const existingStyle = document.getElementById('channel-io-fixed-position');
+      if (existingStyle) {
+        existingStyle.remove();
+      }
+    };
   }, [userInfo.memberId, userInfo.name, userInfo.mobileNumber, userInfo.landlineNumber, userInfo.customField1, userInfo.customField2]);
 
   // 사용자 정보 설정 함수 (다른 컴포넌트에서 사용 가능)
