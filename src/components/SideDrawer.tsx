@@ -20,6 +20,22 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
+  
+  /* 모바일에서 Channel.io 버튼과 크기와 얼라인 맞추기 */
+  @media (max-width: 768px) {
+    bottom: 100px;
+    right: 40px;
+  }
+  
+  @media (max-width: 480px) {
+    bottom: 90px;
+    right: 30px;
+  }
+  
+  @media (max-width: 375px) {
+    bottom: 80px;
+    right: 25px;
+  }
 `;
 
 const ChatIcon = styled.div<{ $isClose?: boolean }>`
@@ -45,25 +61,26 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     transition: all 0.1s ease;
   }
 
+  /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
   @media (max-width: 768px) {
-    width: 3.5rem;
-    height: 3.5rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
-  }
-  
-  @media (max-width: 480px) {
-    width: 3.25rem;
+    width: 3.25rem; /* Channel.io 기본 크기와 맞춤 */
     height: 3.25rem;
     background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
     border-radius: ${props => props.$isClose ? '45%' : '50%'};
     box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
-  @media (max-width: 375px) {
-    width: 3rem;
+  @media (max-width: 480px) {
+    width: 3rem; /* Channel.io 모바일 크기와 맞춤 */
     height: 3rem;
+    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+    border-radius: ${props => props.$isClose ? '45%' : '50%'};
+    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
+  }
+  
+  @media (max-width: 375px) {
+    width: 2.75rem; /* Channel.io 작은 모바일 크기와 맞춤 */
+    height: 2.75rem;
     background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
     border-radius: ${props => props.$isClose ? '45%' : '50%'};
     box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
@@ -75,19 +92,20 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
     
+    /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
     @media (max-width: 768px) {
-      width: 56px;
-      height: 56px;
-    }
-    
-    @media (max-width: 480px) {
-      width: 52px;
+      width: 52px; /* Channel.io 기본 크기와 맞춤 */
       height: 52px;
     }
     
-    @media (max-width: 375px) {
-      width: 48px;
+    @media (max-width: 480px) {
+      width: 48px; /* Channel.io 모바일 크기와 맞춤 */
       height: 48px;
+    }
+    
+    @media (max-width: 375px) {
+      width: 44px; /* Channel.io 작은 모바일 크기와 맞춤 */
+      height: 44px;
     }
   }
   
@@ -96,19 +114,20 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     height: 32px;
     transition: all 0.3s ease;
     
+    /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
     @media (max-width: 768px) {
-      width: 24px;
-      height: 24px;
+      width: 28px; /* Channel.io 기본 크기와 맞춤 */
+      height: 28px;
     }
     
     @media (max-width: 480px) {
-      width: 22px;
-      height: 22px;
+      width: 26px; /* Channel.io 모바일 크기와 맞춤 */
+      height: 26px;
     }
     
     @media (max-width: 375px) {
-      width: 20px;
-      height: 20px;
+      width: 24px; /* Channel.io 작은 모바일 크기와 맞춤 */
+      height: 24px;
     }
   }
 `;
@@ -159,9 +178,10 @@ const FloatingButton = styled.button`
     box-shadow: none;
   }
 
+  /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
   @media (max-width: 768px) {
-    width: 7.5rem;
-    height: 3.25rem;
+    width: 7rem; /* Channel.io 기본 크기와 맞춤 */
+    height: 3rem;
     font-size: 0.875rem;
     gap: 0.125rem;
     
@@ -171,15 +191,15 @@ const FloatingButton = styled.button`
   }
   
   @media (max-width: 480px) {
-    width: 7rem;
-    height: 3rem;
+    width: 6.5rem; /* Channel.io 모바일 크기와 맞춤 */
+    height: 2.75rem;
     font-size: 0.8125rem;
     gap: 0.125rem;
   }
   
   @media (max-width: 375px) {
-    width: 6.5rem;
-    height: 2.75rem;
+    width: 6rem; /* Channel.io 작은 모바일 크기와 맞춤 */
+    height: 2.5rem;
     font-size: 0.75rem;
     gap: 0.125rem;
   }
@@ -229,11 +249,26 @@ const ModalContainer = styled.div<{ $isOpen: boolean }>`
     border-top: 0.5rem solid white;
   }
 
+  /* 모바일에서 Channel.io 버튼 위치와 맞춘 모달 위치 조정 */
   @media (max-width: 768px) {
     width: 22.5rem;
     right: 1.25rem;
-    bottom: 9.375rem;
+    bottom: 8.75rem; /* Channel.io 모달과 맞춤 */
     max-height: 80vh;
+  }
+  
+  @media (max-width: 480px) {
+    width: 21rem;
+    right: 1rem;
+    bottom: 8.125rem; /* Channel.io 모바일 모달과 맞춤 */
+    max-height: 75vh;
+  }
+  
+  @media (max-width: 375px) {
+    width: 20rem;
+    right: 0.75rem;
+    bottom: 7.5rem; /* Channel.io 작은 모바일 모달과 맞춤 */
+    max-height: 70vh;
   }
 `;
 
