@@ -777,6 +777,16 @@ const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: ${props => props.isHovered ? 'translateY(-4px)' : 'translateY(0)'};
   box-shadow: ${props => props.isHovered ? '0 8px 25px rgba(0, 0, 0, 0.15)' : 'none'};
+  
+  /* 768px 이하에서 가로로 긴 직사각형으로 변경 */
+  @media (max-width: 768px) {
+    border-radius: 12px;
+    width: 200px;
+    height: 80px;
+    padding: 12px 16px;
+    flex-direction: row;
+    gap: 12px;
+  }
   position: relative;
   
   &:hover {
@@ -820,6 +830,15 @@ const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   word-wrap: break-word;
   transition: color 0.3s ease;
   
+  /* 768px 이하에서 가로 레이아웃에 맞게 조정 */
+  @media (max-width: 768px) {
+    font-size: 14px;
+    line-height: 20px;
+    min-width: 60px;
+    text-align: left;
+    align-items: flex-start;
+  }
+  
   @media (max-width: 600px) {
     font-size: 16px;
     line-height: 20px;
@@ -844,6 +863,15 @@ const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   line-height: 24px;
   word-wrap: break-word;
   transition: color 0.3s ease;
+  
+  /* 768px 이하에서 가로 레이아웃에 맞게 조정 */
+  @media (max-width: 768px) {
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+    align-items: flex-start;
+    flex: 1;
+  }
   
   @media (max-width: 600px) {
     font-size: 14px;

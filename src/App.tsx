@@ -119,7 +119,7 @@ function App() {
               position: fixed !important;
               bottom: 20px !important;
               right: 20px !important;
-              z-index: 999 !important;
+              z-index: 500 !important;
             }
             
             /* Channel.io 버튼 내부 요소들도 위치 고정 */
@@ -127,7 +127,7 @@ function App() {
               position: fixed !important;
               bottom: 20px !important;
               right: 20px !important;
-              z-index: 999 !important;
+              z-index: 500 !important;
             }
             
             /* 데스크탑에서 Channel.io 버튼 크기 조정 - 1번 버튼과 동일한 크기 */
@@ -171,7 +171,7 @@ function App() {
             /* Channel.io 모달도 위치 고정 */
             #ch-plugin #ch-plugin-messenger {
               position: fixed !important;
-              z-index: 1000 !important;
+              z-index: 600 !important;
             }
           `;
           document.head.appendChild(style);
@@ -226,7 +226,7 @@ function App() {
               position: fixed !important;
               bottom: 20px !important;
               right: 20px !important;
-              z-index: 999 !important;
+              z-index: 500 !important;
             }
             
             /* Channel.io 버튼 내부 요소들도 위치 고정 */
@@ -234,7 +234,7 @@ function App() {
               position: fixed !important;
               bottom: 20px !important;
               right: 20px !important;
-              z-index: 999 !important;
+              z-index: 500 !important;
             }
             
             /* 데스크탑에서 Channel.io 버튼 크기 조정 - 1번 버튼과 동일한 크기 */
@@ -278,7 +278,7 @@ function App() {
             /* Channel.io 모달도 위치 고정 */
             #ch-plugin #ch-plugin-messenger {
               position: fixed !important;
-              z-index: 1000 !important;
+              z-index: 600 !important;
             }
           `;
           document.head.appendChild(style);

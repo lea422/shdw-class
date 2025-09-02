@@ -13,39 +13,13 @@ declare global {
 
 const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   position: fixed !important;
-  bottom: 80px !important;
-  right: 55px !important;
+  bottom: 24px !important; /* 위로 0.5px 더 이동 (23.5px → 24px) */
+  right: 135px !important; /* 오른쪽으로 10px 더 이동 (145px → 135px) */
   z-index: 1000;
-  opacity: ${props => props.$isVisible ? 1 : 0};
+  opacity: 1 !important; /* 항상 완전히 불투명하게 유지 */
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  pointer-events: ${props => props.$isVisible ? 'auto' : 'none'};
-  
-  /* 모바일에서 Channel.io 버튼과 적절한 간격으로 배치 */
-  @media (max-width: 768px) {
-    bottom: 60px !important;
-    right: 20px !important;
-  }
-  
-  @media (max-width: 480px) {
-    bottom: 50px !important;
-    right: 15px !important;
-  }
-  
-  @media (max-width: 375px) {
-    bottom: 45px !important;
-    right: 12px !important;
-  }
-  
-  @media (max-width: 320px) {
-    bottom: 40px !important;
-    right: 10px !important;
-  }
-  
-  @media (max-width: 280px) {
-    bottom: 35px !important;
-    right: 8px !important;
-  }
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* opacity transition 제거 */
+  pointer-events: auto !important; /* 항상 클릭 가능하게 유지 */
 `;
 
 const ChatIcon = styled.div<{ $isClose?: boolean }>`
@@ -53,83 +27,31 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 3.75rem;
-  height: 3.75rem;
+  width: 3.4375rem; /* 5px 줄임 (64px → 59px) */
+  height: 3.4375rem;
   background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
   border-radius: ${props => props.$isClose ? '45%' : '50%'};
   box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   position: relative;
+  z-index: 9999 !important; /* 최상위 레이어로 설정 */
+  opacity: 1 !important; /* 항상 완전히 불투명하게 유지 */
   transition: all 0.3s ease;
 
   &:hover {
-    transform: scale(1.05);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    /* 확대 효과 제거 */
   }
   
   &:active {
-    transform: scale(0.95);
+    transform: scale(0.98); /* 클릭 효과 줄임 (0.95 → 0.98) */
+    transform-origin: center center; /* 가운데 축을 기준으로 축소 */
     transition: all 0.1s ease;
-  }
-
-  /* 모바일에서 Channel.io 버튼과 정확히 동일한 크기로 조정 */
-  @media (max-width: 768px) {
-    width: 3rem; /* Channel.io 기본 크기와 맞춤 */
-    height: 3rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
-  }
-  
-  @media (max-width: 480px) {
-    width: 2.75rem; /* Channel.io 모바일 크기와 맞춤 */
-    height: 2.75rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
-  }
-  
-  @media (max-width: 375px) {
-    width: 2.5rem; /* Channel.io 작은 모바일 크기와 맞춤 */
-    height: 2.5rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
-  }
-  
-  @media (max-width: 320px) {
-    width: 2.25rem; /* Channel.io 매우 작은 모바일 크기와 맞춤 */
-    height: 2.25rem;
-    background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
-    border-radius: ${props => props.$isClose ? '45%' : '50%'};
-    box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
   }
   
   img {
-    width: 60px;
-    height: 60px;
+    width: 56px; /* 1px 증가 (55px → 56px) */
+    height: 56px;
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
-    
-    /* 모바일에서 Channel.io 버튼과 동일한 크기로 조정 */
-    @media (max-width: 768px) {
-      width: 48px; /* Channel.io 기본 크기와 맞춤 */
-      height: 48px;
-    }
-    
-    @media (max-width: 480px) {
-      width: 44px; /* Channel.io 모바일 크기와 맞춤 */
-      height: 44px;
-    }
-    
-    @media (max-width: 375px) {
-      width: 40px; /* Channel.io 작은 모바일 크기와 맞춤 */
-      height: 40px;
-    }
-    
-    @media (max-width: 320px) {
-      width: 36px; /* Channel.io 매우 작은 모바일 크기와 맞춤 */
-      height: 36px;
-    }
   }
   
   svg {
@@ -186,8 +108,7 @@ const FloatingButton = styled.button`
 
   &:hover {
     color: #835EEB;
-    transform: translateY(-2px) scale(1.02);
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+    /* 확대 효과 제거, 텍스트 컬러 전환만 유지 */
   }
 
   &:active {
@@ -233,35 +154,26 @@ const FloatingButton = styled.button`
   }
 `;
 
-const ModalOverlay = styled.div<{ $isOpen: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 1001;
-  opacity: ${props => props.$isOpen ? 1 : 0};
-  visibility: ${props => props.$isOpen ? 'visible' : 'hidden'};
-  transition: all 0.3s ease;
-  backdrop-filter: ${props => props.$isOpen ? 'blur(4px)' : 'blur(0px)'};
-`;
+// ModalOverlay 제거 - 배경 흐리게 효과 없음
 
 const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  bottom: 11.875rem;
-  right: 3.125rem;
+  bottom: 5.625rem; /* 위로 2px 이동 (5.5rem → 5.625rem) */
+  right: 8.4375rem; /* 1번 버튼 위치에 맞춰 조정 */
   width: 24.6875rem;
-  max-height: 43.75rem;
+  height: 42.8125rem; /* 685px 높이로 설정 (15px 감소) */
+  max-height: 42.8125rem;
   background: white;
-  z-index: 1002;
+  z-index: 2002;
   opacity: ${props => props.$isOpen ? 1 : 0};
-  transform: ${props => props.$isOpen ? 'scale(1) translateY(0)' : 'scale(0.8) translateY(1.25rem)'};
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transform: ${props => props.$isOpen ? 'translateY(0)' : 'translateY(50px)'};
+  transform-origin: bottom right;
+  pointer-events: ${props => props.$isOpen ? 'auto' : 'none'};
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), 0 8px 32px rgba(0, 0, 0, 0.15);
   border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow-y: auto;
 
   /* 말풍선 꼬리 */
@@ -277,26 +189,24 @@ const ModalContainer = styled.div<{ $isOpen: boolean }>`
     border-top: 0.5rem solid white;
   }
 
-  /* 모바일에서 Channel.io 버튼 위치와 맞춘 모달 위치 조정 */
+  /* 모바일에서 전체화면 모달 */
   @media (max-width: 768px) {
-    width: 22.5rem;
-    right: 1.25rem;
-    bottom: 8.75rem; /* Channel.io 모달과 맞춤 */
-    max-height: 80vh;
-  }
-  
-  @media (max-width: 480px) {
-    width: 21rem;
-    right: 1rem;
-    bottom: 8.125rem; /* Channel.io 모바일 모달과 맞춤 */
-    max-height: 75vh;
-  }
-  
-  @media (max-width: 375px) {
-    width: 20rem;
-    right: 0.75rem;
-    bottom: 7.5rem; /* Channel.io 작은 모바일 모달과 맞춤 */
-    max-height: 70vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    bottom: auto;
+    right: auto;
+    border-radius: 0;
+    transform: ${props => props.$isOpen ? 'translateY(0)' : 'translateY(100%)'};
+    transform-origin: bottom center;
+    
+    /* 말풍선 꼬리 제거 */
+    &::after {
+      display: none;
+    }
   }
 `;
 
@@ -320,13 +230,35 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     setIsOpen(true);
     onDrawerStateChange?.(true);
     
-    // Channel.io 모달이 열려있으면 숨기기
+    // Channel.io 모달이 열려있으면 완전히 닫기
     try {
+      // Channel.io 서비스가 있으면 hide 호출
       if (window.ChannelService && window.ChannelService.hide) {
         window.ChannelService.hide();
       }
+      
+      // 추가로 DOM 요소를 직접 조작하여 Channel.io 모달 닫기
+      const channelModal = document.querySelector('#ch-plugin-messenger');
+      if (channelModal) {
+        const channelModalStyle = channelModal as HTMLElement;
+        channelModalStyle.style.display = 'none';
+        channelModalStyle.style.visibility = 'hidden';
+        channelModalStyle.style.opacity = '0';
+      }
+      
+      // Channel.io 버튼도 일시적으로 숨기기
+      const channelButton = document.querySelector('#ch-plugin-launcher');
+      if (channelButton) {
+        const channelButtonStyle = channelButton as HTMLElement;
+        channelButtonStyle.style.display = 'none';
+        // 1초 후 다시 표시
+        setTimeout(() => {
+          channelButtonStyle.style.display = '';
+        }, 1000);
+      }
+      
     } catch (error) {
-      console.log('Channel.io 모달 숨기기 실패');
+      console.log('Channel.io 모달 닫기 실패:', error);
     }
     
     // 키보드 포커스 관리
@@ -340,6 +272,17 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     setIsOpen(false);
     onDrawerStateChange?.(false);
     document.body.style.overflow = 'auto';
+    
+    // Channel.io 버튼 다시 표시
+    try {
+      const channelButton = document.querySelector('#ch-plugin-launcher');
+      if (channelButton) {
+        const channelButtonStyle = channelButton as HTMLElement;
+        channelButtonStyle.style.display = '';
+      }
+    } catch (error) {
+      console.log('Channel.io 버튼 복원 실패:', error);
+    }
   }, [onDrawerStateChange]);
 
   // isModalOpen prop 변경 시 isOpen 상태 동기화
@@ -347,11 +290,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     setIsOpen(isModalOpen);
   }, [isModalOpen]);
 
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      handleClose();
-    }
-  };
+  // handleOverlayClick 제거 - 배경 클릭으로 모달 닫기 기능 없음
 
   // 1번 플로팅 버튼 위치 고정을 위한 useEffect
   useEffect(() => {
@@ -360,29 +299,14 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
       if (buttonContainer) {
         // 강제로 위치 고정
         buttonContainer.style.position = 'fixed';
-        buttonContainer.style.zIndex = '1000';
         
-        // 화면 크기에 따른 반응형 위치 설정
-        const width = window.innerWidth;
-        if (width <= 280) {
-          buttonContainer.style.bottom = '35px';
-          buttonContainer.style.right = '8px';
-        } else if (width <= 320) {
-          buttonContainer.style.bottom = '40px';
-          buttonContainer.style.right = '10px';
-        } else if (width <= 375) {
-          buttonContainer.style.bottom = '45px';
-          buttonContainer.style.right = '12px';
-        } else if (width <= 480) {
-          buttonContainer.style.bottom = '50px';
-          buttonContainer.style.right = '15px';
-        } else if (width <= 768) {
-          buttonContainer.style.bottom = '60px';
-          buttonContainer.style.right = '20px';
-        } else {
-          buttonContainer.style.bottom = '80px';
-          buttonContainer.style.right = '55px';
-        }
+        // data-z-index 속성에서 올바른 z-index 값 가져오기
+        const correctZIndex = buttonContainer.getAttribute('data-z-index') || '1000';
+        buttonContainer.style.zIndex = correctZIndex;
+        
+        // 모든 화면 크기에서 동일한 위치로 고정
+        buttonContainer.style.bottom = '24px'; /* 위로 0.5px 더 이동 */
+        buttonContainer.style.right = '135px'; /* 오른쪽으로 10px 더 이동 */
       }
     };
 
@@ -426,30 +350,54 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
     window.isDrawerOpen = isOpen;
     window.closeDrawer = handleClose;
     
-    // Channel.io 모달 상태 감지 (폴링 방식)
+    // Channel.io 버튼 클릭 감지
+    const handleChannelButtonClick = (event: Event) => {
+      const target = event.target as HTMLElement;
+      const channelButton = document.querySelector('#ch-plugin-launcher');
+      
+      // Channel.io 버튼이 클릭되었고 1번 모달이 열려있으면 1번 모달 닫기
+      if (channelButton && (target === channelButton || channelButton.contains(target)) && isOpen) {
+        console.log('Channel.io 버튼 클릭 감지, 1번 모달 자동 닫기');
+        handleClose();
+      }
+    };
+
+    // Channel.io 버튼 클릭 이벤트 리스너 추가
+    document.addEventListener('click', handleChannelButtonClick, true);
+    
+    // Channel.io 모달 상태 감지 (폴링 방식) - 더 강화된 감지
     const checkChannelModal = setInterval(() => {
       try {
-        // Channel.io 모달이 열려있는지 확인하는 방법
-        const channelElements = document.querySelectorAll('[class*="channel"], [class*="chat"], [class*="messenger"]');
+        // Channel.io 모달이 열려있는지 확인하는 방법들
+        const channelElements = document.querySelectorAll('[class*="channel"], [class*="chat"], [class*="messenger"], #ch-plugin-messenger, [id*="ch-plugin"]');
         const isChannelModalOpen = Array.from(channelElements).some(el => {
           const rect = el.getBoundingClientRect();
+          const computedStyle = window.getComputedStyle(el);
           return rect.width > 0 && rect.height > 0 && 
-                 window.getComputedStyle(el).display !== 'none' &&
-                 window.getComputedStyle(el).visibility !== 'hidden';
+                 computedStyle.display !== 'none' &&
+                 computedStyle.visibility !== 'hidden' &&
+                 computedStyle.opacity !== '0';
         });
         
+        // 추가로 Channel.io 특정 클래스나 속성 확인
+        const channelModal = document.querySelector('#ch-plugin-messenger');
+        const isChannelModalVisible = channelModal && 
+          window.getComputedStyle(channelModal).display !== 'none' &&
+          window.getComputedStyle(channelModal).visibility !== 'hidden';
+        
         // Channel.io 모달이 열려있으면 1번 모달 자동 닫기
-        if (isChannelModalOpen && isOpen) {
+        if ((isChannelModalOpen || isChannelModalVisible) && isOpen) {
           console.log('Channel.io 모달 감지, 1번 모달 자동 닫기');
           handleClose();
         }
       } catch (error) {
         // 에러 무시
       }
-    }, 1000); // 1초마다 체크
+    }, 500); // 더 빠른 감지를 위해 500ms로 변경
 
     return () => {
       clearInterval(checkChannelModal);
+      document.removeEventListener('click', handleChannelButtonClick, true);
       window.isDrawerOpen = false;
       window.closeDrawer = undefined;
     };
@@ -457,48 +405,45 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
 
   return (
     <>
+      {/* 1번 플로팅 버튼 (항상 표시, 모달 상태에 따라 아이콘 변경) */}
       <FloatingButtonContainer 
         $isVisible={true} 
-        style={{ zIndex: isOpen ? 1003 : 1000 }}
+        style={{ zIndex: isOpen ? 10000 : 1000 }}
         data-floating-button
+        data-z-index={isOpen ? 10000 : 1000}
       >
         <FloatingButton onClick={isOpen ? handleClose : handleOpen} aria-label={isOpen ? "무료체험 신청 닫기" : "무료체험 신청 열기"}>
           <FloatingButtonText>무료체험신청</FloatingButtonText>
           <ChatIcon $isClose={isOpen}>
             {isOpen ? (
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M18 6L6 18M6 6L18 18" stroke="#835EEB" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '20px', height: '20px' }}>
+                <path d="M6 6L18 18M18 6L6 18" stroke="#666666" strokeWidth="2.5" strokeLinecap="round"/>
               </svg>
             ) : (
               <img 
                 src="/Assets/icon/무료체험.svg" 
-
-                
                 alt="무료체험" 
               />
             )}
           </ChatIcon>
         </FloatingButton>
       </FloatingButtonContainer>
-      {isOpen && (
-        <>
-          <ModalOverlay $isOpen={isOpen} onClick={handleOverlayClick} />
-          <ModalContainer $isOpen={isOpen}>
-            <div style={{ padding: '16px 20px' }}>
-              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '12px' }}>
-                <h2 style={{ margin: 0, color: '#33373B', fontSize: '18px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
-                  무료 체험 신청
-                </h2>
-              </div>
-              <p style={{ color: '#6B7280', fontSize: '13px', lineHeight: '1.4', marginBottom: '12px', fontFamily: 'Pretendard, sans-serif' }}>
-                궁금한 점이 있으신가요?<br />
-                아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
-              </p>
-              <ConsultationForm onClose={handleClose} />
-            </div>
-          </ModalContainer>
-        </>
-      )}
+
+      {/* 모달 항상 렌더링, 애니메이션으로 표시/숨김 제어 */}
+      <ModalContainer $isOpen={isOpen}>
+        <div style={{ padding: '30px 20px' }}>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '12px' }}>
+            <h2 style={{ margin: 0, color: '#33373B', fontSize: '22px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
+              무료 체험 신청
+            </h2>
+          </div>
+          <p style={{ color: '#6B7280', fontSize: '16px', lineHeight: '1.5', marginBottom: '12px', fontFamily: 'Pretendard, sans-serif' }}>
+            궁금한 점이 있으신가요?<br />
+            아래 폼을 작성해주시면 빠르게 연락드리겠습니다.
+          </p>
+          <ConsultationForm onClose={handleClose} />
+        </div>
+      </ModalContainer>
     </>
   );
 };
