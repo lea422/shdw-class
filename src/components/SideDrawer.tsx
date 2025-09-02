@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
+const FloatingButtonContainer = styled.div<{ $isVisible: boolean; $isOpen: boolean }>`
   position: fixed !important;
   bottom: 24px !important; /* 위로 0.5px 더 이동 (23.5px → 24px) */
   right: 135px !important; /* 오른쪽으로 10px 더 이동 (145px → 135px) */
@@ -20,6 +20,13 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean }>`
   transform: ${props => props.$isVisible ? 'scale(1)' : 'scale(0.8)'};
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* opacity transition 제거 */
   pointer-events: auto !important; /* 항상 클릭 가능하게 유지 */
+  
+  /* 모바일에서 모달이 열렸을 때 버튼 숨기기 */
+  @media (max-width: 768px) {
+    display: ${props => props.$isOpen ? 'none' : 'block'};
+    right: 25px !important; /* 오른쪽으로 110px 이동 (135px - 110px) */
+    bottom: 44px !important; /* 위로 20px 이동 (24px + 20px) */
+  }
 `;
 
 const ChatIcon = styled.div<{ $isClose?: boolean }>`
@@ -27,8 +34,8 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 3.4375rem; /* 5px 줄임 (64px → 59px) */
-  height: 3.4375rem;
+  width: 2.75rem; /* 15px 더 줄임 (59px → 44px) */
+  height: 2.75rem;
   background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
   border-radius: ${props => props.$isClose ? '45%' : '50%'};
   box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
@@ -47,9 +54,15 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     transition: all 0.1s ease;
   }
   
+  /* 모바일에서 아이콘 크기 줄이기 */
+  @media (max-width: 768px) {
+    width: 1.8125rem; /* 15px 더 줄임 (44px → 29px) */
+    height: 1.8125rem; /* 15px 더 줄임 (44px → 29px) */
+  }
+  
   img {
-    width: 56px; /* 1px 증가 (55px → 56px) */
-    height: 56px;
+    width: 44px; /* 15px 줄임 (59px → 44px) */
+    height: 44px;
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
   }
@@ -115,6 +128,14 @@ const FloatingButton = styled.button`
     transform: translateY(0) scale(0.95);
     transition: all 0.1s ease;
   }
+  
+  /* 모바일에서 버튼 크기 줄이기 */
+  @media (max-width: 768px) {
+    width: 6.5rem; /* 20px 줄임 (8rem → 6.5rem) */
+    height: 2.75rem; /* 20px 줄임 (3.5rem → 2.75rem) */
+    font-size: 0.75rem; /* 폰트 크기도 조정 */
+    gap: 0.375rem; /* 간격 조정 */
+  }
   }
 
   &:focus {
@@ -155,6 +176,34 @@ const FloatingButton = styled.button`
 `;
 
 // ModalOverlay 제거 - 배경 흐리게 효과 없음
+
+const MobileCloseButton = styled.button`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+  }
+`;
 
 const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
@@ -408,6 +457,7 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
       {/* 1번 플로팅 버튼 (항상 표시, 모달 상태에 따라 아이콘 변경) */}
       <FloatingButtonContainer 
         $isVisible={true} 
+        $isOpen={isOpen}
         style={{ zIndex: isOpen ? 10000 : 1000 }}
         data-floating-button
         data-z-index={isOpen ? 10000 : 1000}
@@ -431,6 +481,13 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
 
       {/* 모달 항상 렌더링, 애니메이션으로 표시/숨김 제어 */}
       <ModalContainer $isOpen={isOpen}>
+        {/* 모바일에서 우측상단 닫기버튼 */}
+        <MobileCloseButton onClick={handleClose} aria-label="닫기">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: '20px', height: '20px' }}>
+            <path d="M6 6L18 18M18 6L6 18" stroke="#666666" strokeWidth="2.5" strokeLinecap="round"/>
+          </svg>
+        </MobileCloseButton>
+        
         <div style={{ padding: '30px 20px' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginBottom: '12px' }}>
             <h2 style={{ margin: 0, color: '#33373B', fontSize: '22px', fontWeight: 700, fontFamily: 'Pretendard, sans-serif' }}>
