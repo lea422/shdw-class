@@ -24,7 +24,6 @@ const MainContent = styled.main`
 `;
 
 function AppInner({ setChannelUser, bootAnonymousUser }: { setChannelUser: (userData: any) => void; bootAnonymousUser: () => void }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const location = useLocation();
 
@@ -77,14 +76,14 @@ function AppInner({ setChannelUser, bootAnonymousUser }: { setChannelUser: (user
       <Header hasWhiteBackground={isPricingPage} />
       <MainContent>
         <Routes>
-          <Route path="/" element={<Home isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/notice/*" element={<NoticePage />} />
         </Routes>
       </MainContent>
       <Footer />
       <SideDrawer 
-        isModalOpen={isModalOpen || isDrawerOpen} 
+        isModalOpen={isDrawerOpen} 
         onDrawerStateChange={handleDrawerStateChange}
       />
     </AppContainer>

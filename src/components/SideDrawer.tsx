@@ -21,11 +21,17 @@ const FloatingButtonContainer = styled.div<{ $isVisible: boolean; $isOpen: boole
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* opacity transition 제거 */
   pointer-events: auto !important; /* 항상 클릭 가능하게 유지 */
   
+  /* 데스크탑에서 버튼 위치 조정 */
+  @media (min-width: 769px) {
+    bottom: 39px !important; /* 위로 15px 이동 (24px + 15px) */
+    right: 115px !important; /* 오른쪽으로 20px 이동 (135px - 20px) */
+  }
+  
   /* 모바일에서 모달이 열렸을 때 버튼 숨기기 */
   @media (max-width: 768px) {
     display: ${props => props.$isOpen ? 'none' : 'block'};
     right: 25px !important; /* 오른쪽으로 110px 이동 (135px - 110px) */
-    bottom: 44px !important; /* 위로 20px 이동 (24px + 20px) */
+    bottom: 64px !important; /* 위로 20px 더 이동 (44px + 20px) */
   }
 `;
 
@@ -34,11 +40,11 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.75rem; /* 15px 더 줄임 (59px → 44px) */
-  height: 2.75rem;
-  background: ${props => props.$isClose ? '#ffffff' : 'transparent'};
+  width: 3.5rem; /* 데스크탑에서 8px 줄임 (64px → 56px) */
+  height: 3.5rem;
+  background: #ffffff; /* 항상 흰색 배경으로 통일 */
   border-radius: ${props => props.$isClose ? '45%' : '50%'};
-  box-shadow: ${props => props.$isClose ? '0 4px 12px rgba(0, 0, 0, 0.2)' : 'none'};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* 항상 그림자 표시 */
   position: relative;
   z-index: 9999 !important; /* 최상위 레이어로 설정 */
   opacity: 1 !important; /* 항상 완전히 불투명하게 유지 */
@@ -54,17 +60,23 @@ const ChatIcon = styled.div<{ $isClose?: boolean }>`
     transition: all 0.1s ease;
   }
   
-  /* 모바일에서 아이콘 크기 줄이기 */
+  /* 모바일에서 아이콘 크기 조정 */
   @media (max-width: 768px) {
-    width: 1.8125rem; /* 15px 더 줄임 (44px → 29px) */
-    height: 1.8125rem; /* 15px 더 줄임 (44px → 29px) */
+    width: 2.8125rem; /* 45px × 45px (5px 줄임) */
+    height: 2.8125rem; /* 45px × 45px (5px 줄임) */
   }
   
   img {
-    width: 44px; /* 15px 줄임 (59px → 44px) */
-    height: 44px;
+    width: 56px; /* 데스크탑에서 8px 줄임 (64px → 56px) */
+    height: 56px;
     transition: all 0.3s ease;
     filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.15));
+    
+    /* 모바일에서 이미지 크기 조정 */
+    @media (max-width: 768px) {
+      width: 45px; /* 45px × 45px (5px 줄임) */
+      height: 45px; /* 45px × 45px (5px 줄임) */
+    }
   }
   
   svg {
@@ -131,10 +143,10 @@ const FloatingButton = styled.button`
   
   /* 모바일에서 버튼 크기 줄이기 */
   @media (max-width: 768px) {
-    width: 6.5rem; /* 20px 줄임 (8rem → 6.5rem) */
+    width: 7.5rem; /* 간격을 고려한 너비 조정 */
     height: 2.75rem; /* 20px 줄임 (3.5rem → 2.75rem) */
     font-size: 0.75rem; /* 폰트 크기도 조정 */
-    gap: 0.375rem; /* 간격 조정 */
+    gap: 1.25rem; /* 20px 간격 (아이콘과 텍스트 사이) */
   }
   }
 
@@ -207,8 +219,8 @@ const MobileCloseButton = styled.button`
 
 const ModalContainer = styled.div<{ $isOpen: boolean }>`
   position: fixed;
-  bottom: 5.625rem; /* 위로 2px 이동 (5.5rem → 5.625rem) */
-  right: 8.4375rem; /* 1번 버튼 위치에 맞춰 조정 */
+  bottom: 6.5rem; /* 위로 16px 이동 (5.625rem + 1rem) */
+  right: 7.5rem; /* 오른쪽으로 30px 이동 (8.4375rem - 0.9375rem) */
   width: 24.6875rem;
   height: 42.8125rem; /* 685px 높이로 설정 (15px 감소) */
   max-height: 42.8125rem;
@@ -230,7 +242,7 @@ const ModalContainer = styled.div<{ $isOpen: boolean }>`
     content: '';
     position: absolute;
     bottom: -0.5rem;
-    right: 1.25rem;
+    right: 1.25rem; /* 모달 위치에 맞춰 조정 */
     width: 0;
     height: 0;
     border-left: 0.5rem solid transparent;
@@ -353,9 +365,17 @@ const SideDrawer: React.FC<SideDrawerProps> = ({ isModalOpen = false, onDrawerSt
         const correctZIndex = buttonContainer.getAttribute('data-z-index') || '1000';
         buttonContainer.style.zIndex = correctZIndex;
         
-        // 모든 화면 크기에서 동일한 위치로 고정
-        buttonContainer.style.bottom = '24px'; /* 위로 0.5px 더 이동 */
-        buttonContainer.style.right = '135px'; /* 오른쪽으로 10px 더 이동 */
+                 // 화면 크기에 따라 위치 조정
+         const screenWidth = window.innerWidth;
+         if (screenWidth >= 769) {
+           // 데스크탑
+           buttonContainer.style.bottom = '39px'; /* 위로 15px 이동 */
+           buttonContainer.style.right = '115px'; /* 오른쪽으로 20px 이동 */
+                    } else {
+             // 모바일
+            buttonContainer.style.bottom = '64px'; /* 위로 20px 더 이동 */
+            buttonContainer.style.right = '25px'; /* 오른쪽으로 110px 이동 */
+           }
       }
     };
 

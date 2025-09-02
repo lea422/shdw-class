@@ -1710,13 +1710,15 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
       },
     );
 
-    // 모바일 핵심기능 박스들을 위한 별도 observer (더 민감한 설정)
+    // 모바일 핵심기능 박스들을 위한 별도 observer (인터렉션 후 고정)
     const mobileObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && entry.boundingClientRect.top > 0) {
             // 요소가 화면 위에서 아래로 내려올 때만 애니메이션 트리거
             entry.target.classList.add("visible");
+            // 한 번 visible이 되면 observer에서 제거하여 고정
+            mobileObserver.unobserve(entry.target);
           }
         });
       },
@@ -1764,11 +1766,11 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     };
   }, []);
 
-  // 스크롤 기반 인터랙션
+  // 스크롤 기반 인터랙션 - 인터렉션 후 고정
   useEffect(() => {
     const handleScroll = () => {
-      const newZoomedBoxes = new Set<number>();
-      const newVisibleTexts = new Set<number>();
+      const newZoomedBoxes = new Set(zoomedBoxes); // 기존 상태 유지
+      const newVisibleTexts = new Set(visibleTexts); // 기존 상태 유지
       
       featureBoxRefs.current.forEach((ref, index) => {
         if (ref) {
@@ -1782,6 +1784,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
           const maxDistance = windowHeight / 2;
           const zoomThreshold = maxDistance * 0.4; // 화면 중앙 40% 영역에서 줌 (더 넓은 영역)
           
+          // 한 번 인터렉션되면 계속 유지 (고정)
           if (distanceFromCenter < zoomThreshold) {
             newZoomedBoxes.add(index);
             newVisibleTexts.add(index);
@@ -1789,8 +1792,20 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
         }
       });
       
-      setZoomedBoxes(newZoomedBoxes);
-      setVisibleTexts(newVisibleTexts);
+      // 상태가 변경된 경우에만 업데이트
+      const newZoomedArray = Array.from(newZoomedBoxes);
+      const currentZoomedArray = Array.from(zoomedBoxes);
+      const newVisibleArray = Array.from(newVisibleTexts);
+      const currentVisibleArray = Array.from(visibleTexts);
+      
+      if (newZoomedArray.length !== currentZoomedArray.length || 
+          !newZoomedArray.every(box => currentZoomedArray.includes(box))) {
+        setZoomedBoxes(newZoomedBoxes);
+      }
+      if (newVisibleArray.length !== currentVisibleArray.length || 
+          !newVisibleArray.every(text => currentVisibleArray.includes(text))) {
+        setVisibleTexts(newVisibleTexts);
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -1799,7 +1814,7 @@ const Body = React.forwardRef<HTMLDivElement>((props, ref) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [zoomedBoxes, visibleTexts]); // 의존성 배열에 상태 추가
 
   const features = [
     {

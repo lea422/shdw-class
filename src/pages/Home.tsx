@@ -735,16 +735,8 @@ const TrialSteps = styled.div`
   align-items: center;
   gap: 20px;
   
-  /* 태블릿 */
-  @media (max-width: 1024px) {
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  
-  /* 모바일 */
-  @media (max-width: 600px) {
+  /* 768px 이하에서 바로 세로 배치로 전환 */
+  @media (max-width: 768px) {
     flex-direction: column;
     gap: 16px;
     width: 100%;
@@ -781,11 +773,19 @@ const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   /* 768px 이하에서 가로로 긴 직사각형으로 변경 */
   @media (max-width: 768px) {
     border-radius: 12px;
-    width: 200px;
+    width: 300px; /* 텍스트가 잘리지 않도록 너비 더 증가 */
     height: 80px;
     padding: 12px 16px;
     flex-direction: row;
     gap: 12px;
+  }
+  
+  /* 600px 이하에서 더 작은 화면에 맞게 조정 */
+  @media (max-width: 600px) {
+    width: 320px;
+    height: 70px;
+    padding: 10px 14px;
+    gap: 8px;
   }
   position: relative;
   
@@ -794,23 +794,9 @@ const TrialStep = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
   
-  @media (max-width: 768px) {
-    width: 120px;
-    height: 120px;
-    padding: 16px;
-  }
+  /* 중복된 모바일 스타일 제거 */
   
-  @media (max-width: 600px) {
-    width: 100px;
-    height: 100px;
-    padding: 16px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-    flex-shrink: 0;
-  }
+  /* 중복된 모바일 스타일 제거 */
 `;
 
 const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
@@ -840,10 +826,11 @@ const StepNumber = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
   }
   
   @media (max-width: 600px) {
-    font-size: 16px;
-    line-height: 20px;
-    text-align: center;
-    width: 100%;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: left;
+    min-width: 50px;
+    flex-shrink: 0;
   }
 `;
 
@@ -871,14 +858,20 @@ const StepDescription = styled.div<{ isFirst?: boolean; isHovered?: boolean }>`
     text-align: left;
     align-items: flex-start;
     flex: 1;
+    white-space: normal; /* 텍스트 줄바꿈 허용 */
+    flex-direction: row; /* 가로 배치로 변경 */
+    justify-content: flex-start; /* 좌측 정렬 */
   }
   
   @media (max-width: 600px) {
-    font-size: 14px;
-    line-height: 18px;
-    text-align: center;
-    width: 100%;
+    font-size: 11px;
+    line-height: 15px;
+    text-align: left;
     white-space: normal;
+    flex-direction: row; /* 가로 배치로 변경 */
+    justify-content: flex-start; /* 좌측 정렬 */
+    flex: 1;
+    min-width: 0; /* flex item이 축소될 수 있도록 */
   }
 `;
 
@@ -948,12 +941,7 @@ const FaqAccordion: React.FC<{ faqs: { question: string; answer: string }[] }> =
   );
 };
 
-interface HomeProps {
-  isModalOpen: boolean;
-  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
+const Home: React.FC = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   // 제거: 사용하지 않는 슬라이드 트랙 이동 상태
@@ -1045,12 +1033,12 @@ const Home: React.FC<HomeProps> = ({ isModalOpen, setIsModalOpen }) => {
 
   const handleOpenDialog = () => {
     setIsDialogOpen(true);
-    setIsModalOpen(true);
+    // 플로팅 모달은 활성화하지 않음 (히어로 버튼은 독립적으로 동작)
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
-    setIsModalOpen(false);
+    // 플로팅 모달 상태는 건드리지 않음
   };
 
   const scrollToBody = () => {
